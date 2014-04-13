@@ -5,7 +5,7 @@ description: Help with structural equation modeling
 
 # Uncomment if you are planning to run the blog in a subdirectory
 # Note - if you enable this, use jekyll --baseurl '/' to view locally
-baseurl: /SEM-in-OpenMx/
+baseurl: /
 
 markdown: redcarpet
 pygments: true
