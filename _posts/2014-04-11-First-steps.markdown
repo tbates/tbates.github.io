@@ -14,6 +14,11 @@ umx stands for "user" mx function, and is a library of helper functions for doin
 puts "Hello, world!"
 ```
 
+``` R
+# install & load newish devtools
+install.packages("devtools")
+library("devtools")    
+```
 
 {% highlight R %}
 # install & load newish devtools
