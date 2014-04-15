@@ -10,11 +10,10 @@ categories: models tutorial
 
 umx stands for "user" mx function, and is a library of helper functions for doing [Structural Equation Modeling](http://en.wikipedia.org/wiki/Structural_equation_modeling) in [OpenMx](http://openmx.psyc.virginia.edu).
 
-```R
-	# install & load newish devtools
-	install.packages("devtools")
-	library("devtools")    
+``` ruby
+puts "Hello, world!"
 ```
+
 
 {% highlight R %}
 # install & load newish devtools
