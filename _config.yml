@@ -7,6 +7,9 @@ description: Help with structural equation modeling
 # Note - if you enable this, use jekyll --baseurl '/' to view locally
 baseurl: /
 
-markdown: redcarpet
 pygments: true
+
+markdown: redcarpet
+redcarpet:
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
 
