@@ -5,10 +5,15 @@ date: 2014-04-12 14:50
 comments: true
 categories: models
 ---
+umx allows you to more easily build, run, modify, and report models using OpenMx
+with code. The core functions are linked below:
 
-umx adds helpers to [OpenMx](http://openmx.psyc.virginia.edu) that take care of repetitive tasks like labeling and start values, and which streamlines the work flow of model comparison and graphing, while not sacrificing power.
+All the functions have explanatory examples, so use the help, even if you think it won't help :-)
+Have a look, for example at `?umxRun`
 
-The umx package has many helpers. `?umx` will show them all.
+The functions are grouped into "families". These families are collated in the help for each function.
+
+The core family is helpers for [OpenMx](http://openmx.psyc.virginia.edu) that take care of repetitive tasks like labeling and start values, and which streamline the work flow of model comparison and graphing, while not sacrificing power.
 
 Here are some of the most important.
 
