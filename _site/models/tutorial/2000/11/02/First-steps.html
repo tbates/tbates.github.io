@@ -69,6 +69,8 @@ library<span class="p">(</span><span class="s">&quot;umx&quot;</span><span class
 <p><a href="http://en.wikipedia.org/wiki/Sewall_Wright%22Wikipedia%20Entry:%20Sewall%20Wright%22">Sewall Wright</a> invented SEM to allow us to think in explicit graphs. So, here&#39;s what that language implies:</p>
 
 <p><img src="/media/1_make_a_model/mpg_1a_theory.png" alt="model of mpg" title="A model of Miles/gallon"></p>
+
+<p>Here&#39;s what it looks like in OpenMx (and don&#39;t worry, I&#39;m going to take you through it step by step below for people new to OpenMx)</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">manifests <span class="o">=</span> c<span class="p">(</span><span class="s">&quot;mpg&quot;</span><span class="p">,</span> <span class="s">&quot;disp&quot;</span><span class="p">,</span> <span class="s">&quot;gear&quot;</span><span class="p">)</span>
 m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span><span class="s">&quot;car&quot;</span><span class="p">,</span> type <span class="o">=</span> <span class="s">&quot;RAM&quot;</span><span class="p">,</span>
     <span class="c1"># All the boxes on our diagram</span>
@@ -162,9 +164,11 @@ umxSummary<span class="p">(</span>m1<span class="p">,</span> show <span class="o
 </code></pre></div>
 <p><img src="/media/1_make_a_model/mtcar2.png" alt="model 1" title="Model 1"></p>
 
-<p>Modeling is, fundamentally, all about model comparison: &quot;Better&quot; theories fit comparatively better.</p>
+<p>Modeling is, fundamentally, all about model comparison: Better theories fit the data better than do worse theories.</p>
 
-<p>To skip to comparing models, <a href="#compare">click here</a>. To go over what we&#39;ve just seen slowly... just read on were I break that down into a series of steps:</p>
+<p>If you were happy with that, <a href="#modify">click here</a> to go to modify and compare.</p>
+
+<p>To go over what we&#39;ve just seen slowly... just read on where I break that down into a series of steps:</p>
 
 <ol>
 <li><a href="#build">Build</a></li>
@@ -342,7 +346,7 @@ m2 <span class="o">=</span> mxRun<span class="p">(</span>m2<span class="p">)</sp
 
 <h3 id="toc_7">Compare two models</h3>
 
-<p>Now we can test if gear affect mpg by comparing these two models:</p>
+<p>Now we can test if gear affects mpg by comparing these two models:</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">umxCompare<span class="p">(</span>m1<span class="p">,</span>m2<span class="p">)</span>
 </code></pre></div>
 <p>This did not lower fit significantly(χ²(1) = 0.01, p = 0.905):</p>
@@ -379,7 +383,7 @@ m2 <span class="o">=</span> mxRun<span class="p">(</span>m2<span class="p">)</sp
 </tbody></table>
 
 <p>Advanced tip: umxReRun can modify and compare in 1-line</p>
-<div class="highlight"><pre><code class="splus language-splus" data-lang="splus">    m2 <span class="o">=</span> umxReRun<span class="p">(</span>m1<span class="p">,</span> <span class="s">&quot;gear_to_mpg&quot;</span><span class="p">,</span> name <span class="o">=</span> <span class="s">&quot;no effect of gear&quot;</span><span class="p">),</span> comparison <span class="o">=</span> <span class="k-Variable">T</span><span class="p">)</span>
+<div class="highlight"><pre><code class="splus language-splus" data-lang="splus">    m2 <span class="o">=</span> umxReRun<span class="p">(</span>m1<span class="p">,</span> update <span class="o">=</span> <span class="s">&quot;gear_to_mpg&quot;</span><span class="p">,</span> name <span class="o">=</span> <span class="s">&quot;dop effect of gear&quot;</span><span class="p">),</span> comparison <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="toc_8">TODO</h4>
 
@@ -388,9 +392,9 @@ m2 <span class="o">=</span> mxRun<span class="p">(</span>m2<span class="p">)</sp
 <li>and IQ, and a model in which all facets load on each other. g fits well, and better than the alternative.</li>
 </ol>
 
-<p><strong>Footnotes</strong>
-[^1]: <code>devtools</code> is @Hadley&#39;s package for using packages not on CRAN.
-[^2]: <a href="https://www.lg.com/us/support/repair-service/track-repair-detail">LG</a> # CNM140415049560</p>
+<p><strong>Footnotes</strong></p>
+
+<p>[^1]: <code>devtools</code> is @Hadley&#39;s package for using packages not on CRAN.</p>
 
 </div>
 
