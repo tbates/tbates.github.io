@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Get some Confidence!</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+		<link rel="stylesheet" href="/stylesheets/styles.css">
+    	<link rel="stylesheet" href="/stylesheets/pygment_trac.css">
+		<!--[if lt IE 9]>
+		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+    </head>
+
+    <body>
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">umx</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Get some Confidence!</h2>
+<!-- <p class="meta">01 Feb 2000</p> -->
+
+<div class="post">
+<h1 id="toc_0">Get some Confidence!</h1>
+<div class="highlight"><pre><code class="splus language-splus" data-lang="splus">manifests <span class="o">=</span> c<span class="p">(</span><span class="s">&quot;mpg&quot;</span><span class="p">,</span> <span class="s">&quot;disp&quot;</span><span class="p">,</span> <span class="s">&quot;gear&quot;</span><span class="p">)</span>
+m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span><span class="s">&quot;car&quot;</span><span class="p">,</span> type <span class="o">=</span> <span class="s">&quot;RAM&quot;</span><span class="p">,</span>
+    manifestVars <span class="o">=</span> manifests<span class="p">,</span>   
+    mxPath<span class="p">(</span>from <span class="o">=</span> c<span class="p">(</span><span class="s">&quot;disp&quot;</span><span class="p">,</span> <span class="s">&quot;gear&quot;</span><span class="p">),</span> to <span class="o">=</span> <span class="s">&quot;mpg&quot;</span><span class="p">),</span>
+    mxPath<span class="p">(</span>from <span class="o">=</span> <span class="s">&quot;disp&quot;</span><span class="p">,</span> to <span class="o">=</span> <span class="s">&quot;gear&quot;</span><span class="p">,</span> arrows <span class="o">=</span> <span class="m">2</span><span class="p">),</span>
+    mxPath<span class="p">(</span>from <span class="o">=</span> <span class="s">&quot;disp&quot;</span><span class="p">,</span> arrows <span class="o">=</span> <span class="m">2</span><span class="p">,</span> free <span class="o">=</span> <span class="k-Variable">F</span><span class="p">,</span> values <span class="o">=</span> var<span class="p">(</span>mtcars<span class="o">$</span>disp<span class="p">)),</span>
+    mxPath<span class="p">(</span>from <span class="o">=</span> <span class="s">&quot;gear&quot;</span><span class="p">,</span> arrows <span class="o">=</span> <span class="m">2</span><span class="p">,</span> free <span class="o">=</span> <span class="k-Variable">F</span><span class="p">,</span> values <span class="o">=</span> var<span class="p">(</span>mtcars<span class="o">$</span>gear<span class="p">)),</span>
+    mxPath<span class="p">(</span>from <span class="o">=</span> <span class="s">&quot;mpg&quot;</span><span class="p">,</span> arrows <span class="o">=</span> <span class="m">2</span><span class="p">),</span>
+    mxData<span class="p">(</span>cov<span class="p">(</span>mtcars<span class="p">[,</span>manifests<span class="p">]),</span> type <span class="o">=</span> <span class="s">&quot;cov&quot;</span><span class="p">,</span> numObs <span class="o">=</span> nrow<span class="p">(</span>mtcars<span class="p">))</span>
+<span class="p">)</span>
+
+confint<span class="p">(</span>m1<span class="p">,</span> run <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span> <span class="c1"># lots more to learn about ?confint.MxModel</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th align="right">Path</th>
+<th align="right">lbound</th>
+<th align="right">estimate</th>
+<th align="right">ubound</th>
+<th align="right">lbound</th>
+<th align="right">Code</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="right">disp_to_mpg</td>
+<td align="right">-0.052</td>
+<td align="right">-0.041</td>
+<td align="right">-0.030</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">gear_to_mpg</td>
+<td align="right">-1.816</td>
+<td align="right">0.111</td>
+<td align="right">2.038</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">mpg_with_mpg</td>
+<td align="right">6.397</td>
+<td align="right">10.226</td>
+<td align="right">18.494</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">disp_with_gear</td>
+<td align="right">-66.415</td>
+<td align="right">-50.803</td>
+<td align="right">-17.977</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+</tbody></table>
+
+<p><strong>Footnotes</strong>
+[^1]: </p>
+
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Timothy Bates<br />
+                timothy.c.bates@gmail.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/tbates">github.com/tbates</a><br />
+                <a href="https://twitter.com/timothycbates">twitter.com/timothycbates</a><br />
+              </p>
+			  <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+            </div>
+          </div>
+        </div>
+</section>
+<script src="javascripts/scale.fix.js"></script>
+	<script type="text/javascript">
+		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  	</script>
+   <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("todo-replaceme!!!");
+            pageTracker._trackPageview();
+            } catch(err) {}
+</script>
+</body>
+</html>
