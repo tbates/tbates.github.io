@@ -48,6 +48,8 @@ We will model miles/gallon (mpg) as a function of engine size (disp) and number 
 
 ![model of mpg](/media/1_make_a_model/mpg_1a_theory.png "A model of Miles/gallon")
 
+Here's what it looks like in OpenMx (and don't worry, I'm going to take you through it step by step below for people new to OpenMx)
+
 ``` splus
 manifests = c("mpg", "disp", "gear")
 m1 <- mxModel("car", type = "RAM",
@@ -93,9 +95,11 @@ umxPlot(m1)
 
 ![model 1](/media/1_make_a_model/mtcar2.png "Model 1")
 
-Modeling is, fundamentally, all about model comparison: "Better" theories fit comparatively better.
+Modeling is, fundamentally, all about model comparison: Better theories fit the data better than do worse theories.
 	
-To skip to comparing models, [click here](#compare). To go over what we've just seen slowly... just read on were I break that down into a series of steps:
+If you were happy with that, [click here](#modify) to go to modify and compare.
+
+To go over what we've just seen slowly... just read on where I break that down into a series of steps:
 
 1. [Build](#build)
 2. [Run](#run)
@@ -266,7 +270,7 @@ That, by default, fixes the value of matched labels to zero. Learn more at the [
 <a name="compare"></a>
 ### Compare two models
 
-Now we can test if gear affect mpg by comparing these two models:
+Now we can test if gear affects mpg by comparing these two models:
 
 ``` splus
 umxCompare(m1,m2)
@@ -283,7 +287,7 @@ This did not lower fit significantly(χ²(1) = 0.01, p = 0.905):
 Advanced tip: umxReRun can modify and compare in 1-line
 
 ``` splus
-	m2 = umxReRun(m1, "gear_to_mpg", name = "no effect of gear"), comparison = T)
+	m2 = umxReRun(m1, update = "gear_to_mpg", name = "dop effect of gear"), comparison = TRUE)
 ```
 
 
@@ -292,5 +296,5 @@ Advanced tip: umxReRun can modify and compare in 1-line
 2. and IQ, and a model in which all facets load on each other. g fits well, and better than the alternative.
 
 **Footnotes**
+
 [^1]: `devtools` is @Hadley's package for using packages not on CRAN.
-[^2]: [LG](https://www.lg.com/us/support/repair-service/track-repair-detail) # CNM140415049560
