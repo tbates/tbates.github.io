@@ -29,9 +29,26 @@
 <!-- <p class="meta">02 Nov 2000</p> -->
 
 <div class="post">
-<p><a name="top"></a></p>
+	<div id="page-navigation"> 
+	        <div class="clear">&nbsp;</div> 
+	        <div class="right"> 
+	         
+	                <a href="/models/tutorial/2000/12/01/Install.html" title="previous Post: Installing umx (and OpenMx)">&laquo; Previous: Installing umx (and OpenMx)</a> 
+	         
+	        </div> 
 
-<h3 id="toc_0">A first model in OpenMx using umx</h3>
+	        <div class="left"> 
+	         
+	                <a href="/models/tutorial/2000/10/04/Values-matter.html" title="Previous Post: Values and why they are important"> Next: Values and why they are important &raquo; </a> 
+	         
+	        </div> 
+
+	        <div class="clear">&nbsp;</div> 
+	</div> 
+
+	<p><a name="top"></a></p>
+
+<h1 id="toc_0">Introductory OpenMx tutorial using the umx helpers</h1>
 
 <p>umx stands for &quot;user&quot; OpenMx helper library. It&#39;s purpose is to help with <a href="http://en.wikipedia.org/wiki/Structural_equation_modeling">Structural Equation Modeling</a> in <a href="http://openmx.psyc.virginia.edu">OpenMx</a>.</p>
 
@@ -41,7 +58,7 @@
 
 <p><a name="install"></a></p>
 
-<h3 id="toc_1">Installing umx</h3>
+<h2 id="toc_1">Install umx</h2>
 
 <p>umx lives on <a href="http://github.com/tbates/umx">github</a> – a great place for package development. Loading libraries from github differs slightly from the procedure you may be used to. instead of <code>install.packages(&quot;umx&quot;)</code>, we&#39;re going to use <code>devtools::install_github(&quot;umx&quot;)</code> [^1]</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">install.packages<span class="p">(</span><span class="s">&quot;devtools&quot;</span><span class="p">)</span>
@@ -53,8 +70,6 @@ install_github<span class="p">(</span><span class="s">&quot;devtools&quot;</span
 <span class="c1"># install and load umx</span>
 install_github<span class="p">(</span><span class="s">&quot;tbates/umx&quot;</span><span class="p">)</span>
 library<span class="p">(</span><span class="s">&quot;umx&quot;</span><span class="p">)</span>
-<span class="c1"># get going :-)</span>
-<span class="o">?</span>umx
 </code></pre></div>
 <p><a name="overview"></a></p>
 
@@ -62,7 +77,7 @@ library<span class="p">(</span><span class="s">&quot;umx&quot;</span><span class
 
 <p>Now, let&#39;s build, run, summarize, modify/compare, and display a model.</p>
 
-<p>We will use the built-in mtcars data set.</p>
+<p>We will use the built-in <a href="https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html">mtcars</a> data set.</p>
 
 <p>We will model miles/gallon (mpg) as a function of engine size (disp) and number of gears (gear). Then we can drop number of gears to test the theory that the only determinant (in this confounded play dataset) of mpg is inches<sup>3</sup> of displacement.</p>
 
@@ -72,7 +87,7 @@ library<span class="p">(</span><span class="s">&quot;umx&quot;</span><span class
 
 <p>Here&#39;s what it looks like in OpenMx (and don&#39;t worry, I&#39;m going to take you through it step by step below for people new to OpenMx)</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">manifests <span class="o">=</span> c<span class="p">(</span><span class="s">&quot;mpg&quot;</span><span class="p">,</span> <span class="s">&quot;disp&quot;</span><span class="p">,</span> <span class="s">&quot;gear&quot;</span><span class="p">)</span>
-m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span><span class="s">&quot;car&quot;</span><span class="p">,</span> type <span class="o">=</span> <span class="s">&quot;RAM&quot;</span><span class="p">,</span>
+m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span><span class="s">&quot;big_motor_bad_mpg&quot;</span><span class="p">,</span> type <span class="o">=</span> <span class="s">&quot;RAM&quot;</span><span class="p">,</span>
     <span class="c1"># All the boxes on our diagram</span>
     manifestVars <span class="o">=</span> manifests<span class="p">,</span>   
     <span class="c1"># mpg depends on displacement and number of gears</span>
@@ -81,14 +96,14 @@ m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span><span class="s">&
     <span class="c1"># Allow displacement and number of gears to correlate</span>
     mxPath<span class="p">(</span>from <span class="o">=</span> <span class="s">&quot;disp&quot;</span><span class="p">,</span> to <span class="o">=</span> <span class="s">&quot;gear&quot;</span><span class="p">,</span> arrows <span class="o">=</span> <span class="m">2</span><span class="p">),</span>
 
-    <span class="c1"># We can fix the variance of our two IVs at their known value, as they have inputs</span>
+    <span class="c1"># mpg will have residual variance (stuff not explained by disp and gear)</span>
+    mxPath<span class="p">(</span>from <span class="o">=</span> <span class="s">&quot;mpg&quot;</span><span class="p">,</span> arrows <span class="o">=</span> <span class="m">2</span><span class="p">),</span>
+
+    <span class="c1"># With no one-headed arrows comming in, we can fix the variance of our two IVs at their known values</span>
     mxPath<span class="p">(</span>from <span class="o">=</span> <span class="s">&quot;disp&quot;</span><span class="p">,</span> arrows <span class="o">=</span> <span class="m">2</span><span class="p">,</span> free <span class="o">=</span> <span class="k-Variable">F</span><span class="p">,</span> values <span class="o">=</span> var<span class="p">(</span>mtcars<span class="o">$</span>disp<span class="p">)),</span>
     mxPath<span class="p">(</span>from <span class="o">=</span> <span class="s">&quot;gear&quot;</span><span class="p">,</span> arrows <span class="o">=</span> <span class="m">2</span><span class="p">,</span> free <span class="o">=</span> <span class="k-Variable">F</span><span class="p">,</span> values <span class="o">=</span> var<span class="p">(</span>mtcars<span class="o">$</span>gear<span class="p">)),</span>
 
-    <span class="c1"># mpg will have residual variance…</span>
-    mxPath<span class="p">(</span>from <span class="o">=</span> <span class="s">&quot;mpg&quot;</span><span class="p">,</span> arrows <span class="o">=</span> <span class="m">2</span><span class="p">),</span>
-
-    <span class="c1"># The data we are testing our hypothesis against</span>
+    <span class="c1"># Finally: the data we are testing our hypothesis against</span>
     mxData<span class="p">(</span>cov<span class="p">(</span>mtcars<span class="p">[,</span>manifests<span class="p">]),</span> type <span class="o">=</span> <span class="s">&quot;cov&quot;</span><span class="p">,</span> numObs <span class="o">=</span> nrow<span class="p">(</span>mtcars<span class="p">))</span>
 <span class="p">)</span>
 
@@ -96,17 +111,14 @@ m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span><span class="s">&
 m1 <span class="o">=</span> umxRun<span class="p">(</span>m1<span class="p">,</span> setValues <span class="o">=</span> <span class="k-Variable">T</span><span class="p">,</span> setLabels <span class="o">=</span> <span class="k-Variable">T</span><span class="p">)</span>
 umxSummary<span class="p">(</span>m1<span class="p">,</span> show <span class="o">=</span> <span class="s">&quot;both&quot;</span><span class="p">)</span>
 </code></pre></div>
-<p>So, this model fits well (χ²(2) = 0, p 1.000; CFI = 1.042; TLI = 1.063; RMSEA = 0).</p>
+<p>This shows that m1 fits well: χ²(2) = 0, p 1.000; CFI = 1.042; TLI = 1.063; RMSEA = 0.</p>
 
-<p>umxSummary also shows us the path estimates (&quot;both&quot; requests the raw and standardized paths and standard errors).</p>
+<p>umxSummary also gives us the path estimates (&quot;both&quot; requests the raw and standardized paths +  standard errors).</p>
 
 <table><thead>
 <tr>
 <th align="left"></th>
 <th align="left">name</th>
-<th align="left">matrix</th>
-<th align="left">row</th>
-<th align="left">col</th>
 <th align="left">Estimate</th>
 <th align="left">Std.Error</th>
 <th align="left">Std.Estimate</th>
@@ -116,9 +128,6 @@ umxSummary<span class="p">(</span>m1<span class="p">,</span> show <span class="o
 <tr>
 <td align="left">1</td>
 <td align="left">disp_to_mpg</td>
-<td align="left">A</td>
-<td align="left">mpg</td>
-<td align="left">disp</td>
 <td align="left">-0.041</td>
 <td align="left">0.0056</td>
 <td align="left">-0.840</td>
@@ -127,9 +136,6 @@ umxSummary<span class="p">(</span>m1<span class="p">,</span> show <span class="o
 <tr>
 <td align="left">2</td>
 <td align="left">gear_to_mpg</td>
-<td align="left">A</td>
-<td align="left">mpg</td>
-<td align="left">gear</td>
 <td align="left">0.111</td>
 <td align="left">0.9363</td>
 <td align="left">0.014</td>
@@ -138,9 +144,6 @@ umxSummary<span class="p">(</span>m1<span class="p">,</span> show <span class="o
 <tr>
 <td align="left">3</td>
 <td align="left">mpg_with_mpg</td>
-<td align="left">S</td>
-<td align="left">mpg</td>
-<td align="left">mpg</td>
 <td align="left">10.226</td>
 <td align="left">2.5975</td>
 <td align="left">0.282</td>
@@ -149,9 +152,6 @@ umxSummary<span class="p">(</span>m1<span class="p">,</span> show <span class="o
 <tr>
 <td align="left">4</td>
 <td align="left">disp_with_gear</td>
-<td align="left">S</td>
-<td align="left">disp</td>
-<td align="left">gear</td>
 <td align="left">-50.803</td>
 <td align="left">9.9254</td>
 <td align="left">-0.556</td>
@@ -159,7 +159,7 @@ umxSummary<span class="p">(</span>m1<span class="p">,</span> show <span class="o
 </tr>
 </tbody></table>
 
-<p>We can plot these on the diagram:</p>
+<p>We can plot these standardized (or raw) coefficients on a diagram the way Sewall would like us too:</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">umxPlot<span class="p">(</span>m1<span class="p">)</span>
 </code></pre></div>
 <p><img src="/media/1_make_a_model/mtcar2.png" alt="model 1" title="Model 1"></p>
@@ -179,7 +179,7 @@ umxSummary<span class="p">(</span>m1<span class="p">,</span> show <span class="o
 
 <p><a name="build"></a></p>
 
-<h3 id="toc_3">Build a model</h3>
+<h2 id="toc_3">Build a model</h2>
 
 <p>To build a model, we need OpenMx and umx</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">require<span class="p">(</span><span class="s">&quot;OpenMx&quot;</span><span class="p">)</span>
@@ -188,22 +188,27 @@ require<span class="p">(</span><span class="s">&quot;umx&quot;</span><span class
 <p>And some data:</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">data<span class="p">(</span>demoOneFactor<span class="p">)</span>
 </code></pre></div>
-<p>And a model. Let&#39;s build that up piece by piece.</p>
-
-<p>First we can explicitly list the manifests. This is necessary so the model knows what data is being modeled, and helpful to you to explicitly state what boxes are on your diagram.</p>
+<p>I like to begin with making up nice lists of the manifests. </p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">manifests <span class="o">=</span> c<span class="p">(</span><span class="s">&quot;mpg&quot;</span><span class="p">,</span> <span class="s">&quot;disp&quot;</span><span class="p">,</span> <span class="s">&quot;gear&quot;</span><span class="p">)</span>
 </code></pre></div>
-<p>now let&#39;s just take each line step by step. Niecly, mxModels can be updated trivially so we can do this.</p>
-<div class="highlight"><pre><code class="splus language-splus" data-lang="splus">m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span><span class="s">&quot;car&quot;</span><span class="p">,</span> type <span class="o">=</span> <span class="s">&quot;RAM&quot;</span><span class="p">)</span>
+<p>We will use this to tell the model which columns are being modeled, but it&#39;s also helpful to allow us to be clearer in listing what boxes  connect where in more complex models.</p>
+
+<p>Now, the model. Let&#39;s build that up piece by piece. Nicely, mxModels can be updated trivially so we can do this &quot;line by line&quot;</p>
+
+<p>First, make a model, give it a name, and let it know it is a RAM model (a model type that understands how to accepts mxPaths)</p>
+
+<p>The name is a memorable string allowing us to refer across models (OpenMx handles multiple nested groups), and also for making <code>umxCompare</code> tables easier to understand. I usually pick a name that say what the model claims.</p>
+<div class="highlight"><pre><code class="splus language-splus" data-lang="splus">m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span><span class="s">&quot;big_motor_bad_mpg&quot;</span><span class="p">,</span> type <span class="o">=</span> <span class="s">&quot;RAM&quot;</span><span class="p">)</span>
 </code></pre></div>
-<p>now m1 knows it is a RAM model (a model type that understands how to accepts mxPaths), and has a name (useful for when we come to comparisons)</p>
+<p><strong>tip</strong>: If it is not an existing model, the first parameter will be used as a name.</p>
 
 <p>Let&#39;s add a list of manifests to m1:</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span>m1<span class="p">,</span>
-    <span class="c1"># All the boxes on our diagram</span>
     manifestVars <span class="o">=</span> manifests
 <span class="p">)</span>
 </code></pre></div>
+<p><code>Important</code>: manifestVars is a special reserved word. RAM models need it, and will complain (informatively) if you forget to set this list of boxes for the model.</p>
+
 <p>Now let&#39;s add the paths from <code>disp</code> and gear to mpg</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span>m1<span class="p">,</span> 
     mxPath<span class="p">(</span>from <span class="o">=</span> c<span class="p">(</span><span class="s">&quot;disp&quot;</span><span class="p">,</span> <span class="s">&quot;gear&quot;</span><span class="p">),</span> to <span class="o">=</span> <span class="s">&quot;mpg&quot;</span><span class="p">)</span>
@@ -217,7 +222,7 @@ require<span class="p">(</span><span class="s">&quot;umx&quot;</span><span class
     mxPath<span class="p">(</span>from <span class="o">=</span> <span class="s">&quot;gear&quot;</span><span class="p">,</span> to <span class="o">=</span> <span class="s">&quot;mpg&quot;</span><span class="p">)</span>
 <span class="p">)</span>
 </code></pre></div>
-<p>PS: You can execute this - it will just re-write the two existing paths. This introduces a neat power in OpenMx: updating models by overwriting existing elements with new states.</p>
+<p><em>PS</em>: You can execute this - it will just re-write the two existing paths. This introduces a neat power in OpenMx: updating models by overwriting existing elements with new states.</p>
 
 <p>Next, we allow displacement and number of gears to correlate (a two headed path between them)</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span>m1<span class="p">,</span>
@@ -245,9 +250,10 @@ require<span class="p">(</span><span class="s">&quot;umx&quot;</span><span class
 <span class="p">)</span>
 </code></pre></div>
 <p>We can be a bit more verbose about that for clarity</p>
-<div class="highlight"><pre><code class="splus language-splus" data-lang="splus">m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span>m1<span class="p">,</span>
-    covData <span class="o">=</span> cov<span class="p">(</span>mtcars<span class="p">[,</span>manifests<span class="p">],</span> use <span class="o">=</span><span class="s">&quot;pairwise.complete.obs&quot;</span><span class="p">)</span>
-    numObs <span class="o">=</span> nrow<span class="p">(</span>mtcars<span class="p">)</span>
+<div class="highlight"><pre><code class="splus language-splus" data-lang="splus">covData <span class="o">=</span> cov<span class="p">(</span>mtcars<span class="p">[,</span>manifests<span class="p">],</span> use <span class="o">=</span><span class="s">&quot;pairwise.complete.obs&quot;</span><span class="p">)</span>
+numObs <span class="o">=</span> nrow<span class="p">(</span>mtcars<span class="p">)</span>
+
+m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span>m1<span class="p">,</span>
     mxData<span class="p">(</span>covData<span class="p">,</span> type <span class="o">=</span> <span class="s">&quot;cov&quot;</span><span class="p">,</span> numObs <span class="o">=</span> numObs<span class="p">)</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -255,7 +261,7 @@ require<span class="p">(</span><span class="s">&quot;umx&quot;</span><span class
 
 <p><a name="run"></a></p>
 
-<h3 id="toc_4">Run a model</h3>
+<h2 id="toc_4">Run the model</h2>
 
 <p>Mow we run the model. In this case we take advantage of umxRun to also set labels and start values. Of course this won&#39;t touch fixed values.</p>
 
@@ -267,7 +273,7 @@ require<span class="p">(</span><span class="s">&quot;umx&quot;</span><span class
 
 <p><a name="report"></a></p>
 
-<h3 id="toc_5">Report on the model</h3>
+<h2 id="toc_5">Report on the model</h2>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">umxSummary<span class="p">(</span>m1<span class="p">,</span> show <span class="o">=</span> <span class="s">&quot;std&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p><strong>Fit Statistics</strong></p>
@@ -327,7 +333,7 @@ require<span class="p">(</span><span class="s">&quot;umx&quot;</span><span class
 
 <p><a name="modify"></a></p>
 
-<h3 id="toc_6">Modify a model</h3>
+<h2 id="toc_6">Modify a model</h2>
 
 <p>Is the path from to gear to mpg significant? There are two ways to test this with umx.</p>
 
@@ -344,7 +350,7 @@ m2 <span class="o">=</span> mxRun<span class="p">(</span>m2<span class="p">)</sp
 
 <p><a name="compare"></a></p>
 
-<h3 id="toc_7">Compare two models</h3>
+<h2 id="toc_7">Compare two models</h2>
 
 <p>Now we can test if gear affects mpg by comparing these two models:</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">umxCompare<span class="p">(</span>m1<span class="p">,</span>m2<span class="p">)</span>
@@ -369,7 +375,7 @@ m2 <span class="o">=</span> mxRun<span class="p">(</span>m2<span class="p">)</sp
 <td align="left">NA</td>
 <td align="left"><NA></td>
 <td align="left">-4.00</td>
-<td align="left">car</td>
+<td align="left">big_motor_bad_mpg</td>
 </tr>
 <tr>
 <td align="left">no effect of gear</td>
@@ -378,13 +384,16 @@ m2 <span class="o">=</span> mxRun<span class="p">(</span>m2<span class="p">)</sp
 <td align="left">1</td>
 <td align="left">0.905</td>
 <td align="left">-5.98</td>
-<td align="left">car</td>
+<td align="left">big_motor_bad_mpg</td>
 </tr>
 </tbody></table>
 
-<p>Advanced tip: umxReRun can modify and compare in 1-line</p>
+<p>Advanced tip: <code>umxReRun()</code> can modify and compare in 1-line</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">    m2 <span class="o">=</span> umxReRun<span class="p">(</span>m1<span class="p">,</span> update <span class="o">=</span> <span class="s">&quot;gear_to_mpg&quot;</span><span class="p">,</span> name <span class="o">=</span> <span class="s">&quot;dop effect of gear&quot;</span><span class="p">),</span> comparison <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
 </code></pre></div>
+<p><strong>Footnotes</strong>
+[^1]: <code>devtools</code> is @Hadley&#39;s package for using packages not on CRAN.</p>
+
 <h4 id="toc_8">TODO</h4>
 
 <ol>
@@ -392,11 +401,26 @@ m2 <span class="o">=</span> mxRun<span class="p">(</span>m2<span class="p">)</sp
 <li>and IQ, and a model in which all facets load on each other. g fits well, and better than the alternative.</li>
 </ol>
 
-<p><strong>Footnotes</strong></p>
 
-<p>[^1]: <code>devtools</code> is @Hadley&#39;s package for using packages not on CRAN.</p>
+	<div id="page-navigation"> 
+	        <div class="clear">&nbsp;</div> 
+	        <div class="right"> 
+	         
+	                <a href="/models/tutorial/2000/12/01/Install.html" title="previous Post: Installing umx (and OpenMx)">&laquo; Previous: Installing umx (and OpenMx)</a> 
+	         
+	        </div> 
 
+	        <div class="left"> 
+	         
+	                <a href="/models/tutorial/2000/10/04/Values-matter.html" title="Previous Post: Values and why they are important"> Next: Values and why they are important &raquo; </a> 
+	         
+	        </div> 
+
+	        <div class="clear">&nbsp;</div> 
+	</div> 
 </div>
+
+
 
 
           <div class="footer">
