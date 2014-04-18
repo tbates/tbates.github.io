@@ -29,13 +29,32 @@
 <!-- <p class="meta">01 Dec 2000</p> -->
 
 <div class="post">
-<p><a name="top"></a></p>
+	<div id="page-navigation"> 
+	        <div class="clear">&nbsp;</div> 
+	        <div class="right"> 
+	         
+	        </div> 
+
+	        <div class="left"> 
+	         
+	                <a href="/models/tutorial/2000/11/02/First-steps.html" title="Previous Post: First steps: Build and run a Path model in a minute."> Next: First steps: Build and run a Path model in a minute. &raquo; </a> 
+	         
+	        </div> 
+
+	        <div class="clear">&nbsp;</div> 
+	</div> 
+
+	<p><a name="top"></a></p>
 
 <h3 id="toc_0">Installing umx (and OpenMx)</h3>
 
-<p>It&#39;s easy to learn and easy to get print-ready results from models. Sweet huh? Installation is easy (look left)</p>
-
+<p>It&#39;s easy to learn and easy to get print-ready results from models. But first you need to install OpenMx and the umx library.</p>
+<div class="highlight"><pre><code class="splus language-splus" data-lang="splus">install.packages<span class="p">(</span><span class="s">&quot;OpenMx&quot;</span><span class="p">)</span>
+library<span class="p">(</span><span class="s">&quot;OpenMx&quot;</span><span class="p">)</span>
+</code></pre></div>
 <h3 id="toc_1">Install umx</h3>
+
+<p>umx lives on <a href="http://github.com/tbates/umx">github</a> – a great place for package development. Loading libraries from github differs slightly from the procedure you may be used to. instead of <code>install.packages(&quot;umx&quot;)</code>, we&#39;re going to use <code>devtools::install_github(&quot;umx&quot;)</code> [^1]</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus"><span class="c1"># install &amp; load newish devtools</span>
 install.packages<span class="p">(</span><span class="s">&quot;devtools&quot;</span><span class="p">)</span>
 library<span class="p">(</span><span class="s">&quot;devtools&quot;</span><span class="p">)</span>
@@ -51,7 +70,24 @@ library<span class="p">(</span><span class="s">&quot;umx&quot;</span><span class
 <p>On old versions of devtools you might need</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">install_github<span class="p">(</span><span class="s">&quot;umx&quot;</span><span class="p">,</span> username <span class="o">=</span> <span class="s">&quot;tbates&quot;</span><span class="p">)</span>  
 </code></pre></div>
+
+	<div id="page-navigation"> 
+	        <div class="clear">&nbsp;</div> 
+	        <div class="right"> 
+	         
+	        </div> 
+
+	        <div class="left"> 
+	         
+	                <a href="/models/tutorial/2000/11/02/First-steps.html" title="Previous Post: First steps: Build and run a Path model in a minute."> Next: First steps: Build and run a Path model in a minute. &raquo; </a> 
+	         
+	        </div> 
+
+	        <div class="clear">&nbsp;</div> 
+	</div> 
 </div>
+
+
 
 
           <div class="footer">

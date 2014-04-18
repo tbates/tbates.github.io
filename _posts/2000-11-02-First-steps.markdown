@@ -7,7 +7,7 @@ categories: models tutorial
 ---
 
 <a name="top"></a>
-### A first model in OpenMx using umx
+# Introductory OpenMx tutorial using the umx helpers
 
 umx stands for "user" OpenMx helper library. It's purpose is to help with [Structural Equation Modeling](http://en.wikipedia.org/wiki/Structural_equation_modeling) in [OpenMx](http://openmx.psyc.virginia.edu).
 
@@ -16,7 +16,7 @@ So, let's do some modeling...
 First, I show how to install umx. If you've got it loaded up, skip down to **[overview](#overview)**
 
 <a name="install"></a>
-### Installing umx
+## Install umx
 umx lives on [github](http://github.com/tbates/umx) – a great place for package development. Loading libraries from github differs slightly from the procedure you may be used to. instead of `install.packages("umx")`, we're going to use `devtools::install_github("umx")` [^1]
 
 ``` splus
@@ -32,15 +32,13 @@ library("devtools")
 # install and load umx
 install_github("tbates/umx")
 library("umx")
-# get going :-)
-?umx
 ```
 
 <a name="overview"></a>
 ## Build and Run: An overview
 Now, let's build, run, summarize, modify/compare, and display a model.
 
-We will use the built-in mtcars data set.
+We will use the built-in [mtcars](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html) data set.
 
 We will model miles/gallon (mpg) as a function of engine size (disp) and number of gears (gear). Then we can drop number of gears to test the theory that the only determinant (in this confounded play dataset) of mpg is inches<sup>3</sup> of displacement.
 
@@ -52,7 +50,7 @@ Here's what it looks like in OpenMx (and don't worry, I'm going to take you thro
 
 ``` splus
 manifests = c("mpg", "disp", "gear")
-m1 <- mxModel("car", type = "RAM",
+m1 <- mxModel("big_motor_bad_mpg", type = "RAM",
 	# All the boxes on our diagram
 	manifestVars = manifests,	
 	# mpg depends on displacement and number of gears
@@ -61,14 +59,14 @@ m1 <- mxModel("car", type = "RAM",
 	# Allow displacement and number of gears to correlate
 	mxPath(from = "disp", to = "gear", arrows = 2),
 
-	# We can fix the variance of our two IVs at their known value, as they have inputs
+	# mpg will have residual variance (stuff not explained by disp and gear)
+	mxPath(from = "mpg", arrows = 2),
+
+	# With no one-headed arrows comming in, we can fix the variance of our two IVs at their known values
 	mxPath(from = "disp", arrows = 2, free = F, values = var(mtcars$disp)),
 	mxPath(from = "gear", arrows = 2, free = F, values = var(mtcars$gear)),
 
-	# mpg will have residual variance…
-	mxPath(from = "mpg", arrows = 2),
-
-	# The data we are testing our hypothesis against
+	# Finally: the data we are testing our hypothesis against
 	mxData(cov(mtcars[,manifests]), type = "cov", numObs = nrow(mtcars))
 )
 
@@ -76,18 +74,18 @@ m1 <- mxModel("car", type = "RAM",
 m1 = umxRun(m1, setValues = T, setLabels = T)
 umxSummary(m1, show = "both")
 ```
-So, this model fits well (χ²(2) = 0, p 1.000; CFI = 1.042; TLI = 1.063; RMSEA = 0).
+This shows that m1 fits well: χ²(2) = 0, p 1.000; CFI = 1.042; TLI = 1.063; RMSEA = 0.
 
-umxSummary also shows us the path estimates ("both" requests the raw and standardized paths and standard errors).
+umxSummary also gives us the path estimates ("both" requests the raw and standardized paths +  standard errors).
 
-|   | name           | matrix | row  | col  | Estimate | Std.Error | Std.Estimate | Std.SE |
-|:--|:---------------|:-------|:-----|:-----|:---------|:----------|:-------------|:-------|
-| 1 | disp_to_mpg    | A      | mpg  | disp | -0.041   | 0.0056    | -0.840       | 0.115  |
-| 2 | gear_to_mpg    | A      | mpg  | gear | 0.111    | 0.9363    | 0.014        | 0.115  |
-| 3 | mpg_with_mpg   | S      | mpg  | mpg  | 10.226   | 2.5975    | 0.282        | 0.072  |
-| 4 | disp_with_gear | S      | disp | gear | -50.803  | 9.9254    | -0.556       | 0.109  |
+|   | name           | Estimate | Std.Error | Std.Estimate | Std.SE |
+|:--|:---------------|:---------|:----------|:-------------|:-------|
+| 1 | disp_to_mpg    | -0.041   | 0.0056    | -0.840       | 0.115  |
+| 2 | gear_to_mpg    | 0.111    | 0.9363    | 0.014        | 0.115  |
+| 3 | mpg_with_mpg   | 10.226   | 2.5975    | 0.282        | 0.072  |
+| 4 | disp_with_gear | -50.803  | 9.9254    | -0.556       | 0.109  |
 
-We can plot these on the diagram:
+We can plot these standardized (or raw) coefficients on a diagram the way Sewall would like us too:
 
 ``` splus
 umxPlot(m1)
@@ -107,7 +105,7 @@ To go over what we've just seen slowly... just read on where I break that down i
 4. [Compare](#compare)
 
 <a name="build"></a>
-### Build a model
+## Build a model
 
 To build a model, we need OpenMx and umx
 
@@ -121,29 +119,36 @@ And some data:
 data(demoOneFactor)
 ```
 
-And a model. Let's build that up piece by piece.
-
-First we can explicitly list the manifests. This is necessary so the model knows what data is being modeled, and helpful to you to explicitly state what boxes are on your diagram.
+I like to begin with making up nice lists of the manifests. 
 
 ``` splus
 manifests = c("mpg", "disp", "gear")
 ```
-now let's just take each line step by step. Niecly, mxModels can be updated trivially so we can do this.
 
+We will use this to tell the model which columns are being modeled, but it's also helpful to allow us to be clearer in listing what boxes  connect where in more complex models.
+
+Now, the model. Let's build that up piece by piece. Nicely, mxModels can be updated trivially so we can do this "line by line"
+
+First, make a model, give it a name, and let it know it is a RAM model (a model type that understands how to accepts mxPaths)
+
+The name is a memorable string allowing us to refer across models (OpenMx handles multiple nested groups), and also for making `umxCompare` tables easier to understand. I usually pick a name that say what the model claims.
 
 ``` splus
-m1 <- mxModel("car", type = "RAM")
+m1 <- mxModel("big_motor_bad_mpg", type = "RAM")
 ```
-now m1 knows it is a RAM model (a model type that understands how to accepts mxPaths), and has a name (useful for when we come to comparisons)
+
+**tip**: If it is not an existing model, the first parameter will be used as a name.
 
 Let's add a list of manifests to m1:
 
 ``` splus
 m1 <- mxModel(m1,
-	# All the boxes on our diagram
 	manifestVars = manifests
 )
 ```
+
+`Important`: manifestVars is a special reserved word. RAM models need it, and will complain (informatively) if you forget to set this list of boxes for the model.
+
 Now let's add the paths from `disp` and gear to mpg
 
 ``` splus
@@ -162,7 +167,8 @@ m1 <- mxModel(m1,
 	mxPath(from = "gear", to = "mpg")
 )
 ```
-PS: You can execute this - it will just re-write the two existing paths. This introduces a neat power in OpenMx: updating models by overwriting existing elements with new states.
+
+*PS*: You can execute this - it will just re-write the two existing paths. This introduces a neat power in OpenMx: updating models by overwriting existing elements with new states.
 
 Next, we allow displacement and number of gears to correlate (a two headed path between them)
 
@@ -203,9 +209,10 @@ m1 <- mxModel(m1,
 We can be a bit more verbose about that for clarity
 
 ``` splus
+covData = cov(mtcars[,manifests], use ="pairwise.complete.obs")
+numObs = nrow(mtcars)
+
 m1 <- mxModel(m1,
-	covData = cov(mtcars[,manifests], use ="pairwise.complete.obs")
-	numObs = nrow(mtcars)
 	mxData(covData, type = "cov", numObs = numObs)
 )
 ```
@@ -213,7 +220,7 @@ m1 <- mxModel(m1,
 Done! So now we have a complete model, with all our hypothesised paths (variances and covariances) and the data. We are ready to run the model.
 
 <a name="run"></a>
-### Run a model
+## Run the model
 
 Mow we run the model. In this case we take advantage of umxRun to also set labels and start values. Of course this won't touch fixed values.
 
@@ -227,7 +234,7 @@ This exposes a lovely (and unique) feature of OpenMx: running a model returns a 
 <!-- TODO  sidebar -->
 
 <a name="report"></a>
-### Report on the model
+## Report on the model
 
 ``` splus
 umxSummary(m1, show = "std")
@@ -248,7 +255,7 @@ umxSummary(m1, show = "std")
 Now we can compare this to competing models.
 
 <a name="modify"></a>
-### Modify a model
+## Modify a model
 
 Is the path from to gear to mpg significant? There are two ways to test this with umx.
 
@@ -268,7 +275,7 @@ m2 = umxReRun(m1, update = "gear_to_mpg", name = "no effect of gear")
 That, by default, fixes the value of matched labels to zero. Learn more at the [umxReRun tutorial](umxReRun tutorial).
 
 <a name="compare"></a>
-### Compare two models
+## Compare two models
 
 Now we can test if gear affects mpg by comparing these two models:
 
@@ -280,21 +287,21 @@ This did not lower fit significantly(χ²(1) = 0.01, p = 0.905):
 
 | Comparison        | EP | Δ -2LL     | Δ df  | p     | AIC   | Compare with Model |
 |:------------------|:---|:-----------|:------|:------|:------|:-------------------|
-| <NA>              | 4  | NA         | NA    | <NA>  | -4.00 | car                |
-| no effect of gear | 3  | 0.0141     | 1     | 0.905 | -5.98 | car                |
+| <NA>              | 4  | NA         | NA    | <NA>  | -4.00 | big_motor_bad_mpg  |
+| no effect of gear | 3  | 0.0141     | 1     | 0.905 | -5.98 | big_motor_bad_mpg  |
 
 
-Advanced tip: umxReRun can modify and compare in 1-line
+Advanced tip: `umxReRun()` can modify and compare in 1-line
 
 ``` splus
 	m2 = umxReRun(m1, update = "gear_to_mpg", name = "dop effect of gear"), comparison = TRUE)
 ```
 
 
+**Footnotes**
+[^1]: `devtools` is @Hadley's package for using packages not on CRAN.
+
 #### TODO
 1. Examples using  [personality](https://en.wikipedia.org/wiki/Five_Factor_Model) data.
 2. and IQ, and a model in which all facets load on each other. g fits well, and better than the alternative.
 
-**Footnotes**
-
-[^1]: `devtools` is @Hadley's package for using packages not on CRAN.
