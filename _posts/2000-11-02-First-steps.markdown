@@ -33,7 +33,6 @@ library("devtools")
 install_github("tbates/umx")
 library("umx")
 ```
-
 <a name="overview"></a>
 ## Build and Run: An overview
 Now, let's build, run, summarize, modify/compare, and display a model.
