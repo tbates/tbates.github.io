@@ -7,8 +7,6 @@ categories: models tutorial
 ---
 
 <a name="top"></a>
-# Introductory OpenMx tutorial using the umx helpers
-
 umx stands for "user" OpenMx helper library. It's purpose is to help with [Structural Equation Modeling](http://en.wikipedia.org/wiki/Structural_equation_modeling) in [OpenMx](http://openmx.psyc.virginia.edu).
 
 So, let's do some modeling... 
@@ -50,15 +48,15 @@ Here's what it looks like in OpenMx (and don't worry, I'm going to take you thro
 ``` splus
 manifests = c("mpg", "disp", "gear")
 m1 <- mxModel("big_motor_bad_mpg", type = "RAM",
-	# All the boxes on our diagram
+	# Define all the boxes in our diagram
 	manifestVars = manifests,	
-	# mpg depends on displacement and number of gears
+	# Add paths from displacement and number of gears to mpg
 	mxPath(from = c("disp", "gear"), to = "mpg"),
 
 	# Allow displacement and number of gears to correlate
 	mxPath(from = "disp", to = "gear", arrows = 2),
 
-	# mpg will have residual variance (stuff not explained by disp and gear)
+	# Residual variance in mpg (stuff not explained by disp and gear)
 	mxPath(from = "mpg", arrows = 2),
 
 	# With no one-headed arrows comming in, we can fix the variance of our two IVs at their known values
@@ -69,13 +67,13 @@ m1 <- mxModel("big_motor_bad_mpg", type = "RAM",
 	mxData(cov(mtcars[,manifests]), type = "cov", numObs = nrow(mtcars))
 )
 
-# Now estimate that model
+# Now Run that model, and show a summary.
 m1 = umxRun(m1, setValues = T, setLabels = T)
 umxSummary(m1, show = "both")
 ```
-This shows that m1 fits well: χ²(2) = 0, p 1.000; CFI = 1.042; TLI = 1.063; RMSEA = 0.
+`umxSummary` shows that m1 fits well: χ²(2) = 0, p 1.000; CFI = 1.042; TLI = 1.063; RMSEA = 0.
 
-umxSummary also gives us the path estimates ("both" requests the raw and standardized paths +  standard errors).
+We also get path estimates ("*both*" requests both the raw and standardized paths).
 
 |   | name           | Estimate | Std.Error | Std.Estimate | Std.SE |
 |:--|:---------------|:---------|:----------|:-------------|:-------|
@@ -92,8 +90,6 @@ umxPlot(m1)
 
 ![model 1](/media/1_make_a_model/mtcar2.png "Model 1")
 
-Modeling is, fundamentally, all about model comparison: Better theories fit the data better than do worse theories.
-	
 If you were happy with that, [click here](#modify) to go to modify and compare.
 
 To go over what we've just seen slowly... just read on where I break that down into a series of steps:
@@ -256,7 +252,11 @@ Now we can compare this to competing models.
 <a name="modify"></a>
 ## Modify a model
 
-Is the path from to gear to mpg significant? There are two ways to test this with umx.
+[Fundamentally](http://www.mii.ucla.edu/causality), modeling is in the service of understanding causality and we do that primarily via model comparison: Better theories fit the data better than do worse theories.
+
+So, "do more gears give better miles per gallon"?
+
+In graph terms, this is asking, "is the path from to gear to mpg significant?" There are two ways to test this with umx.
 
 First, a way that doesn't involve learning anything new: We can modify m1 by overwriting the existing path with one fixing the value to zero.
 
@@ -264,9 +264,9 @@ First, a way that doesn't involve learning anything new: We can modify m1 by ove
 m2 = mxModel(m1, mxPath(from = "gear", to = "mpg", free = F, values = 0)
 m2 = mxRun(m2)
 ```
-That gives us a second model, with no effective path from gear to mpg.
+That gives us a second model, with a zero path from gear to mpg.
 
-The second nifty way uses labels and umxReRun()
+The second way, which you will use often, takes advantage of labels and umxReRun()
 
 ``` splus
 m2 = umxReRun(m1, update = "gear_to_mpg", name = "no effect of gear")
@@ -279,10 +279,10 @@ That, by default, fixes the value of matched labels to zero. Learn more at the [
 Now we can test if gear affects mpg by comparing these two models:
 
 ``` splus
-umxCompare(m1,m2)
+umxCompare(m1, m2)
 ```
 
-This did not lower fit significantly(χ²(1) = 0.01, p = 0.905):
+The table below shows that dropping this path did not lower fit significantly(χ²(1) = 0.01, p = 0.905):
 
 | Comparison        | EP | Δ -2LL     | Δ df  | p     | AIC   | Compare with Model |
 |:------------------|:---|:-----------|:------|:------|:------|:-------------------|
@@ -290,17 +290,16 @@ This did not lower fit significantly(χ²(1) = 0.01, p = 0.905):
 | no effect of gear | 3  | 0.0141     | 1     | 0.905 | -5.98 | big_motor_bad_mpg  |
 
 
-Advanced tip: `umxReRun()` can modify and compare in 1-line
+Advanced tip: `umxReRun()` can modify, run, and compare all in 1-line
 
 ``` splus
 	m2 = umxReRun(m1, update = "gear_to_mpg", name = "dop effect of gear"), comparison = TRUE)
 ```
-
 
 **Footnotes**
 [^1]: `devtools` is @Hadley's package for using packages not on CRAN.
 
 #### TODO
 1. Examples using  [personality](https://en.wikipedia.org/wiki/Five_Factor_Model) data.
-2. and IQ, and a model in which all facets load on each other. g fits well, and better than the alternative.
+2. IQ example. A model in which all facets load on each other. compare to *g*
 

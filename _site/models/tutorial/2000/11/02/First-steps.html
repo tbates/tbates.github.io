@@ -46,11 +46,8 @@
 	        <div class="clear">&nbsp;</div> 
 	</div> 
 
-	<p><a name="top"></a></p>
-
-<h1 id="toc_0">Introductory OpenMx tutorial using the umx helpers</h1>
-
-<p>umx stands for &quot;user&quot; OpenMx helper library. It&#39;s purpose is to help with <a href="http://en.wikipedia.org/wiki/Structural_equation_modeling">Structural Equation Modeling</a> in <a href="http://openmx.psyc.virginia.edu">OpenMx</a>.</p>
+	<p><a name="top"></a>
+umx stands for &quot;user&quot; OpenMx helper library. It&#39;s purpose is to help with <a href="http://en.wikipedia.org/wiki/Structural_equation_modeling">Structural Equation Modeling</a> in <a href="http://openmx.psyc.virginia.edu">OpenMx</a>.</p>
 
 <p>So, let&#39;s do some modeling... </p>
 
@@ -58,7 +55,7 @@
 
 <p><a name="install"></a></p>
 
-<h2 id="toc_1">Install umx</h2>
+<h2 id="toc_0">Install umx</h2>
 
 <p>umx lives on <a href="http://github.com/tbates/umx">github</a> – a great place for package development. Loading libraries from github differs slightly from the procedure you may be used to. instead of <code>install.packages(&quot;umx&quot;)</code>, we&#39;re going to use <code>devtools::install_github(&quot;umx&quot;)</code> [^1]</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">install.packages<span class="p">(</span><span class="s">&quot;devtools&quot;</span><span class="p">)</span>
@@ -73,7 +70,7 @@ library<span class="p">(</span><span class="s">&quot;umx&quot;</span><span class
 </code></pre></div>
 <p><a name="overview"></a></p>
 
-<h2 id="toc_2">Build and Run: An overview</h2>
+<h2 id="toc_1">Build and Run: An overview</h2>
 
 <p>Now, let&#39;s build, run, summarize, modify/compare, and display a model.</p>
 
@@ -88,15 +85,15 @@ library<span class="p">(</span><span class="s">&quot;umx&quot;</span><span class
 <p>Here&#39;s what it looks like in OpenMx (and don&#39;t worry, I&#39;m going to take you through it step by step below for people new to OpenMx)</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">manifests <span class="o">=</span> c<span class="p">(</span><span class="s">&quot;mpg&quot;</span><span class="p">,</span> <span class="s">&quot;disp&quot;</span><span class="p">,</span> <span class="s">&quot;gear&quot;</span><span class="p">)</span>
 m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span><span class="s">&quot;big_motor_bad_mpg&quot;</span><span class="p">,</span> type <span class="o">=</span> <span class="s">&quot;RAM&quot;</span><span class="p">,</span>
-    <span class="c1"># All the boxes on our diagram</span>
+    <span class="c1"># Define all the boxes in our diagram</span>
     manifestVars <span class="o">=</span> manifests<span class="p">,</span>   
-    <span class="c1"># mpg depends on displacement and number of gears</span>
+    <span class="c1"># Add paths from displacement and number of gears to mpg</span>
     mxPath<span class="p">(</span>from <span class="o">=</span> c<span class="p">(</span><span class="s">&quot;disp&quot;</span><span class="p">,</span> <span class="s">&quot;gear&quot;</span><span class="p">),</span> to <span class="o">=</span> <span class="s">&quot;mpg&quot;</span><span class="p">),</span>
 
     <span class="c1"># Allow displacement and number of gears to correlate</span>
     mxPath<span class="p">(</span>from <span class="o">=</span> <span class="s">&quot;disp&quot;</span><span class="p">,</span> to <span class="o">=</span> <span class="s">&quot;gear&quot;</span><span class="p">,</span> arrows <span class="o">=</span> <span class="m">2</span><span class="p">),</span>
 
-    <span class="c1"># mpg will have residual variance (stuff not explained by disp and gear)</span>
+    <span class="c1"># Residual variance in mpg (stuff not explained by disp and gear)</span>
     mxPath<span class="p">(</span>from <span class="o">=</span> <span class="s">&quot;mpg&quot;</span><span class="p">,</span> arrows <span class="o">=</span> <span class="m">2</span><span class="p">),</span>
 
     <span class="c1"># With no one-headed arrows comming in, we can fix the variance of our two IVs at their known values</span>
@@ -107,13 +104,13 @@ m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span><span class="s">&
     mxData<span class="p">(</span>cov<span class="p">(</span>mtcars<span class="p">[,</span>manifests<span class="p">]),</span> type <span class="o">=</span> <span class="s">&quot;cov&quot;</span><span class="p">,</span> numObs <span class="o">=</span> nrow<span class="p">(</span>mtcars<span class="p">))</span>
 <span class="p">)</span>
 
-<span class="c1"># Now estimate that model</span>
+<span class="c1"># Now Run that model, and show a summary.</span>
 m1 <span class="o">=</span> umxRun<span class="p">(</span>m1<span class="p">,</span> setValues <span class="o">=</span> <span class="k-Variable">T</span><span class="p">,</span> setLabels <span class="o">=</span> <span class="k-Variable">T</span><span class="p">)</span>
 umxSummary<span class="p">(</span>m1<span class="p">,</span> show <span class="o">=</span> <span class="s">&quot;both&quot;</span><span class="p">)</span>
 </code></pre></div>
-<p>This shows that m1 fits well: χ²(2) = 0, p 1.000; CFI = 1.042; TLI = 1.063; RMSEA = 0.</p>
+<p><code>umxSummary</code> shows that m1 fits well: χ²(2) = 0, p 1.000; CFI = 1.042; TLI = 1.063; RMSEA = 0.</p>
 
-<p>umxSummary also gives us the path estimates (&quot;both&quot; requests the raw and standardized paths +  standard errors).</p>
+<p>We also get path estimates (&quot;*both*&quot; requests both the raw and standardized paths).</p>
 
 <table><thead>
 <tr>
@@ -164,8 +161,6 @@ umxSummary<span class="p">(</span>m1<span class="p">,</span> show <span class="o
 </code></pre></div>
 <p><img src="/media/1_make_a_model/mtcar2.png" alt="model 1" title="Model 1"></p>
 
-<p>Modeling is, fundamentally, all about model comparison: Better theories fit the data better than do worse theories.</p>
-
 <p>If you were happy with that, <a href="#modify">click here</a> to go to modify and compare.</p>
 
 <p>To go over what we&#39;ve just seen slowly... just read on where I break that down into a series of steps:</p>
@@ -179,7 +174,7 @@ umxSummary<span class="p">(</span>m1<span class="p">,</span> show <span class="o
 
 <p><a name="build"></a></p>
 
-<h2 id="toc_3">Build a model</h2>
+<h2 id="toc_2">Build a model</h2>
 
 <p>To build a model, we need OpenMx and umx</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">require<span class="p">(</span><span class="s">&quot;OpenMx&quot;</span><span class="p">)</span>
@@ -261,7 +256,7 @@ m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span>m1<span class="p"
 
 <p><a name="run"></a></p>
 
-<h2 id="toc_4">Run the model</h2>
+<h2 id="toc_3">Run the model</h2>
 
 <p>Mow we run the model. In this case we take advantage of umxRun to also set labels and start values. Of course this won&#39;t touch fixed values.</p>
 
@@ -273,7 +268,7 @@ m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span>m1<span class="p"
 
 <p><a name="report"></a></p>
 
-<h2 id="toc_5">Report on the model</h2>
+<h2 id="toc_4">Report on the model</h2>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">umxSummary<span class="p">(</span>m1<span class="p">,</span> show <span class="o">=</span> <span class="s">&quot;std&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p><strong>Fit Statistics</strong></p>
@@ -333,29 +328,33 @@ m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span>m1<span class="p"
 
 <p><a name="modify"></a></p>
 
-<h2 id="toc_6">Modify a model</h2>
+<h2 id="toc_5">Modify a model</h2>
 
-<p>Is the path from to gear to mpg significant? There are two ways to test this with umx.</p>
+<p><a href="http://www.mii.ucla.edu/causality">Fundamentally</a>, modeling is in the service of understanding causality and we do that primarily via model comparison: Better theories fit the data better than do worse theories.</p>
+
+<p>So, &quot;do more gears give better miles per gallon&quot;?</p>
+
+<p>In graph terms, this is asking, &quot;is the path from to gear to mpg significant?&quot; There are two ways to test this with umx.</p>
 
 <p>First, a way that doesn&#39;t involve learning anything new: We can modify m1 by overwriting the existing path with one fixing the value to zero.</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">m2 <span class="o">=</span> mxModel<span class="p">(</span>m1<span class="p">,</span> mxPath<span class="p">(</span>from <span class="o">=</span> <span class="s">&quot;gear&quot;</span><span class="p">,</span> to <span class="o">=</span> <span class="s">&quot;mpg&quot;</span><span class="p">,</span> free <span class="o">=</span> <span class="k-Variable">F</span><span class="p">,</span> values <span class="o">=</span> <span class="m">0</span><span class="p">)</span>
 m2 <span class="o">=</span> mxRun<span class="p">(</span>m2<span class="p">)</span>
 </code></pre></div>
-<p>That gives us a second model, with no effective path from gear to mpg.</p>
+<p>That gives us a second model, with a zero path from gear to mpg.</p>
 
-<p>The second nifty way uses labels and umxReRun()</p>
+<p>The second way, which you will use often, takes advantage of labels and umxReRun()</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">m2 <span class="o">=</span> umxReRun<span class="p">(</span>m1<span class="p">,</span> update <span class="o">=</span> <span class="s">&quot;gear_to_mpg&quot;</span><span class="p">,</span> name <span class="o">=</span> <span class="s">&quot;no effect of gear&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p>That, by default, fixes the value of matched labels to zero. Learn more at the <a href="umxReRun%20tutorial">umxReRun tutorial</a>.</p>
 
 <p><a name="compare"></a></p>
 
-<h2 id="toc_7">Compare two models</h2>
+<h2 id="toc_6">Compare two models</h2>
 
 <p>Now we can test if gear affects mpg by comparing these two models:</p>
-<div class="highlight"><pre><code class="splus language-splus" data-lang="splus">umxCompare<span class="p">(</span>m1<span class="p">,</span>m2<span class="p">)</span>
+<div class="highlight"><pre><code class="splus language-splus" data-lang="splus">umxCompare<span class="p">(</span>m1<span class="p">,</span> m2<span class="p">)</span>
 </code></pre></div>
-<p>This did not lower fit significantly(χ²(1) = 0.01, p = 0.905):</p>
+<p>The table below shows that dropping this path did not lower fit significantly(χ²(1) = 0.01, p = 0.905):</p>
 
 <table><thead>
 <tr>
@@ -388,17 +387,17 @@ m2 <span class="o">=</span> mxRun<span class="p">(</span>m2<span class="p">)</sp
 </tr>
 </tbody></table>
 
-<p>Advanced tip: <code>umxReRun()</code> can modify and compare in 1-line</p>
+<p>Advanced tip: <code>umxReRun()</code> can modify, run, and compare all in 1-line</p>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">    m2 <span class="o">=</span> umxReRun<span class="p">(</span>m1<span class="p">,</span> update <span class="o">=</span> <span class="s">&quot;gear_to_mpg&quot;</span><span class="p">,</span> name <span class="o">=</span> <span class="s">&quot;dop effect of gear&quot;</span><span class="p">),</span> comparison <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
 </code></pre></div>
 <p><strong>Footnotes</strong>
 [^1]: <code>devtools</code> is @Hadley&#39;s package for using packages not on CRAN.</p>
 
-<h4 id="toc_8">TODO</h4>
+<h4 id="toc_7">TODO</h4>
 
 <ol>
 <li>Examples using  <a href="https://en.wikipedia.org/wiki/Five_Factor_Model">personality</a> data.</li>
-<li>and IQ, and a model in which all facets load on each other. g fits well, and better than the alternative.</li>
+<li>IQ example. A model in which all facets load on each other. compare to <em>g</em></li>
 </ol>
 
 

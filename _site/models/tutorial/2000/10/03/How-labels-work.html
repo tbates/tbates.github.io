@@ -48,19 +48,135 @@
 
 	<h3 id="toc_0">&quot;In the beginning was the  label&quot;</h3>
 
-<p>Labels are great. In OpenMx, labels are even greater. They get their power because in addition to a value, every parameter in OpenMx can have a label, and that label. In OpenMx, if two parameters have the same label, they are forced to have identical states. So labels are a tool for equating parameters within and across groups.</p>
+<p>Labels are <a href="http://www.amazon.com/Origin-Concepts-Oxford-Cognitive-Development">great</a>. In <a href="http://openmx.psyc.virginia.edu">OpenMx</a>, labels are even greater. They get their power because, in OpenMx, in addition to having a value, every parameter can have a label. That label can be used to control the parameter. In OpenMx, if two parameters have the same label, they are forced to have identical states. So labels are a tool for setting equating parameters. They are especially powerful for allowing communication across <a href="groups%20in%20OpenMx">groups</a>, but also, as we will see here, within groups.</p>
 
 <p><strong>Core concept in OpenMx</strong>
 Parameters know three things: Whether they are free, what their current value is, and, critically, what their label is.</p>
 
-<p>In this tutorial, we are going to <a href="#setLabels">set</a> labels, <a href="#getlabels">get labels</a>, and use labels to <a href="#equate">equate</a> parameters.</p>
+<p>In this tutorial, we are going to <a href="#getLabels">get</a> a parameter by it&#39;s label. We will then <a href="#setLabels">set</a> a value by label. Finally, we will use a label to <a href="#equate">equate</a> two parameters.</p>
 
-<p><a name="getlabels"></a></p>
+<p>For all these examples, we will use our old friend, <code>m1</code>, so if you haven&#39;t made him, do so now:</p>
+<div class="highlight"><pre><code class="splus language-splus" data-lang="splus">latents <span class="o">=</span> c<span class="p">(</span><span class="s">&quot;G&quot;</span><span class="p">)</span>
+manifests <span class="o">=</span> names<span class="p">(</span>demoOneFactor<span class="p">)</span>
+m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span><span class="s">&quot;m1&quot;</span><span class="p">,</span> type <span class="o">=</span> <span class="s">&quot;RAM&quot;</span><span class="p">,</span>
+    manifestVars <span class="o">=</span> manifests<span class="p">,</span>
+    latentVars  <span class="o">=</span> latents<span class="p">,</span>
+    mxPath<span class="p">(</span>from <span class="o">=</span> latents<span class="p">,</span> to <span class="o">=</span> manifests<span class="p">),</span>
+    mxPath<span class="p">(</span>from <span class="o">=</span> manifests<span class="p">,</span> arrows <span class="o">=</span> <span class="m">2</span><span class="p">),</span>
+    mxPath<span class="p">(</span>from <span class="o">=</span> latents  <span class="p">,</span> arrows <span class="o">=</span> <span class="m">2</span><span class="p">,</span> free <span class="o">=</span> <span class="k-Variable">F</span><span class="p">,</span> values <span class="o">=</span> <span class="m">1</span><span class="p">),</span>
+    mxData<span class="p">(</span>cov<span class="p">(</span>demoOneFactor<span class="p">),</span> type <span class="o">=</span> <span class="s">&quot;cov&quot;</span><span class="p">,</span> numObs <span class="o">=</span> nrow<span class="p">(</span>demoOneFactor<span class="p">))</span>
+<span class="p">)</span>
+</code></pre></div>
+<p><a name="getLabels"></a></p>
 
 <h3 id="toc_1">Getting (reading) existing labels</h3>
 
-<p>Get Labels in a model
-omxGetParameters(m1) # nb: By default, paths have no labels, and starts of 0</p>
+<h4 id="toc_2">OpenMx Defaults</h4>
+
+<p>OpenMx has a built-in function for getting parameters from a model</p>
+
+<p>Let&#39;s have a look at the <code>A</code> matrix, which contains our asymmetric paths</p>
+<div class="highlight"><pre><code class="splus language-splus" data-lang="splus">m1<span class="o">$</span>matrices<span class="o">$</span>A<span class="o">$</span>labels <span class="c1"># nb: By default, paths have no labels</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th></th>
+<th>x1</th>
+<th>x2</th>
+<th>x3</th>
+<th>x4</th>
+<th>x5</th>
+<th>G</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>x1</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>x2</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>x3</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>x4</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>x5</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>G</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+</tr>
+</tbody></table>
+
+<p>Despite these free parameters having no labels, we can still address them in OpenMx.</p>
+<div class="highlight"><pre><code class="splus language-splus" data-lang="splus">omxGetParameters<span class="p">(</span>m1<span class="p">)</span> <span class="c1"># nb: By default, paths have no labels, and starts of 0</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>m1.A[1,6]</th>
+<th>m1.A[2,6]</th>
+<th>m1.A[3,6]</th>
+<th>m1.A[4,6]</th>
+<th>m1.A[5,6]</th>
+<th>m1.S[1,1]</th>
+<th>m1.S[2,2]</th>
+<th>m1.S[3,3]</th>
+<th>m1.S[4,4]</th>
+<th>m1.S[5,5]</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody></table>
+
+<p>Here you can see that OpenMx leaves labels blank by default</p>
 
 <p>umxGetParameters(m1)</p>
 
@@ -69,9 +185,27 @@ omxGetParameters(m1) # nb: By default, paths have no labels, and starts of 0</p>
 <p>and use <code>umxStart</code>, to set sensible guesses for start values...
 m1 = umxLabel(m1)
 m1 = umxStart(m1)</p>
+
+<p><a name="setLabels"></a></p>
+
+<h3 id="toc_3">Setting a value by label</h3>
 <div class="highlight"><pre><code class="splus language-splus" data-lang="splus">latents <span class="o">=</span> c<span class="p">(</span><span class="s">&quot;G&quot;</span><span class="p">)</span>
 manifests <span class="o">=</span> names<span class="p">(</span>demoOneFactor<span class="p">)</span>
-m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span><span class="s">&quot;One Factor&quot;</span><span class="p">,</span> type <span class="o">=</span> <span class="s">&quot;RAM&quot;</span><span class="p">,</span>
+m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span><span class="s">&quot;m1&quot;</span><span class="p">,</span> type <span class="o">=</span> <span class="s">&quot;RAM&quot;</span><span class="p">,</span>
+    manifestVars <span class="o">=</span> manifests<span class="p">,</span>
+    latentVars  <span class="o">=</span> latents<span class="p">,</span>
+    mxPath<span class="p">(</span>from <span class="o">=</span> latents<span class="p">,</span> to <span class="o">=</span> manifests<span class="p">),</span>
+    mxPath<span class="p">(</span>from <span class="o">=</span> manifests<span class="p">,</span> arrows <span class="o">=</span> <span class="m">2</span><span class="p">),</span>
+    mxPath<span class="p">(</span>from <span class="o">=</span> latents  <span class="p">,</span> arrows <span class="o">=</span> <span class="m">2</span><span class="p">,</span> free <span class="o">=</span> <span class="k-Variable">F</span><span class="p">,</span> values <span class="o">=</span> <span class="m">1</span><span class="p">),</span>
+    mxData<span class="p">(</span>cov<span class="p">(</span>demoOneFactor<span class="p">),</span> type <span class="o">=</span> <span class="s">&quot;cov&quot;</span><span class="p">,</span> numObs <span class="o">=</span> nrow<span class="p">(</span>demoOneFactor<span class="p">))</span>
+<span class="p">)</span>
+</code></pre></div>
+<p><a name="equate"></a></p>
+
+<h3 id="toc_4">Equating two paths by  setting their label</h3>
+<div class="highlight"><pre><code class="splus language-splus" data-lang="splus">latents <span class="o">=</span> c<span class="p">(</span><span class="s">&quot;G&quot;</span><span class="p">)</span>
+manifests <span class="o">=</span> names<span class="p">(</span>demoOneFactor<span class="p">)</span>
+m1 <span class="o">&lt;-</span> mxModel<span class="p">(</span><span class="s">&quot;m1&quot;</span><span class="p">,</span> type <span class="o">=</span> <span class="s">&quot;RAM&quot;</span><span class="p">,</span>
     manifestVars <span class="o">=</span> manifests<span class="p">,</span>
     latentVars  <span class="o">=</span> latents<span class="p">,</span>
     mxPath<span class="p">(</span>from <span class="o">=</span> latents<span class="p">,</span> to <span class="o">=</span> manifests<span class="p">),</span>
