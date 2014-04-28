@@ -1,0 +1,43 @@
+---
+layout: post
+title: "Installing umx (and OpenMx)"
+date: 2020-12-10 00:00
+comments: true
+categories: models tutorial
+---
+
+<a name="top"></a>
+### Installing umx (and OpenMx)
+
+It's easy to learn and easy to get print-ready results from models. But first you need to install OpenMx and the umx library.
+
+``` splus
+install.packages("OpenMx")
+library("OpenMx")
+```
+
+### Install umx
+umx lives on [github](http://github.com/tbates/umx) – a great place for package development. Loading libraries from github differs slightly from the procedure you may be used to. instead of `install.packages("umx")`, we're going to use `devtools::install_github("umx")` [^1]
+
+``` splus
+# install & load newish devtools
+install.packages("devtools")
+library("devtools")
+# install and load umx
+install_github("tbates/umx")
+library("umx")
+# get going :-)
+?umx
+```
+
+On windows you might need
+
+``` splus
+install_github("umx", username = "tbates", args = "--no-multiarch")
+```
+
+On old versions of devtools you might need
+
+``` splus
+install_github("umx", username = "tbates")	
+```
