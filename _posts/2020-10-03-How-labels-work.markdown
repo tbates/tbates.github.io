@@ -1,12 +1,15 @@
 ---
 layout: post
-title: "How labels work."
+title: "How labels work in OpenMx, and how to get, set, and change them using umx."
 date: 2020-10-03 00:00
 comments: true
 categories: models tutorial
 ---
 
 ### "In the beginning was the  label"
+
+#### This page is not finished. When done it will explain how much more powerful OpenMx is when you label your parameters. 
+#### Currently, this is just a very preliminary stub!
 
 Labels are [great](http://www.amazon.com/Origin-Concepts-Oxford-Cognitive-Development). In [OpenMx](http://openmx.psyc.virginia.edu), labels are even greater. They get their power because, in OpenMx, in addition to having a value, every parameter can have a label. That label can be used to control the parameter. In OpenMx, if two parameters have the same label, they are forced to have identical states. So labels are a tool for setting equating parameters. They are especially powerful for allowing communication across [groups](groups in OpenMx), but also, as we will see here, within groups.
 

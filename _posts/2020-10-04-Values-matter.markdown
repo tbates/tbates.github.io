@@ -1,12 +1,15 @@
 ---
 layout: post
-title: "Values and why they are important"
+title: "Values and why they are important in OpenMx"
 date: 2020-10-04 00:00
 comments: true
 categories: models tutorial
 ---
 
-### Values matter!
+### Values matter
+
+#### This page is not finished. When done it will explain using umx to set values in models. 
+#### This is just a stub beginning!
 
 Values matter. In OpenMx, values matter even more. They are where the model starts, and, once run, they are the best estimates of our parameters.
 

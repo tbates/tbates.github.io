@@ -8,6 +8,9 @@ categories: models tutorial
 
 # Confidence in 1 line:
 
+#### This page is not finished. When done it will explain using umx to get CI from models. 
+#### This is just a stub beginning!
+
 CIs –&nbsp;or confidence intervals are key to understanding how big the likely true effects of your causes are.
 
 First, run our very first model again:

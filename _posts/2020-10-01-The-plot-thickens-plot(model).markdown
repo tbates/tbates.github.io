@@ -8,6 +8,9 @@ categories: models tutorial
 
 # "The plot thickens"
 
+#### This page is not finished. When done it will explain using plot.MxModel() to produce figures from OpenMx
+#### This is just a stub beginning!
+
 ```splus
 require(OpenMx)
 data(demoOneFactor)

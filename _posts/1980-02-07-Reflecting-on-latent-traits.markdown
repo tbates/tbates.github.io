@@ -6,6 +6,9 @@ comments: true
 categories: models
 ---
 
+#### This page is not finished. When done it will explain using umx to make reflective latents
+#### This is just a stub beginning!
+
 Until now, to keep things simple as we learn, We have never had anything but never measured variables (boxes) on the diagram.
 
 Of course,Much of the power ofStruggle? Opening mix comes from the ability to create latent traits. These are represented on the diagram as circles. Conceptually, they are usually thought of as theoretical constructs which explain the existence of a measured variables.

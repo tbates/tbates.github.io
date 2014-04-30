@@ -6,14 +6,25 @@ comments: true
 categories: models tutorial
 ---
 
+<h1>Ignore this post: it's a work in progress...</h1>
+
+This post refers to where we'd like umx to end up: able to act like an intelligent research assistant: asking when you are unclear, but
+
+We are not there yet: It's quite hard to take an [intentional stance](http://en.wikipedia.org/wiki/Intentional_stance"Wikipedia Entry: Intentional stance")!
+
+When done, the first product of this thinking will be the `umxRAM()` function. Until then, read this as a document in flux.
+
+
 <a name="top"></a>
-The [OpenMx](http://openmx.psyc.virginia.edu) philosophy is "no block boxes". 
+The [OpenMx](http://openmx.psyc.virginia.edu) philosophy is "no black boxes". 
 
-Unlike, say, Mplus, OpenMx doesn't do things behind the scenes. Partly the OpenMx philosophy is aided by R - it makes function defaults transparent: When you omit `arrows = 1`, you can see (glass box) that `mxPath` is going to set arrows to 1, becaue that default is in the function definition.
+Unlike, say, Mplus, OpenMx doesn't do things behind the scenes. This means you get just what you request: Nothing more, and nothing less.
 
-This means, however, that out of the box, OpenMx requires explicit setting of many things you might &ldquo;expect&rdquo;. In particular, it doesn't set start values or labels. It also doesn't add objects you don't explicitly request. So it doesn't add residual variances or covariances among exogenous variables.
+Partly the OpenMx philosophy is aided by R - it makes function defaults transparent: When you omit `arrows = 1`, you can see (glass box) that `mxPath` is going to set arrows to 1, because that default is in the function definition.
 
-`umx` takes a different perspective, best phrased as *"What you expect is what you get"*. 
+This means, however, that out of the box, OpenMx requires explicit setting of many things you might &ldquo;expect&rdquo; to happen automagically. In particular, OpenMx doesn't set values or labels. It also doesn't add paths or objects you don't explicitly request. So it doesn't add residual variances or covariances among exogenous variables.
+
+The goal of `umx` is to take a slightly different perspective, perhaps best phrased as *"What you expect is what you get"*.
 
 It tries to do what you expect, much like people expected *"I didn't have sex with that woman"* to mean nothing happened. So…
 
@@ -51,15 +62,9 @@ The claim is
 3. Latent aspiration affects occupational and educational aspiration.
 4. The aspiration latent traits interact with each other.
 
-These are definitely your choice and will need to tell mxModel. That would look thus:
+These are definitely choices and will need to tell OpenMx. That would look thus:
 
 ```splus
-
-umxData <- function(observed, type, means = NA, numObs = NA) {
-	setter <- function(x, value) assign(x, value, envir=parent.frame(2))
-	setter("manifestVars", names(observed))
-	return(mxData(observed, type, means = NA, numObs = NA))
-}
 
 rFormants = c("RSES", "FSES", "RIQ", "RParAsp")
 fFormants = c("FSES", "RSES", "FIQ", "FParAsp")
@@ -83,7 +88,7 @@ m1 = mxModel("Duncan", type = "RAM",
 
 Additional items of note are that:
 
-1. Aspiration is not are not completely determined by the exogenous measures.
+1. Aspiration is not completely determined by the exogenous measures.
 2. The occupational and educational aspiration manifests are not completely determined by latent aspiration.
 3. The measured variables forming aspiration covary each with the other, and are exogenous to the model.
 
@@ -124,7 +129,6 @@ umxCovary <- function(vars)){
 }
 ```
 
-
 ```splus
 # Variances for the 4 exogenous variables (sigmas)
 mxPath(from = c("RIQ" ,"RSES", "FIQ","FSES"), arrows = 2)
@@ -147,26 +151,10 @@ umxResidual("ROccAsp", "FOccAsp") # latents have some exogenous variance (sigma)
 # OR
 umxVariance("ROccAsp", "FOccAsp", with data = Fixed, without = free) # latents have some exogenous variance (sigma)
 ```
+#### TODO
 
-
-The table below shows that dropping this path did not lower fit significantly(χ²(1) = 0.01, p = 0.905):
-
-| Comparison        | EP | Δ -2LL     | Δ df  | p     | AIC   | Compare with Model |
-|:------------------|:---|:-----------|:------|:------|:------|:-------------------|
-| <NA>              | 4  | NA         | NA    | <NA>  | -4.00 | big_motor_bad_mpg  |
-| no effect of gear | 3  | 0.0141     | 1     | 0.905 | -5.98 | big_motor_bad_mpg  |
-
-
-Advanced tip: `umxReRun()` can modify, run, and compare all in 1-line
-
-``` splus
-	m2 = umxReRun(m1, update = "gear_to_mpg", name = "dop effect of gear"), comparison = TRUE)
-```
+1. Lots!
 
 **Footnotes**
 [^1]: `devtools` is @Hadley's package for using packages not on CRAN.
-
-#### TODO
-1. Examples using  [personality](https://en.wikipedia.org/wiki/Five_Factor_Model) data.
-2. IQ example. A model in which all facets load on each other. compare to *g*
 
