@@ -8,9 +8,20 @@ categories: models tutorial
 
 # "Give me results!"
 
-todo
-## umxSummary
-## confint?
+### This page is not finished. When done it will explain using umx's  packaged  S3 classes for getting results the way you already know from R
+
+### Currently, this is just a very preliminary stub!
+
+### TODO list
+## umxSummary()
+* options
+## confint.MxModel()
+
+* options
+* standardized parameters
+
+## residuals.MxModel()
+
 
 **Footnotes**
 [^1]: 

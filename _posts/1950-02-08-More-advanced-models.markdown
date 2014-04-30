@@ -6,8 +6,8 @@ comments: true
 categories: models
 ---
 
-## Mimic?
-## Simplex?
+#### This page is not finished. When done it will explain using umx to help with multiple groups and point to twin modeling
+#### This is just a stub beginning!
 
 ### Multiple groups?
 

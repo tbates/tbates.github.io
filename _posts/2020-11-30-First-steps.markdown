@@ -59,7 +59,7 @@ m1 <- mxModel("big_motor_bad_mpg", type = "RAM",
 	# Residual variance in mpg (stuff not explained by disp and gear)
 	mxPath(from = "mpg", arrows = 2),
 
-	# With no one-headed arrows comming in, we can fix the variance of our two IVs at their known values
+	# In this (silly) toy model, we can fix the variance of our two IVs at their known values
 	mxPath(from = "disp", arrows = 2, free = F, values = var(mtcars$disp)),
 	mxPath(from = "gear", arrows = 2, free = F, values = var(mtcars$gear)),
 
@@ -85,7 +85,7 @@ We also get path estimates ("*both*" requests both the raw and standardized path
 We can plot these standardized (or raw) coefficients on a diagram the way Sewall would like us too:
 
 ``` splus
-umxPlot(m1)
+plot(m1)
 ```
 
 ![model 1](/media/1_make_a_model/mtcar2.png "Model 1")
@@ -299,7 +299,8 @@ Advanced tip: `umxReRun()` can modify, run, and compare all in 1-line
 **Footnotes**
 [^1]: `devtools` is @Hadley's package for using packages not on CRAN.
 
+<!--
 #### TODO
 1. Examples using  [personality](https://en.wikipedia.org/wiki/Five_Factor_Model) data.
 2. IQ example. A model in which all facets load on each other. compare to *g*
-
+-->

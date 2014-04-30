@@ -6,6 +6,9 @@ comments: true
 categories: models
 ---
 
+#### This page is not finished. When done it will list up the core umx functions
+#### This is just a stub beginning!
+
 umx allows you to more easily build, run, modify, and report models using OpenMx
 with code. The core functions are linked below:
 

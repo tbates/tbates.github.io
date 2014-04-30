@@ -6,6 +6,9 @@ comments: true
 categories: models tutorial
 ---
 
+#### This page is not finished. When done it will explain using umx to update models to implement competing theories
+#### This is just a stub beginning!
+
 ### Never make a model when you can update the one you already have!
 
 In OpenMx, you always have a model that can be modified. Want to add a new path? Go ahead - no need to start from scratch.
