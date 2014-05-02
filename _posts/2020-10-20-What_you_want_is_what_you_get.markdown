@@ -6,9 +6,9 @@ comments: true
 categories: models tutorial
 ---
 
-<h1>Ignore this post: it's a work in progress...</h1>
+# Ignore this post: it's a work in progress...
 
-This post refers to where we'd like umx to end up: able to act like an intelligent research assistant: asking when you are unclear, but
+This post refers to where we'd like umx to end up: As an intelligent research assistant: asking when you are unclear, but also able to understand your intentions.
 
 We are not there yet: It's quite hard to take an [intentional stance](http://en.wikipedia.org/wiki/Intentional_stance"Wikipedia Entry: Intentional stance")!
 
@@ -43,10 +43,42 @@ This, to be precise, leaves a lot of expectations unstated - a lot is &ldquo;exp
 3. But not all of it: B has [residual variance](http://en.wikipedia.org/wiki/Explained_variation"Wikipedia Entry: Explained variation").
 4. Variance in A is [exogenous](http://en.wikipedia.org/wiki/Exogeny"Wikipedia Entry: Exogeny") to the model
  * As such, the variance of B is fixed at 1 (in [standardized](http://en.wikipedia.org/wiki/Standard_score"Wikipedia Entry: Standard score") terms)
+5. A and B have means as well as variances
 
 How to implement this without black boxes?
 
-In the SEM package, `specifyModel` can give exogenous variables fixed variance, and account for residual variance in endogenous variables.
+```splus
+df = myFADataRaw[, 1:2]
+names(df) <- c("A", "B")
+summary(lm(B~A, data = df))
+```
+This tells us that B = A × 𝛽1 + , where 𝛽1 = 0.64 CI95%[0.57, 0.71]. R² = 0.40 (F(1, 498) = 336.1,  p-value: << .001)
+
+Now in OpenMx:
+
+```splus
+umxResiduals <- function(vars){
+	mxPath(vars, arrows = 2) 	
+}
+umxMeans <- function(vars){
+	mxPath("one", to = vars, arrows = 1)
+}
+
+manifests  = names(df)
+m1 <- mxModel("A_causes_B", type = "RAM",
+	manifestVars = manifests,
+	mxPath("A", to = "B"), 
+	umxResiduals(manifests), 
+	umxMeans(manifests), 
+	mxData(df, type = "raw")
+)
+
+m1 = umxRun(m1, setLabels = T, setValues = T)
+umx_show(m1)
+plot(m1)
+umxSummary(m1, show = "both")
+
+```
 
 Let's take a more representatively complex model:
 
@@ -57,7 +89,7 @@ How would we state the claims of this model, and what do we expect an intelligen
 The claim is 
 
 1. Respondents and their friends each have a latent trait of "Aspiration"
-2. These are formed from their [IQ](http://en.wikipedia.org/wiki/Intelligence_quotient"Wikipedia Entry: Intelligence quotient"),  [SES](http://en.wikipedia.org/wiki/SES"Wikipedia Entry: SES"), and parental aspiration.
+2. These are formed from their [IQ](http://en.wikipedia.org/wiki/Intelligence_quotient"Wikipedia Entry: Intelligence quotient"), [SES](http://en.wikipedia.org/wiki/SES"Wikipedia Entry: SES"), and parental aspiration.
 	* SES effects impact on both respondent and friend's aspiration.
 3. Latent aspiration affects occupational and educational aspiration.
 4. The aspiration latent traits interact with each other.
@@ -157,4 +189,13 @@ umxVariance("ROccAsp", "FOccAsp", with data = Fixed, without = free) # latents h
 
 **Footnotes**
 [^1]: `devtools` is @Hadley's package for using packages not on CRAN.
+
+<!-- 
+SEM package
+1. `specifyModel` can take a list of "fixed" variables: exogenous variables with fixed variance?
+2. it also adds residual variance for endogenous manifests?
+
+Lavaan
+1. 
+-->
 
