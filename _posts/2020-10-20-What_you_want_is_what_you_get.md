@@ -79,6 +79,7 @@ plot(m1)
 Let's take a more representatively complex model:
 
 <img src="/media/umxFixed/Duncan.png" alt="Duncan SEM model" width="520">
+
 <!-- https://github.com/robwierzbowski/jekyll-picture-tag -->
 
 
@@ -110,25 +111,32 @@ Now some harder decisions. There are three claims of the model not yet included,
 	* If so, we should automatically add:
 
 	```splus    
-		umxPath(c(respondentAsp, friendAsp))
+		umxPath(var = c(respondentAsp, friendAsp))
 	```
-	* I'm happy with this flagged as a default option in `umxRAM()`. So by default, `endogenous.residuals = TRUE`
+	* I'm happy with this flagged as a default option in `umxRAM()`. So by default, `endogenous.residuals = TRUE`. Endogenous variables are manifests with incoming arrows and no outgoing arrows.
 
 2. Should she assume that exogenous variables have variance?
 
 	```splus    
-		umxPath(unique.bivariate = c(respondentFormants, friendFormants))
+		umxPath(var = c(respondentFormants, friendFormants))
 	```
 	* I'm happy with this as an option in `umxRAM()`, but defaulting to `exogenous.variances = TRUE`?
 
-3. Should she assume that exogenous variables all intercorrelate, and add this path automatically?
+3. Users often want to set the first loading on a factor to 1, or set the variance of latent traits to 1 should she assume one of these for us?
+	* My approach here is to make this easy to do in the same umxPath statement that creates the loadings or the latent variance.
+
+	```splus    
+		umxPath(var = "latentX", fixedAt = 1)
+	```
+
+4. Should she assume that exogenous variables all intercorrelate, and add this path automatically?
+	* I'm happy with this as an option in `umxRAM()`, but defaulting to `covary.exogenous = FALSE`
 
 	```splus    
 		umxPath(unique.bivariate = c(respondentFormants, friendFormants))
 	```
-	* I'm happy with this as an option in `umxRAM()`, but defaulting to `covary.exogenous = TRUE`
 
-4. Should she assume that latent traits like Respondent's Aspiration have residual variance?
+5. Should she assume that latent traits like Respondent's Aspiration have residual variance?
 	* This seems wrong: The user can reasonably be expected to state this explicitly.
 
 So then we would build this model in umx like as follows

@@ -1,0 +1,38 @@
+---
+layout: post
+title: "Hello World: with umxRAM and umxPath"
+date: 2020-11-29 00:00
+comments: true
+categories: models tutorial
+---
+
+<a name="top"></a>
+
+[Previously](/models/tutorial/2020/11/30/First-steps.html), we  made a model equivalent to `mpg ~ disp + gear` in OpenMx.
+
+Here's how we could do it with umxRAM and umxPath:
+
+``` splus
+manifests = c("mpg", "disp", "gear")
+
+m1 <- umxRAM("big_motor_low_mpg",
+	umxPath(c("disp", "gear"), to = "mpg"),
+	umxPath("disp", with = "gear"), # same as (from = "disp", to = "gear", arrows = 2)
+	umxPath(var = "mpg"), # same as (from = "mpg", to = "mpg", arrows = 2)
+	umxPath(var = "disp", fixedAt = var(mtcars$disp)), # same as (from = "disp", to = "disp", arrows = 2, free = false, values = var(mtcars$disp) )
+	umxPath(var = "gear", fixedAt = var(mtcars$gear)),
+	# umxRAM takes data just like lm does: i.e., in  a "data = " statement
+	data = mxData(cov(mtcars[,manifests]), type = "cov", numObs = nrow(mtcars))
+)
+
+m1 = umxRun(m1)
+umxSummary(m1, show = "both")
+plot(m1)
+```
+As before,  `umxSummary` shows that m1 fits well: χ²(2) = 0, p 1.000; CFI = 1.042; TLI = 1.063; RMSEA = 0.
+
+But we didn't need to set manifestVars or type=RAM, we add data the way lm users are used to, and the path statements were shorter, which is handy.
+
+
+![model 1](/media/1_make_a_model/mtcar2.png "Model 1")
+
