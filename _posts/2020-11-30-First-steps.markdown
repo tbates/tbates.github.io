@@ -273,7 +273,7 @@ The second way, which you will use often, takes advantage of labels and umxReRun
 ``` splus
 m2 = umxReRun(m1, update = "gear_to_mpg", name = "no effect of gear")
 ```
-That, by default, fixes the value of matched labels to zero. Learn more at the [umxReRun tutorial](umxReRun tutorial).
+By default, umxReRun fixes the value of matched labels to zero. Learn more at the [umxReRun tutorial](umxReRun tutorial).
 
 <a name="compare"></a>
 ## Compare two models
@@ -295,7 +295,7 @@ The table below shows that dropping this path did not lower fit significantly(χ
 Advanced tip: `umxReRun()` can modify, run, and compare all in 1-line
 
 ``` splus
-	m2 = umxReRun(m1, update = "gear_to_mpg", name = "dop effect of gear"), comparison = TRUE)
+	m2 = umxReRun(m1, update = "gear_to_mpg", name = "drop effect of gear"), comparison = TRUE)
 ```
 
 **Footnotes**
