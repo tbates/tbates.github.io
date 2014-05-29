@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "First steps: Build and run a Path model in a minute."
+title: "Hello World: Build & run a model in a minute!"
 date: 2020-11-30 00:00
 comments: true
 categories: models tutorial
