@@ -39,6 +39,8 @@ We will use the built-in [mtcars](https://stat.ethz.ch/R-manual/R-devel/library/
 
 We will model miles/gallon (mpg) as a function of engine size (disp) and number of gears (gear). Then we can drop number of gears to test the theory that the only determinant (in this confounded play dataset) of mpg is inches<sup>3</sup> of displacement.
 
+In `lm`, this would be "mpg ~ disp + gear"
+
 [Sewall Wright](http://en.wikipedia.org/wiki/Sewall_Wright"Wikipedia Entry: Sewall Wright") invented SEM to allow us to think in explicit graphs. So, here's what that language implies:
 
 ![model of mpg](/media/1_make_a_model/mpg_1a_theory.png "A model of Miles/gallon")
