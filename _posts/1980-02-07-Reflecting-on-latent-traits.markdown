@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Adding a latent trait"
+title: "Reflective and Formative latent traits"
 date: 1980-02-07 00:00
 comments: true
 categories: models

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Get more confidence, easily!"
-date: 2020-02-01 00:00
+date: 2020-02-15 00:00
 comments: true
 categories: models tutorial
 ---
