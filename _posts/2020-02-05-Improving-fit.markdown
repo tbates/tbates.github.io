@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Improving models: residuals(), umxMI()"
-date: 2019-12-29 00:00
+date: 2020-02-05 00:00
 comments: true
 categories: models
 ---

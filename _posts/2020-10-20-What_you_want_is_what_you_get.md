@@ -57,19 +57,18 @@ summary(lm(B ~ A, data = df))
 ```
 This tells us that B = A × 𝛽1 + , where 𝛽1 = 0.64 CI95%[0.57, 0.71]. R² = 0.40 (F(1, 498) = 336.1,  p-value: << .001)
 
-Now in OpenMx:
+Now with umx:
 
 ```splus
 manifests  = names(df)
-m1 <- mxModel("A_causes_B", type = "RAM",
-	manifestVars = manifests,
+m1 <- umxRAM("A_causes_B",
 	mxPath("A", to = "B"), 
-	umxResiduals(manifests), 
-	umxMeans(manifests), 
-	mxData(df, type = "raw")
+	umxPath(var = manifests), 
+	umxPath(means = manifests), 
+	data = mxData(df, type = "raw")
 )
 
-m1 = umxRun(m1, setLabels = T, setValues = T)
+m1 = umxRun(m1)
 umxSummary(m1, show = "both")
 umx_show(m1)
 plot(m1)
@@ -182,15 +181,6 @@ m1 = umxRAM("Duncan", data = mtcars,
 
 Lots!
 
-1. Should we have some new functions, like umxFixed, umxResidual, umxVariance or umxLatent()?
-
-I think we should handle all of these with `umxPath` and some new verbs. So to add a covariance structure behind a formative variable, you can use umxPath like this:
-
-```splus
-umxPath(respondentFormants, to = "RGenAsp"),
-umxPath(friendFormants,     to = "FGenAsp"),
-umxPath(unique.bivariate = c(respondentFormants, friendFormants))
-```
 **Footnotes**
 
 <!-- 
