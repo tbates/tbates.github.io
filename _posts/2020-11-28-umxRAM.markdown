@@ -8,24 +8,31 @@ categories: models tutorial
 
 <a name="top"></a>
 
-[Previously](/models/tutorial/2020/11/30/First-steps.html), we  made a model equivalent to `mpg ~ disp + gear` in OpenMx.
+[Previously](/models/tutorial/2020/11/30/First-steps.html), we  made an mxModel equivalent to `lm(mpg ~ disp + gear, data = mtcars)`.
 
 Here's how we could do it with umxRAM and umxPath:
 
 ``` splus
-manifests = c("mpg", "disp", "gear")
-
+m1 <- mxModel("big_motor_low_mpg", type = "RAM",
+	manifestVars = c("mpg", "disp", "gear"),
+	mxPath(from = c("disp", "gear"), to = "mpg"),
+	mxPath(from = "disp", to = "gear", arrows = 2),
+	mxPath(from = c("mpg", "disp", "gear"), arrows = 2),
+	mxPath(from = "one", to = c("mpg", "disp", "gear")),
+	mxData(mtcars[,c("mpg", "disp", "gear")], type="raw")
+)
 m1 <- umxRAM("big_motor_low_mpg",
-	umxPath(c("disp", "gear"), to = "mpg"),
-	umxPath("disp", with = "gear"),
-	umxPath(var = "mpg"),
-	umxPath(var = "disp", fixedAt = var(mtcars$disp)),
-	umxPath(var = "gear", fixedAt = var(mtcars$gear)),
-	data = mxData(cov(mtcars[,manifests]), type = "cov", numObs = nrow(mtcars))
+	umxPath(from = c("disp", "gear"), to = "mpg"),
+	umxPath(cov = c("disp", "gear")),
+	umxPath(var = c("mpg", "disp", "gear")),
+	data = mtcars
 )
 
-m1 = umxRun(m1); umxSummary(m1, show = "both"); plot(m1)
-
+m1 = umxRun(m1); 
+summary(m1)
+umxSummary(m1, show = "raw"); 
+plot(m1)
+mxStandardizeRAMpaths(m1)
 ```
 As before,  `umxSummary` shows that m1 fits well: χ²(2) = 0, p 1.000; CFI = 1.042; TLI = 1.063; RMSEA = 0.
 

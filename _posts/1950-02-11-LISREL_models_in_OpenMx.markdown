@@ -14,8 +14,9 @@ categories: models
 
 ```splus
 library(OpenMx)
-
-#a couple of helpful label strings
+packageVersion("OpenMx")
+[1] ‘999.0.0.3474’
+# A couple of helpful label strings
 v1_6 = paste0("v",1:6) # [1] "v1" "v2" "v3" "v4" "v5" "v6"
 x1_2 = c("x1", "x2")
 
@@ -37,7 +38,8 @@ m1 <- mxModel(model = "exampleModel",
 	mxMatrix(name="PH", "Symm", nrow=2, ncol=2, values = c(1, .3, 1), free=c(F, T, F), dimnames = list(x1_2, x1_2)),
 	mxMatrix(name="LX", "Full", nrow=6, ncol=2, values = c(.5, .6, .8, rep(0,6), .4, .7, .5), free = c(T,T,T, rep(F, 6),T,T,T), dimnames = list(v1_6, x1_2)),
 	# Create a LISREL objective with LX, TD, and PH matrix names
-	mxExpectationLISREL(LX = "LX", TD = "TD", PH = "PH"), 
+	mxExpectationLISREL(LX = "LX", TD = "TD", PH = "PH"),
+	mxFitFunctionML(),
 	mxData(covData, type = "cov", numObs = 100)
 )
 m1 <- mxRun(m1)
