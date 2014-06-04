@@ -6,8 +6,7 @@ comments: true
 categories: models
 ---
 
-#### This page is far from finished. When done it will explain using umx to help with LISREL
-
+#### This page is far from finished. When done it will explain using umx and OpenMx to help with LISREL
 
 # Create and fit a model using mxExpectationLISREL, and mxFitFunctionML
 # Let's create some data to model
@@ -15,7 +14,7 @@ categories: models
 ```splus
 library(OpenMx)
 packageVersion("OpenMx")
-[1] ‘999.0.0.3474’
+[1] ‘999.0.0.3525’
 # A couple of helpful label strings
 v1_6 = paste0("v",1:6) # [1] "v1" "v2" "v3" "v4" "v5" "v6"
 x1_2 = c("x1", "x2")
@@ -39,7 +38,7 @@ m1 <- mxModel(model = "exampleModel",
 	mxMatrix(name="LX", "Full", nrow=6, ncol=2, values = c(.5, .6, .8, rep(0,6), .4, .7, .5), free = c(T,T,T, rep(F, 6),T,T,T), dimnames = list(v1_6, x1_2)),
 	# Create a LISREL objective with LX, TD, and PH matrix names
 	mxExpectationLISREL(LX = "LX", TD = "TD", PH = "PH"),
-	mxFitFunctionML(),
+	# mxFitFunctionML(),
 	mxData(covData, type = "cov", numObs = 100)
 )
 m1 <- mxRun(m1)

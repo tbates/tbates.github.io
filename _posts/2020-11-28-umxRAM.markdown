@@ -27,18 +27,19 @@ m1 <- mxModel("big_motor_low_mpg", type = "RAM",
 
 Now with in umxRAM
 
-```splus    
+```splus
 m1 <- umxRAM("big_motor_low_mpg",
-	umxPath(from = c("disp", "gear"), to = "mpg"),
-
-	umxPath(cov  = c("disp", "gear")),
+	# umxPath(from = c("disp", "gear"), to = "mpg"),
+	# umxPath(cov  = c("disp", "gear")),
 	umxPath(var   = c("mpg", "disp", "gear")),
 	umxPath(means = c("mpg", "disp", "gear")),
 	data = mtcars
 )
-
+plot(m1)
+round(colMeans(mtcars[,c("mpg", "disp", "gear")]), 2)
+round(diag(cov(mtcars[,c("mpg", "disp", "gear")])),2)
 m1 = mxRun(m1); 
-summary(m1)
+# summary(m1)
 umxSummary(m1, show = "raw"); 
 plot(m1)
 mxStandardizeRAMpaths(m1)
