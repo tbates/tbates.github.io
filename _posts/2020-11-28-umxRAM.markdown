@@ -12,6 +12,8 @@ categories: models tutorial
 
 Here's how we could do it with umxRAM and umxPath:
 
+First in mxModel:
+
 ``` splus
 m1 <- mxModel("big_motor_low_mpg", type = "RAM",
 	manifestVars = c("mpg", "disp", "gear"),
@@ -21,14 +23,21 @@ m1 <- mxModel("big_motor_low_mpg", type = "RAM",
 	mxPath(from = "one", to = c("mpg", "disp", "gear")),
 	mxData(mtcars[,c("mpg", "disp", "gear")], type="raw")
 )
+```
+
+Now with in umxRAM
+
+```splus    
 m1 <- umxRAM("big_motor_low_mpg",
 	umxPath(from = c("disp", "gear"), to = "mpg"),
-	umxPath(cov = c("disp", "gear")),
-	umxPath(var = c("mpg", "disp", "gear")),
+
+	umxPath(cov  = c("disp", "gear")),
+	umxPath(var   = c("mpg", "disp", "gear")),
+	umxPath(means = c("mpg", "disp", "gear")),
 	data = mtcars
 )
 
-m1 = umxRun(m1); 
+m1 = mxRun(m1); 
 summary(m1)
 umxSummary(m1, show = "raw"); 
 plot(m1)

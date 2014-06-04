@@ -20,15 +20,13 @@ umx lives on [github](http://github.com/tbates/umx) – a great place for packag
 ``` splus
 install.packages("devtools")
 library("devtools")
-install_github("devtools")
 ```
 
 Once you have `devtools`, then you can install and load `umx`:
 
 ``` splus
-library("devtools")
 # install and load umx
-install_github("tbates/umx")
+devtools::install_github("tbates/umx")
 library("umx")
 ```
 <a name="overview"></a>
@@ -44,6 +42,21 @@ In `lm`, this would be "mpg ~ disp + gear"
 [Sewall Wright](http://en.wikipedia.org/wiki/Sewall_Wright"Wikipedia Entry: Sewall Wright") invented SEM to allow us to think in explicit graphs. So, here's what that language implies:
 
 ![model of mpg](/media/1_make_a_model/mpg_1a_theory.png "A model of Miles/gallon")
+
+Let's start off really simple before moving to the full modelL Just the means and variances of the three variables.
+
+``` splus
+manifests = c("mpg", "disp", "gear")
+m1 <- umxRAM("big_motor_bad_mpg"
+	# Means and variances of the three measured (manifest) variables
+	umxPath(var = manifests),
+	umxPath(means = manifests),
+	# The data we are testing our hypothesis against
+	mxData(mtcars[,manifests], type = "raw")
+)
+m1 = mxRun(m1)
+plot(m1)
+``` 
 
 Here's what it looks like in OpenMx (and don't worry, I'm going to take you through it step by step below for people new to OpenMx)
 
