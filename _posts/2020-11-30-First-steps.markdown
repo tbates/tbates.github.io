@@ -56,7 +56,7 @@ m1 <- umxRAM("big_motor_bad_mpg"
 )
 m1 = mxRun(m1)
 plot(m1)
-``` 
+```
 
 Here's what it looks like in OpenMx (and don't worry, I'm going to take you through it step by step below for people new to OpenMx)
 
