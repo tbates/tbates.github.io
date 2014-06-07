@@ -16,7 +16,7 @@ library(OpenMx)
 packageVersion("OpenMx")
 [1] ‘999.0.0.3525’
 # A couple of helpful label strings
-v1_6 = paste0("v",1:6) # [1] "v1" "v2" "v3" "v4" "v5" "v6"
+v1_6 = paste0("v",1:nVar) # [1] "v1" "v2" "v3" "v4" "v5" "v6"
 x1_2 = c("x1", "x2")
 
 covData <- matrix(nrow=6, ncol=6, byrow=TRUE, dimnames=list(v1_6, v1_6),
@@ -31,16 +31,27 @@ covData <- matrix(nrow=6, ncol=6, byrow=TRUE, dimnames=list(v1_6, v1_6),
 # Create the model, fit it, and print a summary.
 
 ```splus
-m1 <- mxModel(model = "exampleModel", 
+nVar = dim(covData)[1]
+m1 <- mxModel(model = "lisrel_example", 
 	# Create LISREL matrices
-	mxMatrix(name="TD", "Diag", nrow=6, ncol=6, values = rep(.2, 6) , free=T, dimnames = list(v1_6, v1_6)),
+	mxMatrix(name="TD", "Diag", nrow=nVar, ncol=nVar, values = rep(.2, nVar) , free=T, dimnames = list(v1_6, v1_6)),
 	mxMatrix(name="PH", "Symm", nrow=2, ncol=2, values = c(1, .3, 1), free=c(F, T, F), dimnames = list(x1_2, x1_2)),
 	mxMatrix(name="LX", "Full", nrow=6, ncol=2, values = c(.5, .6, .8, rep(0,6), .4, .7, .5), free = c(T,T,T, rep(F, 6),T,T,T), dimnames = list(v1_6, x1_2)),
 	# Create a LISREL objective with LX, TD, and PH matrix names
 	mxExpectationLISREL(LX = "LX", TD = "TD", PH = "PH"),
-	# mxFitFunctionML(),
-	mxData(covData, type = "cov", numObs = 100)
+	mxFitFunctionFIML(),
+	mxData(umx_cov2raw(covData, 100), type = "raw")
+	# mxData(covData, type = "cov", numObs = 100)
 )
 m1 <- mxRun(m1)
 summary(m1)    
+
+umx_cores() <- function(x) {
+	
+}
+
 ```
+
+means
+These are the TX TY matrices (Residual Means of Manifest Exogenous and Endogenous Variables), 
+and KA and AL matrices (Means and residual Means of Latent Endogenous Variables) 

@@ -43,11 +43,11 @@ In `lm`, this would be "mpg ~ disp + gear"
 
 ![model of mpg](/media/1_make_a_model/mpg_1a_theory.png "A model of Miles/gallon")
 
-Let's start off really simple before moving to the full modelL Just the means and variances of the three variables.
+Let's start off really simple before moving to the full model. We'll just model the means and variances of the three variables.
 
 ``` splus
 manifests = c("mpg", "disp", "gear")
-m1 <- umxRAM("big_motor_bad_mpg"
+m1 <- umxRAM("big_motor_bad_mpg",
 	# Means and variances of the three measured (manifest) variables
 	umxPath(var = manifests),
 	umxPath(means = manifests),
