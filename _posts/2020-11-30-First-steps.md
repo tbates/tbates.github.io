@@ -35,9 +35,9 @@ Now, let's build, run, summarize, modify/compare, and display a model.
 
 We will use the built-in [mtcars](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html) data set.
 
-We will model miles/gallon (mpg) as a function of engine size (disp) and number of gears (gear). Then we can drop number of gears to test the theory that the only determinant (in this confounded play dataset) of mpg is inches<sup>3</sup> of displacement.
+We will model miles/gallon (mpg) as a function of engine size (disp) and number of cylinders (cyl). Then we can drop number of cylinders to test the theory that the only determinant (in this confounded play dataset) of mpg is inches<sup>3</sup> of displacement.
 
-In `lm`, this would be "mpg ~ disp + gear"
+In `lm`, this would be "mpg ~ disp + cyl"
 
 [Sewall Wright](http://en.wikipedia.org/wiki/Sewall_Wright"Wikipedia Entry: Sewall Wright") invented SEM to allow us to think in explicit graphs. So, here's what that language implies:
 
@@ -57,6 +57,40 @@ m1 <- umxRAM("big_motor_bad_mpg",
 m1 = mxRun(m1)
 plot(m1)
 ```
+
+```splus
+    confint(m1)
+```
+
+| Parameter      | lbound   | estimate  | ubound      |
+|:---------------|:---------|:----------|:------------|
+| cyl_to_mpg     | -2.974   | -1.587    | -0.201      |
+| disp_to_mpg    | -0.040   | -0.021    | -0.001      |
+| mpg_with_mpg   | 5.337    | 8.461     | 15.006      |
+| cyl_with_cyl   | 1.959    | 3.090     | 5.346       |
+| cyl_with_disp  | 104.881  | 193.432   | 839.877     |
+| disp_with_disp | 4537.337 | 14881.785 | 1976322.799 |
+
+What did lm think these should be?
+
+```splus
+coef(l1)
+```
+
+| (Intercept) | disp        | cyl         |
+|:------------|:------------|:------------|
+| 34.66099474 | -0.02058363 | -1.58727681 |
+
+```splus
+    confint(l1)
+```
+
+| Parameter   | 2.5 %       | 97.5 %        |
+|:------------|:------------|:--------------|
+| (Intercept) | 29.45178692 | 39.8702025668 |
+| disp        | -0.04156253 | 0.0003952592  |
+| cyl         | -3.04316181 | -0.1313918048 |
+
 
 Here's what it looks like in OpenMx (and don't worry, I'm going to take you through it step by step below for people new to OpenMx)
 
