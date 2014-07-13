@@ -11,24 +11,16 @@ umx stands for "user" OpenMx helper library. It's purpose is to help with [Struc
 
 So, let's do some modeling... 
 
-First, I show how to install umx. If you've got it loaded up, skip down to **[overview](#overview)**
+If you haven't installed umx yet, [do that now](/models/tutorial/2020/12/10/Install.html), and follow the link back here.
 
-<a name="install"></a>
-## Install umx
-umx lives on [github](http://github.com/tbates/umx) – a great place for package development. Loading libraries from github differs slightly from the procedure you may be used to. instead of `install.packages("umx")`, we're going to use `devtools::install_github("umx")` [^1]
-
-``` splus
-install.packages("devtools")
-library("devtools")
-```
-
-Once you have `devtools`, then you can install and load `umx`:
+Once you have `devtools`, then you can update and load `umx`:
 
 ``` splus
 # install and load umx
 devtools::install_github("tbates/umx")
 library("umx")
 ```
+
 <a name="overview"></a>
 ## Build and Run: An overview
 Now, let's build, run, summarize, modify/compare, and display a model.
