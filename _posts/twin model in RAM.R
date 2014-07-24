@@ -12,10 +12,10 @@ mzData <- subset(twinData, zyg == 1, selVars)
 dzData <- subset(twinData, zyg == 3, selVars)
 
 # Fit ACE Model with RawData and Path-Style Input
-ACE <-	mxModel("ACE", type = "RAM",
+ACE <- mxModel("ACE", type = "RAM",
     latentVars   = aceVars, # "A1_t1" "C1_t1" "E1_t1" "A1_t2" "C1_t2" "E1_t2"
     manifestVars = selVars, # "bmi1" "bmi2"
-    umxPath(var = aceVars, fixedAt = 1),
+    umxPath(var   = aceVars, fixedAt = 1),
     umxPath(means = aceVars, fixedAt = 0 ),
     umxPath(means = selVars, values = 20, labels = "mean" ),
     umxPath(t1ace, to = "bmi1", values = .6, label = c("a","c","e")),
@@ -23,31 +23,33 @@ ACE <-	mxModel("ACE", type = "RAM",
     umxPath("C1_t1", with = "C1_t2", fixedAt = 1)
 )
 
-m1 <- mxModel("pathACEModel",	
-    mxModel(ACE, name="MZ", umxPath("A1_t1", with = "A1_t2", fixedAt =  1), mxData(mzData, type="raw" )),
-    mxModel(ACE, name="DZ", umxPath("A1_t1", with = "A1_t2", fixedAt = .5), mxData(dzData, type="raw" )),
-    mxAlgebra(MZ.objective + DZ.objective, name="minus2ll"),
+m1 <- mxModel("ACEModel",	
+    mxModel(ACE, name = "MZ", umxPath("A1_t1", with = "A1_t2", fixedAt =  1), mxData(mzData, type="raw" )),
+    mxModel(ACE, name = "DZ", umxPath("A1_t1", with = "A1_t2", fixedAt = .5), mxData(dzData, type="raw" )),
+    mxAlgebra(MZ.objective + DZ.objective, name = "minus2ll"),
     mxFitFunctionAlgebra("minus2ll")
 )
 
-umxReportTime(m1)
 m1 <- mxRun(m1)
-summary(m1)
+plot(m1$MZ, showFixed = T)
+plot(m1$DZ, showFixed = T)
 
+summary(m1)
+umxExpCov(m1)
 # Generate ACE Output
 # -----------------------------------------------------------------------
-MZc <- mxEval(MZ.covariance, pathACEFit)
-DZc <- mxEval(DZ.covariance, pathACEFit)
-M <- mxEval(MZ.means, pathACEFit)
-A <- mxEval(a*a, pathACEFit)
-C <- mxEval(c*c, pathACEFit)
-E <- mxEval(e*e, pathACEFit)
+MZc <- mxEval(MZ.covariance, m1)
+DZc <- mxEval(DZ.covariance, m1)
+M <- mxEval(MZ.means, m1)
+A <- mxEval(a*a, m1)
+C <- mxEval(c*c, m1)
+E <- mxEval(e*e, m1)
 V <- (A+C+E)
 a2 <- A/V
 c2 <- C/V
 e2 <- E/V
 ACEest <- rbind(cbind(A,C,E),cbind(a2,c2,e2))
-LL_ACE <- mxEval(objective, pathACEFit)
+LL_ACE <- mxEval(objective, m1)
 
 
 # Fit AE model
