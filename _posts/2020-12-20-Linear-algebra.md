@@ -64,12 +64,20 @@ These can be re-expressed in matrix algebra as:
 
 **Y** = **a** × **b**
 
-Where **Y**, **a**, and **b** are matrices as follows:
+Where **Y** is a 3*1 column matrix of the Y solutions, **a** is a 3*2 matrix of a values, and **b** is a 2*1 column matrix of b values.
 
+try it in R:
 
+```splus
+a = matrix(c(1,1,2,2,3,3), 3,2, byrow=T)
+b = matrix(c(.1,.2), 2,1, byrow=T)
+Y = a %*% b; 
+list(a=a,b=b, Y=Y)
 
+```
 
 http://stattrek.com/matrix-algebra/deviation-score.aspx?tutorial=matrix
+
 Matrix algebra is a tool for solving problems. Like all tools, it represents or acts on things in a way that makes tasks easier to specify or accomplish.
 
 Matrix algebra makes the three core elements of SEM easier. These are
