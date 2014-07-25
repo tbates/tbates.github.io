@@ -10,7 +10,7 @@ description: Help with structural equation modeling
 # Note - if you enable this, use jekyll --baseurl '/' to view locally
 baseurl: /
 
-pygments: true
+highlighter: pygments
 
 markdown: redcarpet
 redcarpet:
