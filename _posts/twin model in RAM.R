@@ -4,7 +4,8 @@ data(twinData)
 Vars <- 'bmi'
 nv   <- length(Vars)
 ntv  <- nv * 2
-selVars <- c(paste0(Vars,1),paste0(Vars,2)) 
+
+selVars <- umx_paste_names(Vars, "", 1:2) 
 t1ace = paste0(c("A", "C", "E"), 1, "_t1")
 t2ace = paste0(c("A", "C", "E"), 1, "_t2")
 aceVars <- c(t1ace, t2ace)
@@ -13,14 +14,12 @@ dzData <- subset(twinData, zyg == 3, selVars)
 
 # Fit ACE Model with RawData and Path-Style Input
 ACE <- mxModel("ACE", type = "RAM",
-    latentVars   = aceVars, # "A1_t1" "C1_t1" "E1_t1" "A1_t2" "C1_t2" "E1_t2"
-    manifestVars = selVars, # "bmi1" "bmi2"
-    umxPath(var   = aceVars, fixedAt = 1),
-    umxPath(means = aceVars, fixedAt = 0 ),
-    umxPath(means = selVars, values = 20, labels = "mean" ),
-    umxPath(t1ace, to = "bmi1", values = .6, label = c("a","c","e")),
-    umxPath(t2ace, to = "bmi2", values = .6, label = c("a","c","e")),
-    umxPath("C1_t1", with = "C1_t2", fixedAt = 1)
+	umxPath(var   = aceVars, fixedAt = 1),
+	umxPath(means = aceVars, fixedAt = 0 ),
+	umxPath(means = selVars, values = 20, labels = "mean" ),
+	umxPath(t1ace, to = "bmi1", values = .6, label = c("a","c","e")),
+	umxPath(t2ace, to = "bmi2", values = .6, label = c("a","c","e")),
+	umxPath("C1_t1", with = "C1_t2", fixedAt = 1)
 )
 
 m1 <- mxModel("ACEModel",	
