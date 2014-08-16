@@ -262,8 +262,9 @@ round(m1$expCov$values, 3)
 round(cov2cor(m1$expCov$values), 3)
 
 # ======================================
-# = Ordinal (n categories > 2) example =
+# = Ordinal example (>2 categories)    =
 # ======================================
+
 # Cut to form three categories of weight
 ordDVs = c("obese1", "obese2")
 selDVs = c("wt1", "obese1", "wt2", "obese2")
