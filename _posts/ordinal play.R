@@ -1,3 +1,8 @@
+# umx_set_optimizer("CSOLNP")
+# umx_set_optimizer("NPSOL")
+# mxOption(NULL, 'mvnAbsEps', 1.e-6) # default is .001
+# mxOption(NULL, 'mvnMaxPointsC', 5e+5) # default is 5000
+
 # How to do
 # Start each day with a task completed: Make your bed: one thing leads to another. the small stuff matters.
 # Find someone to help you through life: Form groups: Friends, Wives, Coxswain, assistance of strangers.
@@ -231,14 +236,13 @@ twinData$zyg = factor(twinData$zyg, levels = 1:5, labels = c("MZFF", "MZMM", "DZ
 # = MIxed example: Binary data =
 # ==============================
 # Cut bmi to form category of 20% obese subjects
-cutPoints <- quantile(twinData[, "bmi1"], probs = .2, na.rm = TRUE)
 obesityLevels = c('normal', 'obese')
+ordDVs = c("obese1", "obese2")
+selDVs = c("wt1", "obese1", "wt2", "obese2")
+cutPoints <- quantile(twinData[, "bmi1"], probs = .2, na.rm = TRUE)
 twinData$obese1 <- cut(twinData$bmi1, breaks = c(-Inf, cutPoints, Inf), labels = obesityLevels) 
 twinData$obese2 <- cut(twinData$bmi2, breaks = c(-Inf, cutPoints, Inf), labels = obesityLevels) 
-# Step 5: Make the ordinal variables into mxFactors (ensures ordered=TRUE & requires confirmed levels)
-ordDVs = c("obese1", "obese2")
 twinData[, ordDVs] <- mxFactor(twinData[, ordDVs], levels = obesityLevels)
-selDVs = c("wt1", "obese1", "wt2", "obese2")
 mzData <- subset(twinData, zyg == "MZFF", selDVs)
 
 varianceStarts = rep(1, nVar)
@@ -278,8 +282,7 @@ mzData <- subset(twinData, zyg == "MZFF", selDVs)
 varianceStarts = rep(1, nVar)
 varianceStarts[!umx_is_ordinal(mzData)] = diag(var(mzData[,!umx_is_ordinal(mzData)], use="complete"))
 expCov  = mxMatrix(name = "expCov", "Symm", nrow = nVar, ncol = nVar, values = .3, free = TRUE, dimnames = list(selDVs, selDVs))
-expMean = mxMatrix(name = "expMean", "Full", nrow = 1, ncol = nVar, free = !umx_is_ordinal(mzData), values = 0, dimnames = list(NULL, selDVs))
-diag(expCov$free) = !umx_is_ordinal(mzData)
+expMean = mxMatrix(name = "expMean", "Full", nrow = 1, ncol = nVar, free = TRUE, values = 0, dimnames = list(NULL, selDVs))
 diag(expCov$values) = varianceStarts
 expMean$values[!umx_is_ordinal(mzData)] = colMeans(mzData[,!umx_is_ordinal(mzData)], na.rm=T)
 
@@ -289,23 +292,20 @@ m2 <- mxModel("mixOrd_Cont", expCov, expMean,
 	mxFitFunctionML(),
 	mxData(mzData, type = 'raw')
 )
-# umx_set_optimizer("CSOLNP")
+
 m2 = mxRun(m2)
 summary(m2)
 round(m2$expCov$values, 3)
 round(cov2cor(m2$expCov$values), 3)
 
-varianceStarts = rep(1, nVar)
-varianceStarts[!umx_is_ordinal(mzData)] = diag(var(mzData[,!umx_is_ordinal(mzData)], use="complete"))
-expCov  = mxMatrix(name = "expCov", "Symm", nrow = nVar, ncol = nVar, values = .3, free = TRUE, dimnames = list(selDVs, selDVs))
-expMean = mxMatrix(name = "expMean", "Full", nrow = 1, ncol = nVar, free = TRUE, values = 0, dimnames = list(NULL, selDVs))
-diag(expCov$values) = varianceStarts
-expMean$values[!umx_is_ordinal(mzData)] = colMeans(mzData[,!umx_is_ordinal(mzData)], na.rm=T)
+sort.data.frame <- function(x, decreasing=FALSE, by=1, ... ){
+  f <- function(...) order(...,decreasing=decreasing)
+  i <- do.call(f,x[by])
+  x[i,,drop=FALSE]
+}
+It sorts on the first column by default, but you may use any vector of valid column indices. Here are some examples.
 
-m3 <- mxRun(mxModel("mixOrd_Cont", expCov, expMean,
-	umxThresholdMatrix(mzData, suffixes = 1:2), # returns threshMat
-	mxExpectationNormal("expCov", "expMean", thresholds = "threshMat"),
-	mxFitFunctionML(),
-	mxData(mzData, type = 'raw')
-))
-round(m3$expCov$values, 3)
+sort(iris, by="Sepal.Length")
+sort(iris, by=c("Species","Sepal.Length"))
+sort(iris, by=1:2)
+sort(iris, by="Sepal.Length",decreasing=TRUE)
