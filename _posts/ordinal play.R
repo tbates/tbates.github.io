@@ -81,8 +81,8 @@ head(ordinalData)
 ordinalData <- mxFactor(as.data.frame(ordinalData), levels = c(1:(nThresholds + 1)))
 
 # Step 6: name the variables
-fruitynames <- paste0("banana", 1:nVariables)
-names(ordinalData) <- fruitynames
+colNames <- paste0("banana", 1:nVariables)
+names(ordinalData) <- colNames
 
 thresholdModel <- mxModel("thresholdModel",
 	mxMatrix(name = "L"           , "Full", nVariables, nFactors, values=0.2, free=T, lbound = -.99, ubound=.99),
@@ -90,18 +90,31 @@ thresholdModel <- mxModel("thresholdModel",
 	mxMatrix(name = "vectorofOnes", "Unit", nVariables, 1),
     mxMatrix(name = "unitLower", "Lower", nThresholds, nThresholds, values = 1,free = F),
 	mxMatrix(name="thresholdDeviations", "Full", nrow = nThresholds, ncol = nVariables, values = .2, free = TRUE, 
-		lbound = rep( c(-Inf,rep(.01,(nThresholds-1))) , nVariables), dimnames = list(c(), fruitynames)
+		lbound = rep( c(-Inf,rep(.01,(nThresholds-1))) , nVariables), dimnames = list(c(), colNames)
 	),
 	mxAlgebra(name = "E", vectorofOnes - (diag2vec(L %*% t(L)))),
 	mxAlgebra(name = "impliedCovs"  , L %*% t(L) + vec2diag(E)),
     mxAlgebra(name="thresholdMatrix", unitLower %*% thresholdDeviations),
-    mxExpectationNormal("impliedCovs", means = "M", dimnames = fruitynames, thresholds = "thresholdMatrix"),
+    mxExpectationNormal("impliedCovs", means = "M", dimnames = colNames, thresholds = "thresholdMatrix"),
     mxFitFunctionML(),
     mxData(observed = ordinalData, type = 'raw')
 )
 thresholdModel <- mxRun(thresholdModel)
 thresholdModel <- mxRun(thresholdModel)
 mxSummary(thresholdModel)
+
+# TODO figure out what Mike is doing with vector of ones
+timModel <- mxModel("timModel",
+	mxMatrix(name = "L"           , "Full", nVariables, nFactors, values=0.2, free=T, lbound = -.99, ubound=.99),
+	mxMatrix(name = "M"           , "Full", 1         , nVariables),
+	mxMatrix(name = "vectorofOnes", "Unit", nVariables, 1),
+	mxAlgebra(name = "E", vectorofOnes - (diag2vec(L %*% t(L)))),
+	mxAlgebra(name = "impliedCovs"  , L %*% t(L) + vec2diag(E)),
+	umxThresholdMatrix(ordinalData),
+    mxExpectationNormal("impliedCovs", means = "M", dimnames = colNames, thresholds = "thresholdMatrix"),
+    mxFitFunctionML(),
+    mxData(ordinalData, type = 'raw')
+)
 
 # ==============================
 # = Easy way to do all ordinal =
@@ -298,10 +311,12 @@ summary(m2)
 round(m2$expCov$values, 3)
 round(cov2cor(m2$expCov$values), 3)
 
-sort.data.frame <- function(x, decreasing=FALSE, by=1, ... ){
-  f <- function(...) order(...,decreasing=decreasing)
-  i <- do.call(f,x[by])
-  x[i,,drop=FALSE]
+sort.data.frame <- function(x, decreasing = FALSE, by = 1, ... ){
+  f <- function(...) {
+	  order(...,decreasing=decreasing)
+  }
+  i <- do.call(f, x[by])
+  x[i, , drop = FALSE]
 }
 It sorts on the first column by default, but you may use any vector of valid column indices. Here are some examples.
 
@@ -309,3 +324,70 @@ sort(iris, by="Sepal.Length")
 sort(iris, by=c("Species","Sepal.Length"))
 sort(iris, by=1:2)
 sort(iris, by="Sepal.Length",decreasing=TRUE)
+
+
+# ==============================
+# = ACE not running by default =
+# ==============================
+devtools::document("~/bin/umx"); devtools::install("~/bin/umx");
+devtools::document("~/bin/umx.twin"); devtools::install("~/bin/umx.twin");
+
+data(twinData)
+twinData$zyg = factor(twinData$zyg, levels = 1:5, labels = c("MZFF", "MZMM", "DZFF", "DZMM", "DZOS"))
+ordDVs = c("obese1", "obese2")
+obesityLevels = c('normal', 'overweight', 'obese')
+cutPoints <- quantile(twinData[, "bmi1"], probs = c(.5, .2), na.rm = TRUE)
+twinData$obese1 <- cut(twinData$bmi1, breaks = c(-Inf, cutPoints, Inf), labels = obesityLevels)
+twinData$obese2 <- cut(twinData$bmi2, breaks = c(-Inf, cutPoints, Inf), labels = obesityLevels)
+twinData[, ordDVs] <- mxFactor(twinData[, ordDVs], levels = obesityLevels)
+selDVs = c("wt", "obese")
+mzData <- subset(twinData, zyg == "MZFF", umx_paste_names(selDVs, "", 1:2))
+dzData <- subset(twinData, zyg == "DZFF", umx_paste_names(selDVs, "", 1:2))
+str(mzData)
+m1 = umxACE(selDVs = selDVs, dzData = dzData, mzData = mzData, suffix = '')
+m1 = mxRun(m1)
+umxSummaryACE(m1)
+ 
+# ========================
+# = 1. run unsafe = TRUE =
+# ========================
+m1 = mxRun(m1, unsafe=T); umxSummaryACE(m1)
+
+# ==========================
+# = 2. lower off diagonals =
+# ==========================
+m1$top$expCovMZ
+
+m1$top$a$values
+#          [,1]      [,2]
+# [1,] 0.5364019 0.0000000
+# [2,] 0.5886977 0.6318429
+
+m1$top$a$values[2,1] = .3
+m1$top$c$values[2,1] = .0
+m1$top$e$values[2,1] = .1
+m1 = mxRun(m1, unsafe=T); umxSummaryACE(m1)
+# -2 × log(Likelihood)
+# 'log Lik.' 61123.46 (df=11)
+# Standardized solution
+#           a1    a2    c1    c2    e1 e2
+# wt1     0.70        0.01        0.71
+# obese1 -0.76 -0.03 -0.11 -0.03 -0.64  .
+
+eigen(m1$top$a$values)$values
+eigen(m1$top$c$values)$values
+eigen(m1$top$e$values)$values
+cov(m1$MZ$data)
+a = e = t(chol(cov(m1$MZ$data@observed[c(1,3)], use="pair")))/3
+c = t(chol(cov(m1$MZ$data@observed[c(1,3)], use="pair")))/4
+
+
+m1 = omxSetParameters(m1, "a_r2c1", free=F, values=0); m1 = mxRun(m1, unsafe=T)
+
+# =======================
+# = 3. move thresholds? =
+# =======================
+m1$top$threshMat
+m1 = omxSetParameters(m1, "obese_thresh1", free=F, values=0); m1 = mxRun(m1, unsafe=T)
+
+
