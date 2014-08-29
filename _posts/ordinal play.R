@@ -1,20 +1,5 @@
 # umx_set_optimizer("CSOLNP")
 # umx_set_optimizer("NPSOL")
-# mxOption(NULL, 'mvnAbsEps', 1.e-6) # default is .001
-# mxOption(NULL, 'mvnMaxPointsC', 5e+5) # default is 5000
-
-# How to do
-# Start each day with a task completed: Make your bed: one thing leads to another. the small stuff matters.
-# Find someone to help you through life: Form groups: Friends, Wives, Coxswain, assistance of strangers.
-# Respect everyone: Measure a person by the size of their heart, not their feet.
-# You will fail often - keep moving forward: Life is not fair, you can never “succeed”.
-# Take some risks: To change the world, you might have to slide down the obstacles head first.
-# lift up the down trodden: Give people hope: Sing when you are up to your neck in mud.
-# Step up when things are the toughest
-# Face down the bullies: Don’t back down from the sharks.
-# Never, ever give up: Don’t ring the bell.
-# Measure up
-
 # This is an unreliable mess
 mxMatrix(name = "thresh", "Full",
     # values = Mx1Threshold,
@@ -349,7 +334,7 @@ m1 = mxRun(m1)
 umxSummaryACE(m1)
  
 # ========================
-# = 1. run unsafe = TRUE =
+# = 1. Run unsafe = TRUE =
 # ========================
 m1 = mxRun(m1, unsafe=T); umxSummaryACE(m1)
 
@@ -389,5 +374,3 @@ m1 = omxSetParameters(m1, "a_r2c1", free=F, values=0); m1 = mxRun(m1, unsafe=T)
 # =======================
 m1$top$threshMat
 m1 = omxSetParameters(m1, "obese_thresh1", free=F, values=0); m1 = mxRun(m1, unsafe=T)
-
-
