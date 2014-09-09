@@ -1,37 +1,41 @@
-df <- read.table(pipe("pbpaste"), header = T, sep = "\t", as.is = c(T))
+# source("http://openmx.psyc.virginia.edu/getOpenMxBeta.R")
 
-source("http://openmx.psyc.virginia.edu/getOpenMxBeta.R")
-library("OpenMx")
-mxVersion()
 devtools::document("~/bin/umx"); devtools::install("~/bin/umx");
 library(umx)
+mxVersion()
 data(demoOneFactor)  
 
-latents   <- c("G")  
-manifests <- names(demoOneFactor) 
-model <- umxRAM("OneFactor", mxData(demoOneFactor, type="raw"),
+latents <- c("G")  
+manifests <- names(demoOneFactor) # x1-5
+model <- umxRAM("OneFactor", data = mxData(demoOneFactor, type = "raw"),
     umxPath(latents, to = manifests, labels = paste0("b", 1:5)),
-    umxPath(var   = manifests, labels = paste0("u", 1:5)),
     umxPath(means = manifests),
+    umxPath(var   = manifests, labels = paste0("u", 1:5)),
     umxPath(v1m0 = latents)
 )
-model <- mxRun(model) 
-umx_report_time(model) #.398
-mxOption(model= model, key="Number of Threads")
+umx_set_cores(1)
+m1 <- mxRun(model) 
+umx_get_time(m1) # 1.49 secs
 
 # ======================
-# = run with 2 threads =
+# = Run with 4 threads =
 # ======================
-model = mxOption(model= model, key="Number of Threads", value= 2)
-m1 = confint(model, run = T)
-umx_report_time(m1) # 13.455
+umx_set_cores(4)
+m1 <- mxRun(model) 
+umx_get_time(m1) # same as with 1...
+
+# ======================
+# = CIs are threadable =
+# ======================
+m1 = confint(model, run = TRUE)
+umx_get_time(m1) # 
 
 # =====================
-# = run with 1 thread =
+# = Run with 1 thread =
 # =====================
-model = mxOption(model= model, key="Number of Threads", value= 1)
+umx_set_cores(1)
 m1 = confint(model, run = T)
-umx_report_time(m1) # 12.839
+umx_get_time(m1) # 
 
 summary(model)
 
