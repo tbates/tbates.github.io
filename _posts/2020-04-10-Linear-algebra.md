@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Linear Algebra"
-date: 2020-12-20 00:00
+date: 2020-04-10 00:00
 comments: true
 categories: models tutorial
 ---
