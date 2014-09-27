@@ -11,7 +11,7 @@ umx stands for "user" OpenMx helper library. It's purpose is to help with [Struc
 
 So, let's do some modeling... 
 
-If you haven't installed umx yet, [do that now](/models/tutorial/2020/12/10/Install.html), and follow the link back here.
+If you haven't installed devtools yet, [do that now](/models/tutorial/2020/12/10/Install.html), and follow the link back here.
 
 Once you have `devtools`, then you can update and load `umx`:
 
@@ -24,7 +24,6 @@ library("umx")
 <a name="overview"></a>
 ## Build and Run: An overview
 Now, let's build, run, summarize, modify/compare, and display a model. Real science is all about comparing different theoretical predictions: the idea that there are, say, two forms of dyslexia is tested not against a null hypothesis that there are none, but against some competing model: that there is one form, for instance. Whereas the answer to "does this theory fit better than no theory" is always "yes" if we have enough subjects, that's an incredibly low bar, and doesn't lead to increases in knowledge: these come from pitting one model (human-created theory) against another, to see which is closer to the truth. This bed-rock metric of closer-further gives us a boot strap to iteratively choose the ideas (products of human creativity) that are ever closer to reality. 
-
 
 ### Two theories to compare
 Here, we begin with two patsy ideas: one that miles/gallon (mpg) goes up as car engine size goes down **and** as number of cylinders goes up (cyl). A contrasting theory might predict that it is only the number of cylinders that matters. We can drop number of cylinders to test the idea that the only determinant (in this confounded play dataset) of mpg is inches<sup>3</sup> of displacement.
