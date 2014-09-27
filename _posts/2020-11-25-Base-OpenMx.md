@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Build & run a model in base OpenMx functions"
+title: "Run a model using just OpenMx"
 date: 2020-11-25 00:00
 comments: true
 categories: models tutorial
