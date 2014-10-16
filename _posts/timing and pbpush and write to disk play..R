@@ -16,7 +16,6 @@
 # [cmd line R wihtout using up your console..](http://dirk.eddelbuettel.com/code/littler.examples.html)
 
 
-
 #  OpenMx Ordinal Data Example
 #  Revision history:
 #  	Michael Neale 14 Aug 2010
