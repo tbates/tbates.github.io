@@ -1,3 +1,13 @@
+---
+layout: post
+title: "Lavaan bounding"
+date: 2000-12-20 00:00
+comments: true
+categories: models tutorial
+---
+
+<a name="top"></a>
+
 https://groups.google.com/forum/#!topic/lavaan/fIRj-P8Y_Dc
 
 There are several benefits to the short Mplus/sem/lavaan Style of syntax; It's easier to type 
@@ -10,6 +20,7 @@ than
 mxPath("A", to = "B", arrows = 1)    
 ```
 This syntax, however has multiple benefits, benefits which you see as soon as you start fitting moderately complex models.
+
 Even with the simplest model, you get the benefit of knowing and controlling exactly what the model is doing: almost nothing is happening "behind the scenes" - we are not setting initial factor loadings to 1, etc.
 
 `umxPath` significantly compacts that syntax, and, along with `umxRAM` for models, makes simple models quicker to type and read while preserving power and explicitness.
