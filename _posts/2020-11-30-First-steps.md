@@ -60,8 +60,6 @@ m1 <- umxRAM("big_motor_bad_mpg", data = mtcars,
 	umxPath(var   = manifests),
 	umxPath(means = manifests)
 )
-m1 = mxRun(m1)
-plot(m1, std = F)
 ```
 
 Now we can run this model with `mxRun`, get a summary, and even plot the output.
@@ -78,7 +76,7 @@ Here's the plot:
 
 ![independence model](/media/1_make_a_model/independence model.png "Independence model of three variables")
 
-This should also be a warning to us: the variances are very different from one another... Good advice to help the optimiser get to a solution in our real model might be to convert the displacement into litres. We'll ignore this for now.
+This should also be a warning: the variances are very divergent... It would help the optimiser if we convert displacement into litres. We'll ignore this for now.
 
 As you can see, this is an "independence model": No covariances were included, so all variables are modelled as uncorrelated. It would fit poorly in this case.
 
