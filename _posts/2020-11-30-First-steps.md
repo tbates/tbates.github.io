@@ -55,7 +55,7 @@ With `umxPath`, you can specify a variance (a 2-headed path originating and term
 To specify a mean (a path from the constant one to a variable), just use the argument `means =`
 
 ``` splus
-manifests = c("disp", "gear", "mpg")
+manifests = c("disp", "wt", "mpg")
 m1 <- umxRAM("big_motor_bad_mpg", data = mtcars,
 	umxPath(var   = manifests),
 	umxPath(means = manifests)
@@ -191,7 +191,7 @@ With umxPath we can save some typing and use `fixedAt`
 m2 = mxRun(mxModel(m1, umxPath("wt", to = "mpg", fixedAt = 0))
 ```
 
-That gives us a second model, with a zero path from gear to mpg.
+That gives us a second model, with a zero path from wt to mpg.
 
 `umxReRun` gives us a nifty second way, using labels. You will use this often.
 
@@ -211,7 +211,7 @@ You can also add labels to a model (or matrix) using`umxLabel`, and `umxRun` has
 <a name="compare"></a>
 ## Compare two models
 
-Now we can test if gear affects mpg by comparing these two models:
+Now we can test if weight affects mpg by comparing these two models:
 
 ``` splus
 umxCompare(m1, m2)
@@ -229,7 +229,7 @@ So, weight seems to matter, and you can increase mpg (and acceleration) by light
 Advanced tip: `umxReRun()` can modify, run, and compare all in 1-line
 
 ``` splus
-m2 = umxReRun(m1, update = "gear_to_mpg", name = "drop effect of gear"), comparison = TRUE)
+m2 = umxReRun(m1, update = "wt_to_mpg", name = "drop effect of wt"), comparison = TRUE)
 ```
 
 **Footnotes**
