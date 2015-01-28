@@ -6,27 +6,29 @@ comments: true
 categories: models tutorial
 ---
 
-When done, the first product of this thinking will be the `umxRAM()` function. Until then, you can treat this as a road-map, or skip ahead to learn about more functions.
+This is a bit of a road-map essay, you can skip it without losing much.
 
 
 ### Overview
-This post refers to where we'd like umx to end up: As an intelligent research assistant: asking when you are unclear, but also able to understand your intentions.
+This post refers to where we'd like `umx` to end up: As an intelligent research assistant: asking when you are unclear, but also able to understand your intentions.
 
-It's quite hard to take an [intentional stance](http://en.wikipedia.org/wiki/Intentional_stance"Wikipedia Entry: Intentional stance")! So, read on.
+ideally it would be like [Palantir](www.Palantir.com) ☺
+
+Assisting requires taking an [intentional stance](http://en.wikipedia.org/wiki/Intentional_stance"Wikipedia Entry: Intentional stance"). This is hard, and can lead to black-box behavior, so, read on.
 
 
 <a name="top"></a>
 The [OpenMx](http://openmx.psyc.virginia.edu) philosophy is "no black boxes". 
 
-Unlike, say, Mplus, OpenMx doesn't do things behind the scenes. This means you get just what you request: Nothing more, and nothing less.
+Unlike, say, Mplus, OpenMx doesn't do things behind the scenes. You get what you request: Nothing less, and Nothing more.
 
 Partly the OpenMx philosophy is aided by R - it makes function defaults transparent: When you omit `arrows = 1`, you can see (glass box) that `mxPath` is going to set arrows to 1, because that default is in the function definition.
 
 This means, however, that out of the box, OpenMx requires explicit setting of many things you might &ldquo;expect&rdquo; to happen automagically. In particular, OpenMx doesn't set values or labels. It also doesn't add paths or objects you don't explicitly request. So it doesn't add residual variances or covariances among exogenous variables.
 
-The goal of `umx` is to take a slightly different perspective, perhaps best phrased as *"What you expect is what you get"*.
+The goal of `umx` is to take a slightly different perspective, perhaps best phrased as *"It's easy to realise your expectations"*.
 
-It will be conservative in doing what you expect, so when you say *"I, did not, ask for that path in this model"* it won't be there :-). So…
+`umx` is [conservative](https://en.wikipedia.org/wiki/Moral_Foundations_Theory) in doing what you expect.
 
 # Things that go without saying…
 
@@ -61,14 +63,13 @@ Now with umx:
 
 ```splus
 manifests  = names(df)
-m1 <- umxRAM("A_causes_B",
-	mxPath("A", to = "B"), 
+m1 <- umxRAM("A_causes_B", data = df,
+	umxPath("A", to = "B"), 
 	umxPath(var = manifests), 
-	umxPath(means = manifests), 
-	data = mxData(df, type = "raw")
+	umxPath(means = manifests)
 )
 
-m1 = umxRun(m1)
+m1 = mxRun(m1)
 umxSummary(m1, show = "both")
 umx_show(m1)
 plot(m1)
@@ -112,28 +113,56 @@ Now some harder decisions. There are three claims of the model not yet included,
 	```splus    
 		umxPath(var = c(respondentAsp, friendAsp))
 	```
-	* I'm happy with this flagged as a default option in `umxRAM()`. So by default, `endogenous.residuals = TRUE`. Endogenous variables are manifests with incoming arrows and no outgoing arrows.
+	* We might, like `sem` implement this (the skeleton is in the umxRAM function. But in practice, this is a one liner, that actually helps your thinking to add.
+	* If `umxRAM()` were to default to  `endogenous.residuals = TRUE`, then you have to figure out what it has figured out are Endogenous variables (manifests with incoming arrows and no outgoing arrows).
 
 2. Should she assume that exogenous variables have variance?
 
 	```splus    
 		umxPath(var = c(respondentFormants, friendFormants))
 	```
-	* I'm happy with this as an option in `umxRAM()`, but defaulting to `exogenous.variances = TRUE`?
+	* Again, it's so easy to say with umxPath, that defaulting to `exogenous.variances = TRUE` causes more mental work than it saves, IMHO.
 
 3. Users often want to set the first loading on a factor to 1, or set the variance of latent traits to 1 should she assume one of these for us?
 	* My approach here is to make this easy to do in the same umxPath statement that creates the loadings or the latent variance.
 
+So you can say:
+
 	```splus    
 		umxPath(var = "latentX", fixedAt = 1)
 	```
-
-4. Should she assume that exogenous variables all intercorrelate, and add this path automatically?
-	* I'm happy with this as an option in `umxRAM()`, but defaulting to `covary.exogenous = FALSE`
+but also:
 
 	```splus    
-		umxPath(unique.bivariate = c(respondentFormants, friendFormants))
+		umxPath("latentX", to = c("DV1", "DV2", "DV3"), firstAt = 1) # fix the first path, leave the others free
 	```
+and
+
+```splus    
+umxPath(v1m0 = "latentX")
+```
+
+which is short-hand for
+
+```splus    
+umxPath(var   = "latentX", fixedAt=1)
+umxPath(means = "latentX", fixedAt=0)
+```
+
+which is equivalent to:
+
+```splus    
+mxPath("latentX", free = FALSE, values = 1)
+mxPath("latentX", free = FALSE, values = 0)
+```
+
+
+4. Should she assume that exogenous variables all intercorrelate, and add this path automatically?
+	* `umxRAM()` could have the option  `covary.exogenous = FALSE`. but again, who does this help when this is so clear?
+
+```splus    
+umxPath(unique.bivariate = c(respondentFormants, friendFormants))
+```
 
 5. Should she assume that latent traits like Respondent's Aspiration have residual variance?
 	* This seems wrong: The user can reasonably be expected to state this explicitly.
@@ -167,9 +196,6 @@ m1 = umxRAM("Duncan", data = mtcars,
 	# The aspiration latent traits have residual variance.
 	umxPath(var = latents),
 
-	# =================
-	# = Assumed paths =
-	# =================
 	# covary.exogenous  = TRUE
 	umxPath(all.bivariate = c(friendFormants, respondentFormants)),
 	# endogenous.resid  = TRUE
@@ -177,28 +203,11 @@ m1 = umxRAM("Duncan", data = mtcars,
 )    
 ```
 
+Pretty simples, no?
+
+
 #### TODO
 
 Lots!
 
 **Footnotes**
-
-<!-- 
-SEM package
-1. `specifyModel` can take a list of "fixed" variables: exogenous variables with fixed variance?
-2. it also adds residual variance for endogenous manifests?
-
-Lavaan
-1. 
-
-Possible new functions...
-
-```splus    
-uxmFixed(c("RIQ", "RSES", "FSES", "FIQ"))
-umxResidual("ROccAsp", "FOccAsp") # latents have some exogenous variance (sigma)
-umxVariance("ROccAsp", "FOccAsp", with data = Fixed, without = free) # latents have some exogenous variance (sigma)
-umxFixed(c("RIQ" ,"RSES", "FIQ","FSES", "FGenAsp", "RGenAsp"), data = theData)
-umxCovary(c("RIQ" ,"RSES", "FIQ","FSES"))
-```
-
--->
