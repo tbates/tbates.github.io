@@ -128,8 +128,10 @@ plot(m1, showMeans=F)
 
 ![model 1](/media/1_make_a_model/mtcar2.png "Model 1")
 
+We can ask for the (unstandardized) confidence intervals with the usual `confint` function. Because these can take a long time for SEM models, the default is to require you to ask to run them.
+
 ```splus
-    confint(m1)
+    confint(m1, run = TRUE)
 ```
 
 |                | lbound   | estimate  | ubound       |
@@ -158,7 +160,7 @@ coef(l1)
 ```splus
     confint(l1)
 ```
-|             | 2.5         | %            |
+|             | 2.5 %        | 97.5%       |
 |:------------|:------------|:-------------|
 | (Intercept) | 30.53357368 | 39.387534392 |
 | disp        | -0.03652128 | 0.001071794  |
