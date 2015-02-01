@@ -1,3 +1,13 @@
+---
+layout: post
+title: "Helper functions in umx"
+date: 2020-02-07 00:00
+comments: true
+categories: models tutorial
+---
+
+# This is just a stub...
+
 ### umx_residualise
 
 For instance, in a recent paper it turned this:
