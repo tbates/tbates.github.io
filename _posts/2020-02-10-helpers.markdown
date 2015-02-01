@@ -1,0 +1,44 @@
+### umx_residualise
+
+For instance, in a recent paper it turned this:
+
+```splus
+twinData$MPQAchievement_T1          <- residuals(lm(Achievement_T1                                   ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude))
+twinData$PrimarySelective_T1        <- residuals(lm(SelectivePrimaryControl_T1                       ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude))
+twinData$SecondarySelective_T1      <- residuals(lm(SelectiveSecondaryControl_T1                     ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude))
+twinData$PrimaryComp_T1             <- residuals(lm(CompensatoryPrimaryControl_T1                    ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude))
+twinData$SecondaryCompDisengage_T1  <- residuals(lm(CompensatorySecondaryControl_Disengagement_T1    ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude))
+twinData$SecondaryCompProtective_T1 <- residuals(lm(CompensatorySecondaryControl_SelfProtection_T1   ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude))
+twinData$SecondaryCompAdjust_T1     <- residuals(lm(CompensatorySecondaryControl_AdjustmentOfGoal_T1 ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude))
+twinData$CI_T1   <- residuals(lm(ConscientiousnessI_T1   ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude)) # MIDUS I C
+twinData$CII_T1  <- residuals(lm(ConscientiousnessII_T1  ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude)) # MIDUS II C
+twinData$C2II_T1 <- residuals(lm(Conscientiousness2II_T1 ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude)) # MIDUS II C
+                                                                                                                                                                   
+twinData$MPQAchievement_T2          <- residuals(lm(Achievement_T2                                   ~ Sex_T2 + Age_T2 + I(Age_T2^2), data = twinData, na.action = na.exclude))
+twinData$PrimarySelective_T2        <- residuals(lm(SelectivePrimaryControl_T2                       ~ Sex_T2 + Age_T2 + I(Age_T2^2), data = twinData, na.action = na.exclude))
+twinData$SecondarySelective_T2      <- residuals(lm(SelectiveSecondaryControl_T2                     ~ Sex_T2 + Age_T2 + I(Age_T2^2), data = twinData, na.action = na.exclude))
+twinData$PrimaryComp_T2             <- residuals(lm(CompensatoryPrimaryControl_T2                    ~ Sex_T2 + Age_T2 + I(Age_T2^2), data = twinData, na.action = na.exclude))
+twinData$SecondaryCompDisengage_T2  <- residuals(lm(CompensatorySecondaryControl_Disengagement_T2    ~ Sex_T2 + Age_T2 + I(Age_T2^2), data = twinData, na.action = na.exclude))
+twinData$SecondaryCompProtective_T2 <- residuals(lm(CompensatorySecondaryControl_SelfProtection_T2   ~ Sex_T2 + Age_T2 + I(Age_T2^2), data = twinData, na.action = na.exclude))
+twinData$SecondaryCompAdjust_T2     <- residuals(lm(CompensatorySecondaryControl_AdjustmentOfGoal_T2 ~ Sex_T2 + Age_T2 + I(Age_T2^2), data = twinData, na.action = na.exclude))
+twinData$CI_T2   <- residuals(lm(ConscientiousnessI_T2   ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude)) # MIDUS I C
+twinData$CII_T2  <- residuals(lm(ConscientiousnessII_T2  ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude)) # MIDUS II C
+twinData$C2II_T2 <- residuals(lm(Conscientiousness2II_T2 ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude)) # MIDUS II C
+    
+```
+
+Into this, much shorter, clearer, and more manageable code:
+
+```splus
+twinData = umx_residualise(Achievement                                   ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData)
+twinData = umx_residualise(SelectivePrimaryControl                       ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData)
+twinData = umx_residualise(SelectiveSecondaryControl                     ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData)
+twinData = umx_residualise(CompensatoryPrimaryControl                    ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData)
+twinData = umx_residualise(CompensatorySecondaryControl_Disengagement    ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData)
+twinData = umx_residualise(CompensatorySecondaryControl_SelfProtection   ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData)
+twinData = umx_residualise(CompensatorySecondaryControl_AdjustmentOfGoal ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData)
+twinData = umx_residualise(ConscientiousnessI                            ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData) # MIDUS I C
+twinData = umx_residualise(ConscientiousnessII                           ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData) # MIDUS II C
+twinData = umx_residualise(Conscientiousness2II                          ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData) # MIDUS II C
+
+```
