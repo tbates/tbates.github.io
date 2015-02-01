@@ -57,22 +57,24 @@ A matrix is a container or place from which something (else) originates. Example
 To begin to see the value of this representation, let's consider the following 3 equations:
 
 Y1 = a<sub>11</sub> × b<sub>1</sub> + a<sub>12</sub> × b<sub>2</sub>
+
 Y2 = a<sub>21</sub> × b<sub>1</sub> + a<sub>22</sub> × b<sub>2</sub>
+
 Y3 = a<sub>31</sub> × b<sub>1</sub> + a<sub>33</sub> × b<sub>2</sub>
 
-These can be re-expressed in matrix algebra as:
+These can be re-expressed in 1-line of matrix algebra as:
 
 **Y** = **a** × **b**
 
-Where **Y** is a 3*1 column matrix of the Y solutions, **a** is a 3*2 matrix of a values, and **b** is a 2*1 column matrix of b values.
+Where **Y** is a 3*1 column matrix of the Y solutions, **a** is a 3*2 matrix of values of `a`, and **b** is a 2*1 column matrix of `b` values.
 
-try it in R:
+Try it in R:
 
 ```splus
-a = matrix(c(1,1,2,2,3,3), 3,2, byrow=T)
-b = matrix(c(.1,.2), 2,1, byrow=T)
+a = matrix(c(1, 1, 2, 2, 3, 3), 3 , 2, byrow = TRUE)
+b = matrix(c(.1, .2), 2, 1, byrow = TRUE)
 Y = a %*% b; 
-list(a=a,b=b, Y=Y)
+list(a = a,b = b, Y = Y)
 
 ```
 
