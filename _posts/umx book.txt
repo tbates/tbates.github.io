@@ -1,0 +1,44 @@
+require(OpenMx)
+piesSimData <- read.csv("http://goo.gl/yT0XwJ")
+latents = c("PIES", "General","Feature","Image")
+manifests = paste0("i",1:11)
+m1 <- umxRAM("hierarchical", data = mxData(piesSimData, type = "raw"),
+	umxPath("General", to = c("i1","i2","i3")),
+	umxPath("Feature" , to = c("i4","i5","i6","i7")),
+	umxPath("Image"  , to = c("i8","i9","i10","i11")),
+	umxPath("PIES"   , to = c("General","Feature","Image")),
+	umxPath(var = "PIES", fixedAt =1),
+	umxPath(var = c("General","Feature","Image")),
+	umxPath(var = manifests),
+	umxPath(means = latents, fixedAt = 0),
+	umxPath(means = manifests)
+)
+m1 = mxRun(m1)
+umxSummary(m1, showEstimates = "std")
+
+m2 <- umxRAM("flat_fixed", data = mxData(piesSimData, type = "raw"),
+	umxPath("General", to = c("i1","i2","i3")),
+	umxPath("Feature" , to = c("i4","i5","i6","i7")),
+	umxPath("Image"  , to = c("i8","i9","i10","i11")),
+	umxPath(unique.bivariate = c("General","Feature","Image"), free= F, value = .1),
+	umxPath(var = c("General","Feature","Image"), fixedAt =1),
+	umxPath(var = manifests),
+	umxPath(means = c("General","Feature","Image"), fixedAt = 0),
+	umxPath(means = manifests)
+)
+m2 = mxRun(m2)
+mxCompare(m1,m2)
+umxSummary(m2, showEstimates = "std")
+
+m3 = mxModel(m2,name = "constrained_under_point_one", umxPath(unique.bivariate = c("General","Feature","Image"), free= T, lbound = -.1, ubound = .1))
+m3 = mxRun(m3)
+mxCompare(m1,m3)
+
+m4 = mxModel(m2,name = "covary", umxPath(unique.bivariate = c("General","Feature","Image"), free= TRUE))
+m4 = mxRun(m4)
+mxCompare(m1,m4)
+
+
+Living with terror
+https://medium.com/war-is-boring/what-i-learned-after-charlie-hebdo-f11d1a27e469
+Sad the chains silenced themselves. Rewarding organizations that don’t quit would help (Google (Play and Youtube) & Microsoft (Xbox) and 300 independents were not silenced). An “untouchable” (anonymous online) presence may be a partial answer to chilling effects of terrorism: Allow people to signal with validated but untracable voices that can be counted by politicians and other citizens.
