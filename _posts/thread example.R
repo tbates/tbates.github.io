@@ -15,27 +15,27 @@ model <- umxRAM("OneFactor", data = mxData(demoOneFactor, type = "raw"),
 )
 umx_set_cores(1)
 m1 <- mxRun(model) 
-umx_get_time(m1) # 1.49 secs
+umx_time(m1) # 1.49 secs
 
 # ======================
 # = Run with 4 threads =
 # ======================
 umx_set_cores(4)
 m1 <- mxRun(model) 
-umx_get_time(m1) # same as with 1...
+umx_time(m1) # same as with 1...
 
 # ======================
 # = CIs are threadable =
 # ======================
 m1 = confint(model, run = TRUE)
-umx_get_time(m1) # 
+umx_time(m1) # 
 
 # =====================
 # = Run with 1 thread =
 # =====================
 umx_set_cores(1)
 m1 = confint(model, run = T)
-umx_get_time(m1) # 
+umx_time(m1) # 
 
 summary(model)
 
