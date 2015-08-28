@@ -38,11 +38,10 @@ For matrix based models, the rule is simpler (and more general). All cells are l
 
 So a cell on row 2, column 3 of a matrix called "a" would be labelled "a_r2_c3"
 
-<a name="finding"></a>
+<a name = "finding"></a>
 #### Finding labels
 
-
-<a name="equating"></a>
+<a name = "equating"></a>
 ### Equate parameters by label
 A primary use for labels is to equate parameters. If parameters have the same label, they are forced to have identical values. They are especially powerful for allowing communication across [groups](groups in OpenMx), but also, as we will see here, within groups.
 
