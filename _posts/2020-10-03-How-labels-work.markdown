@@ -8,13 +8,41 @@ categories: models tutorial
 
 ### "In the beginning was the  label"
 
-#### This page is not finished. When done it will explain how much more powerful OpenMx is when you label your parameters. 
-#### Currently, this is just a very preliminary stub!
+#### This page is not finished.
 
-Contrary to popular opinion, labels are [great!](http://www.amazon.com/Origin-Concepts-Oxford-Cognitive-Development). Names help us understand the world, and understanding gives meaning to labels.
+OpenMx is MUCH more powerful when label your parameters.
 
-In [OpenMx](http://openmx.psyc.virginia.edu), labels are just as great. They get their power because every parameter can have a label, and that label can be used to control the parameter.
+Contrary to popular opinion, labeling things is [great!](http://www.amazon.com/Origin-Concepts-Oxford-Cognitive-Development). Labels are how we articulate concepts and invest meaning in things.
 
+In [OpenMx](http://openmx.psyc.virginia.edu), labels are just as great. They get their power because when you label parameters, those labels can be used to control the parameter.
+
+There are two ways in which labels are great: two parameters with the same label are just one parameter (i.e., labels implement constraints without all the hassle and time of constraints). Second, we can fix parameters by their label.
+
+<a name="background"></a>
+### A bit of background
+
+#### How umx labels paths and matrices
+By default, OpenMx doesn't label parameters. If you use umxRAM, then all your paths will be labelled. The labelling rule is
+
+1. one-headed: <from> + "_to_" <to>
+2. two-headed: <from> + "_with_" <to>
+3. means: "mean_" <to>
+
+So a path from "E" to "days_of_school" will be labelled "E_to_days_off_school"
+
+For matrix based models, the rule is simpler (and more general). All cells are labeled
+
+```splus
+<matrixName> + "_r" <rowNumber> + "_c" <cellNumber>
+```
+
+So a cell on row 2, column 3 of a matrix called "a" would be labelled "a_r2_c3"
+
+<a name="finding"></a>
+#### Finding labels
+
+
+<a name="equating"></a>
 ### Equate parameters by label
 A primary use for labels is to equate parameters. If parameters have the same label, they are forced to have identical values. They are especially powerful for allowing communication across [groups](groups in OpenMx), but also, as we will see here, within groups.
 
