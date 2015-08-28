@@ -4,6 +4,7 @@ title: "How labels work in OpenMx, and how to get, set, and change them using um
 date: 2020-10-03 00:00
 comments: true
 categories: models tutorial
+content: true
 toc: true
 ---
 
