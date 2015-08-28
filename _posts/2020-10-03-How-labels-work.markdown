@@ -10,6 +10,8 @@ categories: models tutorial
 
 #### This page is not finished.
 
+<%= table_of_contents(current_page) %>
+
 OpenMx is MUCH more powerful when label your parameters.
 
 Contrary to popular opinion, labeling things is [great!](http://www.amazon.com/Origin-Concepts-Oxford-Cognitive-Development). Labels are how we articulate concepts and invest meaning in things.
@@ -40,6 +42,24 @@ So a cell on row 2, column 3 of a matrix called "a" would be labelled "a_r2_c3"
 
 <a name = "finding"></a>
 #### Finding labels
+
+require(OpenMx)
+data(demoOneFactor)
+latents  = c("G")
+manifests = names(demoOneFactor)
+m1 <- mxModel("One Factor", type = "RAM",
+	manifestVars = manifests, latentVars = latents,
+	mxPath(from = latents, to = manifests),
+	mxPath(from = manifests, arrows = 2),
+	mxPath(from = latents, arrows = 2, free = FALSE, values = 1),
+	mxData(cov(demoOneFactor), type = "cov", numObs = 500)
+)
+umxGetParameters(m1) # Default "matrix address" labels, i.e "One Factor.S[2,2]"
+m1 = umxLabel(m1)
+umxGetParameters(m1, free = TRUE) # Informative labels: "G_to_x1", "x4_with_x4", etc.
+# Labeling a matrix
+a = umxLabel(mxMatrix(name = "a", "Full", 3, 3, values = 1:9))
+a$labels
 
 <a name = "equating"></a>
 ### Equate parameters by label
