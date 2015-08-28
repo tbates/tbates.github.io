@@ -10,7 +10,7 @@ categories: models tutorial
 
 #### This page is not finished.
 
-<%= table_of_contents(current_page) %>
+{:toc}
 
 OpenMx is MUCH more powerful when label your parameters.
 
