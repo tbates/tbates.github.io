@@ -182,14 +182,15 @@ First, we can modify m2 by overwriting the existing path with one fixing the val
 With umxPath we can save some typing and use `fixedAt`
 
 ``` splus
-m3 = mxRun(mxModel(m2, umxPath("wt", to = "mpg", fixedAt = 0))
+m3 = mxModel(m2, umxPath("disp", to = "mpg", fixedAt = 0), name = "weight_doesnt_matter")
+m3 = mxRun(m3)
 ```
 
 *note:* The equivalent in base OpenMx is:
 
 ``` splus
-m3 = mxModel(m2, mxPath(from = "wt", to = "mpg", free = FALSE, values = 0)
-m4 = mxRun(m3)
+m3 = mxModel(m2, mxPath(from = "wt", to = "mpg", free = FALSE, values = 0), name = "weight_doesnt_matter"))
+m3 = mxRun(m3)
 ```
 
 That examines out competing theoretical prediction, with zero path from wt to mpg.
@@ -205,26 +206,35 @@ umxCompare(m2, m3)
 
 The table below shows that dropping this path did not lower fit significantly(χ²(1) = 0.01, p = 0.905):
 
-|Model           |EP |Δ -2LL    |Δ df|p    |AIC     |Compare with Model|
-|----------------|---|----------|----|-----|--------|-------------|
-|big_and_heavy   | 9 |419.1343  |    |     |        |             |
-|no effect of wt | 8 |8.0416014 | 1  |0.005|425.1759|big_and_heavy|
+|Model                |EP |Δ -2LL |Δ df|p    |AIC   |Compare with Model|
+|---------------------|---|-------|----|-----|------|-------------|
+|big_and_heavy        | 9 |419.13 |    |     |419.12|             |
+|weight_doesnt_matter | 8 |  3.86 | 1  |0.049|420.98|big_and_heavy|
 
-So, weight seems to matter, and you can increase mpg (and acceleration) by lightening your car.
+The AIC moved the wrong direction, p-value is marginal. So, engine capacity seems barely to matter, controlling for weight of the vehicle.
 
-*Advanced tip*: `umxReRun()` can modify, run, and compare all in 1-line
+*Advanced tip*: `umxReRun()` can modify, run, and compare all in 1-line.
+
+For instance to drop the path from wt to mpg, we can say:
 
 ``` splus
-m3 = umxReRun(m2, update = "wt_to_mpg", name = "drop effect of wt"), comparison = TRUE)
+m4 = umxReRun(m2, update = "wt_to_mpg", name = "drop effect of wt"), comparison = TRUE)
 ```
 
-You will use this often. 
+You will `umxReRun` this often. 
 
 By default, `umxReRun` fixes the value of matched labels to zero. Learn more at the [umxReRun tutorial](umxReRun tutorial).
 
 **tip**: To discover the labels in a model, use `parameters(model)`
 
-**gotcha**: mxModel doesn't add these labels by default –&nbsp; `umxRAM` does.
+This version of parameters is "on steroids" - you can filter using regular expressions! So
+
+``` splus
+parameters(m3, "^mpg")
+# [1] "mpg_to_mpg"   "mpg_to_disp"  "mpg_to_wt"    "mpg_with_mpg" "mpg_with_wt" 
+```
+
+**gotcha**: OpenMx doesn't add labels by default –&nbsp; `umxRAM` does.
 
 You can also add labels to a model (or matrix) using`umxLabel`, and `umxRun` has the option `addLabels`
 
