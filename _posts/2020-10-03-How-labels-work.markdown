@@ -27,11 +27,11 @@ There are two ways in which labels are great: two parameters with the same label
 #### How umx labels paths and matrices
 By default, OpenMx doesn't label parameters. If you use umxRAM, then all your paths will be labelled. The labelling rule is
 
-1. one-headed: <from> + "_to_" <to>
-2. two-headed: <from> + "_with_" <to>
-3. means: "mean_" <to>
+1. one-headed: &lt;from&gt; + &quot;_to_&quot; &lt;to&gt;
+2. two-headed: &lt;from&gt; + &quot;_with_&quot; &lt;to&gt;
+3. means: &quot;mean_&quot; &lt;to&gt;
 
-So a path from "E" to "days_of_school" will be labelled "E_to_days_off_school"
+So a path from "E" to "days_off_school" will be labelled "E_to_days_off_school"
 
 For matrix based models, the rule is simpler (and more general). All cells are labeled
 
@@ -44,9 +44,10 @@ So a cell on row 2, column 3 of a matrix called "a" would be labelled "a_r2_c3"
 <a name = "finding"></a>
 #### Finding labels
 
+```splus
 require(OpenMx)
 data(demoOneFactor)
-latents  = c("G")
+latents = c("G")
 manifests = names(demoOneFactor)
 m1 <- mxModel("One Factor", type = "RAM",
 	manifestVars = manifests, latentVars = latents,
@@ -58,6 +59,14 @@ m1 <- mxModel("One Factor", type = "RAM",
 umxGetParameters(m1) # Default "matrix address" labels, i.e "One Factor.S[2,2]"
 m1 = umxLabel(m1)
 umxGetParameters(m1, free = TRUE) # Informative labels: "G_to_x1", "x4_with_x4", etc.
+
+```
+
+```splus
+umxGetParameters(m1, "^G_to", free = TRUE) # Informative labels: "G_to_x1", "x4_with_x4", etc.
+```
+
+
 # Labeling a matrix
 a = umxLabel(mxMatrix(name = "a", "Full", 3, 3, values = 1:9))
 a$labels
