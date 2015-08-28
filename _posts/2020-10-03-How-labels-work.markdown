@@ -62,14 +62,23 @@ umxGetParameters(m1, free = TRUE) # Informative labels: "G_to_x1", "x4_with_x4",
 
 ```
 
+Often there are lots of labels. with umxGetParameters you can filter (view just the ones you want) with regular expressions.
+
 ```splus
-umxGetParameters(m1, "^G_to", free = TRUE) # Informative labels: "G_to_x1", "x4_with_x4", etc.
+umxGetParameters(m1, "^G_to", free = TRUE) # Just labels beginning "G_to"
 ```
 
-
 # Labeling a matrix
+
+```splus
 a = umxLabel(mxMatrix(name = "a", "Full", 3, 3, values = 1:9))
 a$labels
+     [,1]     [,2]     [,3]    
+[1,] "a_r1c1" "a_r1c2" "a_r1c3"
+[2,] "a_r2c1" "a_r2c2" "a_r2c3"
+[3,] "a_r3c1" "a_r3c2" "a_r3c3"
+
+```
 
 <a name = "equating"></a>
 ### Equate parameters by label
