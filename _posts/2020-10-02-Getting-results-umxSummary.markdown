@@ -8,7 +8,7 @@ categories: models tutorial
 
 # "Give me results!"
 
-### This page is not finished. When done it will explain using umx's  packaged  S3 classes for getting results the way you already know from R
+### This page is not finished. When done it will explain using umx functions to display results the way you already know from R
 
 ### Currently, this is just a very preliminary stub!
 
@@ -21,7 +21,6 @@ categories: models tutorial
 * standardized parameters
 
 ## residuals.MxModel()
-
 
 **Footnotes**
 [^1]: 
