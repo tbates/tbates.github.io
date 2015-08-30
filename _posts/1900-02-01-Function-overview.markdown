@@ -22,14 +22,14 @@ The core family is helpers for [OpenMx](http://openmx.psyc.virginia.edu) that ta
 Here are some of the most important.
 
 1. Built-in Models
-	* `umxACE()` *# Twin ACE model, all paths labeled*
-	* umx.twin has `umxCP()`, `umxIP()`
+* `umxACE()` *# Twin ACE model, all paths labeled*
+* umx.twin has `umxCP()`, `umxIP()`
 2. Building Models
- * `umxRAM()` *# high-level model builder*
- * `umxpath()` *# high-level path builder*
- * Lower-level builders
-  * `umxStart()` *# Add likely start values to a model: **very** helpful*
-  * `umxLabel()` *# Add labels to paths: Labels allow you to set, equate, and drop paths by label!*
+	* `umxRAM()` *# high-level model builder*
+	* `umxpath()` *# high-level path builder*
+	* Lower-level builders
+		* `umxStart()` *# Add likely start values to a model: **very** helpful*
+		* `umxLabel()` *# Add labels to paths: Labels allow you to set, equate, and drop paths by label!*
 3. Run models
 	* `umxRun()` *# Use in place of mxRun to: set labels, starts, compute saturated for raw data, run model until it returns green*
 	* `umxReRun()` *# Modify a model (drop paths etc), run, and even return the comparison all in 1 line*
@@ -37,6 +37,8 @@ Here are some of the most important.
 	* `umxSummary(model)` # *Get a brief summary of model fit, similar to a journal report (Χ², p, CFI, TLI, & RMSEA)*
 	* plot() # *Create a graphical representation of a RAM model (outputs a [GraphViz](http://www.graphviz.org/Gallery.php) file)*
 		`?umxPlot` to learn more options
+	* Miscellaneous
+		* `umx_time(model)`  *# Report the time taken by a model in a compact friendly, programable format*
 5. Modify models
 	* `umxMI()` # Report the top n modification indices
 	* `umxAdd1()` # add parameters and return a table of the effect on fit
@@ -47,5 +49,3 @@ Here are some of the most important.
 6. Data and package helpers
 	* `umxHetcor(data, use = "pairwise.complete.obs")` *# Compute appropriate pair-wise correlations for mixed data types.*
 	* `lower2full(lower.no.diag, diag=F, byrow=F)`  *# Create a full matrix from a lower matrix of data*
-7. Miscellaneous
-	* `umx_time(model)`  *# Report the time taken by a model in a compact friendly, programable format*
