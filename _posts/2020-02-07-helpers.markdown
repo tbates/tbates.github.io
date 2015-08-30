@@ -1,16 +1,22 @@
 ---
 layout: post
-title: "Helper functions in umx"
+title: "Lesser-often used helper functions"
 date: 2020-02-07 00:00
 comments: true
 categories: models tutorial
 ---
 
-# This is just a stub...
+There are many useful, but less-often called upon helpers in the umx library.
+A great overview of these is sitting in the package help (`?umx`).
+
+Have a read through. If there are any that are unclear, contact me, and i will add an explanation here.
 
 ### umx_residualise
 
-For instance, in a recent paper it turned this:
+As an example, we often want to residualise several variables prior to analysis. Sometimes even in wide data sets, but with the same residual 
+formula for all copies of a variable in the wide dataset.
+
+This can lead to complex, error-prone and lengthy code. For instance, in a recent paper, this is how I was residualizing some variables:
 
 ```splus
 twinData$MPQAchievement_T1          <- residuals(lm(Achievement_T1                                   ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude))
@@ -34,10 +40,13 @@ twinData$SecondaryCompAdjust_T2     <- residuals(lm(CompensatorySecondaryControl
 twinData$CI_T2   <- residuals(lm(ConscientiousnessI_T2   ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude)) # MIDUS I C
 twinData$CII_T2  <- residuals(lm(ConscientiousnessII_T2  ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude)) # MIDUS II C
 twinData$C2II_T2 <- residuals(lm(Conscientiousness2II_T2 ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude)) # MIDUS II C
-    
+
 ```
 
-Into this, much shorter, clearer, and more manageable code:
+22 lines of code, with lots of repetition, and therefore lots of chances for error (not to say tedious typing and checking.
+You also have to remember to `na.exclude` your `lm`() call
+
+umx_residualise was able to reduce this into the following shorter, clearer, and more manageable code:
 
 ```splus
 twinData = umx_residualise(Achievement                                   ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData)
@@ -52,3 +61,6 @@ twinData = umx_residualise(ConscientiousnessII                           ~ Sex +
 twinData = umx_residualise(Conscientiousness2II                          ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData) # MIDUS II C
 
 ```
+
+You could make it even briefer, but this is about where I am happy in terms of the brevity vs. explicit tradeoff.
+

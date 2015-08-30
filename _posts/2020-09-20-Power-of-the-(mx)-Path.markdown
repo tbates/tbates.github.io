@@ -17,8 +17,3 @@ categories: models tutorial
 ### Variable reuse
 
 ### Values and labels
-
-
-
-**Footnotes**
-[^1]: 

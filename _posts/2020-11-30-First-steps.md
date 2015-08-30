@@ -9,7 +9,7 @@ categories: models tutorial
 <a name="top"></a>
 umx stands for "user" OpenMx helper library. It's purpose is to help with [Structural Equation Modeling](http://en.wikipedia.org/wiki/Structural_equation_modeling) in [OpenMx](http://openmx.psyc.virginia.edu).
 
-So, let's do some modeling... 
+I called this post "first steps" but it will take you a long way into practical modelling. So, let's do some modeling …
 
 If you haven't installed umx, [do that now](/models/tutorial/2020/12/10/Install.html), and follow the link back here.
 
