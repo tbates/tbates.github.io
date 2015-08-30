@@ -7,7 +7,6 @@ categories: models
 ---
 
 #### This page is not finished. When done it will list up the core umx functions
-#### This is just a stub beginning!
 
 umx allows you to more easily build, run, modify, and report models using OpenMx
 with code. The core functions are linked below:
@@ -17,13 +16,11 @@ Have a look, for example at `?umxRun`
 
 The functions are grouped into "families". These families are collated in the help for each function.
 
-The core family is helpers for [OpenMx](http://openmx.psyc.virginia.edu) that take care of repetitive tasks like labeling and start values, and which streamline the work flow of model comparison and graphing, while not sacrificing power.
-
 Here are some of the most important.
 
 1. Built-in Models
-* `umxACE()` *# Twin ACE model, all paths labeled*
-* umx.twin has `umxCP()`, `umxIP()`
+	* `umxACE()` *# Twin ACE model, all paths labeled*
+	* umx.twin has `umxCP()`, `umxIP()`
 2. Building Models
 	* `umxRAM()` *# high-level model builder*
 	* `umxpath()` *# high-level path builder*
@@ -39,6 +36,11 @@ Here are some of the most important.
 		`?umxPlot` to learn more options
 	* Miscellaneous
 		* `umx_time(model)`  *# Report the time taken by a model in a compact friendly, programable format*
+		* umx_APA_CI
+		* umx_APA_pval
+		* umx_aggregate
+		* umx_print
+		* umx_show
 5. Modify models
 	* `umxMI()` # Report the top n modification indices
 	* `umxAdd1()` # add parameters and return a table of the effect on fit
@@ -46,6 +48,59 @@ Here are some of the most important.
 	* `parameters(model` *# A powerful assistant to get labels from a model. like `omxGetParameters` but uses regular expressions.*
 		* ?umxGetParameters to learn more options, like regex filters
 	* `umxReRun()` *# re-run a model: Quickly drop or free parameters, rename the model, and re-run...*
-6. Data and package helpers
+6. Miscellaneous Functions
 	* `umxHetcor(data, use = "pairwise.complete.obs")` *# Compute appropriate pair-wise correlations for mixed data types.*
 	* `lower2full(lower.no.diag, diag=F, byrow=F)`  *# Create a full matrix from a lower matrix of data*
+	* umx_APA_pval
+	* umx_add_variances
+	* umx_apply
+	* umx_check_model
+	* umx_check_multi_core
+	* umx_check_OS
+	* umx_checkpoint, umx_set_checkpoint
+	* umx_check
+	* umx_default_option
+	* umx_explode
+	* umx_get_CI_as_APA_string
+	* umx_get_bracket_addresses
+	* umx_get_checkpoint
+	* umx_get_cores
+	* umx_get_optimizer
+	* umx_has_CIs
+	* umx_has_been_run
+	* umx_has_means
+	* umx_has_square_brackets
+	* umx_is_MxMatrix
+	* umx_is_MxModel
+	* umx_is_RAM
+	* umx_is_cov
+	* umx_is_endogenous
+	* umx_is_exogenous
+	* umx_is_ordered
+	* umx_msg
+	* umx_names
+	* umx_object_as_str
+	* umx_paste_names
+	* umx_print
+	* umx_rename
+	* umx_reorder
+	* umx_rot
+	* umx_set_cores
+	* umx_set_optimizer
+	* umx_string_to_algebra
+	* umx_trim
+7. Miscellaneous Data Functions
+	* umxHetCor
+	* umxPadAndPruneForDefVars
+	* umx_as_numeric
+	* umx_cont_2_ordinal
+	* umx_cov2raw
+	* umx_lower2full
+	* umx_make_bin_cont_pair_data
+	* umx_merge_CIs
+	* umx_read_lower
+	* umx_residualize
+	* umx_round
+	* umx_scale_wide_twin_data
+	* umx_scale
+	* umx_swap_a_block
