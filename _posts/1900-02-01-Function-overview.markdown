@@ -1,12 +1,10 @@
 ---
 layout: post
-title: "Overview of umx functions: Quickly survey all the umx helpers available to you"
+title: "Overview of umx functions: Quickly survey the key umx helpers available to you (plus some minor players)"
 date: 1900-02-01 00:00
 comments: true
-categories: models
+categories: models lists
 ---
-
-#### This page is not finished. When done it will list up the core umx functions
 
 umx allows you to more easily build, run, modify, and report models using OpenMx
 with code. The core functions are linked below:
@@ -20,7 +18,7 @@ Here are some of the most important.
 
 1. Built-in Models
 	* `umxACE()` *# Twin ACE model, all paths labeled*
-	* umx.twin has `umxCP()`, `umxIP()`
+		* The umx.twin library has several others:  `umxGxE()`, `umxCP()`, `umxIP()`
 2. Building Models
 	* `umxRAM()` *# high-level model builder*
 	* `umxpath()` *# high-level path builder*

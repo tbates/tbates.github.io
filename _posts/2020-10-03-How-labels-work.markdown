@@ -37,6 +37,7 @@ For matrix based models, the rule is simpler (and more general). All cells are l
 
 ```splus
 <matrixName> + "_r" <rowNumber> + "_c" <cellNumber>
+
 ```
 
 So a cell on row 2, column 3 of a matrix called "a" would be labelled "a_r2_c3"

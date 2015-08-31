@@ -84,7 +84,7 @@ Like lm, we're going to feed this model container a data set (`data = mtcars`). 
 Instead of just one formula, we give `umxRAM` a list of `umxPaths` to specify all the lines, boxes, and circles in the figure above.
 
 With `umxPath`, you can specify a variance (a 2-headed path originating and terminating on one variable) with the argument `var =`
-To specify a mean (a path from the constant one to a variable), just use the argument `means =`
+To specify a mean (a path from the constant one to a variable), just use the argument `means =`. You can learn more about umxPath in the help and in this chapter on [using umxPath](/models/tutorial/ram/2020/10/10/umxPath.html).
 
 Just like `lm`, `umxRAM` runs the model automatically for you when it is complete. (re-run models anytime with `mxRun`)
 
@@ -95,7 +95,7 @@ umxSummary(m1)
 plot(m1, std = F)
 ```
 
-nb: *You'll need to have GraphViz installed for plot to work flawlessly: if it doesn't work, don't worry. Later posts will explain how to get great graphics*!
+nb: *You'll need to have GraphViz installed for plot to open a graphic: if it doesn't work, don't worry. Later posts will explain how to get great graphics*!
 
 Here's the plot:
 

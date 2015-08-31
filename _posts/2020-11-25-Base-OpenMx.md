@@ -6,14 +6,11 @@ comments: true
 categories: models tutorial
 ---
 
-In the last post, we used `umxPath` and `umxRAM`. Here, I show how this differs from the built-in OpenMx `mxModel` and `mxPath` functions
+In the last post, we used `umxPath` and `umxRAM`. Here, I show how this differs from the built-in OpenMx `mxModel` and `mxPath` functions.
 
-`umxRAM` saves you specifying three things from the get go: Model type, manifestVars and latentVars. 
+#### umxRAM vs mxModel
 
-Fourthly, it mirrors `lm`, `plot` etc. in having an explicit **data** = *myData* argument.
-
-Finally, umxPath differs from mxPath in that it supports a range of new arguments to say what you want more succinctly and (I think, more readably).
-So to list all that in one place:
+`umxRAM` saves you specifying three elements of the model:
 
 1. The Model type
  * In OpenMx, all models are built using mxModel. You need to tell the model that the type you want is "RAM". Using umxRAM, that's not needed.
@@ -21,12 +18,14 @@ So to list all that in one place:
  * OpenMx requires all the boxes in a diagram to be listed explicitly with `manifestVars = manifests`. In umxRAM, the manifests are simply the names found in umxPath statements that are also in the data.
 3. The latentVars don't need to be listed
  * In umx, latents are just variables not found in the data.
-4. data is explicitly passed in as `data = `
- * In `mxModel`, data is just another thing listed in the model. By contrast, like lm, umxRAM has a data parameter.
 
-This last feature has some additional benefits. You can pass in raw data, and mxRAM will build the mxData statement you need. It will also drop columns not referred to in the model.
+In addition, with umxRAM, data is explicitly passed in as `data = ` In `mxModel`, data is just another thing listed in the model.
+
+This last feature has the benefit that you can pass in raw data, and `umxRAM` will create the `mxData` statement you need. It will also drop columns not referred to in the model.
 
 #### mxPath vs umxPath
+
+`umxPath` differs from mxPath in that it supports new arguments to say what you want more succinctly and (I think, more readably).
 
 `mxPath` takes `from`, `to`, `arrows` (1 or 2), `values`, and `free` parameters, amongst others. So, a path with 2 arrows, fixed at 1 requires you to specify all of those things:
 
@@ -60,15 +59,10 @@ note: currently, umxRAM doesn't support this piece-wise assembly
 <a name="build"></a>
 ## Build a model
 
-To build the model, we need OpenMx and umx
+To build the model, we need umx and some data:
 
 ``` splus
-require("OpenMx")
 require("umx")
-```
-And some data:
-
-``` splus
 data(mtcars)
 ```
 
@@ -102,11 +96,12 @@ We don't have any latents in this model. If we did, they'd be included using `la
 Now we can add the paths from `disp` and from `wt` to `mpg`
 
 ``` splus
-m1 <- mxModel(m1,  mxPath(from = c("disp", "wt"), to = "mpg") )
+m1 <- mxModel(m1, mxPath(from = c("disp", "wt"), to = "mpg") )
 ```
-By default, these are single-arrow paths, with  parameters left free, and starting at a value of 0 (probably jiggled to .01 when mxRun sees the model).
 
-This exposes a great advanced feature of `mxPath`: It is smart and powerful about reusing from and to. In this case, two paths to "mpg" are created, one from each of the two elements from. Learn more in the chapter on [Power with mxPath](todo).
+These default to single-arrow paths with values left free, starting at 0 (probably jiggled to .01 when `mxRun` sees the model).
+
+This exposes a great advanced feature of `mxPath` (and `umxPath`): They're smart about reusing `from` and `to`. In this case, two paths to "mpg" are created, one from each of the two elements from. Learn more in the chapter on [using umxPath](/models/tutorial/ram/2020/10/10/umxPath.html).
 
 So that was the same as:
 
@@ -117,9 +112,9 @@ m1 <- mxModel(m1,
 )
 ```
 
-*PS*: You can execute this - it will just re-write the two existing paths. This introduces a neat power in OpenMx: updating models by overwriting existing elements with new states.
+*PS*: You can execute this - it will just re-write the two existing paths. This introduces a neat power in OpenMx: updating models by overwriting existing elements with new ones.
 
-**PPS**: If you've got a dot graphing program installed, you can visualise what you've done in your model at every step.
+**PPS**: If you've got a graphviz graphing program installed, you can visualise what you've done in your model at every step.
 
 Assuming you've got `umx` loaded, just say:
 
@@ -127,7 +122,9 @@ Assuming you've got `umx` loaded, just say:
 	plot(m1)
 ```
 
-Alternatively
+Alternatively use the built in graphing function, `omxGraphviz`. This adds color, and uses circles to draw residuals (I use lines in `plot`), but doesn't show path values, doesn't allow customizing what gets drawn.
+
+PS: the reason i don't use circles for variances is they are not (currently) imported nicely in Omnigraffle :-(.
 
 ``` splus
 	omxGraphviz(m1) # doesn't show path values.
@@ -184,7 +181,7 @@ Done! So now we have a complete model, with all our hypothesised paths (variance
 
 Mow we run the model. In this case we take advantage of umxRun to also set labels and start values. Of course this won't touch fixed values.
 
-**nb**: See tutorials on using [labels](todo: Using labels), and on [values](todo:Using start values).
+**nb**: See tutorials on using [labels](models/tutorial/2020/10/03/How-labels-work.html), and on [values](/models/tutorial/2020/10/04/Values-matter.html).
 
 ``` splus
 m1 <- umxRun(m1, setLabels = T, setValues = T)
