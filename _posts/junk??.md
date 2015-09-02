@@ -1,12 +1,3 @@
-```splus
-.Call("callNPSOL", objective, startVals, constraints, matrices,     parameters, algebras, data, intervalList, communication,     options, state, PACKAGE = "OpenMx")
-
-runHelper(model, frontendStart, intervals, silent, suppressWarnings, unsafe, checkpoint, useSocket, onlyFrontend, useOptimizer)
-```
-
-http://thetvbay.com/torrent/9973642/WakeUpNFuck_-_Susana_Melo.mp4
-http://thetvbay.com/torrent/8486779/Woodman_Casting_X_-_Victoria_Puppy_And_Misha_Cross_HD_720p
-
 Will people still read this and think it’s interesting a year from now?
 
 That’s the goal of evergreen.
@@ -44,7 +35,3 @@ Evergreen content must hold its relevancy over time or else it risks losing its 
  * Magnified if the user's answer is incorrect.
  * Appeal via curiosity to basic needs ![Theylaughed](../../Desktop/theylaughed.jpg) 
 8. Negatives: "Worst" beats "best" (appeals to basic motive of fear)
-
- 
-
-
