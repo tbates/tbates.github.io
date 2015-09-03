@@ -12,9 +12,9 @@ This is a bit of a road-map essay, you can skip it without losing much.
 ### Overview
 This post refers to where we'd like `umx` to end up: As an intelligent research assistant: asking when you are unclear, but also able to understand your intentions.
 
-ideally it would be like [Palantir](www.Palantir.com) ☺
+Ideally it would be like [Palantir](www.Palantir.com) ☺
 
-Assisting requires taking an [intentional stance](http://en.wikipedia.org/wiki/Intentional_stance"Wikipedia Entry: Intentional stance"). This is hard, and can lead to black-box behavior, so, read on.
+Assisting requires taking an [intentional stance](http://en.wikipedia.org/wiki/Intentional_stance). This is hard, and can lead to black-box behavior, so, read on.
 
 
 <a name="top"></a>
@@ -113,47 +113,42 @@ Now some harder decisions. There are three claims of the model not yet included,
 	```splus    
 		umxPath(var = c(respondentAsp, friendAsp))
 	```
-	* We might, like `sem` implement this (the skeleton is in the umxRAM function. But in practice, this is a one liner, that actually helps your thinking to add.
-	* If `umxRAM()` were to default to  `endogenous.residuals = TRUE`, then you have to figure out what it has figured out are Endogenous variables (manifests with incoming arrows and no outgoing arrows).
+	* Some packages (`sem`, `lavaan`, Mplus) implement this. We don't: This a one-liner in umx, and adding it yourself keeps your thinking clear and explicit.
 
 2. Should she assume that exogenous variables have variance?
 
 	```splus    
 		umxPath(var = c(respondentFormants, friendFormants))
 	```
-	* Again, it's so easy to say with umxPath, that defaulting to `exogenous.variances = TRUE` causes more mental work than it saves, IMHO.
+	* Again, this is easy to say with 1 `umxPath`, So auto-adding exogenous variances causes more mental work than it saves, IMHO.
 
-3. Users often want to set the first loading on a factor to 1, or set the variance of latent traits to 1 should she assume one of these for us?
-	* My approach here is to make this easy to do in the same umxPath statement that creates the loadings or the latent variance.
+3. You need to set a scale for latent variables. Some users like to set the first loading on a factor to 1. Others fix the variance of latent traits @ 1. Should she assume one of these for us?
+	* My approach is to make it trivial to do this in the same umxPath statement that creates the loadings or the latent variance.
 
 So you can say:
 
 ```splus    
 	umxPath(var = "latentX", fixedAt = 1)
+umxPath(means = "latentX", fixedAt=0)
 ```
-but also:
+
+or
 
 ```splus    
 	umxPath("latentX", to = c("DV1", "DV2", "DV3"), firstAt = 1) # fix the first path, leave the others free
 ```
-and
+
+You also have nifty short-cuts:
 
 ```splus    
-umxPath(v1m0 = "latentX")
+	umxPath(v1m0 = "latentX")
 ```
 
-which is short-hand for
-
-```splus    
-umxPath(var   = "latentX", fixedAt=1)
-umxPath(means = "latentX", fixedAt=0)
-```
-
-which is equivalent to:
+which is short-hand equivalent to (but much easier to read and to type) to this:
 
 ```splus    
 mxPath("latentX", free = FALSE, values = 1)
-mxPath("latentX", free = FALSE, values = 0)
+mxPath("one", to = "latentX", free = FALSE, values = 0)
 ```
 
 
@@ -168,8 +163,6 @@ umxPath(unique.bivariate = c(respondentFormants, friendFormants))
 	* This seems wrong: The user can reasonably be expected to state this explicitly.
 
 So then we would build this model in umx as follows.
-
-umxPath(latentList, to = vars, Cholesky = TRUE)
 
 First, let&rsquo;s read in the Duncan data:
 
