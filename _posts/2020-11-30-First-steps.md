@@ -95,17 +95,18 @@ umxSummary(m1)
 plot(m1, std = F)
 ```
 
-nb: *You'll need to have GraphViz installed for plot to open a graphic: if it doesn't work, don't worry. Later posts will explain how to get great graphics*!
+*nb*: *You'll need to have GraphViz installed for plot to open a graphic: if it doesn't work, don't worry. Later posts will explain how to get great graphics*!
+*ps*: On systems with Word installed a .dot file extension gets opened (uselessly) by M$ word. You might need to make graphviz the default app for these files. On Mac, just go to the get info, select "open with", select Graphviz.app and then "change all".
 
 Here's the plot:
 
 ![independence model](/media/1_make_a_model/independence model.png "Independence model of three variables")
 
-This should also be a warning: the variances are very divergent... It would help the optimiser if we convert displacement into litres. We'll ignore this for now.
+This should also be a warning flag for the modeller: the variances are very divergent... It would help the optimiser if we convert displacement into litres to keep its variance closer to that of the other variables. We'll ignore this for now.
 
-As you can see, this is an "independence model": No covariances were included, so all variables are modelled as uncorrelated. It would fit poorly in this case. `umxSummary` tells us this fit is, in fact, awful: χ²(90) = 52.39, p < 0.001; CFI = 0; TLI = 0; RMSEA = 0.717
+As you can see, this is an "independence model": No covariances were included, so all variables are modelled as uncorrelated. It would fit poorly in this case. `umxSummary` tells us this fit can definately be improved: χ²(90) = 98.32, p < 0.001; CFI = 0; TLI = 0; RMSEA = 0.996
 
-Clearly some un-modelled covariance here... Let's build our first theorized model.
+Clearly some un-modelled covariance here... Let's build our theorized model.
 
 ``` splus
 m2 <- umxRAM("big_and_heavy", data = mxData(mtcars, type = "raw"),
@@ -119,11 +120,20 @@ m2 <- umxRAM("big_and_heavy", data = mxData(mtcars, type = "raw"),
 )
 
 # Now show a summary.
+umxCompare(m2, m1)
+
 umxSummary(m2, show = "std")
 ```
 
-This (saturated) model fits perfectly, of course.
-So `umxSummary` shows that m1 fits well: χ²(87) = 0.02, p < 0.001; CFI = 1; TLI = 1; RMSEA = 0
+This is MUCH better, the three degrees of freedom were worth paying for (As )
+
+|  |Model            |EP|&Delta; -2LL|&Delta; df|p      |AIC   |Compare with Model|
+|--|-----------------|--|------------|----------|-------|------|------------------|
+|1 |big_and_heavy    |9 |419.12|     |          |       |      |                  |
+|2 |big_motor_bad_mpg|6 |98.312      |3         |< 0.001|511.44|big_and_heavy     |
+
+
+In fact this (saturated) model fits perfectly, as `umxSummary` shows: χ²(87) = 0, p < 0.001; CFI = 1; TLI = 1; RMSEA = 0
 
 We also get path estimates ("**show** = *std*" requests the standardized paths).
 
@@ -144,6 +154,8 @@ plot(m1, showMeans = F)
 ```
 
 ![model 1](/media/1_make_a_model/mtcar2.png "Model 1")
+
+note: Means are not shown on this diagram (showMeans =FALSE) though they are in the model.
 
 We can ask for the (unstandardized) confidence intervals with the usual `confint` function. Because these can take a long time for SEM models, the default is to require you to ask to run them.
 
