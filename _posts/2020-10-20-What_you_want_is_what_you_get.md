@@ -78,7 +78,7 @@ plot(m1)
 
 Let's take a more representatively complex model:
 
-<img src="/media/umxFixed/Duncan.png" alt="Duncan SEM model" width="520">
+<img src="/media/umxFixed/Duncan.png" alt="Duncan SEM model">
 
 <!-- https://github.com/robwierzbowski/jekyll-picture-tag -->
 
