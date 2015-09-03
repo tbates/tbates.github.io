@@ -47,7 +47,7 @@ Fully verbalized, people who know this means "changes in A cause changes in B" e
 2. That A accounts for *some* of the variance in B.
 3. But not all of it: B has [residual variance](http://en.wikipedia.org/wiki/Explained_variation"Wikipedia Entry: Explained variation").
 4. Variance in A is [exogenous](http://en.wikipedia.org/wiki/Exogeny"Wikipedia Entry: Exogeny") to the model
- * As such, the variance of B is fixed at 1 (in [standardized](http://en.wikipedia.org/wiki/Standard_score"Wikipedia Entry: Standard score") terms)
+ * As such, its variance is fixed at 1 (in [standardized](http://en.wikipedia.org/wiki/Standard_score"Wikipedia Entry: Standard score") terms)
 5. A and B have means as well as variances.
 
 How to implement this without black boxes? Let's look at an `lm` statement of A <- B:
@@ -57,7 +57,7 @@ df = myFADataRaw[, 1:2]
 names(df) <- c("A", "B")
 summary(lm(B ~ A, data = df))
 ```
-This tells us that B = A × 𝛽1 + , where 𝛽1 = 0.64 CI95%[0.57, 0.71]. R² = 0.40 (F(1, 498) = 336.1,  p-value: << .001)
+This tells us that B = A × 𝛽1 + , where 𝛽1 = 0.64  CI95[0.57, 0.71]. R² = 0.40 (F(1, 498) = 336.1,  p-value: << .001)
 
 Now with umx:
 
@@ -91,7 +91,7 @@ The theoretical claim is:
 2. These are formed from their [IQ](http://en.wikipedia.org/wiki/Intelligence_quotient"Wikipedia Entry: Intelligence quotient"), [SES](http://en.wikipedia.org/wiki/SES"Wikipedia Entry: SES"), and parental aspiration.
 	* SES effects impact on both respondent and friend's aspiration.
 3. Latent aspiration affects occupational and educational aspiration.
-4. The aspiration latent traits interact with each other.
+4. The aspiration latent traits have mutual influences on each other.
 
 These four choices clearly will need to be specified by the researcher.
 
@@ -100,9 +100,9 @@ What can the assistant assume for any model? Clearly she can assume we intend th
 That allows us to delete this code from a standard ram model:
 
 ```splus
-type = "RAM", 
-latentVars = latents,
-manifestVars = manifests,
+type = "RAM"
+latentVars = latents
+manifestVars = manifests
 ```
 
 Now some harder decisions. There are three claims of the model not yet included, for which our assistant might be able to assume intended answers.
@@ -128,14 +128,14 @@ Now some harder decisions. There are three claims of the model not yet included,
 
 So you can say:
 
-	```splus    
-		umxPath(var = "latentX", fixedAt = 1)
-	```
+```splus    
+	umxPath(var = "latentX", fixedAt = 1)
+```
 but also:
 
-	```splus    
-		umxPath("latentX", to = c("DV1", "DV2", "DV3"), firstAt = 1) # fix the first path, leave the others free
-	```
+```splus    
+	umxPath("latentX", to = c("DV1", "DV2", "DV3"), firstAt = 1) # fix the first path, leave the others free
+```
 and
 
 ```splus    
@@ -157,31 +157,56 @@ mxPath("latentX", free = FALSE, values = 0)
 ```
 
 
-4. Should she assume that exogenous variables all intercorrelate, and add this path automatically?
+4th. Should she assume that exogenous variables all intercorrelate, and add this path automatically?
 	* `umxRAM()` could have the option  `covary.exogenous = FALSE`. but again, who does this help when this is so clear?
 
 ```splus    
 umxPath(unique.bivariate = c(respondentFormants, friendFormants))
 ```
 
-5. Should she assume that latent traits like Respondent's Aspiration have residual variance?
+5th. Should she assume that latent traits like Respondent's Aspiration have residual variance?
 	* This seems wrong: The user can reasonably be expected to state this explicitly.
 
-So then we would build this model in umx like as follows
+So then we would build this model in umx as follows.
 
-First, let's define some handy lists:
+umxPath(latentList, to = vars, Cholesky = TRUE)
+
+First, let&rsquo;s read in the Duncan data:
+
+```splus
+
+dimnames = c("ROccAsp", "REdAsp", "FOccAsp", "FEdAsp", "RParAsp", "RIQ", "RSES", "FSES", "FIQ", "FParAsp")
+tmp = c(
+	c(0.6247,
+	0.3269, 0.3669,
+	0.4216, 0.3275, 0.6404,
+	0.2137, 0.2742, 0.1124, 0.0839,
+	0.4105, 0.4043, 0.2903, 0.2598, 0.1839,
+	0.3240, 0.4047, 0.3054, 0.2786, 0.0489, 0.2220,
+	0.2930, 0.2407, 0.4105, 0.3607, 0.0186, 0.1861, 0.2707,
+	0.2995, 0.2863, 0.5191, 0.5007, 0.0782, 0.3355, 0.2302,  0.2950,
+	0.0760, 0.0702, 0.2784, 0.1988, 0.1147, 0.1021, 0.0931, -0.0438, 0.2087)
+)
+duncan = umx_lower2full(tmp, diag = FALSE, dimnames = dimnames)
+duncan = mxData(duncan, type = "cov", numObs = 300)
+
+```
+
+and define some handy lists:
 
 ```splus
 respondentFormants = c("RSES", "FSES", "RIQ", "RParAsp")
 friendFormants     = c("FSES", "RSES", "FIQ", "FParAsp")
 respondentAsp      = c("ROccAsp", "REdAsp")
 friendAsp          = c("FOccAsp", "FEdAsp")
+latents            = c("RGenAsp", "FGenAsp")
 ```
 
 Now using these we can specify the model as follows:
 
 ```splus
-m1 = umxRAM("Duncan", data = mtcars,
+
+m1 = umxRAM("Duncan", data = duncan,
 	# Respondents and their friends each have a latent trait of "Aspiration" formed from IQ, SES, and parental aspiration.
 	umxPath(respondentFormants, to = "RGenAsp"),
 	umxPath(friendFormants,     to = "FGenAsp"),
@@ -190,17 +215,18 @@ m1 = umxRAM("Duncan", data = mtcars,
 	umxPath("RGenAsp", to = respondentAsp),
 	umxPath("FGenAsp", to = friendAsp),
 
-	# The latent traits interact with each other.
-	umxPath(all.bivariate = latents),
+	# The latent traits influence each other.
+	umxPath(unique.bivariate = latents),
 
 	# The aspiration latent traits have residual variance.
 	umxPath(var = latents),
 
 	# covary.exogenous  = TRUE
-	umxPath(all.bivariate = c(friendFormants, respondentFormants)),
+	umxPath(unique.bivariate = c(friendFormants, respondentFormants)),
 	# endogenous.resid  = TRUE
-	umxPath(var = c(respondentAsp, friendAsp)),
-)    
+	umxPath(var = c(respondentAsp, friendAsp))
+)
+
 ```
 
 Pretty simples, no?
