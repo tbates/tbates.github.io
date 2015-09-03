@@ -21,9 +21,9 @@ library("umx")
 ```
 
 <a name="overview"></a>
-## Build and Run: An overview
+## Overview
 
-For those of you who want to get straitght into the code: here's what happens on this page:
+For those of you who want to get straight to the code: here's what happens on this page:
 
 ``` splus
 m2 <- umxRAM("big_and_heavy", data = mxData(mtcars, type = "raw"),
@@ -54,7 +54,7 @@ Our contrasting theory predict that it is "*only weight matters*", not engine ca
 
 We will use the built-in [mtcars](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html) data set. miles/gallon is `mpg`, displacement is `disp`, and weight is `wt`.
 
-We'll use umx to build both models, and compare them.
+We'll use `umx` to build both models, and compare them.
 
 ### Building on what you already know
 
