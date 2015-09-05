@@ -8,40 +8,53 @@ categories: models tutorial
 
 ### Values matter
 
-#### This page is not finished. When done it will explain using umx to set values in models. 
-#### This is just a stub beginning!
+#### nb: This page is not finished. 
 
-Values matter. In OpenMx, values matter even more. They are where the model starts, and, once run, they are the best estimates of our parameters.
+Values matter if life. In OpenMx, values matter to. They are where model estimation starts from. Once run, they are the best estimates of our parameters.
 
-**Core concept in OpenMx**
+### Core concepts about parameters in OpenMx
+
 Parameters know three things: Whether they are free, what their current value is, and, critically, what their label is.
 
-In this tutorial, we are going to [set](#setStarts) values, [get values](#getValues). In more [advanced tutorials](), we can equate values using [constraints]() and labels.
+In this tutorial, we are going to [set](#setStarts) values, [get values](#getValues). In more [advanced tutorials](TODO: constraints and labels), we will learn how to equate values using constraints and labels.
 
-### setting start values
-
-Set values in a matrix
-
-``` splus
-mxMatrix(name="IamAllOnes", type="Full", nrow=1, ncol=3, values=1, label=labels, byrow = T)
-
-```
-
-Tip: R fills by column. You can say byrow = T to do what humans do: fill across a line before moving to the next.
+### Setting start values in a path
 
 ``` splus
 latents = c("G")
 manifests = names(demoOneFactor)
-m1 <- mxModel("One Factor", type = "RAM",
-	manifestVars = manifests,
-	latentVars  = latents,
-	mxPath(from = latents, to = manifests),
-	mxPath(from = manifests, arrows = 2),
-	mxPath(from = latents  , arrows = 2, free = F, values = 1),
-	mxData(cov(demoOneFactor), type = "cov", numObs = nrow(demoOneFactor))
+df = mxData(cov(demoOneFactor), type = "cov", numObs = nrow(demoOneFactor))
+m1 <- mxModel("One Factor", data = df,
+	umxPath(latents, to = manifests),
+	umxPath(var = manifests),
+	umxPath(v1m0 = latents)
 )
+
+```
+
+### Set values in a matrix
+
+Values are reused to fill the cells of a matrix:
+
+``` splus
+mxMatrix(name = "IamAllOnes", type = "Full", nrow = 3, ncol = 3, values = 1, byrow = TRUE)
+$values
+     [,1] [,2] [,3]
+[1,]    1    1    1
+[2,]    1    1    1
+[3,]    1    1    1
+
+```
+
+R fills by column. You can say byrow = TRUE to do what humans do: fill across a line before moving to the next.
+
+``` splus
+mxMatrix(name = "IwasFilledByRow", type = "Full", nrow = 3, ncol = 3, values = 1:9, byrow = TRUE)
+$values
+     [,1] [,2] [,3]
+[1,]    1    2    3
+[2,]    4    5    6
+[3,]    7    8    9
 ```
 
 
-**Footnotes**
-[^1]: 
