@@ -24,7 +24,9 @@ There are two ways in which labels are great: two parameters with the same label
 <a name="background"></a>
 ### A bit of background
 
-#### How umx labels paths and matrices
+When finished, this will talk about labels, the labels layer of mxMatrices, and equating via labels.
+
+####  umx labels creates systematic paths and matrices for you.
 By default, OpenMx doesn't label parameters. If you use umxRAM, then all your paths will be labelled. The labelling rule is
 
 1. one-headed: &lt;from&gt; + &quot;_to_&quot; &lt;to&gt;
@@ -57,16 +59,32 @@ m1 <- mxModel("One Factor", type = "RAM",
 	mxPath(from = latents, arrows = 2, free = FALSE, values = 1),
 	mxData(cov(demoOneFactor), type = "cov", numObs = 500)
 )
-umxGetParameters(m1) # Default "matrix address" labels, i.e "One Factor.S[2,2]"
+
+```
+###  Using the parameters()  function
+umx implements a `parameters` function to get these for you.
+
+```splus
+parameters(m1) # Default "matrix address" labels, i.e "One Factor.S[2,2]"
 m1 = umxLabel(m1)
+parameters(m1, free = TRUE) # Default "matrix address" labels, i.e "One Factor.S[2,2]"
 umxGetParameters(m1, free = TRUE) # Informative labels: "G_to_x1", "x4_with_x4", etc.
 
 ```
 
-Often there are lots of labels. with umxGetParameters you can filter (view just the ones you want) with regular expressions.
+#### Filtering to see just the labels you're looking for
+
+Often there are many labels in a model. parameters (or its alias umxGetParameters) allows you to can filter (view just the ones you want) with regular expressions!
 
 ```splus
 umxGetParameters(m1, "^G_to", free = TRUE) # Just labels beginning "G_to"
+```
+Another feature we've used but not highlighted above is the free=TRUE option. Compare these two outputs:
+
+```splus
+parameters(m1) # All parameters
+parameters(m1, free = TRUE) # Just parameters that are free
+parameters(m1, free = FALSE) # Just parameters that are fixed
 ```
 
 # Labeling a matrix
