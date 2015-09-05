@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How labels work in OpenMx, and how to get, set, and change them using umx."
+title: "Labels, and how to get, set, and change them using umx."
 date: 2020-10-03 00:00
 comments: true
 categories: models tutorial
@@ -186,6 +186,3 @@ umxGetParameters(m1, "^x1.*5$") # umxGetParameters can filter using regular expr
 m1 = omxSetParameters(m1, labels="G_to_x5", newlabels = "G_to_x4")
 umxSummary(mxRun(m1), show = "std")
 ```
-
-**Footnotes**
-[^1]: 

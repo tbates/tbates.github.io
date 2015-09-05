@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Values and why they are important in OpenMx"
+title: "Values and why they are important"
 date: 2020-10-04 00:00
 comments: true
 categories: models tutorial
@@ -16,7 +16,7 @@ Values matter if life. In OpenMx, values matter to. They are where model estimat
 
 Parameters know three things: Whether they are free, what their current value is, and, critically, what their label is.
 
-In this tutorial, we are going to [set](#setStarts) values, [get values](#getValues). In more [advanced tutorials](TODO: constraints and labels), we will learn how to equate values using constraints and labels.
+In this tutorial, we are going to [set](#setStarts) values, [get values](#getValues). In more [advanced tutorials](2020-10-03-How-labels-work), we will learn how to equate values using constraints and labels.
 
 ### Setting start values in a path
 
