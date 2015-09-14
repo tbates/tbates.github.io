@@ -127,10 +127,10 @@ umxSummary(m2, show = "std")
 
 This is better, i.e., the three degrees of freedom were worth paying for.
 
-|  | Model           |EP|&Delta; -2LL|&Delta; df|p      |AIC   |Compare with Model|
-|--|-----------------|--|------------|----------|-------|------|------------------|
-|1 |big_and_heavy    |9 |419.12      |          |       |      |                  |
-|2 |big_motor_bad_mpg|6 |98.312      |3         |< 0.001|511.44|big_and_heavy     |
+|   |  Model            | EP| &Delta; -2LL | &Delta; df | p       |AIC    | Compare with Model|
+|---|-------------------|---|--------------|------------|---------|-------|-------------------|
+| 1 | big_and_heavy     | 9 | 419.12       |            |         |       |                   |
+| 2 | big_motor_bad_mpg | 6 | 98.312       | 3          | < 0.001 |511.44 | big_and_heavy     |
 
 
 In fact this (saturated) model fits perfectly, as `umxSummary` shows: χ²(87) = 0, p < 0.001; CFI = 1; TLI = 1; RMSEA = 0
