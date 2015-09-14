@@ -237,14 +237,14 @@ Now we can test if weight affects mpg by comparing these two models:
 umxCompare(m2, m3)
 ```
 
-The table below shows that dropping this path did not lower fit significantly(χ²(1) = 0.01, p = 0.905):
+The table below shows that dropping this path caused a (just) significant loss of fit (χ²(1) = 3.96, p = 0.049):
 
 |Model                |EP |Δ -2LL |Δ df|p    |AIC   |Compare with Model|
 |---------------------|---|-------|----|-----|------|-------------|
 |big_and_heavy        | 9 |419.13 |    |     |419.12|             |
 |weight_doesnt_matter | 8 |  3.86 | 1  |0.049|420.98|big_and_heavy|
 
-The AIC moved the wrong direction, p-value is marginal. So, engine capacity seems barely to matter, controlling for weight of the vehicle.
+The AIC moved the wrong direction, p-value is marginal. This model would lead us to conclude that weight matters, but only a little bit (controlling for engine capacity). Note however that these variables covary: heavy vehicles have big motors: This is why trying to do science on observational data is fraught with problems. MUCH better to systematically vary the weight and watch mpg change. In behavior science, [Twin Studies](http://en.wikipedia.org/wiki/Twin_study), [Mendelian Randomization](http://en.wikipedia.org/wiki/Mendelian_randomization) let us do this.
 
 *Advanced tip*: `umxReRun()` can modify, run, and compare all in 1-line.
 
