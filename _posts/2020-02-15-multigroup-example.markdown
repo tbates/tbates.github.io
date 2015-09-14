@@ -6,6 +6,8 @@ comments: true
 categories: models tutorial
 ---
 
+### This is a work in progress: email me to prioritize this page if you want it sooner.
+
 ```splus
 require(OpenMx)
 require(umx)

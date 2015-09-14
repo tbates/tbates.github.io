@@ -12,7 +12,7 @@ This is a bit of a road-map essay, you can skip it without losing much.
 ### Overview
 This post refers to where we'd like `umx` to end up: As an intelligent research assistant: asking when you are unclear, but also able to understand your intentions.
 
-Ideally it would be like [Palantir](www.Palantir.com) ☺
+Ideally it would be like [Palantir](http://www.Palantir.com) ☺
 
 Assisting requires taking an [intentional stance](http://en.wikipedia.org/wiki/Intentional_stance). This is hard, and can lead to black-box behavior, so, read on.
 

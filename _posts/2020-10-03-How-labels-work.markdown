@@ -72,11 +72,12 @@ umxGetParameters(m1, free = TRUE) # Informative labels: "G_to_x1", "x4_with_x4",
 
 #### Filtering to see just the labels you're looking for
 
-Often there are many labels in a model. parameters (or its alias umxGetParameters) allows you to can filter (view just the ones you want) with regular expressions!
+Often there are many labels in a model. `parameters` (or its alias `umxGetParameters`) allows you to "filter" this list, i.e., view just the ones you want. You can even write filters using regular expressions!
 
 ```splus
 umxGetParameters(m1, "^G_to", free = TRUE) # Just labels beginning "G_to"
 ```
+
 Another feature we've used but not highlighted above is the free=TRUE option. Compare these two outputs:
 
 ```splus
@@ -99,7 +100,7 @@ a$labels
 
 <a name = "equating"></a>
 ### Equate parameters by label
-A primary use for labels is to equate parameters. If parameters have the same label, they are forced to have identical values. They are especially powerful for allowing communication across [groups](groups in OpenMx), but also, as we will see here, within groups.
+A primary use for labels is to equate parameters. If parameters have the same label, they are forced to have identical values. They are especially powerful for allowing communication across [groups](2020-02-15-multigroup-example), but also, as we will see here, within groups.
 
 **Core concept in OpenMx**
 

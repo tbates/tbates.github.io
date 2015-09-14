@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Get more confidence, easily!"
-date: 2020-02-15 00:00
+title: "Standard Errors!"
+date: 2020-02-14 00:00
 comments: true
 categories: models tutorial
 ---
