@@ -60,7 +60,7 @@ We'll use `umx` to build both models, and compare them.
 
 In `lm`, model 1 would be "mpg ~ disp + wt". Model 2 would be "mpg ~ disp"
 
-[Sewall Wright](http://en.wikipedia.org/wiki/Sewall_Wright"Wikipedia Entry: Sewall Wright") invented SEM to allow us to think in explicit graphs. So, here's what that language implies:
+[Sewall Wright](http://en.wikipedia.org/wiki/Sewall_Wright) invented SEM to allow us to think in explicit graphs. So, here's what that language implies:
 
 ![model of mpg](/media/1_make_a_model/mpg_1a_theory.png "A model of Miles/gallon")
 
@@ -84,7 +84,7 @@ Like lm, we're going to feed this model container a data set (`data = mtcars`). 
 Instead of just one formula, we give `umxRAM` a list of `umxPaths` to specify all the lines, boxes, and circles in the figure above.
 
 With `umxPath`, you can specify a variance (a 2-headed path originating and terminating on one variable) with the argument `var =`
-To specify a mean (a path from the constant one to a variable), just use the argument `means =`. You can learn more about umxPath in the help and in this chapter on [using umxPath](/models/tutorial/ram/2020/10/10/umxPath.html).
+To specify a mean (a path from the constant one to a variable), just use the argument `means =`. You can learn more about umxPath in the help and in this chapter on [using umxPath](http://tbates.github.io/ram/path/2020/09/20/Power-of-the-(mx)-Path.html).
 
 Just like `lm`, `umxRAM` runs the model automatically for you when it is complete. (re-run models anytime with `mxRun`)
 
@@ -125,11 +125,11 @@ umxCompare(m2, m1)
 umxSummary(m2, show = "std")
 ```
 
-This is MUCH better, the three degrees of freedom were worth paying for (As )
+This is better, i.e., the three degrees of freedom were worth paying for.
 
-|  |Model            |EP|&Delta; -2LL|&Delta; df|p      |AIC   |Compare with Model|
+|  | Model           |EP|&Delta; -2LL|&Delta; df|p      |AIC   |Compare with Model|
 |--|-----------------|--|------------|----------|-------|------|------------------|
-|1 |big_and_heavy    |9 |419.12|     |          |       |      |                  |
+|1 |big_and_heavy    |9 |419.12      |          |       |      |                  |
 |2 |big_motor_bad_mpg|6 |98.312      |3         |< 0.001|511.44|big_and_heavy     |
 
 
@@ -168,7 +168,7 @@ We can ask for the (unstandardized) confidence intervals with the usual `confint
 | disp_to_mpg    | -0.035   | -0.018    | 0.000        |
 | wt_to_mpg      | -5.641   | -3.351    | -1.060       |
 | mpg_with_mpg   | 4.866    | 7.709     | 13.642       |
-| disp_with_disp | 4536.833 | 15360.850 | 24081337.389 |
+| disp_with_disp | 4536     | 15360     | 24081337     |
 | disp_with_wt   | 58.605   | 107.685   | 286.965      |
 | wt_with_wt     | 0.589    | 0.951     | 1.590        |
 | one_to_mpg     | 30.631   | 34.960    | 39.291       |

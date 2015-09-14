@@ -15,11 +15,9 @@ toc: true
 
 OpenMx is MUCH more powerful when label your parameters.
 
-Contrary to popular opinion, labeling things is [great!](http://www.amazon.com/Origin-Concepts-Oxford-Cognitive-Development). Labels are how we articulate concepts and invest meaning in things.
+Making labels for things is a key to [cognitive development](http://www.amazon.com/dp/0199838801). In [OpenMx](http://openmx.psyc.virginia.edu), labels are just as important. They get their power because when you label parameters, those labels can be used to control the parameter.
 
-In [OpenMx](http://openmx.psyc.virginia.edu), labels are just as great. They get their power because when you label parameters, those labels can be used to control the parameter.
-
-There are two ways in which labels are great: two parameters with the same label are just one parameter (i.e., labels implement constraints without all the hassle and time of constraints). Second, we can fix parameters by their label.
+There are two ways in which labels are valuable: two parameters with the same label are just one parameter (i.e., labels implement constraints without all the hassle and time of constraints). Second, we can fix parameters by their label.
 
 <a name="background"></a>
 ### A bit of background

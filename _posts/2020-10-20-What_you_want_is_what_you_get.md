@@ -43,11 +43,11 @@ This, to be precise, leaves a lot of expectations unstated - a lot is &ldquo;int
 Fully verbalized, people who know this means "changes in A cause changes in B" expect also that:
 
 1. A and B are measured (squares)
-2. That A and B have [variance](http://en.wikipedia.org/wiki/Index_of_dispersion"Wikipedia Entry: Index of dispersion").
+2. That A and B have [variance](http://en.wikipedia.org/wiki/Index_of_dispersion).
 2. That A accounts for *some* of the variance in B.
-3. But not all of it: B has [residual variance](http://en.wikipedia.org/wiki/Explained_variation"Wikipedia Entry: Explained variation").
-4. Variance in A is [exogenous](http://en.wikipedia.org/wiki/Exogeny"Wikipedia Entry: Exogeny") to the model
- * As such, its variance is fixed at 1 (in [standardized](http://en.wikipedia.org/wiki/Standard_score"Wikipedia Entry: Standard score") terms)
+3. But not all of it: B has [residual variance](http://en.wikipedia.org/wiki/Explained_variation).
+4. Variance in A is [exogenous](http://en.wikipedia.org/wiki/Exogeny) to the model
+ * As such, its variance is fixed at 1 (in [standardized](http://en.wikipedia.org/wiki/Standard_score) terms)
 5. A and B have means as well as variances.
 
 How to implement this without black boxes? Let's look at an `lm` statement of A <- B:
@@ -88,7 +88,7 @@ How would we state the claims of this model, and what do we expect an intelligen
 The theoretical claim is:
 
 1. Respondents and their friends each have a latent trait of "Aspiration"
-2. These are formed from their [IQ](http://en.wikipedia.org/wiki/Intelligence_quotient"Wikipedia Entry: Intelligence quotient"), [SES](http://en.wikipedia.org/wiki/SES"Wikipedia Entry: SES"), and parental aspiration.
+2. These are formed from their [IQ](http://en.wikipedia.org/wiki/Intelligence_quotient), [SES](http://en.wikipedia.org/wiki/SES), and parental aspiration.
 	* SES effects impact on both respondent and friend's aspiration.
 3. Latent aspiration affects occupational and educational aspiration.
 4. The aspiration latent traits have mutual influences on each other.

@@ -101,7 +101,7 @@ m1 <- mxModel(m1, mxPath(from = c("disp", "wt"), to = "mpg") )
 
 These default to single-arrow paths with values left free, starting at 0 (probably jiggled to .01 when `mxRun` sees the model).
 
-This exposes a great advanced feature of `mxPath` (and `umxPath`): They're smart about reusing `from` and `to`. In this case, two paths to "mpg" are created, one from each of the two elements from. Learn more in the chapter on [using umxPath](/models/tutorial/ram/2020/10/10/umxPath.html).
+This exposes a great advanced feature of `mxPath` (and `umxPath`): They're smart about reusing `from` and `to`. In this case, two paths to "mpg" are created, one from each of the two elements from. Learn more in the chapter on [using umxPath](http://tbates.github.io/ram/path/2020/09/20/Power-of-the-(mx)-Path.html).
 
 So that was the same as:
 
