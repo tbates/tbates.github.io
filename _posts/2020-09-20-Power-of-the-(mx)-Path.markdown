@@ -91,15 +91,24 @@ The new words for *connecting variables* are shown below, along with their mxPat
 The intuition for `v.m.` is v for variance, m for means, and dot for "any value"
 
 ### unique.bivariate
-unique.bivariate is a massive time saver and error-preventor. It allows a 1-line specification of bivariate paths between all distinct pairs of variables.
+unique.bivariate is a massive time saver and error-preventer. It allows a 1-line specification of bivariate paths between all distinct pairs of variables.
 
 So to create paths A<->B, B<->C, and A<->C, you can say just:
 
 ```splus
-umxPath(unique.bivariate = c('A',"B","C")    
+umxPath(unique.bivariate = c("A","B","C")
+```
+and get back the equivalent of 
+
+```splus
+umxPath("A", with  = "B")
+umxPath("A", with  = "C")
+umxPath("B", with  = "C")
 ```
 
-[Cholesky](TODO) has a page of its own as this series moves into twin modeling.
+### Cholesky
+
+[Cholesky](http://tbates.github.io/models/tutorial/2010/06/15/Cholesky.html) has a page of its own as this series moves into twin modeling.
 
 
 ### new words for setting values

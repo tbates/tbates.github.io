@@ -1,0 +1,12 @@
+---
+layout: post
+title: "Cholesky paths"
+date: 2010-06-15 00:00
+comments: true
+categories: models twins
+---
+
+#### This page is not started!
+
+This page will explain how umx allows you to readily create Cholesky decomposition path models.
+
