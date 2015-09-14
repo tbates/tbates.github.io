@@ -181,7 +181,7 @@ Done! So now we have a complete model, with all our hypothesised paths (variance
 
 Mow we run the model. In this case we take advantage of umxRun to also set labels and start values. Of course this won't touch fixed values.
 
-**nb**: See tutorials on using [labels](models/tutorial/2020/10/03/How-labels-work.html), and on [values](/models/tutorial/2020/10/04/Values-matter.html).
+**nb**: See tutorials on using [labels](http://tbates.github.io/models/tutorial/2020/10/03/How-labels-work.html), and on [values](http://tbates.github.io/models/tutorial/2020/10/04/Values-matter.html).
 
 ``` splus
 m1 <- umxRun(m1, setLabels = T, setValues = T)

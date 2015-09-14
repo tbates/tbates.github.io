@@ -16,7 +16,7 @@ Values matter if life. In OpenMx, values matter to. They are where model estimat
 
 Parameters know three things: Whether they are free, what their current value is, and, critically, what their label is.
 
-In this tutorial, we are going to [set](#setStarts) values, [get values](#getValues). In more [advanced tutorials](/models/tutorial/2020/10/03/How-labels-work.html), we will learn how to equate values using constraints and labels.
+In this tutorial, we are going to [set](#setStarts) values, [get values](#getValues). In more [advanced tutorials](http://tbates.github.io/models/tutorial/2020/10/03/How-labels-work.html), we will learn how to equate values using constraints and labels.
 
 ### Setting start values in a path
 

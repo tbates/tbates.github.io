@@ -100,7 +100,7 @@ a$labels
 
 <a name = "equating"></a>
 ### Equate parameters by label
-A primary use for labels is to equate parameters. If parameters have the same label, they are forced to have identical values. They are especially powerful for allowing communication across [groups](2020-02-15-multigroup-example), but also, as we will see here, within groups.
+A primary use for labels is to equate parameters. If parameters have the same label, they are forced to have identical values. They are especially powerful for allowing communication across [groups](http://tbates.github.io/models/tutorial/2020/02/15/multigroup-example.html), but also, as we will see here, within groups.
 
 **Core concept in OpenMx**
 

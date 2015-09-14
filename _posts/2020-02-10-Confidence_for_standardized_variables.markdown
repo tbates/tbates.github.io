@@ -16,10 +16,10 @@ In OpenMx there are three ways you can get CIs on standardized values.
 
 1. Using SEs from mxSummary
 2. Re-running the model on Standardized data
-3. Adding algebras which conpute the standardized effect and then running the model with mxCI() on each of those.
+3. Adding algebras which compute the standardized effect and then running the model with mxCI() on each of those.
 
 ### 1. Using SEs
-Method 1 is easiest, and this is what umxSummary does for you.
+Method 1 is easiest, and this is what `umxSummary` does for you.
 mxSummary on a model will report both the raw and standardized parameter estimates, and also the SE and std SE. You can calculate 95% confidence intervals around the standardized parameter values using the formula `std estimate - (1.96 × std.SE)` and `std estimate + (1.96 × std.SE)`.
 If we run umxSummary, this is what happens under the hood.
 
