@@ -102,9 +102,9 @@ Here's the plot:
 
 ![independence model](/media/1_make_a_model/independence model.png "Independence model of three variables")
 
-This should also be a warning flag for the modeller: the variances are very divergent... It would help the optimiser if we convert displacement into litres to keep its variance closer to that of the other variables. We'll ignore this for now.
+*note*: When you are running real models, having variances differ by orders of magnitude can make it hard for the optimiser. In such cases, you can often get better results making variables more comparable: in this case, for instance, by converting displacement into litres to keep its variance closer to that of the other variables.
 
-As you can see, this is an "independence model": No covariances were included, so all variables are modelled as uncorrelated. It would fit poorly in this case. `umxSummary` tells us this fit can definately be improved: χ²(90) = 98.32, p < 0.001; CFI = 0; TLI = 0; RMSEA = 0.996
+As you can see, this is an "independence model": No covariances were included, so all variables are modelled as uncorrelated. It would fit poorly in this case. `umxSummary` tells us this fit can definitely be improved: χ²(90) = 98.32, p < 0.001; CFI = 0; TLI = 0; RMSEA = 0.996
 
 Clearly some un-modelled covariance here... Let's build our theorized model.
 
@@ -150,7 +150,7 @@ We also get path estimates ("**show** = *std*" requests the standardized paths).
 We can plot these standardized (or raw) coefficients on a diagram the way Sewall Wright would like us too:
 
 ``` splus
-plot(m1, showMeans = F)
+plot(m2, showMeans = F)
 ```
 
 ![model 1](/media/1_make_a_model/mtcar2.png "Model 1")
@@ -160,7 +160,7 @@ note: Means are not shown on this diagram (showMeans =FALSE) though they are in 
 We can ask for the (unstandardized) confidence intervals with the usual `confint` function. Because these can take a long time for SEM models, the default is to require you to ask to run them.
 
 ```splus
-    confint(m1, run = TRUE)
+    confint(m2, run = T)
 ```
 
 |                | lbound   | estimate  | ubound       |
