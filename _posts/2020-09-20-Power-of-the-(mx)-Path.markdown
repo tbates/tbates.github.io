@@ -16,7 +16,7 @@ Let's start using `umxPath` to specify a [CFA](http://en.wikipedia.org/wiki/Conf
 
 ![UmxPath Model1](/media/umxPath/umxPath_model1.png)
 
-We'll also use [umxRAM](TODO) so we get automatical [labeling](TODO), good [start values] etc.
+We'll also use umxRAM so we get automatic labeling and good start values.
 
 ```splus
 # 1. grab some data
