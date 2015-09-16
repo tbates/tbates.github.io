@@ -10,7 +10,7 @@ categories: models tutorial
 
 A principle can be a great guide to keep practice aligned with goals.
 
-Our principle in designing `umx` is that it should be the best possible language for expressing causal hypotheses.
+Our principle in designing `umx` is that it should be the best language for expressing causal hypotheses.
 
 That's the answer to "Why this package?": To make modeling easier by giving you a vocabulary that will help you:
 
