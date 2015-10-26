@@ -23,7 +23,7 @@ library("umx")
 <a name="overview"></a>
 ## Overview
 
-For those of you who want to get straight to the code: here's what happens on this page:
+For those of you who like to get straight to the code: here's what happens on this page:
 
 ``` splus
 m2 <- umxRAM("big_and_heavy", data = mxData(mtcars, type = "raw"),
