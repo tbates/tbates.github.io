@@ -92,35 +92,36 @@ Let's start trying to compute a mean.
 
 To compute a mean, we want to sum all the elements of a column, and divide them by nrows. Equivalently, we might multiply by 1/nrow
 
-Let's compute the mean of each of three columns of a 2 *3 matrix.
+Let's compute the mean of each of three columns of a matrix of order 5,3.
 
 ```splus
-mu = t(I) %*% x ( t(I) %*% I ) - I = t(I) x ( I/n )
-```
-
-
-```splus
-myData <- matrix(nrow = 5, byrow = TRUE, data = c(
+n = 5
+myData <- matrix(nrow = n, byrow = TRUE, data = c(
 90, 60, 90, 
-90, 90, 30, 
+90, 90, 28, 
 60, 60, 60, 
 60, 60, 90, 
-30, 30, 30))
+30, 30, 20))
 myData
 ```
 
 To form the means, we’ll need the help of an n * 1 Identify matrix (matrix of ones), let's call it `I`.
 
 ```splus
-I = matrix(1, nrow(myData), 1)
+I = matrix(data = 1, nrow= n, ncol = 1)
 ```
 
-Now if we pre-multiply the data by t(I), and then take the Kronecker product of t(I) %*% I)
+Now if we pre-multiply the data by t(I), and then take the Kronecker product of t(I) %*% I):
 
 ```splus
 # means
 t(I) %*% myData %x% solve(t(I) %*% I)
 ```
+We get the means
+
+| col 1 | col 2 | col 3 |
+|:------|:------|:------|
+| 66    | 60    | 57.6  |
 
 ### Computing a Covariance matrix
 

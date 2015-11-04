@@ -83,8 +83,8 @@ The new words for *connecting variables* are shown below, along with their mxPat
 | with            | "X", with = "Y"    | from = "X", to = "Y", arrows = 2 |
 | cov             | cov = c("X","Y")   | from = "X", to = "Y", arrows = 2 |
 | means           | means = c("X","Y") | from = "one", to = c("X","Y")    |
-| v1m0            | v1m0 = c"X"        | requires two lines: var and means|
-| v.m.            | v.m. = c"Y"        | requires two lines: var and means|
+| v1m0            | v1m0 = c("X")      | requires two lines               |
+| v.m.            | v.m. = c("Y")      | requires two lines               |
 | unique.bivariate| unique.bivariate = c("X","Y", "Z") | from = c("X","Y", "Z"), connection = "unique.bivariate", arrows = 2|
 | Cholesky        | Cholesky = c("X","Y"), to = c("a", "b") | a complex series of paths|
 
@@ -111,7 +111,7 @@ umxPath("B", with  = "C")
 [Cholesky](http://tbates.github.io/models/tutorial/2010/06/15/Cholesky.html) has a page of its own as this series moves into twin modeling.
 
 
-### new words for setting values
+### New words for setting values
 
 The new words for *setting values* are shown below, along with their mxPath equivalents
 
