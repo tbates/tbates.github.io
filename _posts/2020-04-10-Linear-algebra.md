@@ -133,24 +133,39 @@ And then devise a matrix formulation which sums the squares of these deviations,
 
 If we have n variables, we will want an n * n output matrix, containing variances on the diagonal, and covariances on the off diagonal.
 
+We first want not a row of means (like above) but a matrix with the column mean in each cell. To get that, we do I times our row of means:
+
 ```splus
-r = nrow(myData)
-I = matrix(1, r, r)
+meanMyData = (I %*% (t(I) %*% myData))/n
 
-I %*% t(I) 
-|     | [,1] | [,2] | [,3] | [,4] | [,5]
-|[1,] |    5 |    5 |    5 |    5 |    5
-|[2,] |    5 |    5 |    5 |    5 |    5
-|[3,] |    5 |    5 |    5 |    5 |    5
-|[4,] |    5 |    5 |    5 |    5 |    5
-|[5,] |    5 |    5 |    5 |    5 |    5
+```
+Now we can subtract that from our data, to get a deviatio matrix:
 
+```splus
+devMatrix = myData - meanMyData
+```
 
-myData %*% I %*% t(I) %*% myData
+The sum of squares of the deviations is t(dev) %*% dev
 
-meanMyData = I %*% myData /r
+```splus
 
-t(myData) %*% (myData - meanMyData)
+t(devMatrix) %*% devMatrix
+
+```
+
+The covariance matrix is the sum-of-squares of the deviations divided by n-1. We can check this by comparing it to R's built-in `cov()` function:
+
+```splus
+
+ourCov = (t(devMatrix) %*% devMatrix) / (n-1)
+
+cov(myData) - ourCov
+
+```
+
+This is a nice chance too to mention that umx has a nifty quick-matrix helper built in for rapidly building matrices:
+
+```splus
 
 A = qm(0,1,2|
 3,4,5)
@@ -161,24 +176,6 @@ B = qm(
 10,11)
 
 B %*% A
-
-A
-
-L = qm(
-1,0,0|
-1,1,0|
-1,1,1)
-
-data = qm(
-3,5,1|
-9,1,4)
-
-r = nrow(data)
-A = matrix(1,r,1)
-
-(t(A) %*% data) %x% solve(t(A)%*% A)
-
-(t(A) %*% data) / (t(A)%*% A)[1]
     
 ```
 
@@ -228,7 +225,8 @@ invA %*% A #  = I = standardized diagonal
 
 ### An example with values (covariances) in the off-diagonals
 
-```
+```splus
+    
 A = matrix(nrow = 3, byrow = T, c(
   	 1, .5, .9,
  	.5,  2, .4,
@@ -253,11 +251,11 @@ invSD
 
 ```
 
-Any number times its inverse = 1, so this sweeps covariances into correlations
+Any number times its inverse = 1, so this code sweeps covariances into correlations
 
-```
+```splus
 corr = invSD %*% A %*% invSD # pre- and post- multiply by 1/SD
-
+round(cor,2)
      [,1] [,2] [,3]
 [1,] 1.00 0.35 0.45
 [2,] 0.35 1.00 0.14
@@ -266,9 +264,10 @@ corr = invSD %*% A %*% invSD # pre- and post- multiply by 1/SD
 ```
 
 ## Easy way of doing this in R
+
 Using diag to grab the diagonal and make a new one, and capitalising on the fact that inv(X) = 1/x for a diagonal matrix
 
-```
+```splus
 diag(1/sqrt(diag(A))) %&% A # note: The %&%  operator is short for pre- and post-mul
      [,1] [,2] [,3]
 [1,] 1.00 0.35 0.45
@@ -279,7 +278,7 @@ diag(1/sqrt(diag(A))) %&% A # note: The %&%  operator is short for pre- and post
 
 ## Even-easier built-in way
 
-```
+```splus
 cov2cor(A)
 
      [,1] [,2] [,3]
