@@ -7,7 +7,6 @@ categories: models
 ---
 
 #### This page is not finished. When done it will explain using umx to make reflective latents
-#### This is just a stub beginning!
 
 Until now, to keep things simple as we learn, We have never had anything but never measured variables (boxes) on the diagram.
 
