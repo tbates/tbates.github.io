@@ -8,18 +8,16 @@ categories: models tutorial
 
 <a name="top"></a>
 
-A principle can be a great guide to keep practice aligned with goals.
+"Principles keep practice aligned with goals"
 
-Our principle in designing `umx` is that it should be the best language for expressing causal hypotheses.
+The answer to "Why this package?" is "To make getting the right models easier"
 
-That's the answer to "Why this package?": To make modeling easier by giving you a vocabulary that will help you:
+To this end, `umx` provides a compact vocabulary of functions for doing these four things as fast as possible:
 
 1. Express theories in SEM models.
 2. Test competing theories.
 3. Maintain a reproducible and correct workflow.
 4. Get results rapidly and communicate them effectively.
-
-To this end, `umx` provides a compact vocabulary of functions for doing these four things as fast as possible.
 
 OpenMx is a fantastic base - often you'll stick with core OpenMx functions: Using `mxPath` instead of `umxPath`, or `summary` instead of `umxSummary`.
 
