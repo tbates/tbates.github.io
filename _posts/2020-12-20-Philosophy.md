@@ -8,7 +8,7 @@ categories: models tutorial
 
 <a name="top"></a>
 
-"Principles keep practice aligned with goals"
+<p style="text-align: center;">"Principles keep practice aligned with goals"</p>
 
 The answer to "Why this package?" is "To make getting the right models easier"
 
