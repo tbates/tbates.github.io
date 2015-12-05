@@ -36,9 +36,9 @@ What goes without saying? Let's take the example of this model: What does it cla
                              
 ![A >B](/media/umxFixed/A->B.png)
 
-Most people would answer "A causes B" (can someone test that?).
+Most people would answer "A causes B".
 
-This, to be precise, leaves a lot of expectations unstated - a lot is &ldquo;intended&rdquo; to be understood.
+This however, leaves a lot of expectations implicit - a lot is &ldquo;intended&rdquo; to be understood.
 
 Fully verbalized, people who know this means "changes in A cause changes in B" expect also that:
 
@@ -69,14 +69,13 @@ m1 <- umxRAM("A_causes_B", data = df,
 	umxPath(means = manifests)
 )
 
-m1 = mxRun(m1)
-umxSummary(m1, show = "both")
+umxSummary(m1, show = "std")
 umx_show(m1)
 plot(m1)
 
 ```
 
-Let's take a more representatively complex model:
+Let's take a more complex model:
 
 <img src="/media/umxFixed/Duncan.png" alt="Duncan SEM model">
 
@@ -222,11 +221,7 @@ m1 = umxRAM("Duncan", data = duncan,
 
 ```
 
-Pretty simples, no?
+So: an open box, not a blackbox!
 
-
-#### TODO
-
-Lots!
 
 **Footnotes**

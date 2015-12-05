@@ -12,15 +12,22 @@ categories: models tutorial
 
 ### Currently, this is just a very preliminary stub!
 
-### TODO list
 ## umxSummary()
 * options
-## confint.MxModel()
+ * standardized output
+ * filter "NS" or "SIG"
 
+## confint()
 * options
-* standardized parameters
 
-## residuals.MxModel()
+## parameters()
+* model parameters
 
-**Footnotes**
-[^1]: 
+## residuals()
+* options
+ * filter minimum value to display
+
+## vcov()
+* options
+ * filter minimum value to display
+

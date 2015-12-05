@@ -8,24 +8,20 @@ content: true
 toc: true
 ---
 
-### "In the beginning was the  label"
+### "In the beginning was the  <strike>word</strike> label"
 
-#### This page is not finished.
+Making names for things is a key to [cognitive development](http://www.amazon.com/dp/0199838801). In [OpenMx](http://openmx.psyc.virginia.edu), labels are just as important. In fact, OpenMx is MUCH more powerful when label your parameters.
 
+This power comes because those labels can be used to control the parameter.
 
-OpenMx is MUCH more powerful when label your parameters.
+There are two ways in which labels are valuable: two parameters with the same label are effectively just one parameter (i.e., labels implement constraints without all the hassle and time of constraints).
 
-Making labels for things is a key to [cognitive development](http://www.amazon.com/dp/0199838801). In [OpenMx](http://openmx.psyc.virginia.edu), labels are just as important. They get their power because when you label parameters, those labels can be used to control the parameter.
-
-There are two ways in which labels are valuable: two parameters with the same label are just one parameter (i.e., labels implement constraints without all the hassle and time of constraints). Second, we can fix parameters by their label.
+Second, we can change a model by addressing its parameters by label. That's how, for instance, `umxSetparameters`() works.
 
 <a name="background"></a>
-### A bit of background
+###  using umxLabel to create systematic paths and matrices for you.
 
-When finished, this will talk about labels, the labels layer of mxMatrices, and equating via labels.
-
-####  umx labels creates systematic paths and matrices for you.
-By default, OpenMx doesn't label parameters. If you use umxRAM, then all your paths will be labelled. The labelling rule is
+By default, OpenMx doesn't label parameters. However, if you use umxRAM, then all your paths will be labelled. The labelling rule is
 
 1. one-headed: &lt;from&gt; + &quot;_to_&quot; &lt;to&gt;
 2. two-headed: &lt;from&gt; + &quot;_with_&quot; &lt;to&gt;
@@ -66,6 +62,7 @@ umx implements a `parameters` function to get these for you.
 parameters(m1) # Default "matrix address" labels, i.e "One Factor.S[2,2]"
 m1 = umxLabel(m1)
 parameters(m1, free = TRUE) # Default "matrix address" labels, i.e "One Factor.S[2,2]"
+# an alias for the same thing
 umxGetParameters(m1, free = TRUE) # Informative labels: "G_to_x1", "x4_with_x4", etc.
 
 ```
@@ -203,3 +200,5 @@ umxGetParameters(m1, "^x1.*5$") # umxGetParameters can filter using regular expr
 m1 = omxSetParameters(m1, labels="G_to_x5", newlabels = "G_to_x4")
 umxSummary(mxRun(m1), show = "std")
 ```
+
+

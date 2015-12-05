@@ -8,14 +8,7 @@ categories: models tutorial
 
 # "The plot thickens"
 
-#### This page is not finished.
-
-This post explains using plot() to produce figures from OpenMx
-
-You will be used to using `plot` for graphs. umx defines an "S3" function which allows you to do this for RAM models and selected matrix models (mainly twin models).
-
-
-At its simplest, you just provide a model, and plot() will create a path diagram.
+If you've used R at all, you'll be used to using `plot` to graph model output. *umx* defines `plot` for RAM models,  and for selected twin models. At its simplest, you just provide a model, and plot() will create and display (in Graphviz, or another app) a path diagram.
 
 ```splus
 selVars = c("mpg", "wt", "disp")
@@ -84,15 +77,27 @@ plot(model, std = TRUE, digits = 2, dotFilename = "name", pathLabels = c("none",
 
 ```
 
-#### std and digits
+#### Standardized output and digit rouinding
 
-You can optionally output unstandardized output using `std`, and control the precision with `digits`
+You can optionally output unstandardized output using `std = FALSE`, and control the precision with `digits = `
 
 ```splus
 plot(m1, std=F, digits = 3)
 ```
 
-#### file output and filename
+#### Plot style: residuals, means, fixed paths
+The correct way to draw a residual is a double headed arrow from an object back to the object. This is the default for `plot`.
+Omingraffle doesn't import or allow you to edit these easily, so for omnigraffle editing, you might switch to resid = "line".
+
+For clarity you can turn this off all together with resid = "none".  You can also suppress drawing means, and turn on drawing fixed paths as you choose.
+
+```splus
+resid = c("circle", "line", "none")
+showFixed = FALSE
+showMeans = TRUE
+```
+
+#### File output and filename
 
 The path model can be written to a file (the default is the name of the model with ".dot" suffix.
 
