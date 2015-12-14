@@ -1,6 +1,5 @@
 # http://offbeat.group.shef.ac.uk/FIO/model1a.htm
 ```splus
-    
 
 # Predictor variable - X 
 # Mediator variable(s) – (not applicable) 
@@ -19,10 +18,10 @@ df$XW = df$X * df$W
 df$Y = df$XW + rnorm(n)
 summaryAPA(df)
 # In model statement name each path and intercept using parentheses
-[Y] (b0); 
-  Y ON X (b1); 
-  Y ON W (b2); 
-  Y ON XW (b3);
+# [Y] (b0);
+#   Y ON X (b1);
+#   Y ON W (b2);
+#   Y ON XW (b3);
 	
 m1 <- umxRAM("moderated", data = df,
 	umxPath(v.m. = c("X", "W", "XW", "Y")),
@@ -37,7 +36,7 @@ umxSummary(m1, showEstimates = "std")
 # Pick low, medium and high moderator values (e.g. mean and +/- 1 SD)
 lowW = mean(df$W) - sd(df$W) # low
 medW = mean(df$W)            # medium
- hiW = mean(df$W) + sd(df$W) # high
+hiW  = mean(df$W) + sd(df$W) # high
 
 # Use loop plot to plot model for low, med, high values of W 
 # NOTE - values of 1,5 in LOOP() statement need to be replaced by 
