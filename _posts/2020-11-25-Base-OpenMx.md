@@ -47,9 +47,7 @@ umxPath(cov = c("A", "B"), fixedAt = 1)
 
 You can learn more about these additional parameters at `?umxPath`
 
-What follows in this post, is the construction of our toy model using base OpenMx functions. Nicely, mxModels can be updated trivially so we can do this "line by line"
-
-note: currently, umxRAM doesn't support this piece-wise assembly
+What follows in this post, is the construction of our toy model using base OpenMx functions. Nicely, mxModels can be updated by passing an existing model into mxModel and adding or subtracting objects "line by line".
 
 1. [Build](#build)
 2. [Run](#run)
