@@ -14,8 +14,9 @@ The Cholesky or lower-triangle decomposition allows a model that is both sure to
 
 <table border="0" cellspacing="5" cellpadding="5">
 	<tr><th>Diagram</th><th>Matrix</th></tr>
-	<tr><td> <img src="media/umxTwin/ACE.png" width="330" height="337" alt="ACE"></td>
+	<tr><td> <img src="/media/umxTwin/ACE.png" width="330" height="337" alt="ACE"></td>
 		<td>
+			
 			3 &times; 3 matrix-form of the Cholesky paths, with labels as applied by umxLabel.
 			<table border="1">
 				<tr><td></td>     <td>A1</td>    <td>A2</td>    <td>A3</td>    </tr>
