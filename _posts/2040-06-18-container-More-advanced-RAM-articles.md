@@ -8,10 +8,12 @@ categories: container tutorial
 
 <a name="top"></a>
 
+
+
 <ul>
   {% for post in site.categories.advancedRAM %}
 	{% if post.url %}
-		<li><a href="{{ post.url }}">{{ post.title }}</a></li>
+  <li><a href="{{ post.url }}">{{ post.title }}</a></li>
 	{% endif %}
   {% endfor %}
 </ul>

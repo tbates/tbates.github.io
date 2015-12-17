@@ -9,10 +9,11 @@ categories: container tutorial
 <a name="top"></a>
 Articles on twin modeling in `umx` are collected here.
 
+
 <ul>
   {% for post in site.categories.twin %}
 	{% if post.url %}
-		<li><a href="{{ post.url }}">{{ post.title }}</a></li>
+  <li><a href="{{ post.url }}">{{ post.title }}</a></li>
 	{% endif %}
   {% endfor %}
 </ul>
