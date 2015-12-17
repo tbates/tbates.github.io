@@ -25,7 +25,7 @@ The Cholesky or lower-triangle decomposition allows a model that is both sure to
 		</td>
 	</tr>
 	<tr>
-		<td colspan = "2">
+		<td colspan = "0">
 			Multivariate ACE Cholesky model, showing the additive genetic component only (C and E take identical forms) and for one-twin only (each model in umxACE describes the A, C (or D), and E paths, constrained appropriately across the two-members of the pair, dependent on their zygosity. 
 		</td>
 	</tr>
@@ -79,3 +79,18 @@ plot(m1) # output shown in below
 <img src="/media/umxTwin/weight_ACE_plot.png" width="330" height="337" alt="ACE_uni_plot">
 
 
+Or summarized in table and graphical form:
+
+```splus
+umxSummary(m1) # Create a tabular summary of the model
+-2 × log(Likelihood) = 12186.28 (df = 4)
+```
+
+|    |    a1|c1 |    e1|
+|:---|-----:|:--|-----:|
+|wt1 | -0.92|.  | -0.39|
+[Standardized solution]
+
+By default the report table is written to the console in markdown-format. By setting report = "html", the user can request a rendered html be opened in the default browser. Whether the parameter table is standardized or not is set using the showStd = TRUE parameter (the default). The user can request the genetic correlations with showRg = TRUE (the default is FALSE). If Confidence intervals have been computed, these can be displayed with "CIs = TRUE".
+The user can control the precision of output with the digits = parameter. The umxSummary function can also call the plot in line (dotFilename = "name"). More advanced features include that the function can also return the standardized model (returnStd = TRUE). A model fit comparison can also be requested by offering up the comparison model in comparison = model.
+The help (?umxACE) for umxACE gives extensive examples, including binary, ordinal, and joint data setup and analysis.
