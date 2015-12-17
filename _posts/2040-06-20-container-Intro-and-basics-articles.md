@@ -12,13 +12,11 @@ Articles on the basic principles and practice of `umx` - suitable for new-comers
 
 
 <ul>
-{% for posts in site.categories.basic %}
-  {% for post in posts %}
+  {% for post in site.categories.basic %}
 	{% if post.url %}
 		<li><a href="{{ post.url }}">{{ post.title }}</a></li>
 	{% endif %}
   {% endfor %}
-{% endfor %}
 </ul>
 
 
