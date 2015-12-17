@@ -91,6 +91,8 @@ umxSummary(m1) # Create a tabular summary of the model
 |wt1 | -0.92|.  | -0.39|
 [Standardized solution]
 
-By default the report table is written to the console in markdown-format. By setting report = "html", the user can request a rendered html be opened in the default browser. Whether the parameter table is standardized or not is set using the showStd = TRUE parameter (the default). The user can request the genetic correlations with showRg = TRUE (the default is FALSE). If Confidence intervals have been computed, these can be displayed with "CIs = TRUE".
-The user can control the precision of output with the digits = parameter. The umxSummary function can also call the plot in line (dotFilename = "name"). More advanced features include that the function can also return the standardized model (returnStd = TRUE). A model fit comparison can also be requested by offering up the comparison model in comparison = model.
-The help (?umxACE) for umxACE gives extensive examples, including binary, ordinal, and joint data setup and analysis.
+By default the report table is written to the console in markdown-format. By setting report = "html", the user can request a rendered html be opened in the default browser. Whether the parameter table is standardized or not is set using the `showStd = TRUE` parameter (the default). The user can request the genetic correlations with `showRg = TRUE` (the default is FALSE). If Confidence intervals have been computed, these can be displayed with `CIs = TRUE`.
+
+The user can control the precision of output with the digits = parameter. The umxSummary function can also call the plot in line (`dotFilename = "name"`). More advanced features include that the function can also return the standardized model (`returnStd = TRUE`). A model fit comparison can also be requested by offering up the comparison model in comparison = model.
+
+The help (`?umxACE`) for umxACE gives extensive examples, including binary, ordinal, and joint data setup and analysis.

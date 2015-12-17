@@ -7,6 +7,6 @@ categories: container tutorial
 ---
 
 <a name="top"></a>
-Articles on twin modeling in `umx` are collected here.
+Articles on working with clusters, remote reporting, parallel, multi-core etc. are collected here
 
 1. [umxACE](http://tbates.github.io/models/twins/2020/05/06/Twins-umxACE.html)
