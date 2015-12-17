@@ -10,9 +10,6 @@ categories: container tutorial
 
 Articles on the basic principles and practice of `umx` - suitable for new-comers and beginners.
 
-site.categories.basic
-
-<li>
 <ul>
 {% for posts in site.categories.basic %}
   {% for post in posts %}
@@ -20,7 +17,6 @@ site.categories.basic
   {% endfor %}
 {% endfor %}
 </ul>
-</li>
 
 
 1. [Philosophy](http://tbates.github.io/models/tutorial/2020/12/20/Philosophy.html)
