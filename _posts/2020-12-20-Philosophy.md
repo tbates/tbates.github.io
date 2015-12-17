@@ -3,7 +3,7 @@ layout: post
 title: "The umx principle"
 date: 2020-12-20 00:00
 comments: true
-categories: basic models tutorial
+categories: basic
 ---
 
 <a name="top"></a>
