@@ -14,10 +14,8 @@ The Cholesky or lower-triangle decomposition allows a model that is both sure to
 
 <table border="0" cellspacing="5" cellpadding="5">
 	<tr><th>Diagram</th><th>Matrix</th></tr>
-	<tr><td> <img src="/media/umxTwin/ACE.png" width="330" height="337" alt="ACE"></td>
-		<td>
-			
-			3 &times; 3 matrix-form of the Cholesky paths, with labels as applied by umxLabel.
+	<tr> <td width="50%"> <img src="/media/umxTwin/ACE.png" width="330" height="337" alt="ACE"></td>
+		<td>3 &times; 3 matrix-form of the Cholesky paths, with labels as applied by umxLabel.
 			<table border="1">
 				<tr><td></td>     <td>A1</td>    <td>A2</td>    <td>A3</td>    </tr>
 				<tr><td>Var 1</td><td>a_r1c1</td><td></td>      <td></td>      </tr>
@@ -26,105 +24,58 @@ The Cholesky or lower-triangle decomposition allows a model that is both sure to
 			</table>
 		</td>
 	</tr>
+	<tr>
+		<td colspan = "2">
+			Multivariate ACE Cholesky model, showing the additive genetic component only (C and E take identical forms) and for one-twin only (each model in umxACE describes the A, C (or D), and E paths, constrained appropriately across the two-members of the pair, dependent on their zygosity. 
+		</td>
+	</tr>
 </table>
 
-```splus
-# ====================
-# = Cholesky example =
-# ====================
-latents   = paste0("A", 1:5)
-manifests = names(demoOneFactor)
-myData    = mxData(cov(demoOneFactor), type = "cov", numObs = 500)
-m1 <- umxRAM("Chol", data = myData,
-	umxPath(Cholesky = latents, to = manifests),
-	umxPath(var = manifests),
-	umxPath(var = latents, fixedAt = 1.0)
-)
-```
+### Data Input
+The umxACE function flexibly accepts both raw data and summary covariance data (in which case the user must also supply numbers of observations for the data sets). In an important capability, the model transparently handles ordinal (binary or multi-level ordered factor data) inputs, and can handle mixtures of continuous, binary, and ordinal data in any combination. An experimental feature is under development to allow Tobit modeling.
 
-We can see that this fits perfectly:
+*umxACE* also supports weighting of individual data rows. In this case, the model is estimated for each row individually, then each row’s likelihood is multiplied by its weight, and these weighted likelihoods summed to form the model likelihood, which is to be minimized. This feature is currently used in non-linear GxE model functions. In addition, umxACE supports varying the DZ genetic association (defaulting to .5) to allow exploring assortative mating effects, as well as varying the DZ "C" factor from 1 (the default for modeling family-level effects shared 100% by twins in a pair), to .25 to model dominance effects.
 
-```splus
-umxSummary(m1)
+When it comes to interpretation and graphing, models built by umxACE() are able to be plotted and summarized using plot() and umxSummary() methods. umxSummary can report summary A, C, and E multivariate path-coefficients, along with model fit indices, and genetic correlations. The built-in plot() method is extended by umx to handle graphical reporting of ACE models, laying out models as seen in Figure 2.
+ACE Examples
 
-```
-
-What about a 1-factor solution?
-
-```splus
-m2 = umxReRun(m1, "^A[2:5]", regex = TRUE)
-
-```
-
-```splus
-latents   = paste0("A", 1)
-manifests = names(demoOneFactor)
-myData    = mxData(cov(demoOneFactor), type = "cov", numObs = 500)
-m3 <- umxRAM("Chol", data = myData,
-	umxPath(Cholesky = latents, to = manifests),
-	umxPath(var = manifests),
-	umxPath(var = latents, fixedAt = 1.0)
-)
-umxSummary(m3)
-plot(m3)
-```
+We first set up data for a summary-data ACE analysis of weight data (using a built-in example dataset from Nick Martin’s Australian twin sample:
 
 
+```splus    
+require(umx); data(twinData)
+selDVs = c("wt1", "wt2")
+# Not working until a new version of OpenMx releases the updated dataset…
+tmpTwin = twinData[twinData$cohort == "younger"]
+dz = tmpTwin[tmpTwin$zyg == "DZFF", selDVs]
+mz = tmpTwin[tmpTwin$zyg == "MZFF", selDVs]
 
-```splus
-data(twinData)
+# current version:
 tmpTwin <- twinData
-names(tmpTwin)
-# "fam", "age", "zyg", "part", "wt1", "wt2", "ht1", "ht2", "htwt1", "htwt2", "bmi1", "bmi2"
-
-# Set zygosity to a factor
 labList = c("MZFF", "MZMM", "DZFF", "DZMM", "DZOS")
 tmpTwin$zyg = factor(tmpTwin$zyg, levels = 1:5, labels = labList)
-
-# Pick the variables
-selDVs = c("bmi1", "bmi2") # nb: Can also give base name, (i.e., "bmi") AND set suffix.
-# the function will then make the varnames for each twin using this:
-# for example. "VarSuffix1" "VarSuffix2"
-mzData <- tmpTwin[tmpTwin$zyg %in% "MZFF", selDVs]
-dzData <- tmpTwin[tmpTwin$zyg %in% "DZFF", selDVs]
-mzData <- mzData[1:200,] # just top 200 so example runs in a couple of secs
-dzData <- dzData[1:200,]
-
-latentA = paste0(c("A1"), "_T", 1:2)
-latentC = paste0(c("C1"), "_T", 1:2)
-latentE = paste0(c("E1"), "_T", 1:2)
-latents = c(latentA, latentC, latentE)
-
-mz = umxRAM("mz", data = mxData(mzData, type = "raw"),
-	umxPath(v1m0 = latents),
-	umxPath(v.m. = selDVs),
-	# twin 1
-	umxPath(Cholesky = "A1_T1", to = "bmi1"),
-	umxPath(Cholesky = "C1_T1", to = "bmi1"),
-	umxPath(Cholesky = "E1_T1", to = "bmi1"),
-	# twin 2
-	umxPath(Cholesky = "A1_T2", to = "bmi2"),
-	umxPath(Cholesky = "C1_T2", to = "bmi2"),
-	umxPath(Cholesky = "E1_T2", to = "bmi2"),
-	# A C E links
-	umxPath("A1_T1", with = "A1_T2", fixedAt = 1),
-	umxPath("C1_T1", with = "C1_T2", fixedAt = 1),
-	umxPath("E1_T1", with = "E1_T2", fixedAt = 0)
-)
-dz = mxModel(mz, name= "dz",
-	mxData(dzData, type = "raw"),
-	umxPath("A1_T1", with = "A1_T2", fixedAt = .5)
-)
-
-m1 = mxModel(mz, dz, mxFitFunctionMultigroup(c("mz", "dz")))
-omxGetParameters(mz)
-plot(dz, showFixed= T)
-
-
-m1 = umxACE(selDVs = selDVs, dzData = dzData, mzData = mzData)
-m1 = umxRun(m1)
-umxSummary(m1)
-umxSummaryACE(m1)
-## Not run: 
-plot(m1)
+selDVs = c("wt1", "wt2")
+dz = tmpTwin[tmpTwin$zyg == "DZFF", selDVs]
+mz = tmpTwin[tmpTwin$zyg == "MZFF", selDVs]
 ```
+
+The next line shows how umxACE allows the user to easily build an ACE model with a single function call. umx will give some feedback, noting that the variables are continuous and that the data have been treated as raw. We could conduct this same modeling using only covariance data, offering up suitable covariance matrices to mzData and dzData, and entering the number of subjects in each via numObsDZ and numObsMZ.
+
+```splus
+m1 = umxACE(selDVs = selDVs, dzData = dz, mzData = mz)
+```
+        
+This model can be run:
+
+```splus
+m1 = mxRun(m1) # Run the model
+```
+and then plotted:
+
+```splus
+plot(m1) # output shown in below
+```
+
+<img src="/media/umxTwin/weight_ACE_plot.png" width="330" height="337" alt="ACE_uni_plot">
+
+
