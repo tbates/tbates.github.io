@@ -10,6 +10,19 @@ categories: container tutorial
 
 Articles on the basic principles and practice of `umx` - suitable for new-comers and beginners.
 
+site.categories.basic
+
+<li>
+<ul>
+{% for posts in site.categories.basic %}
+  {% for post in posts %}
+    <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+  {% endfor %}
+{% endfor %}
+</ul>
+</li>
+
+
 1. [Philosophy](http://tbates.github.io/models/tutorial/2020/12/20/Philosophy.html)
 2. [Installing umx](http://tbates.github.io/models/tutorial/2020/12/10/Install.html)
 3. [Your first model](http://tbates.github.io/models/tutorial/2020/11/30/First-steps.html)
