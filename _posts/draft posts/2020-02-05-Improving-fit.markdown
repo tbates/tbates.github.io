@@ -3,12 +3,12 @@ layout: post
 title: "Improving models: residuals(), umxMI()"
 date: 2020-02-05 00:00
 comments: true
-categories: models
+categories: advancedRAM
 ---
 
 # Improving models
+
 #### This page is not finished. When done it will explain umx functions to help you local why models are not well-fitting.
-#### This is just a stub beginning!
 
 ```splus    
 library(umx)

@@ -3,7 +3,7 @@ layout: post
 title: "Constraints?"
 date: 1940-12-01 00:00
 comments: true
-categories: models
+categories: advancedRAM
 ---
 
 #### This page is not finished. When done it will list up why one should choose OpenMx

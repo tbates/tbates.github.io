@@ -3,7 +3,7 @@ layout: post
 title: "Choosing an Optimizer: umx_set_optimizer()"
 date: 1945-02-12 00:00
 comments: true
-categories: models
+categories: technical
 ---
 
 As of version 2.0, OpenMx has 3 optimizers: NPSOL, CSOLNP, and SLSQP (the default).

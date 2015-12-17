@@ -3,7 +3,7 @@ layout: post
 title: "What you expect is what you get"
 date: 2020-10-20 00:00
 comments: true
-categories: models tutorial
+categories: basic tutorial
 ---
 
 This is a bit of a road-map essay, you can skip it without losing much.

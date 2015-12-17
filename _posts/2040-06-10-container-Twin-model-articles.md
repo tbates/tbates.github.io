@@ -9,4 +9,10 @@ categories: container tutorial
 <a name="top"></a>
 Articles on twin modeling in `umx` are collected here.
 
-1. [umxACE](http://tbates.github.io/models/twins/2020/05/06/Twins-umxACE.html)
+<ul>
+  {% for post in site.categories.twin %}
+	{% if post.url %}
+		<li><a href="{{ post.url }}">{{ post.title }}</a></li>
+	{% endif %}
+  {% endfor %}
+</ul>

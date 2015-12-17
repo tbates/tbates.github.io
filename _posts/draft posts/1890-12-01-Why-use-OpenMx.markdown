@@ -3,28 +3,27 @@ layout: post
 title: "Why should I use OpenMx?"
 date: 1890-12-01 00:00
 comments: true
-categories: models
+categories: basic
 ---
 
 #### This page is not finished. When done it will list up why one should choose OpenMx
-#### This is just a stub beginning!
 
 # Why should I use OpenMx?
 
-1. It's where umx can help you ☺
+1. Because of umx ☺
 2. Ecosystem
 	* MetaSEM
 	* Onyx
-3. Open Mx is general purpose
+3. Use both matrices and paths as appropriate
+4. Open Mx is general purpose
 	* Handle an extremely wide variety of models. If necessary, OpenMx lets you code algebra and even optimisers by hand.
-4. It's open source
-5. It's fast
-	* Prove it!
+	* Multiple groups
+	* Multi-level
+	* IRT
+5. Open source and under active development
 6. Scales up
 	1. Parallel processing
 		* Timing example
-	2. Multiple groups
-
 
 
 ### Constrain K to take a value fixed in another matrix (no real use...)
@@ -45,7 +44,7 @@ m1 <- mxRun(m1)
 mxEval(K, m1)
 ```
 
-You might try and to this using labels: but labels can only equate free parameters, not free and fixed parameters. SO...
+You might try and to this using labels: but labels can only equate free parameters, not free and fixed parameters. So...
 
 ```splus
 m1 <- mxModel(model="con_test", 

@@ -3,7 +3,7 @@ layout: post
 title: "Updating models: umxReRun and compare"
 date: 2020-03-10 00:00
 comments: true
-categories: models tutorial
+categories: advancedRAM tutorial
 ---
 
 note: This page is not finished.

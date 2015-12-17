@@ -3,7 +3,7 @@ layout: post
 title: "Twin ACE Cholesky with umxACE"
 date: 20-05-06-10 00:00
 comments: true
-categories: models twins
+categories: models twin
 ---
 
 The Multivariate ACE Cholesky is a core construct in behavior genetics (Neale & Maes, 1996), and umx supports this via umxACE.

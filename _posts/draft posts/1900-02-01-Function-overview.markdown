@@ -3,7 +3,7 @@ layout: post
 title: "Overview of umx functions: Quickly survey the key umx helpers available to you (plus some minor players)"
 date: 1900-02-01 00:00
 comments: true
-categories: models lists
+categories: advancedRAM
 ---
 
 umx allows you to more easily build, run, modify, and report models using OpenMx
@@ -34,18 +34,18 @@ Here are some of the most important.
 		`?umxPlot` to learn more options
 	* Miscellaneous
 		* `umx_time(model)`  *# Report the time taken by a model in a compact friendly, programable format*
-		* umx_APA_CI
+		* summaryAPA
 		* umx_APA_pval
 		* umx_aggregate
 		* umx_print
 		* umx_show
 5. Modify models
-	* `umxMI()` # Report the top n modification indices
-	* `umxAdd1()` # add parameters and return a table of the effect on fit
-	* `umxDrop1()` # Drop parameters and return a table of the effect on fit
+	* `umxMI` # Report the top n modification indices
+	* `umxAdd1` # add parameters and return a table of the effect on fit
+	* `umxDrop1` # Drop parameters and return a table of the effect on fit
 	* `parameters(model` *# A powerful assistant to get labels from a model. like `omxGetParameters` but uses regular expressions.*
 		* ?umxGetParameters to learn more options, like regex filters
-	* `umxReRun()` *# re-run a model: Quickly drop or free parameters, rename the model, and re-run...*
+	* `umxReRun` *# re-run a model: Quickly drop or free parameters, rename the model, and re-run...*
 6. Miscellaneous Functions
 	* `umxHetcor(data, use = "pairwise.complete.obs")` *# Compute appropriate pair-wise correlations for mixed data types.*
 	* `lower2full(lower.no.diag, diag=F, byrow=F)`  *# Create a full matrix from a lower matrix of data*

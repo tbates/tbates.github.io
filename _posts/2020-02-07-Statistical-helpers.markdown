@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Lesser-often used helper functions"
+title: "Statistical helper functions"
 date: 2020-02-07 00:00
 comments: true
-categories: models tutorial
+categories: technical
 ---
 
 There are many useful, but less-often called upon helpers in the umx library.

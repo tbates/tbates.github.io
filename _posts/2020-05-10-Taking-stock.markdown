@@ -3,10 +3,8 @@ layout: post
 title: "Taking Stock: What you’ve seen so far"
 date: 2020-05-10 00:00
 comments: true
-categories: models
+categories: basic
 ---
-
-#### This page is not finished
 
 ### What we you have seen how to do:
 1. Build & Run `umxRAM` models

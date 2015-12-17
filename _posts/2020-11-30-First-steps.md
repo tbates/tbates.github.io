@@ -3,7 +3,7 @@ layout: post
 title: "Build & run a model in a minute!"
 date: 2020-11-30 00:00
 comments: true
-categories: models tutorial
+categories: basic tutorial
 ---
 
 <a name="top"></a>

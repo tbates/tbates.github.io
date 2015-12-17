@@ -3,7 +3,7 @@ layout: post
 title: "A picture is worth a thousand words: Getting graphical Figures from OpenMx models"
 date: 2020-10-01 00:00
 comments: true
-categories: models tutorial
+categories: basic advancedRAM tutorial
 ---
 
 # "The plot thickens"

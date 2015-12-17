@@ -3,7 +3,7 @@ layout: post
 title: "Linear Algebra"
 date: 2020-04-10 00:00
 comments: true
-categories: models tutorial
+categories: technical tutorial
 ---
 
 <a name="top"></a>

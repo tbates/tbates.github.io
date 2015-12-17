@@ -3,7 +3,7 @@ layout: post
 title: "Standard Errors!"
 date: 2020-02-14 00:00
 comments: true
-categories: models tutorial
+categories: advancedRAM
 ---
 
 We just looked at CIs and SE. Simplistically, these are related as CI = est ± 1.96 × SE, but we saw this is not accurate. The CIs can be asymmetric. So if you are using SE to generate confidence intervals, you are wrong, and will often give misleading results incompatible, with the outcome from mxCompare().
