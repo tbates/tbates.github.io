@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Collection of more advanced RAM articles- modification, comparison etc."
+title: "Collection of more advanced RAM articles"
 date: 2040-06-18 00:00
 comments: true
 categories: container tutorial
