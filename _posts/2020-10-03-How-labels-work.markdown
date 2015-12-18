@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Labels, and how to get, set, and change them using umx."
+title: "Labels, and how to get, set, and use them to fix, drop, or equate paths."
 date: 2020-10-03 00:00
 comments: true
 categories: advancedRAM tutorial
@@ -67,15 +67,22 @@ umxGetParameters(m1, free = TRUE) # Informative labels: "G_to_x1", "x4_with_x4",
 
 ```
 
-#### Filtering to see just the labels you're looking for
+#### Filtering the parameter list to show just the labels you're looking for
 
 Often there are many labels in a model. `parameters` (or its alias `umxGetParameters`) allows you to "filter" this list, i.e., view just the ones you want. You can even write filters using regular expressions!
 
+So a simple filter might show only paths containin G_to
+
+```splus
+umxGetParameters(m1, "G_to", free = TRUE) # Just labels beginning "G_to"
+```
+
+A clever regular-expression version uses ^ to "anchor the expression" to the start of the label
 ```splus
 umxGetParameters(m1, "^G_to", free = TRUE) # Just labels beginning "G_to"
 ```
 
-Another feature we've used but not highlighted above is the free=TRUE option. Compare these two outputs:
+Another feature we've used but not highlighted above is the `free` option. Compare these two outputs:
 
 ```splus
 parameters(m1) # All parameters
@@ -96,7 +103,7 @@ a$labels
 ```
 
 <a name = "equating"></a>
-### Equate parameters by label
+# Equate parameters by label
 A primary use for labels is to equate parameters. If parameters have the same label, they are forced to have identical values. They are especially powerful for allowing communication across [groups](http://tbates.github.io/models/tutorial/2020/02/15/multigroup-example.html), but also, as we will see here, within groups.
 
 **Core concept in OpenMx**

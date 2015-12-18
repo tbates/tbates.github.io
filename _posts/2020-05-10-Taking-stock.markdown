@@ -1,5 +1,3 @@
-@BrentWRoberts @EcoDevoEvo  i.e. do(raiseMean) → raised h²; not do(raised h²)->raise mean
-
 ---
 layout: post
 title: "Taking Stock: What you’ve seen so far"
@@ -15,7 +13,7 @@ categories: basic
 5. `umxCompare` models
 6. Modify models
  * Drop paths
- * Equate paths
+ * Equate paths by label
 
 ### umx function list
 We've used:
