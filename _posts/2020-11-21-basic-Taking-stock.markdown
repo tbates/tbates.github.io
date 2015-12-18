@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Taking Stock: What you’ve seen so far"
-date: 2020-05-10 00:00
+date: 2020-11-21 00:00
 comments: true
 categories: basic
 ---
@@ -29,6 +29,10 @@ We've used:
 # Congratulations!
 
 ### What's in store?
+
+You can learn about mapths, models, plot, summary in more detail in the [advanced collection](/container/tutorial/2040/06/18/container-More-advanced-RAM-articles.html).
+
+We'll also cover:
 1. Multiple groups
 2. Twin models: umxACE, umxCP, umxIP, umxGxE
 3. Factor scores (with missing data!)
