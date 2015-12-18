@@ -3,7 +3,7 @@ layout: post
 title: "Power of the path"
 date: 2020-09-20 00:00
 comments: true
-categories:advanced  path
+categories: advanced
 ---
 
 ## "Staying on the (Wright) path"
