@@ -3,7 +3,7 @@ layout: post
 title: "Labels, and how to get, set, and use them to fix, drop, or equate paths."
 date: 2020-10-03 00:00
 comments: true
-categories:advanced  tutorial
+categories: advanced
 content: true
 toc: true
 ---
