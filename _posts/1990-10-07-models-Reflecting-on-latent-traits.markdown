@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Latent traits unmeasured (Reflective and Formative) variables"
-date: 202-1-07 00:00
+date: 1990-10-07 00:00
 comments: true
 categories: models
 ---

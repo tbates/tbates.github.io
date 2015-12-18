@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Get more confidence, easily!"
+title: "Get more confidence (intervals), easily!"
 date: 2020-02-15 00:00
 comments: true
-categories:advanced  tutorial
+categories: advanced  tutorial
 ---
 
 # Confidence in 1 line:

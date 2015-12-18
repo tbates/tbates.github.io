@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Updating models: umxReRun and compare"
+title: "Updating models: umxReRun and umxCompare"
 date: 2020-03-10 00:00
 comments: true
-categories:advanced  tutorial
+categories: advanced
 ---
 
 note: This page is not finished.

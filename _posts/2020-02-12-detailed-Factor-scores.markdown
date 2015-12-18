@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "Ordinal variables in RAM models"
-date: 1950-02-12 00:00
+date: 2020-02-12 00:00
 comments: true
-categories: models
+categories: advanced
 ---
 
 #### This page is not finished. When done it will explain using umx to help with ordinal variables in RAM models

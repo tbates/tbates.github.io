@@ -3,7 +3,7 @@ layout: post
 title: "Multiple groups"
 date: 2020-02-15 00:00
 comments: true
-categories:advanced  tutorial
+categories: advanced  tutorial
 ---
 
 ### This is a work in progress: email me to prioritize this page if you want it sooner.
