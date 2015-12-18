@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Collected umx Introduction and basics articles"
+title: "Collected introductory umx articles"
 date: 2040-06-20 00:00
 comments: true
 categories: container tutorial

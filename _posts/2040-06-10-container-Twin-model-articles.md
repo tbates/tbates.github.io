@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Collected articles on twin-modeling in umx"
+title: "Collected articles on twin modeling in umx"
 date: 2040-06-10 00:00
 comments: true
 categories: container tutorial

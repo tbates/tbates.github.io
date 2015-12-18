@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Collected cluster, work-flow & matrix-algebra articles"
+title: "Collected efficiency & matrix-algebra articles"
 date: 2040-06-05 00:00
 comments: true
 categories: container tutorial
