@@ -3,7 +3,7 @@ layout: post
 title: "Confidence on standardized parameters"
 date: 2020-02-10 00:00
 comments: true
-categories:advanced 
+categories: advanced
 ---
 
 This page is not yet finished!
