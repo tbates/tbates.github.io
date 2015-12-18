@@ -3,7 +3,7 @@ layout: post
 title: "Values and why they are important"
 date: 2020-10-04 00:00
 comments: true
-categories:advanced 
+categories: advanced 
 ---
 
 ### Values matter
