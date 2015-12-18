@@ -9,7 +9,7 @@ categories: technical
 There are many useful, but less-often called upon helpers in the umx library.
 A great overview of these is sitting in the package help (`?umx`).
 
-Have a read through. If there are any that are unclear, contact me, and i will add an explanation here.
+Have a read through. If there are any that are unclear, contact me, and I will add an explanation here.
 
 ### umx_residualise
 
@@ -19,48 +19,29 @@ formula for all copies of a variable in the wide dataset.
 This can lead to complex, error-prone and lengthy code. For instance, in a recent paper, this is how I was residualizing some variables:
 
 ```splus
-twinData$MPQAchievement_T1          <- residuals(lm(Achievement_T1                                   ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude))
-twinData$PrimarySelective_T1        <- residuals(lm(SelectivePrimaryControl_T1                       ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude))
-twinData$SecondarySelective_T1      <- residuals(lm(SelectiveSecondaryControl_T1                     ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude))
-twinData$PrimaryComp_T1             <- residuals(lm(CompensatoryPrimaryControl_T1                    ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude))
-twinData$SecondaryCompDisengage_T1  <- residuals(lm(CompensatorySecondaryControl_Disengagement_T1    ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude))
-twinData$SecondaryCompProtective_T1 <- residuals(lm(CompensatorySecondaryControl_SelfProtection_T1   ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude))
-twinData$SecondaryCompAdjust_T1     <- residuals(lm(CompensatorySecondaryControl_AdjustmentOfGoal_T1 ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude))
-twinData$CI_T1   <- residuals(lm(ConscientiousnessI_T1   ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude)) # MIDUS I C
-twinData$CII_T1  <- residuals(lm(ConscientiousnessII_T1  ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude)) # MIDUS II C
-twinData$C2II_T1 <- residuals(lm(Conscientiousness2II_T1 ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude)) # MIDUS II C
-                                                                                                                                                                   
-twinData$MPQAchievement_T2          <- residuals(lm(Achievement_T2                                   ~ Sex_T2 + Age_T2 + I(Age_T2^2), data = twinData, na.action = na.exclude))
-twinData$PrimarySelective_T2        <- residuals(lm(SelectivePrimaryControl_T2                       ~ Sex_T2 + Age_T2 + I(Age_T2^2), data = twinData, na.action = na.exclude))
-twinData$SecondarySelective_T2      <- residuals(lm(SelectiveSecondaryControl_T2                     ~ Sex_T2 + Age_T2 + I(Age_T2^2), data = twinData, na.action = na.exclude))
-twinData$PrimaryComp_T2             <- residuals(lm(CompensatoryPrimaryControl_T2                    ~ Sex_T2 + Age_T2 + I(Age_T2^2), data = twinData, na.action = na.exclude))
-twinData$SecondaryCompDisengage_T2  <- residuals(lm(CompensatorySecondaryControl_Disengagement_T2    ~ Sex_T2 + Age_T2 + I(Age_T2^2), data = twinData, na.action = na.exclude))
-twinData$SecondaryCompProtective_T2 <- residuals(lm(CompensatorySecondaryControl_SelfProtection_T2   ~ Sex_T2 + Age_T2 + I(Age_T2^2), data = twinData, na.action = na.exclude))
-twinData$SecondaryCompAdjust_T2     <- residuals(lm(CompensatorySecondaryControl_AdjustmentOfGoal_T2 ~ Sex_T2 + Age_T2 + I(Age_T2^2), data = twinData, na.action = na.exclude))
-twinData$CI_T2   <- residuals(lm(ConscientiousnessI_T2   ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude)) # MIDUS I C
-twinData$CII_T2  <- residuals(lm(ConscientiousnessII_T2  ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude)) # MIDUS II C
-twinData$C2II_T2 <- residuals(lm(Conscientiousness2II_T2 ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude)) # MIDUS II C
-
+twinData$MPQAchievement_T1 <- residuals(lm(Achievement_T1 ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude))                                                    
+twinData$MPQAchievement_T2 <- residuals(lm(Achievement_T2 ~ Sex_T2 + Age_T2 + I(Age_T2^2), data = twinData, na.action = na.exclude))
 ```
+One complex line of code for each twin. And I repeated this for 10 more variables: 20 lines of complex code&hellip; Lot&#x27;s of opportunity for a tupo &#x263A;
 
-22 lines of code, with lots of repetition, and therefore lots of chances for error (not to say tedious typing and checking.
-You also have to remember to `na.exclude` your `lm`() call
+You also have to remember to `na.exclude` your `lm`() call.
 
-umx_residualise was able to reduce this into the following shorter, clearer, and more manageable code:
+With `umx_residualise` this can be reduced in two ways. This one-line residualizes both twin's data, and doesn't require typing all the suffixes:
 
 ```splus
-twinData = umx_residualise(Achievement                                   ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData)
-twinData = umx_residualise(SelectivePrimaryControl                       ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData)
-twinData = umx_residualise(SelectiveSecondaryControl                     ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData)
-twinData = umx_residualise(CompensatoryPrimaryControl                    ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData)
-twinData = umx_residualise(CompensatorySecondaryControl_Disengagement    ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData)
-twinData = umx_residualise(CompensatorySecondaryControl_SelfProtection   ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData)
-twinData = umx_residualise(CompensatorySecondaryControl_AdjustmentOfGoal ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData)
-twinData = umx_residualise(ConscientiousnessI                            ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData) # MIDUS I C
-twinData = umx_residualise(ConscientiousnessII                           ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData) # MIDUS II C
-twinData = umx_residualise(Conscientiousness2II                          ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData) # MIDUS II C
+twinData = umx_residualise(Achievement ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData)
+```
 
+`umx_residualise` can also residualise more than one dependent variable (though not with formulae yet). So this works:
+
+```splus
+twinData = umx_residualise(c("Achievement", "Motivation"), c("Sex", "Age"), suffix = "_T", data = twinData)
 ```
 
 You could make it even briefer, but this is about where I am happy in terms of the brevity vs. explicit tradeoff.
 
+
+On my **TODO** list are tutorial blogs about 
+
+1. summaryAPA
+2. 
