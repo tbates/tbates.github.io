@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Factor scores with missing data!"
-date: 1950-02-20 00:00
+date: 2019-02-20 00:00
 comments: true
 categories: models
 ---

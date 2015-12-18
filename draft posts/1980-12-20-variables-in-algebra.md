@@ -6,8 +6,6 @@ comments: true
 categories: models tutorial
 ---
 
-http://www.vox.com/2014/7/16/5905533/the-benefits-of-beauty
-
 You can do piece-wise model building: That way you always know where an error has occurred to within one line.
 
 ```splus
@@ -74,5 +72,4 @@ t1$algebras$cell1_7$result[1] # 0
 t1 <- mxRun(mxMatrix(1:bob))
 
 ```
-Be handy to enable round() in algebras
 
