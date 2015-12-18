@@ -79,16 +79,17 @@ m1 <- umxRAM("big_motor_bad_mpg", data = mtcars,
 
 ```
 
-Like lm, we're going to feed this model container a data set (`data = mtcars`). The string "my_first_model" is a name that is used to refer to the model, and which is used in output as well. Just make it informative.
+Like `lm`, we're going to feed this model-container a data set (`data = mtcars`). The string "my_first_model" is a name that is used to refer to the model, and which is used in output as well (so make it informative).
 
-Instead of just one formula, we give `umxRAM` a list of `umxPaths` to specify all the lines, boxes, and circles in the figure above.
+We then give `umxRAM` a list of `umxPaths` to specify all the lines, boxes, and circles in the figure above.
 
 With `umxPath`, you can specify a variance (a 2-headed path originating and terminating on one variable) with the argument `var =`
 To specify a mean (a path from the constant one to a variable), just use the argument `means =`. You can learn more about umxPath in the help and in this chapter on [using umxPath](http://tbates.github.io/ram/path/2020/09/20/Power-of-the-(mx)-Path.html).
 
-Just like `lm`, `umxRAM` runs the model automatically for you when it is complete. (re-run models anytime with `mxRun`)
+By deafult, just like `lm`, `umxRAM` runs the model automatically for you. It also returns fit-information.
+*nb*: you can re-run a model anytime with `mxRun`
 
-Now we can get a summary, and even plot the output.
+You can also request a summary, and plot the output:
 
 ``` splus
 umxSummary(m1)
@@ -118,11 +119,14 @@ m2 <- umxRAM("big_and_heavy", data = mxData(mtcars, type = "raw"),
 	umxPath(means = c("disp", "wt", "mpg")),
 	umxPath(var = c("disp", "wt", "mpg"))
 )
+```
 
-# Now show a summary.
+*nb*: a shortcut for the last two lines is: `umxPath(v.m. = c("disp", "wt", "mpg"))`
+
+You can compare the models with 
+
+``` splus
 umxCompare(m2, m1)
-
-umxSummary(m2, show = "std")
 ```
 
 This is better, i.e., the three degrees of freedom were worth paying for.
@@ -135,7 +139,11 @@ This is better, i.e., the three degrees of freedom were worth paying for.
 
 In fact this (saturated) model fits perfectly, as `umxSummary` shows: χ²(87) = 0, p < 0.001; CFI = 1; TLI = 1; RMSEA = 0
 
-We also get path estimates ("**show** = *std*" requests the standardized paths).
+We can request a full summary including standardized output as a table with ("**show** = *std*" requests the standardized paths):
+
+``` splus
+umxSummary(m2, show = "std")
+```
 
 |   | name           | Estimate | Std.Error | CI (SE-based)       |
 |:--|:---------------|:---------|:----------|:--------------------|
@@ -155,7 +163,7 @@ plot(m2, showMeans = F)
 
 ![model 1](/media/1_make_a_model/mtcar2.png "Model 1")
 
-note: Means are not shown on this diagram (showMeans =FALSE) though they are in the model.
+note: Means are not shown on this diagram (`showMeans =FALSE`) though they are in the model.
 
 We can ask for the (unstandardized) confidence intervals with the usual `confint` function. Because these can take a long time for SEM models, the default is to require you to ask to run them.
 
@@ -215,8 +223,7 @@ First, we can modify m2 by overwriting the existing path with one fixing the val
 With umxPath we can save some typing and use `fixedAt`
 
 ``` splus
-m3 = mxModel(m2, umxPath("disp", to = "mpg", fixedAt = 0), name = "weight_doesnt_matter")
-m3 = mxRun(m3)
+m3 = umxRAM(m2, umxPath("disp", to = "mpg", fixedAt = 0), name = "weight_doesnt_matter")
 ```
 
 *note:* The equivalent in base OpenMx is:

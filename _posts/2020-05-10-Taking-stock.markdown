@@ -1,3 +1,5 @@
+@BrentWRoberts @EcoDevoEvo  i.e. do(raiseMean) → raised h²; not do(raised h²)->raise mean
+
 ---
 layout: post
 title: "Taking Stock: What you’ve seen so far"
@@ -41,4 +43,3 @@ We've used:
  * Simplex?
  * Bi-factor?
 9. Lower-level helpers
-
