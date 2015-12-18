@@ -8,16 +8,15 @@ categories: advanced
 
 ### Values matter
 
-Parameters know three things: Whether they are *free*, , what their *label* is, and, importantly, what their current *value* is.
+Parameters know three things: Whether they are *free*, what their *label* is, and, importantly, what their current *value* is.
 
-As in life, "values matter" in `umx` also.
+As in life, so too in `umx`: "values matter".
 
 Values are where model estimation starts from.
 
 Once run, a model's values are the best estimates of its `parameters()`.
 
 In this tutorial, we are going to [set](#setStarts) values, and [get values](#getValues). In a more [advanced tutorial](http://tbates.github.io/advanced/2020/10/03/detailed-How-labels-work.html), we will learn how to equate values using constraints and labels.
-
 
 
 ### Setting start values in a path
