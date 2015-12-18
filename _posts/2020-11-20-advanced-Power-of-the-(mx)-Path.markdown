@@ -35,7 +35,6 @@ m1 <- umxRAM("m1", data = mxData(df, "raw"),
 	umxPath(v.m. = manifests),
 	umxPath(v1m0 = latents)	
 )
-umxSummary(m1)
 plot(m1, showFixed = TRUE)
     
 ```
@@ -52,7 +51,7 @@ umxPath(means = latents, fixedAt = 0),
 umxPath(var   = latents, fixedAt = 1),
 ```
 
-For comparison, see how you would do that using mxModel and mxPath:
+For comparison, see how you would do that using `mxModel` and `mxPath`:
 
 ```splus
 data(myFADataRaw, package = "OpenMx")
@@ -73,9 +72,9 @@ m1 <- mxModel("m1", type="RAM",
 )    
 ```
 
-note: this model is not run by default, has start values of zero or .1, and has no labels.
+*note*: mxModel does not run the model, has start values of zero or .1, and no labels.
 
-The new words for *connecting variables* are shown below, along with their mxPath equivalents
+The new terms for *connecting variables* are shown below, along with their `mxPath` equivalents
 
 |New Term         | Example           | mxPath Equivalent                |
 |-----------------|:-------------------|:---------------------------------|
@@ -91,12 +90,12 @@ The new words for *connecting variables* are shown below, along with their mxPat
 The intuition for `v.m.` is v for variance, m for means, and dot for "any value"
 
 ### unique.bivariate
-unique.bivariate is a massive time saver and error-preventer. It allows a 1-line specification of bivariate paths between all distinct pairs of variables.
+`unique.bivariate` is a massive time saver and error-preventer. It allows a 1-line specification of bivariate paths between all distinct pairs of variables.
 
-So to create paths A<->B, B<->C, and A<->C, you can say just:
+So to create paths "A&harr;B", "B&harr;C", and "A&harr;C", you can say just:
 
 ```splus
-umxPath(unique.bivariate = c("A","B","C")
+umxPath(unique.bivariate = c('A', 'B', 'C')
 ```
 and get back the equivalent of 
 
@@ -108,7 +107,7 @@ umxPath("B", with  = "C")
 
 ### Cholesky
 
-[Cholesky](http://tbates.github.io/models/tutorial/2010/06/15/Cholesky.html) has a page of its own as this series moves into twin modeling.
+[Cholesky](http://tbates.github.io/twin/2010/06/15/Cholesky.html) has a page of its own as this feature moves us into twin modeling.
 
 
 ### New words for setting values
@@ -162,5 +161,6 @@ umxPath(from  = "A", to = "A")
 
 ```splus
     plot(umxRAM("tim", umxPath(c("mpg", "cyl", "disp"), value=1), data=mtcars, run=F))
+	# hmmm single-headed arrows... should use "var = "
 ```
 ![quicklook](/media/umxPath/quickLook.png)
