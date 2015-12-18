@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Collected advanced RAM articles"
+title: "Collected in-depth RAM function articles"
 date: 2040-06-18 00:00
 comments: true
 categories: container tutorial
