@@ -8,6 +8,7 @@ categories: container tutorial
 
 <a name="top"></a>
 
+Articles on the more advanced usage of `umx` - suitable for advancing and advanced users.
 
 <ul>
   {% for post in site.categories.advancedRAM %}
