@@ -41,6 +41,25 @@ m4 = umxReRun(m2, update = "disp_to_mpg", name = "drop effect of capacity", comp
 plot(m4)
 
 ```
+|name           | Std.Estimate| Std.SE|CI                   |
+|:--------------|------------:|------:|:--------------------|
+|disp_to_mpg    |        -0.36|   0.18|-0.36 [-0.71, -0.02] |
+|wt_to_mpg      |        -0.54|   0.17|-0.54 [-0.89, -0.2]  |
+|mpg_with_mpg   |         0.22|   0.07|0.22 [0.08, 0.35]    |
+|disp_with_disp |         1.00|   0.00|1 [1, 1]             |
+|disp_with_wt   |         0.89|   0.04|0.89 [0.81, 0.96]    |
+|wt_with_wt     |         1.00|   0.00|1 [1, 1]             |
+[χ²(87) = 0, p < 0.001; CFI = 1; TLI = 1; RMSEA = 0]
+
+
+|Model                   | EP|&Delta; -2LL |&Delta; df |p     |      AIC|Compare with Model |
+|:-----------------------|--:|:------------|:----------|:-----|--------:|:------------------|
+|big_and_heavy           |  9|             |           |      | 419.1183|                   |
+|drop effect of capacity |  8|3.8616447    |1          |0.049 | 420.9800|big_and_heavy      |
+[Comparison]
+
+![model of mpg](/media/1_make_a_model/drop_effect_of_capacity.png "Model 4 figure")
+
 
 Now, let's build, run, summarize, modify/compare, and display this model step by step.
 
