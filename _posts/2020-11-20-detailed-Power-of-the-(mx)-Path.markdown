@@ -12,7 +12,7 @@ categories: advanced
 
 It has a full set options to facilitate easy path specification, streamlining script writing, and increasing readability.
 
-Let's start using `umxPath` to specify a [CFA](http://en.wikipedia.org/wiki/Confirmatory_factor_analysis) model with a slight increase in complexity: two linked latent factors forced to be the same:
+Let's start using `umxPath` to specify a [CFA](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis) model with a slight increase in complexity: two linked latent factors forced to be the same:
 
 ![UmxPath Model1](/media/umxPath/umxPath_model1.png)
 

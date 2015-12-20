@@ -7,7 +7,7 @@ categories: basic tutorial
 ---
 
 <a name="top"></a>
-umx stands for "user" OpenMx helper library. It's purpose is to help with [Structural Equation Modeling](http://en.wikipedia.org/wiki/Structural_equation_modeling) in [OpenMx](http://openmx.psyc.virginia.edu).
+umx stands for "user" OpenMx helper library. It's purpose is to help with [Structural Equation Modeling](https://en.wikipedia.org/wiki/Structural_equation_modeling) in [OpenMx](http://openmx.psyc.virginia.edu).
 
 I called this post "first steps" but it will take you a long way into practical modelling. So, let's do some modeling …
 
@@ -60,7 +60,7 @@ We'll use `umx` to build both models, and compare them.
 
 In `lm`, model 1 would be "mpg ~ disp + wt". Model 2 would be "mpg ~ disp"
 
-[Sewall Wright](http://en.wikipedia.org/wiki/Sewall_Wright) invented SEM to allow us to think in explicit graphs. So, here's what that language implies:
+[Sewall Wright](https://en.wikipedia.org/wiki/Sewall_Wright) invented SEM to allow us to think in explicit graphs. So, here's what that language implies:
 
 ![model of mpg](/media/1_make_a_model/mpg_1a_theory.png "A model of Miles/gallon")
 
@@ -251,7 +251,7 @@ The table below shows that dropping this path caused a (just) significant loss o
 |big_and_heavy        | 9 |419.13 |    |     |419.12|             |
 |weight_doesnt_matter | 8 |  3.86 | 1  |0.049|420.98|big_and_heavy|
 
-The AIC moved the wrong direction, p-value is marginal. This model would lead us to conclude that weight matters, but only a little bit (controlling for engine capacity). Note however that these variables covary: heavy vehicles have big motors: This is why trying to do science on observational data is fraught with problems. MUCH better to systematically vary the weight and watch mpg change. In behavior science, [Twin Studies](http://en.wikipedia.org/wiki/Twin_study), [Mendelian Randomization](http://en.wikipedia.org/wiki/Mendelian_randomization) let us do this.
+The AIC moved the wrong direction, p-value is marginal. This model would lead us to conclude that weight matters, but only a little bit (controlling for engine capacity). Note however that these variables covary: heavy vehicles have big motors: This is why trying to do science on observational data is fraught with problems. MUCH better to systematically vary the weight and watch mpg change. In behavior science, [Twin Studies](https://en.wikipedia.org/wiki/Twin_study), [Mendelian Randomization](https://en.wikipedia.org/wiki/Mendelian_randomization) let us do this.
 
 *Advanced tip*: `umxReRun()` can modify, run, and compare all in 1-line.
 

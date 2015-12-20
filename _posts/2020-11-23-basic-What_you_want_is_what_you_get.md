@@ -14,7 +14,7 @@ This post refers to where we'd like `umx` to end up: As an intelligent research 
 
 Ideally it would be like [Palantir](http://www.Palantir.com) ☺
 
-Assisting requires taking an [intentional stance](http://en.wikipedia.org/wiki/Intentional_stance). This is hard, and can lead to black-box behavior, so, read on.
+Assisting requires taking an [intentional stance](https://en.wikipedia.org/wiki/Intentional_stance). This is hard, and can lead to black-box behavior, so, read on.
 
 
 <a name="top"></a>
@@ -43,11 +43,11 @@ This however, leaves a lot of expectations implicit - a lot is &ldquo;intended&r
 Fully verbalized, people who know this means "changes in A cause changes in B" expect also that:
 
 1. A and B are measured (squares)
-2. That A and B have [variance](http://en.wikipedia.org/wiki/Index_of_dispersion).
+2. That A and B have [variance](https://en.wikipedia.org/wiki/Index_of_dispersion).
 2. That A accounts for *some* of the variance in B.
-3. But not all of it: B has [residual variance](http://en.wikipedia.org/wiki/Explained_variation).
-4. Variance in A is [exogenous](http://en.wikipedia.org/wiki/Exogeny) to the model
- * As such, its variance is fixed at 1 (in [standardized](http://en.wikipedia.org/wiki/Standard_score) terms)
+3. But not all of it: B has [residual variance](https://en.wikipedia.org/wiki/Explained_variation).
+4. Variance in A is [exogenous](https://en.wikipedia.org/wiki/Exogeny) to the model
+ * As such, its variance is fixed at 1 (in [standardized](https://en.wikipedia.org/wiki/Standard_score) terms)
 5. A and B have means as well as variances.
 
 How to implement this without black boxes? Let's look at an `lm` statement of A <- B:
@@ -87,7 +87,7 @@ How would we state the claims of this model, and what do we expect an intelligen
 The theoretical claim is:
 
 1. Respondents and their friends each have a latent trait of "Aspiration"
-2. These are formed from their [IQ](http://en.wikipedia.org/wiki/Intelligence_quotient), [SES](http://en.wikipedia.org/wiki/SES), and parental aspiration.
+2. These are formed from their [IQ](https://en.wikipedia.org/wiki/Intelligence_quotient), [SES](https://en.wikipedia.org/wiki/SES), and parental aspiration.
 	* SES effects impact on both respondent and friend's aspiration.
 3. Latent aspiration affects occupational and educational aspiration.
 4. The aspiration latent traits have mutual influences on each other.

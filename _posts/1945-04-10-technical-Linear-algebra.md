@@ -180,11 +180,11 @@ B %*% A
 ```
 
 # What's that "pre- and post-multiply" stuff?
-Often in [SEM](http://en.wikipedia.org/wiki/Structural_equation_modeling) scripts you will see matrices being pre- and post-multiplied by some other matrix. For instance, this figures in scripts computing the [genetic correlation](http://en.wikipedia.org/wiki/Genetic_correlation) between variables. How does pre- and post-multiplying a variance/covariance matrix give us a correlation matrix? And what is it that we are multiplying this matrix by?
+Often in [SEM](https://en.wikipedia.org/wiki/Structural_equation_modeling) scripts you will see matrices being pre- and post-multiplied by some other matrix. For instance, this figures in scripts computing the [genetic correlation](https://en.wikipedia.org/wiki/Genetic_correlation) between variables. How does pre- and post-multiplying a variance/covariance matrix give us a correlation matrix? And what is it that we are multiplying this matrix by?
 
 In general, a covariance matrix can be converted to a correlation matrix by pre- and post-multiplying by a diagonal matrix with 1/SD for each variable on the diagonal.
 
-In R, [matrix inversion](http://en.wikipedia.org/wiki/Invertible_matrix) (usually signified by **A** <sup>-1</sup>) is done using the [solve](http://openmx.psyc.virginia.edu/wiki/matrix-operators-and-functions)() function.
+In R, [matrix inversion](https://en.wikipedia.org/wiki/Invertible_matrix) (usually signified by **A** <sup>-1</sup>) is done using the [solve](http://openmx.psyc.virginia.edu/wiki/matrix-operators-and-functions)() function.
 
 For the diagonal case, the inverse of a matrix is simply 1/x in each cell.
 
