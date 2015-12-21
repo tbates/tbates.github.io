@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Cholesky paths with umxPath(Cholesky = )"
+title: "Cholesky paths with umxPath"
 date: 2010-06-15 00:00
 comments: true
 categories: twin
