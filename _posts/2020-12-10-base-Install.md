@@ -23,12 +23,12 @@ install.packages("umx")
 ``` splus
 library("umx")
 ```
-
-3 There is no step 3: You're ready for [your first umx model](/basic/2020/11/30/First-steps.html)!
+                                                               
+3 There is no step 3: You're ready for [your first umx model](/basic/2020/11/30/base-First-steps.html)!
 
 ### Advanced/beta users
 
-The development version of `umx` lives on [github](http://github.com/tbates/umx) – a great place for package development. Loading libraries from github differs slightly from the procedure you may be used to. instead of `install.packages()`, we're going to use `devtools::install_github()`
+The development version of `umx` lives on [github](https://github.com/tbates/umx) – a great place for package development. Loading libraries from github differs slightly from the procedure you may be used to. instead of `install.packages()`, we're going to use `devtools::install_github()`
 
 ``` splus
 # if you haven't already, install & load devtools now
