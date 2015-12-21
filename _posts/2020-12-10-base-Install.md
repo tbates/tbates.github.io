@@ -24,7 +24,7 @@ install.packages("umx")
 library("umx")
 ```
 
-3 There is no step 3: You're ready for [your first umx model](/models/tutorial/2020/11/30/First-steps.html)!
+3 There is no step 3: You're ready for [your first umx model](/basic/2020/11/30/First-steps.html)!
 
 ### Advanced/beta users
 
