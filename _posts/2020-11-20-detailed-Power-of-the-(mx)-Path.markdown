@@ -107,8 +107,7 @@ umxPath("B", with  = "C")
 
 ### Cholesky
 
-[Cholesky](/twin/2010/06/15/Cholesky.html) has a page of its own as this feature moves us into twin modeling.
-
+[Cholesky](/twin/2010/06/15/Twin-Cholesky.html) has a page of its own as this feature moves us into twin modeling.
 
 ### New words for setting values
 
