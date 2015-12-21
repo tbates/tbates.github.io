@@ -286,7 +286,7 @@ m4 = umxReRun(m2, update = "wt_to_mpg", name = "drop effect of wt", comparison =
 
 You will `umxReRun` this often. 
 
-By default, `umxReRun` fixes the value of matched labels to zero. Learn more at the [umxReRun tutorial](http://tbates.github.io/models/tutorial/2020/03/10/Updating.html).
+By default, `umxReRun` fixes the value of matched labels to zero. Learn more at the [umxReRun tutorial](/advanced/2020/03/10/detailed-Updating.html).
 
 **tip**: To discover the labels in a model, use `parameters(model)`
 
