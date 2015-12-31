@@ -38,10 +38,10 @@ m2 <- umxRAM("big_and_heavy", data = mxData(mtcars, type = "raw"),
 
 umxSummary(m2, show = "std")
 m4 = umxReRun(m2, update = "disp_to_mpg", name = "drop effect of capacity", comparison = TRUE)
-plot(m4)
-
 ```
+
 **m2 Fit**
+
 |name           | Std.Estimate| Std.SE|CI                   |
 |:--------------|------------:|------:|:--------------------|
 |disp_to_mpg    |        -0.36|   0.18|-0.36 [-0.71, -0.02] |
@@ -53,7 +53,6 @@ plot(m4)
 
 χ²(87) = 0, p < 0.001; CFI = 1; TLI = 1; RMSEA = 0
 
-
 **Comparison**
 
 |Model                   | EP|&Delta; -2LL |&Delta; df |p     |      AIC|Compare with Model |
@@ -61,6 +60,9 @@ plot(m4)
 |big_and_heavy           |  9|             |           |      | 419.1183|                   |
 |drop effect of capacity |  8|3.8616447    |1          |0.049 | 420.9800|big_and_heavy      |
 
+```splus   
+plot(m4)
+```
 
 ![model of mpg](/media/1_make_a_model/drop_effect_of_capacity.png "Model 4 figure")
 
@@ -109,7 +111,8 @@ We then give `umxRAM` a list of `umxPaths` to specify all the lines, boxes, and 
 With `umxPath`, you can specify a variance (a 2-headed path originating and terminating on one variable) with the argument `var =`
 To specify a mean (a path from the constant one to a variable), just use the argument `means =`. You can learn more about umxPath in the help and in this chapter on [using umxPath](http://tbates.github.io/ram/path/2020/09/20/Power-of-the-(mx)-Path.html).
 
-By deafult, just like `lm`, `umxRAM` runs the model automatically for you. It also returns fit-information.
+By default, just like `lm`, `umxRAM` runs the model automatically for you. It also returns fit-information.
+
 *nb*: you can re-run a model anytime with `mxRun`
 
 You can also request a summary, and plot the output:
@@ -120,6 +123,7 @@ plot(m1, std = F)
 ```
 
 *nb*: *You'll need to have GraphViz installed for plot to open a graphic: if it doesn't work, don't worry. Later posts will explain how to get great graphics*!
+
 *ps*: On systems with Word installed a .dot file extension gets opened (uselessly) by M$ word. You might need to make graphviz the default app for these files. On Mac, just go to the get info, select "open with", select Graphviz.app and then "change all".
 
 Here's the plot:
@@ -220,6 +224,7 @@ coef(l1)
 ```splus
     confint(l1)
 ```
+
 |             | 2.5 %        | 97.5%       |
 |:------------|:------------|:-------------|
 | (Intercept) | 30.53357368 | 39.387534392 |
@@ -238,7 +243,7 @@ So, we can ask questions like "does lower weight give better miles per gallon"?
 
 In graph terms, this is asking, "can I set the  path from to wt to mpg to zero without significant loss of fit?"
 
-There are two ways to test this with umx.
+There are two ways to test this with *umx*.
 
 First, we can modify m2 by overwriting the existing path with one fixing the value to zero.
 

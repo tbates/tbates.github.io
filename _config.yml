@@ -1,5 +1,10 @@
+gems:
+  - jekyll-feed
+
 # url for [snaptortoise](https://github.com/snaptortoise/jekyll-rss-feeds)
 url: http://tbates.github.io
+
+jekyll-feed
 
 # Name of your blog (this will show up at the top of your page and in the RSS feed)
 name: umx modeling package

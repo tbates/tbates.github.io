@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<link type="application/atom+xml" rel="alternate" href="http://tbates.github.io/feed.xml" title="umx modeling package" />
         <title>umx: Help for Structural Equation Modeling</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <!-- syntax highlighting CSS -->
@@ -11,6 +12,7 @@
         <!-- <link rel="stylesheet" href="/css/main.css"> -->
 		<link rel="stylesheet" href="/stylesheets/styles.css">
     	<link rel="stylesheet" href="/stylesheets/pygment_trac.css">
+    	<link rel="stylesheet" href="/stylesheets/sidebox.css">
 		<!--[if lt IE 9]>
 		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
@@ -19,83 +21,86 @@
     <body>
         <div class="site">
           <div class="header">
-            <h1 class="title"><a href="/">umx</a></h1>
+            <h1 class="title"><a href="/">umx modeling package</a></h1>
             <!-- <a class="extra" href="/">home</a> -->
           </div>
           <div class="wrapper">
 <section>
+
 	<h3><a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to getting structural equation modeling done fast.</h3>
 
 	<p><strong>umx</strong> is an R package with one purpose: helping you get things done with <a href="http://en.wikipedia.org/wiki/Structural_equation_modeling">Structural Equation Modeling</a> 
-	using <a href="http://openmx.psyc.virginia.edu">OpenMx</a>. The design goals are that umx should make models things quicker and easier to implement, update, and publish.</p>
+	using <a href="http://openmx.psyc.virginia.edu">OpenMx</a>. The design goals are to make SEM quicker and easier to implement, update, and publish.</p>
 
-	<p>umx is easy to learn, and too remember: Follow the tutorial get print-ready results in a few minutes. Sweet huh? Installation is easy (look at the install post below!)</p>
+	<p>There is a <a href="http://openmx.psyc.virginia.edu/forums/third-party-software/umx">forum for Q&amp;A-style discussion</a></p>
+
+<p><a href="https://cran.rstudio.com/web/packages/umx/index.html"><img src="http://cranlogs.r-pkg.org/badges/umx"/></a></p>
 
 	<div id="home">
 	  <h1>Chapters</h1>
 	  <ol class="posts">
 	    
-	      <li><a href="/models/tutorial/2020/12/20/Philosophy.html">The principles guiding umx</a></li>
+	      <li><a href="/container/tutorial/2040/06/20/container-Intro-and-basics-articles.html">Collected introductory umx articles</a></li>
 	    
-	      <li><a href="/models/tutorial/2020/12/20/Linear-algebra.html">Linear Algebra</a></li>
+	      <li><a href="/container/tutorial/2040/06/18/container-More-advanced-RAM-articles.html">Collected in-depth RAM function articles</a></li>
 	    
-	      <li><a href="/models/tutorial/2020/12/10/Install.html">Installing umx</a></li>
+	      <li><a href="/container/tutorial/2040/06/10/container-Twin-model-articles.html">Collected articles on twin modeling in umx</a></li>
 	    
-	      <li><a href="/models/tutorial/2020/11/30/First-steps.html">Hello World: Build & run a model in a minute!</a></li>
+	      <li><a href="/container/tutorial/2040/06/05/container-Under-the-hood-computing-articles.html">Collected efficiency & matrix-algebra articles</a></li>
 	    
-	      <li><a href="/models/tutorial/2020/11/25/Base-OpenMx.html">Build & run a model in base OpenMx functions</a></li>
+	      <li><a href="/container/tutorial/2040/06/02/container-Models-and-modeling-posts.html">Collection of example SEM Models</a></li>
 	    
-	      <li><a href="/models/tutorial/2020/10/20/What_you_want_is_what_you_get.html">What you expect is what you get</a></li>
+	      <li><a href="/basic/2020/12/20/base-Philosophy.html">The umx principle</a></li>
 	    
-	      <li><a href="/models/tutorial/ram/2020/10/10/umxPath.html">umxPath</a></li>
+	      <li><a href="/basic/2020/12/10/base-Install.html">Installing umx</a></li>
 	    
-	      <li><a href="/models/tutorial/2020/10/04/Values-matter.html">Values and why they are important in OpenMx</a></li>
+	      <li><a href="/basic/2020/11/30/base-First-steps.html">Build & run a model in a minute!</a></li>
 	    
-	      <li><a href="/models/tutorial/2020/10/03/How-labels-work.html">How labels work in OpenMx, and how to get, set, and change them using umx.</a></li>
+	      <li><a href="/basic/2020/11/25/base-OpenMx.html">Run a model using just OpenMx</a></li>
 	    
-	      <li><a href="/models/tutorial/2020/10/02/Getting-results-umxSummary.html">Getting results</a></li>
+	      <li><a href="/basic/2020/11/23/base-What_you_want_is_what_you_get.html">What you expect is what you get</a></li>
 	    
-	      <li><a href="/models/tutorial/2020/10/01/The-plot-thickens-plot(model).html">A picture is worth a thousand words: Getting graphical Figures from OpenMx models</a></li>
+	      <li><a href="/basic/2020/11/21/base-Taking-stock.html">Taking Stock: What you’ve seen so far</a></li>
 	    
-	      <li><a href="/models/tutorial/2020/09/20/Power-of-the-(mx)-Path.html">Power of the path</a></li>
+	      <li><a href="/advanced/2020/10/04/detailed-Values-matter.html">Values and why they are important</a></li>
 	    
-	      <li><a href="/models/2020/05/10/Taking-stock1.html">Taking Stock: What we’ve learned so far</a></li>
+	      <li><a href="/advanced/2020/10/03/detailed-How-labels-work.html">Labels, and how to get, set, and use them to fix, drop, or equate paths.</a></li>
 	    
-	      <li><a href="/models/tutorial/2020/02/15/lavaan%20std%20errors.html">Get more confidence, easily!</a></li>
+	      <li><a href="/advanced/2020/10/02/detailed-Getting-results-umxSummary.html">Getting results</a></li>
 	    
-	      <li><a href="/models/tutorial/2020/02/15/Confidence.html">Get more confidence, easily!</a></li>
+	      <li><a href="/basicadvanced/tutorial/2020/10/01/detailed-The-plot-thickens-plot(model).html">A picture is worth a thousand words: Getting graphical Figures from OpenMx models</a></li>
 	    
-	      <li><a href="/models/tutorial/2020/02/10/Updating.html">Updating models: umxReRun and compare</a></li>
+	      <li><a href="/advanced/2020/09/20/detailed-Power-of-the-(mx)-Path.html">Power of the path</a></li>
 	    
-	      <li><a href="/models/tutorial/2020/02/10/Confidence-2.html">Confidence on standardized parameters</a></li>
+	      <li><a href="/models/twin/2020/05/06/twin-umxACE.html">Twin ACE Cholesky with umxACE</a></li>
 	    
-	      <li><a href="/models/2020/02/05/Improving-fit.html">Improving models: residuals(), umxMI()</a></li>
+	      <li><a href="/advanced/2020/03/10/detailed-Updating.html">Updating models: umxReRun and umxCompare</a></li>
 	    
-	      <li><a href="/models/2020/01/29/Taking-stock2.html">Taking Stock: Three things you can do, three things you havn't seen yet</a></li>
+	      <li><a href="/advanced/tutorial/2020/02/15/detailed-multigroup-example.html">Multiple groups</a></li>
 	    
-	      <li><a href="/models/tutorial/1980/12/20/variables-in-algebra.html">Variables in algebras</a></li>
+	      <li><a href="/advanced/tutorial/2020/02/15/detailed-Confidence.html">Get more confidence (intervals), easily!</a></li>
 	    
-	      <li><a href="/models/1980/02/07/Reflecting-on-latent-traits.html">Reflective and Formative latent traits</a></li>
+	      <li><a href="/advanced/2020/02/12/detailed-Factor-scores.html">Ordinal variables in RAM models</a></li>
 	    
-	      <li><a href="/models/1980/02/06/Adding-a-latent-trait-umxLatent.html">Adding a latent trait</a></li>
+	      <li><a href="/advanced/2020/02/10/detailed-Confidence_for_standardized_variables.html">Confidence on standardized parameters</a></li>
 	    
-	      <li><a href="/models/1950/02/12/Ordinal-RAM.html">Ordinal variables in RAM models</a></li>
+	      <li><a href="/technical/2020/02/07/detailed-Statistical-helpers.html">Statistical helper functions</a></li>
 	    
-	      <li><a href="/models/1950/02/10/WLS.html">WLS (weighted least squares) estimation in RAM models</a></li>
+	      <li><a href="/advanced/2019/12/01/detailed-Constraints.html">Constraints?</a></li>
 	    
-	      <li><a href="/models/1950/02/08/More-advanced-models.html">Next Steps: More advanced features of umx</a></li>
+	      <li><a href="/models/2019/02/20/detailed-Ordinal-RAM.html">Factor scores with missing data!</a></li>
 	    
-	      <li><a href="/models/1950/02/01/LISREL_models_in_OpenMx.html">LISREL models in OpenMx</a></li>
+	      <li><a href="/twin/2010/06/15/twin-Cholesky.html">Cholesky paths with umxPath</a></li>
 	    
-	      <li><a href="/models/1945/02/10/Parallel.html">Parallel Execution</a></li>
+	      <li><a href="/models/1990/10/07/models-Reflecting-on-latent-traits.html">Latent traits unmeasured (Reflective and Formative) variables</a></li>
 	    
-	      <li><a href="/models/1940/12/01/Constraints.html">Constraints?</a></li>
+	      <li><a href="/technical/tutorial/1945/04/10/technical-Linear-algebra.html">Linear Algebra</a></li>
 	    
-	      <li><a href="/models/1900/06/01/Concepts-the-Hessian.html">Matrix concepts: Not positive definite, Hessian, Jacobian</a></li>
+	      <li><a href="/technical/1945/02/12/technical-Optional-optimizers.html">Get and Set the Optimizer using umx_set_optimizer</a></li>
 	    
-	      <li><a href="/models/1900/02/01/Function-overview.html">Overview of umx functions: Quickly survey all the umx helpers available to you</a></li>
+	      <li><a href="/technical/1945/02/10/technical-Parallel.html">Parallel Execution</a></li>
 	    
-	      <li><a href="/models/1890/12/01/Why-use-OpenMx.html">Why should I use OpenMx?</a></li>
+	      <li><a href="/technical/1900/06/01/technical-Concepts-the-Hessian.html">Matrix concepts: Not positive definite, Hessian, Jacobian</a></li>
 	    
 	  </ol>
 	</div>
@@ -113,7 +118,7 @@
                 <a href="https://twitter.com/timothycbates">twitter/timothycbates</a><br />
                 <a href="http://scholar.google.com/citations?user=5MDWBs8AAAAJ&hl=en">google scholar</a><br />
                 <a href="http://www.psy.ed.ac.uk/people/view.php?name=timothy-bates">Edinburgh University</a><br />
-
+                <a href="http://r-bloggers.com">r-bloggers</a><br />
 				<!-- 
 					<a href='http://cloud.feedly.com/#subscription%2Ffeed%2Fhttp%3A%2F%2Ftbates.github.io%2F'  target='blank'><img id='feedlyFollow' src='http://s3.feedly.com/img/follows/feedly-follow-rectangle-volume-big_2x.png' alt='follow umx in feedly' width='131' height='56'></a> 
 				-->
@@ -137,5 +142,8 @@
             	
             }
 	</script>
+	
+	
+
 </body>
 </html>
