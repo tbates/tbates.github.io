@@ -13,7 +13,7 @@ description: Tutorial help doing Structural Equation Modeling in R using the umx
 # Note - if you enable this, use jekyll --baseurl '/' to view locally
 baseurl: /
 
-highlighter: pygments
+highlighter: rouge
 
 # markdown: redcarpet
 # redcarpet:
