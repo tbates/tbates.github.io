@@ -5,9 +5,9 @@ gems:
 url: http://tbates.github.io
 
 # Name of your blog (this will show up at the top of your page and in the RSS feed)
-name: Structural Equation Modeling in R using the umx and OpenMx packages
+name: umx!
 # Short description (goes below the title; it will also be used in the RSS feed)
-description: Help with structural equation modeling
+description: Tutorial help doing Structural Equation Modeling in R using the umx and OpenMx packages
 
 # Uncomment if you are planning to run the blog in a subdirectory
 # Note - if you enable this, use jekyll --baseurl '/' to view locally
@@ -15,7 +15,7 @@ baseurl: /
 
 highlighter: pygments
 
-markdown: redcarpet
-redcarpet:
-  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data", "footnotes"]
+# markdown: redcarpet
+# redcarpet:
+  # extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data", "footnotes"]
 
