@@ -61,21 +61,37 @@ This tells us that B = A × 𝛽1 + , where 𝛽1 = 0.64  CI95[0.57, 0.71]. R² 
 
 Now with umx:
 
-```splus
+ ```splus
 manifests  = names(df)
-m1 <- umxRAM("A_causes_B", data = df,
-	umxPath("A", to = "B"), 
-	umxPath(var = manifests), 
-	umxPath(means = manifests)
-)
-
-umxSummary(m1, show = "std")
-umx_show(m1)
-plot(m1)
-
+m1 <- umxRAM("A_causes_B", data = df, show = "std",
+ 	umxPath("A", to = "B"), 
+ 	umxPath(var = manifests), 
+ 	umxPath(means = manifests)
+ )
 ```
 
-Let's take a more complex model:
+Fits well!
+χ²(995) = 0, p = 1.000; CFI = 1; TLI = 1; RMSEA = 0
+
+And gives the same parameters:
+
+|name     | Std.Estimate| Std.SE|CI                |
+|:--------|------------:|------:|:-----------------|
+|A to B   |         0.63|   0.03|0.63 [0.58, 0.69] |
+|A with A |         1.00|   0.00|1 [1, 1]          |
+|B with B |         0.60|   0.03|0.6 [0.53, 0.66]  |
+
+
+```splus
+ umx_show(m1)
+ plot(m1)
+```
+<img src="/media/base/A_causes_B.png" alt="lm(B ~ A, data = df)">
+
+### More complex ( and realistic) models...
+ 
+
+This, more complex model is typical of what is needed for research:
 
 <img src="/media/umxFixed/Duncan.png" alt="Duncan SEM model">
 
