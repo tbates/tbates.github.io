@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Get and Set the Optimizer using umx_set_optimizer"
+title: "Set the Optimizer using umx_set_optimizer"
 date: 1945-02-12 00:00
 comments: true
 categories: technical
