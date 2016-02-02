@@ -3,7 +3,7 @@ layout: post
 title: "Factor scores with missing data!"
 date: 2019-02-20 00:00
 comments: true
-categories: models
+categories: advanced
 ---
 
 # A simple one factor ordinal model

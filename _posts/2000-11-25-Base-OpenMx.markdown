@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Run a model using just OpenMx"
-date: 2020-11-25 00:00
+date: 2000-11-25 00:00
 comments: true
 categories: basic
 ---

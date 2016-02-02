@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "A picture is worth a thousand words: Getting graphical Figures from OpenMx models"
-date: 2020-10-01 00:00
+date: 1995-10-01 00:00
 comments: true
 categories: basicadvanced  tutorial
 ---

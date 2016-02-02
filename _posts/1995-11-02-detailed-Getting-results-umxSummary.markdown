@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Getting results"
-date: 2020-10-02 00:00
+date: 1995-10-02 00:00
 comments: true
 categories: advanced
 ---

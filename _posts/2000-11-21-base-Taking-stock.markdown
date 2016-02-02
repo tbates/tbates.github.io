@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Taking Stock: What you’ve seen so far"
-date: 2020-11-21 00:00
+date: 2000-11-21 00:00
 comments: true
 categories: basic
 ---

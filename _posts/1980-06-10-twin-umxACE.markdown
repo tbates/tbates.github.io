@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Twin ACE Cholesky with umxACE"
-date: 2005-06-10 00:00
+date: 1980-06-10 00:00
 comments: true
 categories: models twin
 ---

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Confidence on standardized parameters"
-date: 2020-02-10 00:00
+date: 1995-02-10 00:00
 comments: true
 categories: advanced
 ---

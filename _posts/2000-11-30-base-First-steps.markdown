@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Build & run a model in a minute!"
-date: 2020-11-30 00:00
+date: 2000-11-30 00:00
 comments: true
 categories: basic
 ---

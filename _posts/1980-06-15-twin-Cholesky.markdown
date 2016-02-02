@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "Cholesky paths with umxPath"
-date: 2010-06-15 00:00
+date: 1980-06-15 00:00
 comments: true
-categories: twin
+categories: models twin
 ---
 
 This page will introduce writing Cholesky structures using umxPath to facilitate twin modeling.

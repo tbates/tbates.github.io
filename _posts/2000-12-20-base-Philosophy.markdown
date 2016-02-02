@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "The umx principle"
-date: 2020-12-20 00:00
+date: 2000-12-20 00:00
 comments: true
 categories: basic
 ---

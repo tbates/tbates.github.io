@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Installing umx"
-date: 2020-12-10 00:01
+date: 2000-12-10 00:01
 comments: true
 categories: basic
 ---
