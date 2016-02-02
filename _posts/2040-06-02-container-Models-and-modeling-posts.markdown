@@ -3,7 +3,7 @@ layout: post
 title: "Collection of example SEM Models"
 date: 2015-06-02 00:00
 comments: true
-categories: container
+categories: technical
 ---
 
 <a name="top"></a>
