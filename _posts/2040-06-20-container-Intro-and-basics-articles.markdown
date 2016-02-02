@@ -3,7 +3,7 @@ layout: post
 title: "Collected introductory umx articles"
 date: 2040-06-20 00:00
 comments: true
-categories: container tutorial
+categories: container
 ---
 
 <a name="top"></a>

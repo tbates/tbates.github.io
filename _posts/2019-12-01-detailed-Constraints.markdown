@@ -6,8 +6,7 @@ comments: true
 categories: advanced 
 ---
 
-#### This page is not finished. When done it will list up why one should choose OpenMx
-#### This is just a stub beginning!
+#### Post not finished...
 
 # Constraints
 
