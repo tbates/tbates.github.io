@@ -3,7 +3,7 @@ layout: post
 title: "Linear Algebra"
 date: 1945-04-10 00:00
 comments: true
-categories: technical tutorial
+categories: technical
 ---
 
 <a name="top"></a>
