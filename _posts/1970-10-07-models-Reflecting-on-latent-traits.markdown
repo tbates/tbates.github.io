@@ -17,7 +17,7 @@ So, just like physicists never directly see electrons (and this lead some positi
 A simple example of building a latent variable exists on the fron page of the OpenMx website.
 Here it is:
 
-```splus
+```r
 require(umx)
 data(demoOneFactor)
 latents   = c("g")
@@ -41,7 +41,7 @@ You'll have noticed I fixed the variance of *g* at 1. This is known as giving a 
 An alternative method you will see used widely, but which I don't prefer is equally valid: To set the value of one of the paths.
 
 Let's do that to compare:
-```splus
+```r
 m2 <- umxRAM("FixedPath", data = myData,
 	umxPath(latents, to = manifests, firstAt = 1),
 	umxPath(var = manifests),
@@ -59,7 +59,7 @@ This shows us the `umxPath` "*firstAt*" parameter in use. This sets the fist val
 
 It is as valid to think of our latent construct as being formed from certain inputs (perhaps five independent genes that all increase extraversion). Let's do that:
 
-```splus
+```r
 m3 <- umxRAM("formative", data = myData,
 	umxPath(manifests, to = latents),
 	umxPath(var = manifests, fixedAt = diag(var(demoOneFactor))),

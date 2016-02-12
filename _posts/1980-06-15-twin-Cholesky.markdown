@@ -10,7 +10,7 @@ This page will introduce writing Cholesky structures using umxPath to facilitate
 
 It is not finished, and for now (and perhaps for sometime), I'd recommend you read [this page instead on the awesome umxACE](/models/twin/2020/05/06/Twin-umxACE.html) function
 
-```splus
+```r
 # ====================
 # = Cholesky example =
 # ====================
@@ -26,19 +26,19 @@ m1 <- umxRAM("Chol", data = myData,
 
 We can see that this fits perfectly:
 
-```splus
+```r
 umxSummary(m1)
 
 ```
 
 What about a 1-factor solution?
 
-```splus
+```r
 m2 = umxReRun(m1, "^A[2:5]", regex = TRUE)
 
 ```
 
-```splus
+```r
 latents   = paste0("A", 1)
 manifests = names(demoOneFactor)
 myData    = mxData(cov(demoOneFactor), type = "cov", numObs = 500)
@@ -53,7 +53,7 @@ plot(m3)
 
 
 
-```splus
+```r
 data(twinData)
 tmpTwin <- twinData
 names(tmpTwin)

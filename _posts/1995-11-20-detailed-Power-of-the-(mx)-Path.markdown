@@ -18,7 +18,7 @@ Let's start using `umxPath` to specify a [CFA](https://en.wikipedia.org/wiki/Con
 
 We'll also use umxRAM so we get automatic labeling and good start values.
 
-```splus
+```r
 # 1. grab some data
 data(myFADataRaw, package = "OpenMx")
 # 2. set up some handy lists
@@ -44,7 +44,7 @@ plot(m1, showFixed = TRUE)
 You just learned two shortcuts offered by umxPath: The "v1m0" and "v.m." options are short for "variance @1, mean @ zero" and "variance free, mean free" respectively.
 We could break this out into 4 lines if desired:
 
-```splus
+```r
 umxPath(means = manifests),
 umxPath(var   = manifests),
 umxPath(means = latents, fixedAt = 0),
@@ -53,7 +53,7 @@ umxPath(var   = latents, fixedAt = 1),
 
 For comparison, see how you would do that using `mxModel` and `mxPath`:
 
-```splus
+```r
 data(myFADataRaw, package = "OpenMx")
 manifests = paste0("x", 1:3)
 latents = c("A","B")
@@ -94,12 +94,12 @@ The intuition for `v.m.` is v for variance, m for means, and dot for "any value"
 
 So to create paths "A&harr;B", "B&harr;C", and "A&harr;C", you can say just:
 
-```splus
+```r
 umxPath(unique.bivariate = c('A', 'B', 'C')
 ```
 and get back the equivalent of 
 
-```splus
+```r
 umxPath("A", with  = "B")
 umxPath("A", with  = "C")
 umxPath("B", with  = "C")
@@ -139,18 +139,18 @@ Default value is "single".
 
 You might have noticed that we can say things like
 
-```splus
+```r
 umxPath(c("A", "B", "C"), values = 1)
 ```
 
 Two things are happening here. First, the values field is being "recycled" for each of the three paths being created here, so the three paths will be started at 1. Second is the from field is being recycled into the to field. so:
 
-```splus
+```r
 umxPath(from  = "A")
 ```
 is the same as:
 
-```splus
+```r
 umxPath(from  = "A", to = "A")
 ```
 
@@ -158,7 +158,7 @@ umxPath(from  = "A", to = "A")
 
 *Tip*: `plot`() is a great way to see what you are doing in a model as you build it: look often build once
 
-```splus
+```r
     plot(umxRAM("tim", umxPath(c("mpg", "cyl", "disp"), value=1), data=mtcars, run=F))
 	# hmmm single-headed arrows... should use "var = "
 ```

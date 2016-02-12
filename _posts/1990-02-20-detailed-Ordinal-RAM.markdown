@@ -8,7 +8,7 @@ categories: advanced
 
 # A simple one factor ordinal model
 
-```splus
+```r
 require(OpenMx)
 data(demoOneFactor)
 latents = c("G")
@@ -25,7 +25,7 @@ umxSummary(m1, showEstimates = "std")
 	
 ### Add raw data and compute factor scores
 
-```splus
+```r
 
 # Swap in raw data in place of summary data
 m2 <- mxModel(m1, mxData(demoOneFactor, type = "raw"))
@@ -39,13 +39,13 @@ fs = mxFactorScores(m2, 'Regression')
 
 All the data-points of demoOneFactor are present:
 
-```splus
+```r
 all(complete.cases(demoOneFactor))
 # [1] TRUE
 ```
 Let's delete 10% from each column at random:
 
-```splus
+```r
 df = demoOneFactor
 n = dim(df)[1];
 for (i in dim(df)[2]) {
@@ -56,7 +56,7 @@ all(complete.cases(df))
 
 Run again with the missing data:
 
-```splus
+```r
 
 m2 <- mxModel(m1, mxData(df, type = "raw"))
 # Estimate factor scores for the model

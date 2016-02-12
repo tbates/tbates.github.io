@@ -42,7 +42,7 @@ ACE Examples
 We first set up data for a summary-data ACE analysis of weight data (using a built-in example dataset from Nick Martin’s Australian twin sample:
 
 
-```splus    
+```r    
 require(umx); data(twinData)
 selDVs = c("wt1", "wt2")
 # Not working until a new version of OpenMx releases the updated dataset…
@@ -61,18 +61,18 @@ mz = tmpTwin[tmpTwin$zyg == "MZFF", selDVs]
 
 The next line shows how umxACE allows the user to easily build an ACE model with a single function call. umx will give some feedback, noting that the variables are continuous and that the data have been treated as raw. We could conduct this same modeling using only covariance data, offering up suitable covariance matrices to mzData and dzData, and entering the number of subjects in each via numObsDZ and numObsMZ.
 
-```splus
+```r
 m1 = umxACE(selDVs = selDVs, dzData = dz, mzData = mz)
 ```
         
 This model can be run:
 
-```splus
+```r
 m1 = mxRun(m1) # Run the model
 ```
 and then plotted:
 
-```splus
+```r
 plot(m1) # output shown in below
 ```
 
@@ -81,7 +81,7 @@ plot(m1) # output shown in below
 
 Or summarized in table and graphical form:
 
-```splus
+```r
 umxSummary(m1) # Create a tabular summary of the model
 -2 × log(Likelihood) = 12186.28 (df = 4)
 ```

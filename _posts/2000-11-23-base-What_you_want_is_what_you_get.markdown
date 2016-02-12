@@ -52,7 +52,7 @@ Fully verbalized, people who know this means "changes in A cause changes in B" e
 
 How to implement this without black boxes? Let's look at an `lm` statement of A <- B:
 
-```splus
+```r
 df = myFADataRaw[, 1:2]
 names(df) <- c("A", "B")
 summary(lm(B ~ A, data = df))
@@ -61,7 +61,7 @@ This tells us that B = A × 𝛽1 + , where 𝛽1 = 0.64  CI95[0.57, 0.71]. R² 
 
 Now with umx:
 
- ```splus
+ ```r
 manifests  = names(df)
 m1 <- umxRAM("A_causes_B", data = df, show = "std",
  	umxPath("A", to = "B"), 
@@ -82,7 +82,7 @@ And gives the same parameters:
 |B with B |         0.60|   0.03|0.6 [0.53, 0.66]  |
 
 
-```splus
+```r
  umx_show(m1)
  plot(m1)
 ```
@@ -114,7 +114,7 @@ What can the assistant assume for any model? Clearly she can assume we intend th
 
 That allows us to delete this code from a standard ram model:
 
-```splus
+```r
 type = "RAM"
 latentVars = latents
 manifestVars = manifests
@@ -125,14 +125,14 @@ Now some harder decisions. There are three claims of the model not yet included,
 1. Should she assume that endogenous variables like occupational aspiration have residual variance?
 	* If so, we should automatically add:
 
-	```splus    
+	```r    
 		umxPath(var = c(respondentAsp, friendAsp))
 	```
 	* Some packages (`sem`, `lavaan`, Mplus) implement this. We don't: This a one-liner in umx, and adding it yourself keeps your thinking clear and explicit.
 
 2. Should she assume that exogenous variables have variance?
 
-	```splus    
+	```r    
 		umxPath(var = c(respondentFormants, friendFormants))
 	```
 	* Again, this is easy to say with 1 `umxPath`, So auto-adding exogenous variances causes more mental work than it saves, IMHO.
@@ -142,26 +142,26 @@ Now some harder decisions. There are three claims of the model not yet included,
 
 So you can say:
 
-```splus    
+```r    
 	umxPath(var = "latentX", fixedAt = 1)
 umxPath(means = "latentX", fixedAt=0)
 ```
 
 or
 
-```splus    
+```r    
 	umxPath("latentX", to = c("DV1", "DV2", "DV3"), firstAt = 1) # fix the first path, leave the others free
 ```
 
 You also have nifty short-cuts:
 
-```splus    
+```r    
 	umxPath(v1m0 = "latentX")
 ```
 
 which is short-hand equivalent to (but much easier to read and to type) to this:
 
-```splus    
+```r    
 mxPath("latentX", free = FALSE, values = 1)
 mxPath("one", to = "latentX", free = FALSE, values = 0)
 ```
@@ -170,7 +170,7 @@ mxPath("one", to = "latentX", free = FALSE, values = 0)
 4th. Should she assume that exogenous variables all intercorrelate, and add this path automatically?
 	* `umxRAM()` could have the option  `covary.exogenous = FALSE`. but again, who does this help when this is so clear?
 
-```splus    
+```r    
 umxPath(unique.bivariate = c(respondentFormants, friendFormants))
 ```
 
@@ -181,7 +181,7 @@ So then we would build this model in umx as follows.
 
 First, let&rsquo;s read in the Duncan data:
 
-```splus
+```r
 
 dimnames = c("ROccAsp", "REdAsp", "FOccAsp", "FEdAsp", "RParAsp", "RIQ", "RSES", "FSES", "FIQ", "FParAsp")
 tmp = c(
@@ -202,7 +202,7 @@ duncan = mxData(duncan, type = "cov", numObs = 300)
 
 and define some handy lists:
 
-```splus
+```r
 respondentFormants = c("RSES", "FSES", "RIQ", "RParAsp")
 friendFormants     = c("FSES", "RSES", "FIQ", "FParAsp")
 respondentAsp      = c("ROccAsp", "REdAsp")
@@ -212,7 +212,7 @@ latents            = c("RGenAsp", "FGenAsp")
 
 Now using these we can specify the model as follows:
 
-```splus
+```r
 
 m1 = umxRAM("Duncan", data = duncan,
 	# Respondents and their friends each have a latent trait of "Aspiration" formed from IQ, SES, and parental aspiration.

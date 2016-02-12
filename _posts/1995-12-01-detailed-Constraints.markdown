@@ -28,25 +28,9 @@ m1 <- mxRun(m1)
 mxEval(K, m1)
 ```
 
-```splus
-library(OpenMx)
-m1 <- mxModel(model="con_test", 
-    mxMatrix(name = "limit", type = "Full", nrow = 2, ncol = 2, free = FALSE, values = 1:4), 
-    mxMatrix(name = "K"    , type = "Full", nrow = 2, ncol = 2, free = TRUE), 
-	# Force K to take the values of limit
-    mxConstraint(K == limit, name = "Klimit_equality"), 
-	# Add an algebra and objective to minimise K.
-	# The constraint should ensure that K is [1,2; 3,4]
-    mxAlgebra(min(K), name = "minK"), 
-    mxAlgebraObjective("minK") 
-)
-m1 <- mxRun(m1)
-mxEval(K, m1)
-```
-
 You might try and to this using labels: but labels can only equate free parameters, not free and fixed parameters. SO...
 
-```splus
+```r
 m1 <- mxModel(model="con_test", 
     mxMatrix(name = "limit", nrow = 2, ncol = 2, free = F, labels = paste0("eq", 1:4), values = 1:4),
     mxMatrix(name = "K"    , nrow = 2, ncol = 2, free = T, labels = paste0("eq", 1:4)),
@@ -59,7 +43,7 @@ m1 <- mxRun(m1)
 
 Let's maximise A + B with the constraint that A must exceed B, A < 10 and B < 100. What do you think the answer is?
 
-```splus
+```r
 m1 <- mxModel(model="max_A_plus_B",
     mxMatrix(name = "A", nrow = 1, ncol = 1, free = T),
     mxMatrix(name = "B", nrow = 1, ncol = 1, free = T),
@@ -79,7 +63,7 @@ mxEval(C, m1)
 
 Equate both free parameters of matrix D using labels (both are set to "eq")
 
-```splus    
+```r    
 m1 <- mxModel(model="what", 
 	mxMatrix("Full", 2, 1, free=TRUE, values=1, labels="eq", name="D")
 	mxAlgebra(log(start), name = "logP")
@@ -93,7 +77,7 @@ mxEval(C, m1)
 
 ```
 
-```splus
+```r
 require(OpenMx)
 data(demoOneFactor)
 df = demoOneFactor[c("x1","x2", "x3")]

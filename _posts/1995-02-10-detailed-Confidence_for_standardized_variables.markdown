@@ -32,7 +32,7 @@ A second method is to `scale()` your data, and run the model on the scaled (stan
 If you are an advanced user, you might add `mxAlgebra` calls which compute the standardized parameters, then re-run the model with `mxCI` on those algebras. OpenMx will vary the underlying parameters to drive the model fit to the edge of the requested confidence limit for each of the CIs you request. This can be time-consuming, especially for large, complex, raw-data models.
 
 
-```splus
+```r
 library(umx);
 data(myFADataRaw, package="OpenMx")
 manifests = paste0("x",1:6)
@@ -48,21 +48,21 @@ a1 = umxRun(a1); umxSummary(a1)
 
 Now, we can add a set of standardization algebras
 
-```splus    
+```r    
 a1 = umx_add_std(a1, addCIs = TRUE)
 a1 = umxRun(a1); umxSummary(a1)
 ```
 
 If we set `intervals = TRUE` in `mxRun()` then we get the requested CIs. This is needed because CIs take time, so they are off by default.
 
-```splus    
+```r    
 a1 = umxRun(a1, intervals = TRUE);
 a1@output$confidenceIntervals
 
 ```
 ### umxSummary can format all this nicely for you.
 
-```splus
+```r
 umxSummary(a1)
 # TODO modify this to report CIs
 # 1. Incorporate estimate in the CI table
@@ -70,7 +70,7 @@ umxSummary(a1)
 ```
 ### Hard way to see how we do it inside
 
-```splus
+```r
 freeS = umx_make_bracket_addresses(a2@matrices$A, free= TRUE, newName="stdA")
 # a3 = mxModel(a2, mxCI("stdS"))
 a3 = mxModel(a2, mxCI(freeS))

@@ -60,7 +60,7 @@ m4 = umxReRun(m2, update = "disp_to_mpg", name = "drop effect of capacity", comp
 |big_and_heavy           |  9|             |           |      | 419.1183|                   |
 |drop effect of capacity |  8|3.8616447    |1          |0.049 | 420.9800|big_and_heavy      |
 
-```splus   
+```r   
 plot(m4)
 ```
 
@@ -194,7 +194,7 @@ note: Means are not shown on this diagram (`showMeans =FALSE`) though they are i
 
 We can ask for the (unstandardized) confidence intervals with the usual `confint` function. Because these can take a long time for SEM models, the default is to require you to ask to run them.
 
-```splus
+```r
     confint(m2, run = T)
 ```
 
@@ -212,7 +212,7 @@ We can ask for the (unstandardized) confidence intervals with the usual `confint
 
 What did lm think these should be?
 
-```splus
+```r
 l1 = lm(mpg ~ 1 + disp + wt, data = mtcars)
 coef(l1)
 ```
@@ -221,7 +221,7 @@ coef(l1)
 |:------------|:------------|:------------|
 | 34.96055404 | -0.01772474 | -3.35082533 |
    
-```splus
+```r
     confint(l1)
 ```
 

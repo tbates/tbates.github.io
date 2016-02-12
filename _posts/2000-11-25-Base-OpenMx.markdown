@@ -29,19 +29,19 @@ This last feature has the benefit that you can pass in raw data, and `umxRAM` wi
 
 `mxPath` takes `from`, `to`, `arrows` (1 or 2), `values`, and `free` parameters, amongst others. So, a path with 2 arrows, fixed at 1 requires you to specify all of those things:
 
-```splus
+```r
 mxPath(from = "A", to = "B", arrows = 2, values = 1, free = FALSE)
 ```
 
 `umxPath` adds some new verbs which link these actions together:
 
-```splus
+```r
 umxPath("A", with = "B", fixedAt = 1)
 ```
 
 Equivalently:
 
-```splus
+```r
 umxPath(cov = c("A", "B"), fixedAt = 1)
 ```
 

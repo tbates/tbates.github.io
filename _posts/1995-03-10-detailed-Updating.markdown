@@ -78,12 +78,12 @@ umxReRun Is a convenience function to re-run an mxModel, optionally adding, sett
 
 For example, this one-liner drops a path labelled "Cs", tests the effect, and returns the updated model
 
-```splus
+```r
 fit2 = umxReRun(fit1, update = "Cs", name = "newModelName", comparison = T) 
 ```
 A powerful feature of umxReRun is regular expressions. These let you drop collections of paths by matching patterns. So, 
 
-```splus
+```r
 fit2 = umxReRun(fit1, update = "Cs_r1_c[0-9].", regex = TRUE, name = "drop_all_cols_of_row1_of_Cs", comparison = T)
 ```
 Will drop all paths with labels matching  "Cs_r1_c" followed by anyother digits. i.e., all columns of row 1.
@@ -94,7 +94,7 @@ In addition to the `lastFit` parameter (the mxModel you wish to update and re-ru
 
 `update` specifies what to update before re-running. It can be a list of labels, a regular expression (set regex = T) or an object such as an `mxCI` (mx confidence interval request).
 
-```splus
+```r
 # 1. update by matching a label
 fit2 = umxReRun(fit1, update = "Cs", name = "newModelName") 
 
@@ -121,7 +121,7 @@ As in mxRun, you can set `intervals` = TRUE to run confidence intervals (see mxR
 
 To run umxCompare() and report on the old and new models, just set "comparison = TRUE"
 
-```splus
+```r
 # 1. just run the new model
 fit2 = umxReRun(fit1, update = "Cs", name = "newModelName") 
 

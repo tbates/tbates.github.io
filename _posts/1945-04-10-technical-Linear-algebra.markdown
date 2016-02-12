@@ -12,7 +12,7 @@ categories: technical
 
 To understand your models you should understand matrices and linear algebra. In some ways, OpenMx's USP or unique selling point is that it is a matrix algebra processor. Most of the blog posts on this site cover RAM-style modeling, but all of this sits on top of matrices: `mxPath("A", "B")` simply inserts values into a matrix cell: Try it and see!
 
-```splus
+```r
 require(OpenMx)
 data(demoOneFactor)
 latents  = c("G")
@@ -70,7 +70,7 @@ Where **Y** is a 3*1 column matrix of the Y solutions, **a** is a 3*2 matrix of 
 
 Try it in R:
 
-```splus
+```r
 a = matrix(c(1, 1, 2, 2, 3, 3), 3 , 2, byrow = TRUE)
 b = matrix(c(.1, .2), 2, 1, byrow = TRUE)
 Y = a %*% b; 
@@ -94,7 +94,7 @@ To compute a mean, we want to sum all the elements of a column, and divide them 
 
 Let's compute the mean of each of three columns of a matrix of order 5,3.
 
-```splus
+```r
 n = 5
 myData <- matrix(nrow = n, byrow = TRUE, data = c(
 90, 60, 90, 
@@ -107,13 +107,13 @@ myData
 
 To form the means, we’ll need the help of an n * 1 Identify matrix (matrix of ones), let's call it `I`.
 
-```splus
+```r
 I = matrix(data = 1, nrow= n, ncol = 1)
 ```
 
 Now if we pre-multiply the data by t(I), and then take the Kronecker product of t(I) %*% I):
 
-```splus
+```r
 # means
 t(I) %*% myData %x% solve(t(I) %*% I)
 ```
@@ -135,19 +135,19 @@ If we have n variables, we will want an n * n output matrix, containing variance
 
 We first want not a row of means (like above) but a matrix with the column mean in each cell. To get that, we do I times our row of means:
 
-```splus
+```r
 meanMyData = (I %*% (t(I) %*% myData))/n
 
 ```
 Now we can subtract that from our data, to get a deviatio matrix:
 
-```splus
+```r
 devMatrix = myData - meanMyData
 ```
 
 The sum of squares of the deviations is t(dev) %*% dev
 
-```splus
+```r
 
 t(devMatrix) %*% devMatrix
 
@@ -155,7 +155,7 @@ t(devMatrix) %*% devMatrix
 
 The covariance matrix is the sum-of-squares of the deviations divided by n-1. We can check this by comparing it to R's built-in `cov()` function:
 
-```splus
+```r
 
 ourCov = (t(devMatrix) %*% devMatrix) / (n-1)
 
@@ -165,7 +165,7 @@ cov(myData) - ourCov
 
 This is a nice chance too to mention that umx has a nifty quick-matrix helper built in for rapidly building matrices:
 
-```splus
+```r
 
 A = qm(0,1,2|
 3,4,5)
@@ -225,7 +225,7 @@ invA %*% A #  = I = standardized diagonal
 
 ### An example with values (covariances) in the off-diagonals
 
-```splus
+```r
     
 A = matrix(nrow = 3, byrow = T, c(
   	 1, .5, .9,
@@ -253,7 +253,7 @@ invSD
 
 Any number times its inverse = 1, so this code sweeps covariances into correlations
 
-```splus
+```r
 corr = invSD %*% A %*% invSD # pre- and post- multiply by 1/SD
 round(cor,2)
      [,1] [,2] [,3]
@@ -267,7 +267,7 @@ round(cor,2)
 
 Using diag to grab the diagonal and make a new one, and capitalising on the fact that inv(X) = 1/x for a diagonal matrix
 
-```splus
+```r
 diag(1/sqrt(diag(A))) %&% A # note: The %&%  operator is short for pre- and post-mul
      [,1] [,2] [,3]
 [1,] 1.00 0.35 0.45
@@ -278,7 +278,7 @@ diag(1/sqrt(diag(A))) %&% A # note: The %&%  operator is short for pre- and post
 
 ## Even-easier built-in way
 
-```splus
+```r
 cov2cor(A)
 
      [,1] [,2] [,3]

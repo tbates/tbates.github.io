@@ -10,13 +10,13 @@ categories: advanced
 
 # A simple one factor ordinal model
 
-```splus
+```r
 require(OpenMx)    
 ```
 	
 ### Create a dataframe of three ordinal variables
 
-```splus
+```r
 data(myFADataRaw)
 df <- myFADataRaw[,c("z1", "z2", "z3")]
 df$z1 <- mxFactor(df$z1, levels = c(0, 1))
@@ -35,7 +35,7 @@ Now we have a 500 observation dataframe of 3 variables, each of which is factor:
 
 ### Making a model with ordinal variables
 
-```splus
+```r
 m1 <- umxRAM("Common_Factor_Model", data = mxData(df, type = "raw"), 
 	umxPath(var = c("z1","z2","z3"), fixedAt = 1), # latent variance
 	umxPath(var = "F1", values = 1, labels = "varF1"), # factor loadings

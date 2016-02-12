@@ -13,7 +13,7 @@ categories: technical
 ### What is the Jacobian?
 
 
-```splus
+```r
     
  # list up manifests and latents
  manifests = c(nfc_items)

@@ -15,14 +15,14 @@ We can make trivial example that shows how this works.
 
 This example, we fit the same model to each of two groups, allowing the residual variances to differ between the groups, then testing if those can be equated.
 
-```splus
+```r
 require(umx)
 data(demoOneFactor)
 ```
 
 ### 1. Make two models. As an example I'll just make a copy of model 1
 
-```splus
+```r
 latents  = c("G")
 manifests = names(demoOneFactor)
 
@@ -38,7 +38,7 @@ m2 <- mxModel(m1, name = "model2",
 
 ### 2. Nest them in a multi-group "supermodel" and run
 
-```splus
+```r
 m3 = mxModel("super", m1, m2, 
 	mxFitFunctionMultigroup(c("model1", "model2"))
 )

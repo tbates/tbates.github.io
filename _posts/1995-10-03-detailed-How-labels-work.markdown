@@ -31,7 +31,7 @@ So a path from "E" to "days_off_school" will be labelled "E_to_days_off_school"
 
 For matrix based models, the rule is simpler (and more general). All cells are labeled
 
-```splus
+```r
 <matrixName> + "_r" <rowNumber> + "_c" <cellNumber>
 
 ```
@@ -41,7 +41,7 @@ So a cell on row 2, column 3 of a matrix called "a" would be labelled "a_r2_c3"
 <a name = "finding"></a>
 #### Finding labels
 
-```splus
+```r
 require(OpenMx)
 data(demoOneFactor)
 latents = c("G")
@@ -58,7 +58,7 @@ m1 <- mxModel("One Factor", type = "RAM",
 ###  Using the parameters()  function
 umx implements a `parameters` function to get these for you.
 
-```splus
+```r
 parameters(m1) # Default "matrix address" labels, i.e "One Factor.S[2,2]"
 m1 = umxLabel(m1)
 parameters(m1, free = TRUE) # Default "matrix address" labels, i.e "One Factor.S[2,2]"
@@ -73,18 +73,18 @@ Often there are many labels in a model. `parameters` (or its alias `umxGetParame
 
 So a simple filter might show only paths containin G_to
 
-```splus
+```r
 umxGetParameters(m1, "G_to", free = TRUE) # Just labels beginning "G_to"
 ```
 
 A clever regular-expression version uses ^ to "anchor the expression" to the start of the label
-```splus
+```r
 umxGetParameters(m1, "^G_to", free = TRUE) # Just labels beginning "G_to"
 ```
 
 Another feature we've used but not highlighted above is the `free` option. Compare these two outputs:
 
-```splus
+```r
 parameters(m1) # All parameters
 parameters(m1, free = TRUE) # Just parameters that are free
 parameters(m1, free = FALSE) # Just parameters that are fixed
@@ -92,7 +92,7 @@ parameters(m1, free = FALSE) # Just parameters that are fixed
 
 # Labeling a matrix
 
-```splus
+```r
 a = umxLabel(mxMatrix(name = "a", "Full", 3, 3, values = 1:9))
 a$labels
      [,1]     [,2]     [,3]    
@@ -139,7 +139,7 @@ OpenMx has a built-in function for getting parameters from a model
 
 Let's have a look at the `A` matrix, which contains our asymmetric paths
 
-```splus
+```r
 m1$matrices$A$labels # nb: By default, paths have no labels
 # we could also use
 # umx_show(m1)
@@ -156,7 +156,7 @@ m1$matrices$A$labels # nb: By default, paths have no labels
 
 Despite these parameters having no explicit labels, we can still address them in OpenMx using bracket labels.
 
-```splus
+```r
 omxGetParameters(m1) # nb: By default, paths have no labels, and starts of 0
 ```
 

@@ -14,14 +14,14 @@ CSOLNP can work well for ordinal models. SLSQP has the benefit of working out of
 
 You can see what optimizer  is being used with
 
-```splus
+```r
 umx_get_optimizer()
 # SLSQP
 ```
 
 You can set the optimizer with 
 
-```splus
+```r
 umx_set_optimizer("CSOLNP")
 umx_get_optimizer()
 # "CSOLNP"
@@ -30,7 +30,7 @@ umx_get_optimizer()
 
 Called with no input, umx_set_optimizer will try and set the optimizer to `NPSOL`
 
-```splus
+```r
 umx_set_optimizer() 
 umx_get_optimizer()
 # "NPSOL"
@@ -41,7 +41,7 @@ umx_get_optimizer()
 
 1. Grab the NPSOL version of OpemMx with this command:
 
-```splus
+```r
 source('http://openmx.psyc.virginia.edu/getOpenMx.R')
 
 ```

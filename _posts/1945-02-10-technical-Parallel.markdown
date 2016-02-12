@@ -19,7 +19,7 @@ Out of the box, OpenMx uses `detectCores() - 1` to execute in parallel on suppor
 
 *umx* allows you to get and set the number of cores OpenMx will use with:
 
-```splus
+```r
 umx_get_cores() # how many cores are we currently requesting?
 umx_set_cores() # defaults to max-1
 umx_set_cores(n) # request use of n-cores
@@ -28,19 +28,19 @@ umx_set_cores(n) # request use of n-cores
 
 Under the hood, this is changing an option:
 
-```splus
+```r
 mxOption(NULL, "Number of Threads", n)
 ```
 
 So this
 
-```splus
+```r
 umx_set_cores() # defaults to max-1
 ```
 
 is equivalent to:
 
-```splus
+```r
 mxOption(NULL, "Number of Threads", detectCores() - 1)
 ```
 
@@ -57,7 +57,7 @@ If you're trying to use mulitple cores on a managed cluster, you might need to r
 
 Here's an example for edinburgh's cluster. The key is `-pe OpenMP 12`
 
-```splus
+```r
 #!/bin/sh
 # This is a simple example of a batch script
 # call me as

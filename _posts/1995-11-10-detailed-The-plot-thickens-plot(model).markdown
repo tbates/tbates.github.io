@@ -10,7 +10,7 @@ categories: basicadvanced  tutorial
 
 If you've used R at all, you'll be used to using `plot` to graph model output. *umx* defines `plot` for RAM models,  and for selected twin models. At its simplest, you just provide a model, and plot() will create and display (in Graphviz, or another app) a path diagram.
 
-```splus
+```r
 selVars = c("mpg", "wt", "disp")
 myCov = mxData(cov(mtcars[,selVars]), type = "cov", numObs = nrow(mtcars) )
 m1 = umxRAM("tim", data = myCov,
@@ -29,7 +29,7 @@ plot in fact writes a "[dot](http://graphviz.org/content/dot-language)" file. Th
 
 Just so you know what we are working with, here's the .dot file for the model above:
 
-```splus
+```r
 digraph G {
 
 	mpg [shape = square];
@@ -71,7 +71,7 @@ On Mac also, Omnigraffle opens .dot, and allows awsome publication quality graph
 
 The parameters of plot give you a lot of flexibility. You can set the name of the file (it defaults to the model name), show unstandardized output, set the rounding for loadings, choose to show labels rather than estimates of paths, show or hide fixed paths, and means, and error variance.
 
-```splus
+```r
 plot(model, std = TRUE, digits = 2, dotFilename = "name", pathLabels = c("none", "labels", "both"),
   showFixed = FALSE, showMeans = TRUE, showError = TRUE, ...)
 
@@ -81,7 +81,7 @@ plot(model, std = TRUE, digits = 2, dotFilename = "name", pathLabels = c("none",
 
 You can optionally output unstandardized output using `std = FALSE`, and control the precision with `digits = `
 
-```splus
+```r
 plot(m1, std=F, digits = 3)
 ```
 
@@ -91,7 +91,7 @@ Omingraffle doesn't import or allow you to edit these easily, so for omnigraffle
 
 For clarity you can turn this off all together with resid = "none".  You can also suppress drawing means, and turn on drawing fixed paths as you choose.
 
-```splus
+```r
 resid = c("circle", "line", "none")
 showFixed = FALSE
 showMeans = TRUE
@@ -103,20 +103,20 @@ The path model can be written to a file (the default is the name of the model wi
 
 Don't write any file
 
-```splus
+```r
 plot(m1, dotFilename = NA)
 ```
 
 Override the default name
 
-```splus
+```r
 plot(m1, dotFilename = "my nice example") 
 
 ```
 
 Give a full file path
 
-```splus
+```r
 plot(m1, dotFilename = "~/tmp.dot") # specify a file
 
 ```
