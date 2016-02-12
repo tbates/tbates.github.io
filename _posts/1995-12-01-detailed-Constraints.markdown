@@ -12,6 +12,22 @@ categories: advanced
 
 ### Constrain K to take a value fixed in another matrix (no real use...)
 
+~~~~splus
+library(OpenMx)
+m1 <- mxModel(model="con_test", 
+    mxMatrix(name = "limit", type = "Full", nrow = 2, ncol = 2, free = FALSE, values = 1:4), 
+    mxMatrix(name = "K"    , type = "Full", nrow = 2, ncol = 2, free = TRUE), 
+	# Force K to take the values of limit
+    mxConstraint(K == limit, name = "Klimit_equality"), 
+	# Add an algebra and objective to minimise K.
+	# The constraint should ensure that K is [1,2; 3,4]
+    mxAlgebra(min(K), name = "minK"), 
+    mxAlgebraObjective("minK") 
+)
+m1 <- mxRun(m1)
+mxEval(K, m1)
+~~~~
+
 ```splus
 library(OpenMx)
 m1 <- mxModel(model="con_test", 
