@@ -12,7 +12,7 @@ categories: advanced
 
 ### Constrain K to take a value fixed in another matrix (no real use...)
 
-~~~~splus
+```r
 library(OpenMx)
 m1 <- mxModel(model="con_test", 
     mxMatrix(name = "limit", type = "Full", nrow = 2, ncol = 2, free = FALSE, values = 1:4), 
@@ -26,7 +26,7 @@ m1 <- mxModel(model="con_test",
 )
 m1 <- mxRun(m1)
 mxEval(K, m1)
-~~~~
+```
 
 ```splus
 library(OpenMx)
