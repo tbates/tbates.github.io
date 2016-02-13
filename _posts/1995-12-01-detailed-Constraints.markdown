@@ -10,17 +10,20 @@ categories: advanced
 
 # Constraints
 
+There a many times in modeling that we need to set paths equal to values determined from other paths in the model. Commonly, this can be done using labels - simply giving the same label to the objects we wish to equate. This is easy, and computationally efficient. Another way to limit the values a path can take is via upper and lower limits. There are times, however, when these two go-to tool won't work. For instance equating a free path to a fixed path, or, constraining a value using an algebra. That's when constraints are essential.
+
+Constraints are implemented, as you might expect, via `mxConstraint`. This takes an algebra, like ` A < B[1,1] %*% `
+
 ### Constrain K to take a value fixed in another matrix (no real use...)
+
+Here's an example in which we force the cells of matrix `K`	to take the values of a second matrix `limit`. To do this we write an mxConstraint with the algebra `K == limit`. The constraint should ensure that K is [1,2; 3,4] - the values of `limit`.
 
 ```r
 library(OpenMx)
 m1 <- mxModel(model="con_test", 
     mxMatrix(name = "limit", type = "Full", nrow = 2, ncol = 2, free = FALSE, values = 1:4), 
     mxMatrix(name = "K"    , type = "Full", nrow = 2, ncol = 2, free = TRUE), 
-	# Force K to take the values of limit
     mxConstraint(K == limit, name = "Klimit_equality"), 
-	# Add an algebra and objective to minimise K.
-	# The constraint should ensure that K is [1,2; 3,4]
     mxAlgebra(min(K), name = "minK"), 
     mxAlgebraObjective("minK") 
 )
@@ -41,7 +44,7 @@ m1 <- mxRun(m1)
 # Error: In model 'con_test' the name 'eq1' is used as a free parameter in 'con_test.K' and as a fixed parameter in 'con_test.limit'
 ```
 
-Let's maximise A + B with the constraint that A must exceed B, A < 10 and B < 100. What do you think the answer is?
+Here's another example. In this model, we will maximise the sum `A + B`, with the `mxConstraint`s that `A` must exceed `B`, and `A < 10`. What do you think the answer will be?
 
 ```r
 m1 <- mxModel(model="max_A_plus_B",
@@ -49,23 +52,21 @@ m1 <- mxModel(model="max_A_plus_B",
     mxMatrix(name = "B", nrow = 1, ncol = 1, free = T),
 	mxConstraint(A > B  , name = 'A_greaterthan_B'),
 	mxConstraint(A < 10 , name = 'Amax'),
-	mxConstraint(B < 100, name = 'Bmax'),
     mxAlgebra(A + B, name = "C"),
     mxAlgebra(   -C, name = "maxC"), 
     mxAlgebraObjective("maxC") 
 )
 m1 <- mxRun(m1)
-mxEval(C, m1)
+mxEval(c(A, B, C), m1)
 #      [,1]
 # [1,]   20
-
 ```
 
 Equate both free parameters of matrix D using labels (both are set to "eq")
 
 ```r    
 m1 <- mxModel(model="what", 
-	mxMatrix("Full", 2, 1, free=TRUE, values=1, labels="eq", name="D")
+	mxMatrix("Full", 2, 1, free = TRUE, values = 1, labels = "eq", name = "D")
 	mxAlgebra(log(start), name = "logP")
     mxAlgebra(-C, name = "maxC"), 
     mxAlgebraObjective("maxC") 
@@ -76,23 +77,3 @@ mxEval(C, m1)
 # [1,]   20
 
 ```
-
-```r
-require(OpenMx)
-data(demoOneFactor)
-df = demoOneFactor[c("x1","x2", "x3")]
-manifests = names(df)
-m1 <- mxModel("x1_equals_x2byx3 ", type = "RAM", 
-	manifestVars = manifests,
-	mxPath(from = "by", to = "x1"),
-	mxPath(from = manifests, arrows = 2, free = F, values = 1.0),
-	mxData(cov(demoOneFactor), type = "cov", numObs = 500)
-)
-#' m1 = umxRun(m1, setLabels = T, setValues = T)
-
-```
-# Constrain a matrix element in F to be equal to the result of an algebra
-start <- mxMatrix("Full", 1, 1, free=TRUE,  values=1, labels="logP", name="F")
-
-# Constrain the fixed parameter in matrix G to be the result of the algebra
-end <- mxMatrix("Full", 1, 1, free=FALSE, values=1, labels="logP[1,1]", name="G")
