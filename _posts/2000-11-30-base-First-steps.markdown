@@ -37,7 +37,7 @@ m2 <- umxRAM("big_and_heavy", data = mxData(mtcars, type = "raw"),
 )
 
 umxSummary(m2, show = "std")
-m4 = umxReRun(m2, update = "disp_to_mpg", name = "drop effect of capacity", comparison = TRUE)
+m4 = umxModify(m2, update = "disp_to_mpg", name = "drop effect of capacity", comparison = TRUE)
 ```
 
 **m2 Fit**
@@ -281,17 +281,17 @@ The table below shows that dropping this path caused a (just) significant loss o
 
 The AIC moved the wrong direction, p-value is marginal. This model would lead us to conclude that weight matters, but only a little bit (controlling for engine capacity). Note however that these variables covary: heavy vehicles have big motors: This is why trying to do science on observational data is fraught with problems. MUCH better to systematically vary the weight and watch mpg change. In behavior science, [Twin Studies](https://en.wikipedia.org/wiki/Twin_study), [Mendelian Randomization](https://en.wikipedia.org/wiki/Mendelian_randomization) let us do this.
 
-*Advanced tip*: `umxReRun()` can modify, run, and compare all in 1-line.
+*Advanced tip*: `umxModify()` can modify, run, and compare all in 1-line.
 
 For instance to drop the path from wt to mpg, we can say:
 
 ``` splus
-m4 = umxReRun(m2, update = "wt_to_mpg", name = "drop effect of wt", comparison = TRUE)
+m4 = umxModify(m2, update = "wt_to_mpg", name = "drop effect of wt", comparison = TRUE)
 ```
 
-You will `umxReRun` this often. 
+You will `umxModify` this often. 
 
-By default, `umxReRun` fixes the value of matched labels to zero. Learn more at the [umxReRun tutorial](/advanced/2020/03/10/detailed-Updating.html).
+By default, `umxModify` fixes the value of matched labels to zero. Learn more at the [umxModify tutorial](/advanced/2020/03/10/detailed-Updating.html).
 
 **tip**: To discover the labels in a model, use `parameters(model)`
 

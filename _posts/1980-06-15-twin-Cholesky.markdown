@@ -34,7 +34,7 @@ umxSummary(m1)
 What about a 1-factor solution?
 
 ```r
-m2 = umxReRun(m1, "^A[2:5]", regex = TRUE)
+m2 = umxModify(m1, "^A[2:5]", regex = TRUE)
 
 ```
 

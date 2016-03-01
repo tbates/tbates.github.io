@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Updating models: umxReRun and umxCompare"
+title: "Updating models: umxModify and umxCompare"
 date: 1995-03-10 00:00
 comments: true
 categories: advanced
@@ -14,7 +14,7 @@ In OpenMx, models can be modified. Want to add a new path? Go ahead - no need to
 
 You can add, or remove anything, re-run, and compare.
 
-This tutorial will cover using umxReRun to update models.
+This tutorial will cover using umxModify to update models.
 
 
 <a name="overview"></a>
@@ -59,50 +59,50 @@ m2 = mxRun(m2)
 umxCompare(m1, m2)
 ```
 
-2. Use a label and umxReRun()
+2. Use a label and umxModify()
 
-By default, umxReRun fixes the value of matched labels to zero.
-
-``` splus
-m2 = umxReRun(m1, update = "gear_to_mpg", name = "no effect of gear")
-```
-
-`umxReRun()` can modify, run, and compare all in 1-line
+By default, umxModify fixes the value of matched labels to zero.
 
 ``` splus
-	m2 = umxReRun(m1, update = "gear_to_mpg", name = "drop effect of gear"), comparison = TRUE)
+m2 = umxModify(m1, update = "gear_to_mpg", name = "no effect of gear")
+```
+
+`umxModify()` can modify, run, and compare all in 1-line
+
+``` splus
+	m2 = umxModify(m1, update = "gear_to_mpg", name = "drop effect of gear"), comparison = TRUE)
 ```
 
 
-umxReRun Is a convenience function to re-run an mxModel, optionally adding, setting, or dropping parameters. The main utility of `umxReRun` is compactness. 
+umxModify Is a convenience function to re-run an mxModel, optionally adding, setting, or dropping parameters. The main utility of `umxModify` is compactness. 
 
 For example, this one-liner drops a path labelled "Cs", tests the effect, and returns the updated model
 
 ```r
-fit2 = umxReRun(fit1, update = "Cs", name = "newModelName", comparison = T) 
+fit2 = umxModify(fit1, update = "Cs", name = "newModelName", comparison = T) 
 ```
-A powerful feature of umxReRun is regular expressions. These let you drop collections of paths by matching patterns. So, 
+A powerful feature of umxModify is regular expressions. These let you drop collections of paths by matching patterns. So, 
 
 ```r
-fit2 = umxReRun(fit1, update = "Cs_r1_c[0-9].", regex = TRUE, name = "drop_all_cols_of_row1_of_Cs", comparison = T)
+fit2 = umxModify(fit1, update = "Cs_r1_c[0-9].", regex = TRUE, name = "drop_all_cols_of_row1_of_Cs", comparison = T)
 ```
 Will drop all paths with labels matching  "Cs_r1_c" followed by anyother digits. i.e., all columns of row 1.
 
 ### Parameters of unxReRun
 
-In addition to the `lastFit` parameter (the mxModel you wish to update and re-run), umxReRun takes the following options:
+In addition to the `lastFit` parameter (the mxModel you wish to update and re-run), umxModify takes the following options:
 
 `update` specifies what to update before re-running. It can be a list of labels, a regular expression (set regex = T) or an object such as an `mxCI` (mx confidence interval request).
 
 ```r
 # 1. update by matching a label
-fit2 = umxReRun(fit1, update = "Cs", name = "newModelName") 
+fit2 = umxModify(fit1, update = "Cs", name = "newModelName") 
 
 # 2. update by matching a regular expression
-fit2 = umxReRun(fit1, update = "C[sr]", regex = TRUE, name = "drop_Cs_andCr")
+fit2 = umxModify(fit1, update = "C[sr]", regex = TRUE, name = "drop_Cs_andCr")
 
 # 3. update by passing in a new object to be added to the model
-fit2 = umxReRun(fit1, update = mxCI("Cs"), name = "withCI")
+fit2 = umxModify(fit1, update = mxCI("Cs"), name = "withCI")
 ```
 ### free and value
 
@@ -123,8 +123,8 @@ To run umxCompare() and report on the old and new models, just set "comparison =
 
 ```r
 # 1. just run the new model
-fit2 = umxReRun(fit1, update = "Cs", name = "newModelName") 
+fit2 = umxModify(fit1, update = "Cs", name = "newModelName") 
 
 # 2. run new model, and compare to the lastFit
-fit2 = umxReRun(fit1, update = "Cs", name = "newModelName", comparison = T) 
+fit2 = umxModify(fit1, update = "Cs", name = "newModelName", comparison = T) 
 ```

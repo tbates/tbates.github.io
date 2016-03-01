@@ -22,7 +22,7 @@ We've used:
 * umxPath
 * umxSummary
 * plot
-* umxReRun
+* umxModify
 * mxModel
 * mxPath
 
