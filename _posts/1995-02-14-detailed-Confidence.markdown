@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Get more confidence (intervals), easily!"
-date: 1995-02-15 00:00
+date: 1995-02-14 00:00
 comments: true
 categories: advanced
 ---

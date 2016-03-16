@@ -3,7 +3,7 @@ layout: post
 title: "Multiple groups"
 date: 1995-02-15 00:00
 comments: true
-categories: basicadvanced
+categories: advanced
 ---
 
 ### This is a work in progress: email me to prioritize this page if you want it sooner.
