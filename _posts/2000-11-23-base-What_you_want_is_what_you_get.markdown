@@ -46,20 +46,21 @@ Fully verbalized, people who know this means "changes in A cause changes in B" e
 2. That A and B have [variance](https://en.wikipedia.org/wiki/Index_of_dispersion).
 2. That A accounts for *some* of the variance in B.
 3. But not all of it: B has [residual variance](https://en.wikipedia.org/wiki/Explained_variation).
-4. Variance in A is [exogenous](https://en.wikipedia.org/wiki/Exogeny) to the model
- * As such, its variance is fixed at 1 (in [standardized](https://en.wikipedia.org/wiki/Standard_score) terms)
+4. Variance in A is [exogenous](https://en.wikipedia.org/wiki/Exogeny) to the model.
+ * The [standardized](https://en.wikipedia.org/wiki/Standard_score) variance of A will be 1.
 5. A and B have means as well as variances.
 
-How to implement this without black boxes? Let's look at an `lm` statement of A <- B:
+How to implement this without black boxes? Let's look at an `lm` statement of A -> B:
 
 ```r
 df = myFADataRaw[, 1:2]
 names(df) <- c("A", "B")
 summary(lm(B ~ A, data = df))
 ```
-This tells us that B = A × 𝛽1 + , where 𝛽1 = 0.64  CI95[0.57, 0.71]. R² = 0.40 (F(1, 498) = 336.1,  p-value: << .001)
 
-Now with umx:
+This tells us that B = A × 𝛽₁ + ε, where 𝛽₁ = 0.64  CI95[0.57, 0.71]. R² = 0.40 (F(1, 498) = 336.1,  p-value: << .001)
+
+Now in `umx`:
 
  ```r
 manifests  = names(df)
@@ -71,6 +72,7 @@ m1 <- umxRAM("A_causes_B", data = df, show = "std",
 ```
 
 Fits well!
+
 χ²(995) = 0, p = 1.000; CFI = 1; TLI = 1; RMSEA = 0
 
 And gives the same parameters:
@@ -86,6 +88,7 @@ And gives the same parameters:
  umx_show(m1)
  plot(m1)
 ```
+
 <img src="/media/base/A_causes_B.png" alt="lm(B ~ A, data = df)">
 
 ### More complex ( and realistic) models...
@@ -237,7 +240,4 @@ m1 = umxRAM("Duncan", data = duncan,
 
 ```
 
-So: an open box, not a blackbox!
-
-
-**Footnotes**
+So: a smart, open, glass box, not a blackbox!
