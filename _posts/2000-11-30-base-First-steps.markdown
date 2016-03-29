@@ -124,7 +124,7 @@ plot(m1, std = F)
 
 *nb*: *You'll need to have GraphViz installed for plot to open a graphic: if it doesn't work, don't worry. Later posts will explain how to get great graphics*!
 
-*ps*: On systems with Word installed a .dot file extension gets opened (uselessly) by M$ word. You might need to make graphviz the default app for these files. On Mac, just go to the get info, select "open with", select Graphviz.app and then "change all".
+*ps*: On systems with Word installed a .gv file extension gets opened (uselessly) by M$ word. You might need to make graphviz the default app for these files. On Mac, just go to the get info, select "open with", select Graphviz.app and then "change all".
 
 Here's the plot:
 

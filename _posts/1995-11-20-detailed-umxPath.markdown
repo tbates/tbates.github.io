@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Power of the path"
+title: "umxPath"
 date: 1995-09-20 00:00
 comments: true
 categories: advanced
@@ -8,15 +8,13 @@ categories: advanced
 
 ## "Staying on the (Wright) path"
 
-`umxPath` is a core umx function.
-
-It has a full set options to facilitate easy path specification, streamlining script writing, and increasing readability.
+`umxPath` is a core `umx` function. It facilitates path specification, streamlines scripts, and increases readability.
 
 Let's start using `umxPath` to specify a [CFA](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis) model with a slight increase in complexity: two linked latent factors forced to be the same:
 
 ![UmxPath Model1](/media/umxPath/umxPath_model1.png)
 
-We'll also use umxRAM so we get automatic labeling and good start values.
+We'll also use `umxRAM` to give us automagical labeling and good start values.
 
 ```r
 # 1. grab some data

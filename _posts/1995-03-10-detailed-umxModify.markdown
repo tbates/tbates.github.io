@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Updating models: umxModify and umxCompare"
+title: "umxModify & umxCompare"
 date: 1995-03-10 00:00
 comments: true
 categories: advanced
@@ -74,7 +74,7 @@ m2 = umxModify(m1, update = "gear_to_mpg", name = "no effect of gear")
 ```
 
 
-umxModify Is a convenience function to re-run an mxModel, optionally adding, setting, or dropping parameters. The main utility of `umxModify` is compactness. 
+`umxModify` Is a convenience function to add, set, or drop parameters, re-name, and re-run a model. Its main benefit is compactness. 
 
 For example, this one-liner drops a path labelled "Cs", tests the effect, and returns the updated model
 
@@ -86,9 +86,9 @@ A powerful feature of umxModify is regular expressions. These let you drop colle
 ```r
 fit2 = umxModify(fit1, update = "Cs_r1_c[0-9].", regex = TRUE, name = "drop_all_cols_of_row1_of_Cs", comparison = T)
 ```
-Will drop all paths with labels matching  "Cs_r1_c" followed by anyother digits. i.e., all columns of row 1.
+Will drop all paths with labels matching  "Cs_r1_c" followed by any other digits. i.e., all columns of row 1.
 
-### Parameters of unxReRun
+### Parameters of umxModify
 
 In addition to the `lastFit` parameter (the mxModel you wish to update and re-run), umxModify takes the following options:
 
@@ -110,8 +110,7 @@ By default, matched labels will be dropped, i.e., "free = F value = 0"
 
 Set "free = TRUE" to free a variable. Set "value = X" to set the value of the matched paths to value X	
 
-freeToStart	
-Whether to update parameters based on their current free-state. free = c(TRUE, FALSE, NA), (defaults to NA - i.e, not checked)
+`freeToStart`: Whether to only update parameters based on their current free-state. defaults to NA - i.e, not checked.
 
 ### confidence Intervals
 
@@ -119,12 +118,12 @@ As in mxRun, you can set `intervals` = TRUE to run confidence intervals (see mxR
 
 ### comparison
 
-To run umxCompare() and report on the old and new models, just set "comparison = TRUE"
+To run `umxCompare`() and report on the old and new models, just set "comparison = TRUE"
 
 ```r
-# 1. just run the new model
+# 1. Run the new model
 fit2 = umxModify(fit1, update = "Cs", name = "newModelName") 
 
-# 2. run new model, and compare to the lastFit
+# 2. R model, and compare to the lastFit
 fit2 = umxModify(fit1, update = "Cs", name = "newModelName", comparison = T) 
 ```

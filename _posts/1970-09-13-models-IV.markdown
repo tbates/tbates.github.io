@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "Instrumental Variables"
-date: 1995-02-13 00:00
+date: 1970-09-13 00:00
 comments: true
-categories: advanced
+categories: models
 ---
 
 ### This is not finished: e-mail me to prioritise this page if you want it sooner.

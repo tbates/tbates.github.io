@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Constraints?"
-date: 1995-12-01 00:00
+title: "Constraints"
+date: 1995-02-13 00:00
 comments: true
 categories: advanced 
 ---
