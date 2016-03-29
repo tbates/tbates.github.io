@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "umxPath"
-date: 1995-09-20 00:00
+date: 1995-11-20 00:00
 comments: true
 categories: advanced
 ---
