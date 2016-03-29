@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Collected efficiency & matrix-algebra articles"
+title: "Collected technical articles (parallel, speed, matrix-algebra)"
 date: 2015-06-05 00:00
 comments: true
 categories: container

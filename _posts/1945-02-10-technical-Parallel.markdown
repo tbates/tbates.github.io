@@ -8,10 +8,10 @@ categories: technical
 
 Parallel execution in OpenMx can be on mulitple cores, or distributed across distinct machines. Single models can be processed using parallel resrouces, and multiple models can be run and results combined.
 
-Modern CPUs typically contain multiple cores ([processing units that share memory](https://en.wikipedia.org/wiki/Multi-core_processor)), and machines may contain more than one CPU.
+Modern CPUs contain multiple cores ([processing units that share memory](https://en.wikipedia.org/wiki/Multi-core_processor)), and machines may contain more than one CPU.
 Some chips also implement "[virtual](https://en.wikipedia.org/wiki/Hyper-threading)" cores which help allow the compiler to keep the hardware working while one process is data limited.
 
-You can see total number of cores on your machine with `detectCores()` (on my 2015 MacBook, the answer is 4, 2 of which are virtual).
+You can see total number of cores on your machine with `detectCores()` (on my 2016 iMac, the answer is 8 (4 real, with hyperthreading).
 
 Out of the box, OpenMx uses `detectCores() - 1` to execute in parallel on supported OS's.
 
@@ -20,9 +20,8 @@ Out of the box, OpenMx uses `detectCores() - 1` to execute in parallel on suppor
 *umx* allows you to get and set the number of cores OpenMx will use with:
 
 ```r
-umx_get_cores() # how many cores are we currently requesting?
-umx_set_cores() # defaults to max-1
-umx_set_cores(n) # request use of n-cores
+umx_set_cores()  # See many cores are currently requested?
+umx_set_cores(3) # Request use of 3 cores
 
 ```
 
@@ -35,18 +34,18 @@ mxOption(NULL, "Number of Threads", n)
 So this
 
 ```r
-umx_set_cores() # defaults to max-1
+umx_set_cores(detectCores())
 ```
 
 is equivalent to:
 
 ```r
-mxOption(NULL, "Number of Threads", detectCores() - 1)
+mxOption(NULL, "Number of Threads", detectCores())
 ```
 
-So now you don't need to remembering the correct option string.
+So now you don't need to remember or type this long option string!
 
-Support for multiple cores is expected on all platforms during 2016, and will dramactically speed up time consuming processing, like CIs.
+Support for multiple cores is expected on all R platforms during 2016, and will dramactically speed up time consuming processing, like CIs.
 
 *top tip*: [TextMate](http://macromates.com) OpenMx bundle
 *top tip*: Use R's tab-function completion (just type `umx_` and tab to see the list…):
