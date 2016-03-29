@@ -1,4 +1,14 @@
-rotation="promax", varimax
+---
+layout: post
+title: "EFA (Exploratory factor analysis) using umx"
+date: 1970-10-10 00:00
+comments: true
+categories: models
+---
+
+[Factor analysis](https://en.wikipedia.org/wiki/Factor_analysis) takes a number of measured variables (manifest variables) and accounts for these in terms of a (smaller) number of latent variables, and uncorrelated residual variance, specific to each manifest variable. The number of factors to retain can be estimated using various methods including Horn's parallel analysis. These factors define a multi-dimensional space within which the items are located. The factors themselves can be transformed (rotated) to a simpler structure.
+
+Performing a factor analysis in R is straightforward, as long as one does not have missing data. This code snippet gives an example of an analysis of 5 variables from the ubiquitous `mtcars` data set, retaining 2-factors: 
 
 ```splus
 vars = c("mpg", "disp", "hp", "wt", "qsec")
@@ -10,8 +20,12 @@ factanal(~ mpg + disp + hp + wt + qsec, factors = 2, rotation="promax"data = mtc
 # hp    0.621  -0.701
 # wt    0.996
 # qsec -0.123   0.906
+```
 
-m2 = umxEFA(name= "test", factors =   2, data = mtcars[, vars])
+In umx, we can replicate this analysis with the `umxEFA` function:
+
+```splus
+m2 = umxEFA(name = "test", factors = 2, data = mtcars[, vars])
 x = mxStandardizeRAMpaths(m2, SE=T)
 x[,c(2,8,9)]
 
@@ -32,7 +46,6 @@ if rotation == "varimax"){
 }
 
 m2$A$values[manifests, latents] = load
-
 
 require(umx)
 data(demoOneFactor)
