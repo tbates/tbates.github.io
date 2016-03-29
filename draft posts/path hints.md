@@ -1,0 +1,2 @@
+ "grammar of paths”
+ In plotting, we have the grammar of graphics. In R, the grammar of paths. This path grammar is both delightful, comprehnsive, and remarkably, a terrific set of training wheels for early-language learners.
