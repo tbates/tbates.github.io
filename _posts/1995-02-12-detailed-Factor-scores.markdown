@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Ordinal variables in RAM models"
+title: "Factor scores"
 date: 1995-02-12 00:00
 comments: true
 categories: advanced

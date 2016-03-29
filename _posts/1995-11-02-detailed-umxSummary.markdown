@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Getting results"
+title: "umxSummary"
 date: 1995-10-02 00:00
 comments: true
 categories: advanced

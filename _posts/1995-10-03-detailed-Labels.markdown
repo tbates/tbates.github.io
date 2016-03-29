@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Labels, and how to get, set, and use them to fix, drop, or equate paths."
+title: "Labels to fix, drop, or equate paths."
 date: 1995-10-03 00:00
 comments: true
 categories: advanced
