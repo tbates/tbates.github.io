@@ -8,12 +8,12 @@ categories: advanced
 
 ### This is not finished: e-mail me to prioritise this page if you want it sooner.
 
-IV [Instrumental variable](https://en.wikipedia.org/wiki/Instrumental_variable) analyses are widely used in fields as diverse as economics, and epidemiology. This page shows how to implement these analyses in `OpenMx` and `umx`.
+IV [Instrumental variable](https://en.wikipedia.org/wiki/Instrumental_variable) analyses are widely used in fields as diverse as [economics], and [genetic epidemiology]. This page shows how to implement these analyses in `OpenMx` and `umx`.
 
 IV analyses allow us to estimate causal relationships when confounding is likely but controlled experiments are not feasible [1]
 
 ### Motivation: linear regression can be misleading
-Consider some explanatory equation e.g. `Y ~ X + ε`. This claims that Y is influenced by X. If, however covariates are correlated with the error terms, ordinary least squares regression produces biased and inconsistent estimates.[2]
+Consider some explanatory equation e.g. `Y ~ 𝛽×X + ε`. As a scientific construct, this is interpreted as the causal claim that X plays a causal role in Y, revealed in these data (one could prevaricate about cause, but scientists). If, however covariates are correlated with the error terms, ordinary least squares regression produces biased and inconsistent estimates.[2]
 
 Such correlation with error occurs when:
 
@@ -44,7 +44,7 @@ library(umx)
 # =================
 # = Simulate Data =
 # =================
-
+	
 set.seed(999)    # Set seed for random number generator
 nInd <- 100000   # 100,000 Individuals
 Vq   <- 0.02     # Variance of QTL Z (which affects variable X
@@ -136,55 +136,29 @@ Now an exactly equivalent model in umxRAM
 ```splus
 
 m2 <- umxRAM("myMR", data = df, autoRun = F,
-	umxPath(v.m. = "Z"),
-	umxPath(v.m. = "X"),
-	umxPath(v.m. = "Y"),
+	umxPath(v.m. = c("Z", "X", "Y")),
 	umxPath("Z", to = "X"),
 	umxPath("X", to = "Y")
-	# umxPath("X", with = "Y")
+	# umxPath("X", with = "Y") # Due to OpenMx rules, will be deleted!
 )
-m3 <- umxModify(m2, "X_with_Y", free=T, value=.2)
+m3 <- umxModify(m2, "X_with_Y", free = T, value = .2)
 plot(m3, std = F, digits = 3)
 # https://www.dropbox.com/s/1sg32yglfuzgwoz/myMR.png?dl=0
 
-m1 <- mxModel("myMR", type="RAM", mxData(df, type="raw"),
-	manifestVars = manifests,
-	latentVars = latents,
-	umxPath(v.m. = "Z"),
-	umxPath(v.m. = "X"),
-	umxPath(v.m. = "Y"),
-	umxPath("Z", to = "X"),
-	umxPath("X", to = "Y"),
-	umxPath("X", with = "Y") # currently will be deleted	
+SB <- umxRAM("SB_IV", data = mxData(df, type="raw"),
+	umxPath("ex", to = "X", fixedAt = 1, labels = "ex"),
+	umxPath("ey", to = "Y", fixedAt = 1, labels = "ey"),
+	umxPath("Tx", to = "X", fixedAt = 1, labels = "Tx"),
+	umxPath("Ty", to = "Y", fixedAt = 1, labels = "Ty"),
+	umxPath("Tz", to = "Z", fixedAt = 1, labels = "Tz"),
+	umxPath("ex", with = "ey", values = 0.2, labels = "phi"),
+	umxPath("Tz",  to = "Tx", labels = "b_zx"),
+	umxPath("Tx",  to = "Ty", labels = "b_xy"),
+	umxPath(var = c("Tx", "Ty", "Tz", "ex", "ey"), values = 1),
+	umxPath(means = c("Z", "X", "Y"))
 )
+ 
+plot(SB, std = F, showFixed = T, digits = 3)
+umxCompare(SB, m3)
 
-# ===================
-# = Delete all this =
-# ===================
-# ↓↓↓↓↓↓
-
-MR_model <- umxRAM("no U has MR", data = df,
-	umxPath(v.m. = "Z"),
-	umxPath("e_x", to = "X", fixedAt = 1), # X residual
-	umxPath("e_y", to = "Y", fixedAt = 1), # Y residual
-	umxPath(var = c("e_x", "e_y"), values = 1),
-	umxPath("e_x", with = "e_y", values=.2),
-
-	umxPath("Z", to = "X"),
-	umxPath("X", to = "Y"),
-	umxPath(means = c("e_x", "e_y"), fixedAt= 0),
-	umxPath(means = c("Z", "X", "Y"), values= 0)
-)
-
-
-# Model with measures U
-m_with_U <- umxRAM("measuredU", data = df,
-	umxPath(v.m. = "U"),
-	umxPath(v.m. = "X"),
-	umxPath(v.m. = "Y"),
-	umxPath("U", to = c("X","Y")),
-	umxPath("X", to = "Y")
-)
-umxSummary(m_with_U, show="raw"); plot(m_with_U, std=F, showF=T, showM=T)
-    
 ```
