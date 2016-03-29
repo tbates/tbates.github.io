@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "Run a model using just OpenMx"
-date: 2000-11-25 00:00
+title: "umx for OpenMx users"
+date: 2000-11-22 00:00
 comments: true
 categories: basic
 ---
 
-In the last post, we used `umxPath` and `umxRAM`. Here, I show how this differs from the built-in OpenMx `mxModel` and `mxPath` functions.
+Previously, I showed how to model with `umxPath` and `umxRAM`. Here, I compare this to built-in OpenMx `mxModel` and `mxPath` functions.
 
 #### umxRAM vs mxModel
 
