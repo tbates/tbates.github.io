@@ -7,6 +7,7 @@ categories: basic
 ---
 
 ### What we you have seen how to do:
+
 1. Build & Run `umxRAM` models
 3. Get `umxSummary` output
 4. `plot` model diagrams
@@ -16,6 +17,7 @@ categories: basic
  * Equate paths by label
 
 ### umx function list
+
 We've used:
 
 * umxRAM
