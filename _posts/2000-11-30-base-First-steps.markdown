@@ -16,11 +16,11 @@ If you haven't installed umx, [do that now](/basic/2020/12/10/base-Install.html)
 ``` splus
 # load umx library
 library("umx")
-# note: the umx philosophy extends to help ?umx is not just boilerplate documentation.
-# All functions are fully documented, with awesome complete examples.
 ```
+*note*: umx help is not just boilerplate documentation: All functions have real-world examples and tips!.
 
 <a name="overview"></a>
+
 ## Overview
 
 For those of you who like to get straight to the code: here's what happens on this page:
