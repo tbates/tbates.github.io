@@ -25,10 +25,12 @@ umx_set_cores(3) # Request use of 3 cores
 
 ```
 
-Under the hood, this is changing an option:
+Under the hood, this is getting or setting an mxOption:
 
 ```r
-mxOption(NULL, "Number of Threads", n)
+mxOption(NULL, "Number of Threads") # get current value
+
+mxOption(NULL, "Number of Threads", n) # set value to n
 ```
 
 So this
@@ -43,12 +45,12 @@ is equivalent to:
 mxOption(NULL, "Number of Threads", detectCores())
 ```
 
-So now you don't need to remember or type this long option string!
+Now you don't need to remember or type this long option string!
 
-Support for multiple cores is expected on all R platforms during 2016, and will dramactically speed up time consuming processing, like CIs.
+Support for multiple cores is expected on all R platforms during 2016, and will dramatically speed up model runtime, e,g,CIs.
 
-*top tip*: [TextMate](http://macromates.com) OpenMx bundle
 *top tip*: Use R's tab-function completion (just type `umx_` and tab to see the list…):
+*top tip*: [TextMate](http://macromates.com) OpenMx bundle contains snippets for many of umx's features.
 
 ### OpenMP on unix clusters
 
