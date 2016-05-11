@@ -42,9 +42,10 @@ Our first analysis one is a simple linear model (or ordinary least squares regre
 
 ```splus
 library(umx)
-data(MR_data)
-m1 = lm(Y ~ X    , data = MR_data); coef(m1) # "appears" that Y is caused by X:  𝛽= .35
-m1 = lm(Y ~ X + U, data = MR_data); coef(m1) # Controlling U reveals the true link: 𝛽= 0.1
+df = umx_make_MR_data(df, nSubjects = 10000)
+
+m1 = lm(Y ~ X    , data = df); coef(m1) # "appears" that Y is caused by X:  𝛽= .35
+m1 = lm(Y ~ X + U, data = df); coef(m1) # Controlling U reveals the true link: 𝛽= 0.1
 
 ```
 
@@ -55,7 +56,7 @@ Next, we analyse a Mendelian randomization trial.
 A conventional implementation involves two-stage least squares. In R, we can do this using John Fox's `tsls` function from the from `sem` library
 
 ```splus
-m1 = sem::tsls(formula = Y ~ X, instruments = ~ qtl, data = MR_data); coef(m1)
+m1 = sem::tsls(formula = Y ~ X, instruments = ~ qtl, data = df); coef(m1)
 #                 Estimate  Std. Error   t value     Pr(>|t|)
 # (Intercept) 0.0009797078 0.003053891 0.3208064 7.483577e-01
 # X           0.1013835358 0.021147133 4.7941976 1.635616e-06
@@ -82,7 +83,7 @@ IVModel <- mxModel("IV Model", type="RAM",
 	mxPath(from = "X",  to = "Y", arrows = 1, free = TRUE, values = 0, labels = "b_xy"), # Causal effect of X on Y
 	# means and intercepts
 	mxPath(from = "one", to = c("qtl", "X", "Y"), arrows = 1, free = TRUE, values =1, labels = c("meansnp", "alpha0", "alpha1") ),
-	mxData(MR_data, type="raw")
+	mxData(df, type="raw")
 )
 
 IVModel <- mxRun(IVModel); umx_time(IVModel) # IV Model: 14.34 seconds for 100,000 subjects
@@ -96,7 +97,7 @@ Now an exactly equivalent model in umxRAM
 
 ```splus
 
-m2 <- umxRAM("myMR", data = MR_data, autoRun = F,
+m2 <- umxRAM("myMR", data = df, autoRun = F,
 	umxPath(v.m. = c("qtl", "X", "Y")),
 	umxPath("qtl", to = "X"),
 	umxPath("X", to = "Y")
@@ -106,7 +107,7 @@ m3 <- umxModify(m2, "X_with_Y", free = T, value = .2)
 plot(m3, std = F, digits = 3)
 # https://www.dropbox.com/s/1sg32yglfuzgwoz/myMR.png?dl=0
 
-SB <- umxRAM("SB_IV", data = mxData(MR_data, type="raw"),
+SB <- umxRAM("SB_IV", data = mxData(df, type="raw"),
 	umxPath("ex", to = "X", fixedAt = 1, labels = "ex"),
 	umxPath("ey", to = "Y", fixedAt = 1, labels = "ey"),
 	umxPath("Tx", to = "X", fixedAt = 1, labels = "Tx"),
