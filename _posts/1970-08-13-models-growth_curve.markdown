@@ -10,7 +10,7 @@ categories: models
 
 [Latent growth](https://en.wikipedia.org/wiki/Latent_growth_modeling) models are common used when a measure is repeated over time, and we wish to propose and test a model in which the manifest variable is accounted for in terms of a mean and a growth function. This page shows how to implement these analyses in `umx` and `OpenMx`.
 
-![latent growth in umx](https://tbates.github.com/media/growth.png)
+![latent growth in umx](https://tbates.github.com/media/growth/growth.png)
 
 ```splus
 require(umx)
