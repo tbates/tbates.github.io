@@ -10,7 +10,12 @@ categories: models
 
 [Latent growth](https://en.wikipedia.org/wiki/Latent_growth_modeling) models are common used when a measure is repeated over time, and we wish to propose and test a model in which the manifest variable is accounted for in terms of a mean and a growth function. This page shows how to implement these analyses in `umx` and `OpenMx`.
 
+Let's build this simple example based on 5 repeated measures (1:5) of "x". Graphically, the model looks like this (means not shown):
+
+
 ![latent growth in umx](https://tbates.github.com/media/growth/growth.png)
+
+Here's the umx code: 7 lines without comments
 
 ```splus
 require(umx)
@@ -30,6 +35,14 @@ m1 <- umxRAM("Linear Growth Curve", data = myLongitudinalData,
 	umxPath(var = manifests, labels = "residual"), # one label equates these!
 	umxPath(mean = manifests, fixedAt = 0)
 )
+
 umxSummary(m1); round(coef(m1), 2)
+plot(m1, means = F)
 
 ```
+χ²(2494) = 9.19, p = 0.818; CFI = 1.003; TLI = 1.002; RMSEA = 0
+
+| residual | vari | cov  | vars | meani | means |
+|:---------|:-----|:-----|:-----|:------|:------|
+| 2.32     | 3.88 | 0.46 | 0.26 | 9.93  | 1.81  |
+
