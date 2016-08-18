@@ -8,7 +8,7 @@ categories: models
 
 ### This is not finished: e-mail me to prioritise this page if you want it sooner.
 
-IV [Instrumental variable](https://en.wikipedia.org/wiki/Instrumental_variable) analyses are widely used in fields as diverse as [economics], and [genetic epidemiology]. This page shows how to implement these analyses in `umx` and `OpenMx`.
+[Latent growth](https://en.wikipedia.org/wiki/Latent_growth_modeling) models are common used when a measure is repeated over time, and we wish to propose and test a model in which the manifest variable is accounted for in terms of a mean and a growth function. This page shows how to implement these analyses in `umx` and `OpenMx`.
 
 
 ```splus
@@ -33,5 +33,3 @@ umxSummary(m1); round(coef(m1), 2)
 # https://www.dropbox.com/s/ljqrhpuskbihda3/IV_Model.png?dl=0
 
 ```
-
-Ioannidis, J. P. (2012). Why Science Is Not Necessarily Self-Correcting. *Perspect Psychol Sci*, **7**, 645-654. doi:10.1177/1745691612464056
