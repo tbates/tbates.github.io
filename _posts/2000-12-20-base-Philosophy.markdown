@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The umx principle"
+title: "The umx principle (1-minute read)"
 date: 2000-12-20 00:00
 comments: true
 categories: basic
@@ -19,7 +19,7 @@ This package has one principle: make good modeling easier.
 3. Maintain a reproducible workflow.
 4. Communicate results effectively.
 
-OpenMx is a fantastic base - often you'll stick with core OpenMx functions: Using `mxPath` instead of `umxPath`, or `summary` instead of `umxSummary`.
+[OpenMx](http://openmx.psyc.virginia.edu) is a fantastic base - often you'll stick with core OpenMx functions: Using `mxPath` instead of `umxPath`, or `summary` instead of `umxSummary`.
 
 That said, R has too many cases where "*you can do it lots of ways*". We want `umx` to provide "just one way" that makes basic work easy, and complex work manageable, so you can spend more time doing better science.
 
