@@ -19,7 +19,8 @@ library("umx")
 
 ```
                                                                
-That's it: There is no step 2: You're ready for [your first umx model](/basic/2020/11/30/base-First-steps.html)!
+That's it: There is no step 2: You're ready for [your first umx model](/basic/2000/11/30/base-First-steps.html)!
+
 
 ### Beta testers
 
