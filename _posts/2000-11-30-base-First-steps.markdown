@@ -11,7 +11,8 @@ umx stands for "user" OpenMx helper library. It's purpose is to help with [Struc
 
 I called this post "first steps" but it will take you a long way into practical modelling. So, let's do some modeling …
 
-If you haven't installed umx, [do that now](/basic/2020/12/10/base-Install.html), and follow the link back here.
+If you haven't installed umx, [do that now](/basic/2000/12/10/base-Install.html), and follow the link back here.
+
 
 ``` splus
 # load umx library
