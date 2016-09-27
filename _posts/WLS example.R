@@ -6,24 +6,35 @@ Stephens, N., et al (2014). Social class culture cycles: How three gateway conte
 Wilkinson, R., & Pickett, K. (2009). The Spirit Level: Why more equal societies almost always do better. Allen Lane, London. 
 
 library(umx)
-
 # Simulate some data
 x = rnorm(1000, mean = 0, sd = 1)
 y= 0.5 * x + rnorm(1000, mean = 0, sd = 1)
 tmpFrame <- data.frame(x, y);
-
-# Define the model
-m1 <- mxModel(model="exampleModel",
+cov(tmpFrame) # ~ .47
+# Define and run x TO y and x WITH y model
+m1 <- mxRun(mxModel(model = "xTOy",
 	# Define the matrices
-	mxMatrix(type = "Full", nrow = 2, ncol = 2, values = c(1,0,0,1), free = c(TRUE, FALSE, FALSE, TRUE), labels =c ("Vx", NA, NA, "Vy"), name = "S"),
-	mxMatrix(type = "Full", nrow = 2, ncol = 2, values = c(0,1,0,0), free = c(FALSE, TRUE, FALSE, FALSE), labels = c(NA, "b", NA, NA), name = "A"),
-	mxMatrix(type = "Iden", nrow = 2, ncol = 2, name = "I"),
+	mxMatrix(name = "S", type = "Full", nrow = 2, ncol = 2, values = c(1,0,0,1), free = c(T, F, F, T), labels = c("Vx", NA , NA, "Vy")),
+	mxMatrix(name = "A", type = "Full", nrow = 2, ncol = 2, values = c(0,1,0,0), free = c(F, T, F, F), labels = c(NA  , "b", NA, NA)),
+	mxMatrix(name = "I", type = "Iden", nrow = 2, ncol = 2),
 	# Define the expectation
-	mxAlgebra(solve(I-A) %*% S %*% t(solve(I-A)), name = "expCov"),
+	mxAlgebra(name = "expCov", solve(I-A) %*% S %*% t(solve(I-A))),
 	mxExpectationNormal("expCov", dimnames= names(tmpFrame)),
 	mxFitFunctionWLS(),
 	mxDataWLS(tmpFrame)
-)
-# Fit the model and print a summary
-m1 <- mxRun(m1)
-summary(m1)
+))
+
+omxCheckCloseEnough(cov(tmpFrame)[2,1], coef(m1)["b"], .01)
+
+m2 <- mxRun(mxModel(model = "xWITHy",
+	# Define the matrices
+	mxMatrix(name = "S", type = "Full", nrow = 2, ncol = 2, values = c(1,0,0,1), free = c(T, T, F, T), labels = c("Vx", "b" , NA, "Vy")),
+	mxMatrix(name = "A", type = "Full", nrow = 2, ncol = 2, free=F, values = 0),
+	mxMatrix(name = "I", type = "Iden", nrow = 2, ncol = 2),
+	# Define the expectation
+	mxAlgebra(name = "expCov", solve(I-A) %*% S %*% t(solve(I-A))),
+	mxExpectationNormal("expCov", dimnames= names(tmpFrame)), mxFitFunctionWLS(),
+	mxDataWLS(tmpFrame)
+))
+
+omxCheckCloseEnough(cov(tmpFrame)[2,1], coef(m2)["b"], .01)
