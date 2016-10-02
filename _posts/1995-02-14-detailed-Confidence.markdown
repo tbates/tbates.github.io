@@ -10,7 +10,7 @@ categories: advanced
 
 #### This page is not finished. When done it will explain using umx to get CIs from models. 
 
-CIs –&nbsp;or confidence intervals are key to understanding how big the likely true effects of your causes are.
+CIs –&nbsp;or profile-based confidence intervals are key to understanding how big the likely true effects of your causes are.
 
 First, run our very first model again:
 
