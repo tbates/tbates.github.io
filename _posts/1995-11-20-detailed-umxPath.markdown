@@ -74,15 +74,18 @@ m1 <- mxModel("m1", type="RAM",
 
 The new terms for *connecting variables* are shown below, along with their `mxPath` equivalents
 
-|New Term         | Example           | mxPath Equivalent                |
-|-----------------|:-------------------|:---------------------------------|
-| var             | var  = "X"         | from = "X", arrows = 2           |
-| with            | "X", with = "Y"    | from = "X", to = "Y", arrows = 2 |
-| cov             | cov = c("X","Y")   | from = "X", to = "Y", arrows = 2 |
-| means           | means = c("X","Y") | from = "one", to = c("X","Y")    |
-| v1m0            | v1m0 = c("X")      | requires two lines               |
-| v.m.            | v.m. = c("Y")      | requires two lines               |
+|New Term         | Example           | mxPath Equivalent                    |
+|-----------------|:-------------------|:------------------------------------|
+| var             | var  = "X"         | from = "X", arrows = 2              |
+| with            | "X", with = "Y"    | from = "X", to = "Y", arrows = 2    |
+| cov             | cov = c("X","Y")   | from = "X", to = "Y", arrows = 2    |
+| means           | means = c("X","Y") | from = "one", to = c("X","Y")       |
+| v1m0            | v1m0 = "X"         | requires 2 lines setting mean & var |
+| v0m0            | v0m0 = "Y"         | requires 2 lines setting mean & var |
+| v.m.            | v.m. = "Y"         | requires 2 lines setting mean & var |
+| defn            | defn = "A", label="data.Y"         | create a latent var@0 mean fixed, with data.var as label |
 | unique.bivariate| unique.bivariate = c("X","Y", "Z") | from = c("X","Y", "Z"), connection = "unique.bivariate", arrows = 2|
+| unique.pairs.   | unique.pairs = c("X","Y", "Z") | from = c("X","Y", "Z"), connection = "unique.pairs", arrows = 2|
 | Cholesky        | Cholesky = c("X","Y"), to = c("a", "b") | a complex series of paths|
 
 The intuition for `v.m.` is v for variance, m for means, and dot for "any value"
