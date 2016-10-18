@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Variables in algebras"
-date: 1980-12-20 00:00
+
 comments: true
 categories: models tutorial
 ---

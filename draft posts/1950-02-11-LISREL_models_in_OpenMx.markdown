@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "LISREL models in OpenMx"
-date: 1950-02-01 00:00
+
 comments: true
 categories: models
 ---

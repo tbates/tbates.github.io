@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Matrix concepts: Not positive definite, Hessian, Jacobian"
-date: 1900-06-01 00:00
+
 comments: true
 categories: technical
 ---

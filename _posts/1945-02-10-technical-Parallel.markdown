@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Parallel Execution"
-date: 1945-02-10 00:00
+
 comments: true
 categories: technical
 ---

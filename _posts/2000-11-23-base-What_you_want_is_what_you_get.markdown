@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "What you expect is what you get"
-date: 2000-11-23 00:00
+
 comments: true
 categories: basic
 ---

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "umxSummary"
-date: 1995-11-02 00:00
+
 comments: true
 categories: advanced
 ---

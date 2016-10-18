@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Collected technical articles (parallel, speed, matrix-algebra)"
-date: 2015-06-05 00:00
+
 comments: true
 categories: container
 ---

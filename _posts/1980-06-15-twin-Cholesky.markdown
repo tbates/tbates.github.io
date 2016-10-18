@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Cholesky paths with umxPath"
-date: 1980-06-15 00:00
+
 comments: true
 categories: models twin
 ---

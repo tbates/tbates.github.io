@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "umxModify & umxCompare"
-date: 1995-03-10 00:00
+
 comments: true
 categories: advanced
 ---

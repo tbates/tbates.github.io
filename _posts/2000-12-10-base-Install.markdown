@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Installing umx (60 seconds)"
-date: 2000-12-10 00:01
+
 comments: true
 categories: basic
 ---

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Statistical helper functions"
-date: 1995-02-07 00:00
+
 comments: true
 categories: technical
 ---

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Growth Curve"
-date: 1970-08-13 00:00
+
 comments: true
 categories: models
 ---

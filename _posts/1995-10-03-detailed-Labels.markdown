@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Labels to fix, drop, or equate paths."
-date: 1995-10-03 00:00
+
 comments: true
 categories: advanced
 content: true

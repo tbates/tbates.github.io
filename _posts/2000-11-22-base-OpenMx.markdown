@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "umx for OpenMx users"
-date: 2000-11-22 00:00
+
 comments: true
 categories: basic
 ---

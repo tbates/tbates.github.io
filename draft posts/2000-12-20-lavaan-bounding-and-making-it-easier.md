@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Lavaan bounding"
-date: 2000-12-20 00:00
+
 comments: true
 categories: models tutorial
 ---

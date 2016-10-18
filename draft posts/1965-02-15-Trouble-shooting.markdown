@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Trouble shooting"
-date: 1965-02-15 00:00
+
 comments: true
 categories: models
 ---

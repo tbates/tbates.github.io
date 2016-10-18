@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "plotting"
-date: 1995-11-10 00:00
+
 comments: true
 categories: advanced
 ---

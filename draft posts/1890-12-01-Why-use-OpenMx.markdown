@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Why should I use OpenMx?"
-date: 1890-12-01 00:00
+
 comments: true
 categories: basic
 ---

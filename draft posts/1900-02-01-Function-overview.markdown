@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Overview of umx functions: Quickly survey the key umx helpers available to you (plus some minor players)"
-date: 1900-02-01 00:00
+
 comments: true
 categories:advanced 
 ---

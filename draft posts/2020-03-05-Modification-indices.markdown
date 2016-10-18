@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Modification indices"
-date: 2020-03-05 00:00
+
 comments: true
 categories: models tutorial
 ---

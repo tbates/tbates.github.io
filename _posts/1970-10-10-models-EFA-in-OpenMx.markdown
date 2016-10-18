@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "EFA (Exploratory factor analysis) using umx"
-date: 1970-10-10 00:00
+
 comments: true
 categories: models
 ---

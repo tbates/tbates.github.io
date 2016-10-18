@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "The umx principle (1-minute read)"
-date: 2000-12-20 00:00
+
 comments: true
 categories: basic
 ---

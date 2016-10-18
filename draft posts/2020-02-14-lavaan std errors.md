@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Standard Errors!"
-date: 2020-02-14 00:00
+
 comments: true
 categories:advanced 
 ---
