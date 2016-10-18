@@ -33,7 +33,7 @@ This last feature has the benefit that you can pass in raw data, and `umxRAM` wi
 mxPath(from = "A", to = "B", arrows = 2, values = 1, free = FALSE)
 ```
 
-`umxPath` adds some new verbs which link these actions together:
+`umxPath` adds several new verbs which link these actions in common patterns:
 
 ```r
 umxPath("A", with = "B", fixedAt = 1)
@@ -45,7 +45,7 @@ Equivalently:
 umxPath(cov = c("A", "B"), fixedAt = 1)
 ```
 
-You can learn more about these additional parameters at `?umxPath`
+In total there are 14 new words for describing paths (with, var, cov, unique.bivariate, unique.pairs, Cholesky, defn, means, v1m0, v1m0, v.m., fixedAt, freeAt, firstAt). You can learn more about these additional parameters [here](/advanced/1995/11/20/detailed-umxPath.html)
 
 What follows in this post, is the construction of our toy model using base OpenMx functions. Nicely, mxModels can be updated by passing an existing model into mxModel and adding or subtracting objects "line by line".
 
