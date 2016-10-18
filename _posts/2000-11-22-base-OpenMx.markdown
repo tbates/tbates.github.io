@@ -55,6 +55,7 @@ What follows in this post, is the construction of our toy model using base OpenM
 4. [Compare](#compare)
 
 <a name="build"></a>
+
 ## Build a model
 
 To build the model, we need umx and some data:
@@ -175,6 +176,7 @@ m1 <- mxModel(m1,
 Done! So now we have a complete model, with all our hypothesised paths (variances and covariances) and the data. We are ready to run the model.
 
 <a name="run"></a>
+
 ## Run the model
 
 Mow we run the model. In this case we take advantage of umxRun to also set labels and start values. Of course this won't touch fixed values.
@@ -189,6 +191,7 @@ This exposes a lovely (and unique) feature of OpenMx: running a model returns a 
 <!-- TODO  sidebar -->
 
 <a name="report"></a>
+
 ## Report on the model
 
 ``` splus
