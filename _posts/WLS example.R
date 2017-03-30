@@ -26,7 +26,7 @@ rms <- function(x, y = NA){
 jointData <- read.table("~/bin/OpenMx/inst/models/passing/data/jointdata.txt", header = TRUE)
 
 # specify ordinal columns as ordered factors
-jointData[,c(2,4,5)] <- mxFactor(jointData[,c(2,4,5)], levels = list(c(0, 1), c(0, 1, 2, 3), c(0, 1, 2)))
+jointData[, c(2, 4, 5)] <- mxFactor(jointData[, c(2, 4, 5)], levels = list(c(0, 1), c(0, 1, 2, 3), c(0, 1, 2)))
 str(jointData)
  # $ z1: num  6.83 8.77 8.01 9 8.52 ...
  # $ z2: Ord.factor w/ 2 levels "0"<"1": 1 1 1 2 1 1 1 1 1 1 ...
@@ -47,19 +47,20 @@ loadings$ubound[1,5] <- 2
 resid <- mxMatrix("Diag", 5, 5, free=c(TRUE, FALSE, TRUE, FALSE, FALSE), values=.5, name="U")
 means <- mxMatrix("Full", 1, 5, free=c(TRUE, FALSE, TRUE, FALSE, FALSE), values=0, name="M")
 
-thresh            <- mxMatrix("Full", 3, 3, FALSE, 0, name="T")
-thresh$free[,1]   <- c(TRUE, FALSE, FALSE)
-thresh$values[,1] <- c(0, NA, NA)
-thresh$labels[,1] <- c("z2t1", NA, NA)
-thresh$free[,2]   <- TRUE
-thresh$values[,2] <- c(-1, 0, 1)
-thresh$labels[,2] <- c("z4t1", "z4t2", "z4t3")
-thresh$free[,3]   <- c(TRUE, TRUE, FALSE)
-thresh$values[,3] <- c(-1, 1, NA)
-thresh$labels[,3] <- c("z5t1", "z5t2", NA)
+thresh            = mxMatrix("Full", 3, 3, FALSE, 0, name="T")
+thresh$free[,1]   = c(TRUE, FALSE, FALSE)
+thresh$values[,1] = c(0, NA, NA)
+thresh$labels[,1] = c("z2t1", NA, NA)
+thresh$free[,2]   = TRUE
+thresh$values[,2] = c(-1, 0, 1)
+thresh$labels[,2] = c("z4t1", "z4t2", "z4t3")
+thresh$free[,3]   = c(TRUE, TRUE, FALSE)
+thresh$values[,3] = c(-1, 1, NA)
+thresh$labels[,3] = c("z5t1", "z5t2", NA)
 
-
-# Model definition
+# ====================
+# = Model definition =
+# ====================
 
 # ML form
 jointModel1 <- mxModel("ContinuousOrdinalData",
@@ -70,30 +71,30 @@ jointModel1 <- mxModel("ContinuousOrdinalData",
 	mxExpectationNormal("C", "M", dimnames = names(jointData), thresholds = "T", threshnames = c("z2", "z4", "z5"))
 )
 
-# run it
+# Run it
 jointResults1 <- mxRun(jointModel1, suppressWarnings = TRUE)
 umx_time(jointResults1)
 summary(jointResults1)
 
 # Create WLS Data
-wd <- mxDataWLS(jointData, "WLS")
-dd <- mxDataWLS(jointData, "DLS")
-ud <- mxDataWLS(jointData, "ULS")
+wd = mxDataWLS(jointData, "WLS")
+dd = mxDataWLS(jointData, "DLS")
+ud = mxDataWLS(jointData, "ULS")
 
 # WLS form(s) of model
-jointWlsModel <- mxModel(jointModel1, name = 'wlsModel', wd, mxFitFunctionWLS())
-jointDlsModel <- mxModel(jointModel1, name = 'dlsModel', dd, mxFitFunctionWLS())
-jointUlsModel <- mxModel(jointModel1, name = 'ulsModel', ud, mxFitFunctionWLS())
+jointWlsModel = mxModel(jointModel1, name = 'wlsModel', wd, mxFitFunctionWLS())
+jointDlsModel = mxModel(jointModel1, name = 'dlsModel', dd, mxFitFunctionWLS())
+jointUlsModel = mxModel(jointModel1, name = 'ulsModel', ud, mxFitFunctionWLS())
 
 # Run 'em
-jointWlsResults <- mxRun(jointWlsModel)
-jointDlsResults <- mxRun(jointDlsModel)
-jointUlsResults <- mxRun(jointUlsModel)
+jointWlsResults = mxRun(jointWlsModel)
+jointDlsResults = mxRun(jointDlsModel)
+jointUlsResults = mxRun(jointUlsModel)
 
 umx_time(c(jointResults1, jointWlsResults, jointDlsResults, jointUlsResults))
 
 # Compare ML and WLS estimates
-round(cmp <- cbind(ML = coef(jointResults1), WLS = coef(jointWlsResults), DLS = coef(jointDlsResults), ULS = coef(jointUlsResults)), 3)
+round(cmp = cbind(ML = coef(jointResults1), WLS = coef(jointWlsResults), DLS = coef(jointDlsResults), ULS = coef(jointUlsResults)), 3)
 
 plot(cmp[1:5, 1], cmp[1:5, 2])
 abline(0, 1)
@@ -103,7 +104,7 @@ omxCheckTrue(all(rms(cmp) < 0.03))
 
 # Create and compare saturated models
 
-jointModel2 <- mxModel("ContinuousOrdinalData",
+jointModel2 = mxModel("ContinuousOrdinalData",
 	mxData(jointData, "raw"),
 	satCov, means, thresh,
 	mxFitFunctionML(),
@@ -113,24 +114,27 @@ jointModel2 <- mxModel("ContinuousOrdinalData",
 	threshnames = c("z2", "z4", "z5"))
 )
 
-jointResults2 <- mxRun(jointModel2, suppressWarnings = TRUE)
+jointResults2 = mxRun(jointModel2, suppressWarnings = TRUE)
 summary(jointResults2)
 
-ref <- mxRefModels(jointResults1, run=TRUE)
+ref = mxRefModels(jointResults1, run=TRUE)
 
-(sref <- summary(jointResults1, refModels=ref))
+sref = summary(jointResults1, refModels = ref)
+sref
 
-(shan <- summary(jointResults1, SaturatedLikelihood=-2*logLik(jointResults2), SaturatedDoF=summary(jointResults2)$degreesOfFreedom))
+shan = summary(jointResults1, SaturatedLikelihood=-2*logLik(jointResults2), SaturatedDoF=summary(jointResults2)$degreesOfFreedom)
+shan
 
-(swls <- summary(jointWlsResults))
+swls = summary(jointWlsResults)
+swls
 
 # Simulate some data
 x = rnorm(1000, mean = 0, sd = 1)
-y= 0.5 * x + rnorm(1000, mean = 0, sd = 1)
-tmpFrame <- data.frame(x, y);
+y = 0.5 * x + rnorm(1000, mean = 0, sd = 1)
+tmpFrame = data.frame(x, y);
 cov(tmpFrame) # ~ .47
 # Define and run x TO y and x WITH y model
-m1 <- mxRun(mxModel(model = "xTOy",
+m1 = mxRun(mxModel(model = "xTOy",
 	# Define the matrices
 	mxMatrix(name = "S", type = "Full", nrow = 2, ncol = 2, values = c(1,0,0,1), free = c(T, F, F, T), labels = c("Vx", NA , NA, "Vy")),
 	mxMatrix(name = "A", type = "Full", nrow = 2, ncol = 2, values = c(0,1,0,0), free = c(F, T, F, F), labels = c(NA  , "b", NA, NA)),
@@ -144,7 +148,7 @@ m1 <- mxRun(mxModel(model = "xTOy",
 
 omxCheckCloseEnough(cov(tmpFrame)[2,1], coef(m1)["b"], .01)
 
-m2 <- mxRun(mxModel(model = "xWITHy",
+m2 = mxRun(mxModel(model = "xWITHy",
 	# Define the matrices
 	mxMatrix(name = "S", type = "Full", nrow = 2, ncol = 2, values = c(1,0,0,1), free = c(T, T, F, T), labels = c("Vx", "b" , NA, "Vy")),
 	mxMatrix(name = "A", type = "Full", nrow = 2, ncol = 2, free=F, values = 0),
