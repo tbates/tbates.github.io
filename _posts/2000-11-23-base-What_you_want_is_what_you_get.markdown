@@ -46,7 +46,7 @@ Fully verbalized, people who know this means "changes in A cause changes in B" e
 2. That A and B have [variance](https://en.wikipedia.org/wiki/Index_of_dispersion).
 2. That A accounts for *some* of the variance in B.
 3. But not all of it: B has [residual variance](https://en.wikipedia.org/wiki/Explained_variation).
-4. Variance in A is [exogenous](https://en.wikipedia.org/wiki/Exogeny) to the model.
+4. Variance of A is [exogenous](https://en.wikipedia.org/wiki/Exogeny) to the model.
  * The [standardized](https://en.wikipedia.org/wiki/Standard_score) variance of A will be 1.
 5. A and B have means as well as variances.
 
@@ -94,12 +94,11 @@ And gives the same parameters:
 ### More complex ( and realistic) models...
  
 
-This, more complex model is typical of what is needed for research:
+This, more complex model is typical of real research (modified from Duncan, Haller, and Portes, 1968):
 
 <img src="/media/umxFixed/Duncan.png" alt="Duncan SEM model">
 
 <!-- https://github.com/robwierzbowski/jekyll-picture-tag -->
-
 
 How would we state the claims of this model, and what do we expect an intelligent assistant to take taken for granted?
 
@@ -147,7 +146,7 @@ So you can say:
 
 ```r    
 	umxPath(var = "latentX", fixedAt = 1)
-umxPath(means = "latentX", fixedAt=0)
+	umxPath(means = "latentX", fixedAt = 0)
 ```
 
 or
@@ -159,22 +158,25 @@ or
 You also have nifty short-cuts:
 
 ```r    
-	umxPath(v1m0 = "latentX")
+	umxPath(v1m0 = "varName") # δ² = 1, mean = 0
+	umxPath(v0m0 = "varName") # δ² = 0, mean = 0
+	umxPath(v.m. = "varName") # δ² = free, mean = free
+	umxPath(v.m0 = "varName") # δ² = free, mean = 0
 ```
 
-which is short-hand equivalent to (but much easier to read and to type) to this:
+These shortcuts are equivalent too (but much easier to type and too read) two-line statements such as this:
 
 ```r    
-mxPath("latentX", free = FALSE, values = 1)
-mxPath("one", to = "latentX", free = FALSE, values = 0)
+mxPath("varName", free = FALSE, values = 1)
+mxPath("one", to = "varName", free = FALSE, values = 0)
 ```
 
 
 4th. Should she assume that exogenous variables all intercorrelate, and add this path automatically?
 	* `umxRAM()` could have the option  `covary.exogenous = FALSE`. but again, who does this help when this is so clear?
 
-```r    
-umxPath(unique.bivariate = c(respondentFormants, friendFormants))
+```r
+	umxPath(unique.bivariate = c(respondentFormants, friendFormants))
 ```
 
 5th. Should she assume that latent traits like Respondent's Aspiration have residual variance?
@@ -186,7 +188,7 @@ First, let&rsquo;s read in the Duncan data:
 
 ```r
 
-dimnames = c("ROccAsp", "REdAsp", "FOccAsp", "FEdAsp", "RParAsp", "RIQ", "RSES", "FSES", "FIQ", "FParAsp")
+dimnames = c("RespOccAsp", "RespEduAsp", "FrndOccAsp", "FrndEduAsp", "RespParAsp", "RespIQ", "RespSES", "FrndSES", "FrndIQ", "FrndParAsp")
 tmp = c(
 	c(0.6247,
 	0.3269, 0.3669,
@@ -199,18 +201,20 @@ tmp = c(
 	0.0760, 0.0702, 0.2784, 0.1988, 0.1147, 0.1021, 0.0931, -0.0438, 0.2087)
 )
 duncan = umx_lower2full(tmp, diag = FALSE, dimnames = dimnames)
+str(duncan)
 duncan = mxData(duncan, type = "cov", numObs = 300)
 
 ```
 
-and define some handy lists:
+And define some handy lists:
 
 ```r
-respondentFormants = c("RSES", "FSES", "RIQ", "RParAsp")
-friendFormants     = c("FSES", "RSES", "FIQ", "FParAsp")
-respondentAsp      = c("ROccAsp", "REdAsp")
-friendAsp          = c("FOccAsp", "FEdAsp")
-latents            = c("RGenAsp", "FGenAsp")
+respondentFormants   = c("RespSES", "FrndSES", "RespIQ", "RespParAsp")
+friendFormants       = c("FrndSES", "RespSES", "FrndIQ", "FrndParAsp")
+respondentOutcomeAsp = c("RespOccAsp", "RespEduAsp")
+friendOutcomeAsp     = c("FrndOccAsp", "FrndEduAsp")
+latentAspiration     = c("RespLatentAsp", "FrndLatentAsp")
+
 ```
 
 Now using these we can specify the model as follows:
@@ -218,26 +222,44 @@ Now using these we can specify the model as follows:
 ```r
 
 m1 = umxRAM("Duncan", data = duncan,
-	# Respondents and their friends each have a latent trait of "Aspiration" formed from IQ, SES, and parental aspiration.
-	umxPath(respondentFormants, to = "RGenAsp"),
-	umxPath(friendFormants,     to = "FGenAsp"),
+	# Working from the left of the model...
 
-	# Latent aspiration affects occupational and educational aspiration.
-	umxPath("RGenAsp", to = respondentAsp),
-	umxPath("FGenAsp", to = friendAsp),
-
-	# The latent traits influence each other.
-	umxPath(unique.bivariate = latents),
-
-	# The aspiration latent traits have residual variance.
-	umxPath(var = latents),
-
-	# covary.exogenous  = TRUE
+	# Allow exogenous manifests to covary with each other
 	umxPath(unique.bivariate = c(friendFormants, respondentFormants)),
-	# endogenous.resid  = TRUE
-	umxPath(var = c(respondentAsp, friendAsp))
+
+	# Variance for the exogenous manifests (assumed error free)
+	umxPath(var = c(friendFormants, respondentFormants), fixedAt = 1),
+
+	# Paths from IQ, SES, and parental aspiration to latent aspiration, for Respondents
+	umxPath(respondentFormants, to = "RespLatentAsp"),
+	# And same for friends
+	umxPath(friendFormants,     to = "FrndLatentAsp"),
+
+	# The two aspiration latent traits have residual variance.
+	umxPath(var = latentAspiration),
+
+	# And the latent traits each influence the other (equally)
+	umxPath(fromEach = latentAspiration, lbound = 0, ubound = 1), # Using one-label would equate these 2 influences
+
+	# Latent aspiration affects occupational and educational aspiration in respondents
+	umxPath("RespLatentAsp", to = respondentOutcomeAsp, firstAt = 1),
+	# umxPath("RespLatentAsp", to = respondentOutcomeAsp, labels = c("Asp_to_OccAsp", "Asp_to_EduAsp")),
+	# # And their friends
+	umxPath("FrndLatentAsp", to = friendOutcomeAsp, firstAt = 1),
+	# nb: The firstAt 1 provides scale to the latent variables
+	# (we could constrain the total variance of the latents to 1, but this is easy )
+	
+	# Finally, on the right hand side of our envelope sketch, we've got
+	# residual variance for the endogenous manifests
+	umxPath(var = c(respondentOutcomeAsp, friendOutcomeAsp)),
+	autoRun = TRUE
 )
+plot(m1, std=T)
 
 ```
 
 So: a smart, open, glass box, not a blackbox!
+
+### References
+
+1. Duncan OD, Haller AO, Portes A (1968). “Peer Influences on Aspirations: a Reinterpretation.” American Journal of Sociology, pp. 119–137.
