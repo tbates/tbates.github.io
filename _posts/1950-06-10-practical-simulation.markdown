@@ -12,7 +12,7 @@ categories: technical
 
 Often you need simulated data to explore an idea.
 
-`umx` offers `umx_make_TwinData`
+### Making data by specifying the model it comes from
 
 You can also use the `mxGenerateData` function to build a model which captures your data, and then generate data from that model!
 
@@ -56,4 +56,57 @@ Or just ask `mxGenerateData` to do that for you:
 m2 = mxGenerateData(m1, nrows = 1000, returnModel = TRUE)
 ```
 
-Neat huh!
+Neat huh! The help on `?mxGenerateData` is nice too!
+
+### Making Twin Data
+
+`umx` offers `umx_make_TwinData`
+This is a great way to create data for twin models, where you want
+1. An MZ dataset and a DZ dataset
+2. You know the Mzr and DZr or the A, C, and E values you want to simulate.
+
+You can also add a moderator (dragging A across a range according to a moderator)
+
+### Making Mendelian Randomization Data
+
+`umx_make_MR_data`allows you to simulate data based on Mendelian Randomization.
+
+You get back a 4-variable data set: 
+
+1. The outcome variable of interest (Y)
+2. The putative causal variable (X)
+3. A qtl (quantitative trait locus) influencing X
+4. A confounding variable (U) affecting both X and Y.
+
+Here's a simple example:
+  
+```r
+df = umx_make_MR_data(nSubjects = 1000, Vqtl = 0.02, bXY = 0.1, bUX = 0.5, bUY = 0.5, pQTL = 0.5, seed = 123)
+```
+
+Which looks like this:
+
+```r
+umxAPA(df)
+```
+
+|          |X           |Y           |U           |qtl     |
+|:---------|:-----------|:-----------|:-----------|:-------|
+|X         |1 (0)       |            |            |        |
+|Y         |0.39 (0.03) |1 (0)       |            |        |
+|U         |0.54 (0.02) |0.54 (0.02) |1 (0)       |        |
+|qtl       |0.18 (0.03) |0.04 (0.03) |0.02 (0.03) |1 (0)   |
+|Mean (SD) |0 (1.02)    |0.01 (1)    |0.01 (1)    |1 (0.7) |
+
+```r
+umx_print(head(df))
+```
+
+|          X|          Y|          U| qtl|
+|----------:|----------:|----------:|---:|
+| -1.0023978| -0.9650462| -0.6018928|   1|
+| -0.9593700| -0.1157263| -0.9936986|   0|
+| -0.2573603| -0.0975572|  1.0267851|   1|
+|  0.7112984|  0.0031000|  0.7510613|   0|
+|  0.0026485| -0.1110663| -1.5091665|   0|
+|  1.7699183| -0.2656627| -0.0951475|   1|
