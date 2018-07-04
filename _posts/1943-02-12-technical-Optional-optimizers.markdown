@@ -42,7 +42,8 @@ If, as above, you don't see `NPSOL` as an option and want to use it (or parallel
 1. Grab the NPSOL version of OpemMx with this command:
 
 ```r
-umx_get_OpenMx()
+install.OpenMx("NPSOL")
+# You can also get a bleeding0edge travis build of OpenMx this way.
 
 ```
 
