@@ -16,7 +16,7 @@ This post covers
 
 1. Using `mxGenerateData` to create data by specifying the path model that fits it.
 2. Making twin data using `umx_make_TwinData`
-3. Making twin data for [Mendelian Randomization](https://en.wikipedia.org/wiki/Mendelian_randomization) using `umx_make_MR_data`
+3. Making  data for [Mendelian Randomization](https://en.wikipedia.org/wiki/Mendelian_randomization) using `umx_make_MR_data`
 
 ### 1. Making data by specifying the model it comes from
 
