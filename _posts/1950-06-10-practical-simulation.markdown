@@ -10,9 +10,15 @@ categories: technical
 
 # Simulation
 
-Often you need simulated data to explore an idea.
+Often having simulated data can help explore an idea, or test an idea.
 
-### Making data by specifying the model it comes from
+This post covers
+
+1. Using `mxGenerateData` to create data by specifying the path model that fits it.
+2. Making twin data using `umx_make_TwinData`
+3. Making twin data for [Mendelian Randomization](https://en.wikipedia.org/wiki/Mendelian_randomization) using `umx_make_MR_data`
+
+### 1. Making data by specifying the model it comes from
 
 You can also use the `mxGenerateData` function to build a model which captures your data, and then generate data from that model!
 
@@ -58,16 +64,71 @@ m2 = mxGenerateData(m1, nrows = 1000, returnModel = TRUE)
 
 Neat huh! The help on `?mxGenerateData` is nice too!
 
-### Making Twin Data
+### 2. Making Twin Data
 
 `umx` offers `umx_make_TwinData`
+
 This is a great way to create data for twin models, where you want
+
 1. An MZ dataset and a DZ dataset
 2. You know the Mzr and DZr or the A, C, and E values you want to simulate.
 
 You can also add a moderator (dragging A across a range according to a moderator)
 
-### Making Mendelian Randomization Data
+It's this easy:
+
+```splus    
+tmp = umx_make_TwinData(nMZpairs = 10000, AA = .30, CC = .00, EE = .70)
+ AA  CC  EE 
+0.3 0.0 0.7 
+   a    c    e 
+0.55 0.00 0.84 
+```
+The results come back as a list of 2 data sets: One for MZ and one for DZ.
+
+#### How to consume the built datasets
+
+```splus
+mzData = tmp[[1]];
+dzData = tmp[[2]];
+cov(mzData); cov(dzData)
+umxAPA(mzData)
+str(mzData); str(dzData);     
+```
+
+|          |var_T1      |var_T2 |
+|:---------|:-----------|:------|
+|var_T1    |1           |       |
+|var_T2    |0.31        |1      |
+|Mean (SD) |0.01 (0.99) |0 (1)  |
+
+
+####  Prefer to work in path coefficient values? (little a?)
+
+```splus    
+tmp = umx_make_TwinData(200, AA = .6^2, CC = .2^2)
+```
+You can omit `nDZpairs` (Defaults to MZ numbers)
+
+Variance doesn't need to sum to 1:
+
+```splus
+tmp = umx_make_TwinData(100, AA = 3, CC = 2, EE = 3, sum2one = FALSE) 
+cov(tmp[[1]])
+
+```    
+
+#### Moderator Example
+
+```splus
+    
+x = umx_make_TwinData(100, AA = c(avg = .7, min = 0, max = 1), CC = .55, EE = .63)
+str(x)
+```
+You can also make Thresholded data, just use MZr and DZr,, or create data for Bivariate GxSES  (see umxGxEbiv)
+
+
+### 3. Making Mendelian Randomization Data
 
 `umx_make_MR_data`allows you to simulate data based on Mendelian Randomization.
 
