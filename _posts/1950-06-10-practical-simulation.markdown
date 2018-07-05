@@ -10,9 +10,9 @@ categories: technical
 
 # Simulation
 
-Often having simulated data can help explore an idea, or test an idea.
+Often, having simulated data can help explore an idea, or test an idea.
 
-This post covers
+This post covers:
 
 1. Using `mxGenerateData` to create data by specifying the path model that fits it.
 2. Making twin data using `umx_make_TwinData`
