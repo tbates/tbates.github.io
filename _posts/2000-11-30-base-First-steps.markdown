@@ -298,7 +298,7 @@ m4 = umxModify(m2, update = "wt_to_mpg", name = "drop effect of wt", comparison 
 
 You will use `umxModify` often.
 
-By default, `umxModify` fixes the value of matched labels to zero. Learn more at the [umxModify tutorial](advanced/1995/03/10/detailed-umxModify.html).
+By default, `umxModify` fixes the value of matched labels to zero. Learn more at the [umxModify tutorial](/advanced/1995/03/10/detailed-umxModify.html).
 
 **tip**: To discover the labels in a model, use `parameters(model)`
 
