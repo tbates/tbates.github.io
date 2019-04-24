@@ -82,7 +82,7 @@ Here, we begin with two patsy ideas: Theory one: miles/gallon (mpg) goes down li
 
 We will use the built-in [mtcars](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html) data set. miles/gallon is `mpg`, displacement is `disp`, and weight is `wt`. 
 
-*note*: `mtcars` + Henderson & Velleman's (1981) "[Building Multiple Regression Models Interactively](http://www.mortality.org/INdb/2008/02/12/8/document.pdf)" can teach you a LOT about statistics in a very short period of time: *Highly* recommended!
+*note*: `mtcars` + Henderson & Velleman's (1981) "[Building Multiple Regression Models Interactively](http://www.mortality.org/INdb/2008/02/12/8/document.pdf)" can teach you a lot of statistics in a very short period of time: Highly recommended!
 
 We'll use `umx` to build both models, and compare them.
 
