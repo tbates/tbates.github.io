@@ -100,39 +100,8 @@ Let’s start off with something very simple: the means and variances of three r
 
 The `umx` equivalent of `lm` is `umxRAM`, and we build the "formula" using `umxPath`s. here's the whole model:
 
-splus
-
-```splus
-manifests = c("disp", "wt", "mpg")
-m1 <- umxRAM("big_motor_bad_mpg", data = mtcars,
-	umxPath(var   = manifests),
-	umxPath(means = manifests)
-)
-```
-
-r
-
-```r
-manifests = c("disp", "wt", "mpg")
-m1 <- umxRAM("big_motor_bad_mpg", data = mtcars,
-	umxPath(var   = manifests),
-	umxPath(means = manifests)
-)
-```
-
-R
 
 ```R
-manifests = c("disp", "wt", "mpg")
-m1 <- umxRAM("big_motor_bad_mpg", data = mtcars,
-	umxPath(var   = manifests),
-	umxPath(means = manifests)
-)
-```
-
-splusR
-
-```splusR
 manifests = c("disp", "wt", "mpg")
 m1 <- umxRAM("big_motor_bad_mpg", data = mtcars,
 	umxPath(var   = manifests),

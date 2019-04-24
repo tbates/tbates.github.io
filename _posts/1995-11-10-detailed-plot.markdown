@@ -13,7 +13,7 @@ If you've used R, you'll be used to `plot` for graphical output. With *umx*,  `p
 Just `plot(model)`, and you will get a path diagram displayed in your browser (or RStudio graph window if you use RStudio). We'll learn later how to open plots in other applications (like *[Graphviz](https://www.graphviz.org)*), including for editing.
 in apps like *[OmniGraffle](https://www.omnigroup.com/omnigraffle)*).
 
-```r
+```R
 selVars = c("mpg", "wt", "disp")
 myCov = mxData(cov(mtcars[,selVars]), type = "cov", numObs = nrow(mtcars) )
 m1 = umxRAM("tim", data = myCov,
@@ -32,7 +32,7 @@ plot(m1)
 
 Just so you know what we are working with, here's the .gv file for the model above:
 
-```r
+```R
 digraph G {
 
 	mpg  [shape = square];
@@ -72,7 +72,7 @@ On Mac also, Omnigraffle opens .gv, and allows awesome publication-quality graph
 
 The parameters of plot give you a lot of flexibility. You can set the name of the file (it defaults to the model name), show unstandardized output, set the rounding for loadings, choose to show labels rather than estimates of paths, show or hide fixed paths, and means, and error variance.
 
-```r
+```R
 plot(model, std = TRUE, digits = 2, file = "name", pathLabels = c("none", "labels", "both"),
   showFixed = FALSE, showMeans = TRUE, showError = TRUE, ...)
 
