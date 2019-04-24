@@ -1,3 +1,7 @@
+markdown: kramdown
+
+highlighter: rouge
+
 gems:
   - jekyll-feed
 
@@ -8,6 +12,6 @@ url: http://tbates.github.io
 # Name of your blog (this will show up at the top of your page and in the RSS feed)
 name: "umx!"
 # Short description (goes below the title; it will also be used in the RSS feed)
-description: "Tutorial help doing Structural Equation Modeling in R using the umx and OpenMx packages."
+description: "Tutorial help doing Structural Equation Modeling in R using umx."
 
 # url for [snaptortoise](https://github.com/snaptortoise/jekyll-rss-feeds)

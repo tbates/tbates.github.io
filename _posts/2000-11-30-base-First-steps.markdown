@@ -305,11 +305,11 @@ By default, `umxModify` fixes the value of matched labels to zero. Learn more at
 This version of parameters is "on steroids" - you can filter using regular expressions! So
 
 ```splus
-parameters(m3, "^mpg")
+umxGetParameters(m3, patt="^mpg")
 # [1] "mpg_to_mpg"   "mpg_to_disp"  "mpg_to_wt"    "mpg_with_mpg" "mpg_with_wt" 
 ```
 
-**gotcha**: OpenMx doesn't add labels by default –&nbsp; `umxRAM` does.
+**gotcha**: OpenMx doesn't add labels by default –&nbsp; (`umxRAM` does).
 
 You can also add labels to a model (or matrix) using`umxLabel`, and `umxRun` has the option `addLabels`
 

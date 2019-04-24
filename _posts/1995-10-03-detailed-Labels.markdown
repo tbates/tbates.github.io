@@ -71,7 +71,7 @@ umxGetParameters(m1, free = TRUE) # Informative labels: "G_to_x1", "x4_with_x4",
 
 Often there are many labels in a model. `parameters` (or its alias `umxGetParameters`) allows you to "filter" this list, i.e., view just the ones you want. You can even write filters using regular expressions!
 
-So a simple filter might show only paths containin G_to
+So a simple filter might show only paths containing `G_to`
 
 ```r
 umxGetParameters(m1, "G_to", free = TRUE) # Just labels beginning "G_to"
