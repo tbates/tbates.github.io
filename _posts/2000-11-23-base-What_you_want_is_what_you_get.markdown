@@ -32,7 +32,7 @@ The goal of `umx` is to take a slightly different perspective, perhaps best phra
 
 # Things that go without saying…
 
-What goes without saying? Let's take the example of this model: What does it claim?
+What goes without saying? Let’s take the example of this model: What does it claim?
                              
 ![A >B](/media/umxFixed/A->B.png)
 
@@ -50,7 +50,7 @@ Fully verbalized, people who know this means "changes in A cause changes in B" e
  * The [standardized](https://en.wikipedia.org/wiki/Standard_score) variance of A will be 1.
 5. A and B have means as well as variances.
 
-How to implement this without black boxes? Let's look at an `lm` statement of A -> B:
+How to implement this without black boxes? Let’s look at an `lm` statement of A -> B:
 
 ```r
 df = myFADataRaw[, 1:2]

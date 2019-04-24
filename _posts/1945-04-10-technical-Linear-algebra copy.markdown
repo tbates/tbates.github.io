@@ -88,11 +88,11 @@ Matrix algebra makes the three core elements of SEM easier. These are
 2. Covariances
 3. Simultaneous equations
 
-Let's start trying to compute a mean.
+Let’s start trying to compute a mean.
 
 To compute a mean, we want to sum all the elements of a column, and divide them by nrows. Equivalently, we might multiply by 1/nrow
 
-Let's compute the mean of each of three columns of a matrix of order 5,3.
+Let’s compute the mean of each of three columns of a matrix of order 5,3.
 
 ```r
 n = 5

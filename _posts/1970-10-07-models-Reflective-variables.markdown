@@ -40,7 +40,7 @@ You'll have noticed I fixed the variance of *g* at 1. This is known as giving a 
 
 An alternative method you will see used widely, but which I don't prefer is equally valid: To set the value of one of the paths.
 
-Let's do that to compare:
+Let’s do that to compare:
 ```r
 m2 <- umxRAM("FixedPath", data = myData,
 	umxPath(latents, to = manifests, firstAt = 1),
@@ -57,7 +57,7 @@ This shows us the `umxPath` "*firstAt*" parameter in use. This sets the fist val
 
 ### Reflective and Formative constructions
 
-It is as valid to think of our latent construct as being formed from certain inputs (perhaps five independent genes that all increase extraversion). Let's do that:
+It is as valid to think of our latent construct as being formed from certain inputs (perhaps five independent genes that all increase extraversion). Let’s do that:
 
 ```r
 m3 <- umxRAM("formative", data = myData,

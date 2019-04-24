@@ -10,7 +10,7 @@ categories: advanced
 
 `umxPath` is a core `umx` function. It facilitates path specification, streamlines scripts, and increases readability.
 
-Let's start using `umxPath` to specify a [CFA](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis) model with a slight increase in complexity: two linked latent factors forced to be the same:
+Let’s start using `umxPath` to specify a [CFA](https://en.wikipedia.org/wiki/Confirmatory_factor_analysis) model with a slight increase in complexity: two linked latent factors forced to be the same:
 
 ![UmxPath Model1](/media/umxPath/umxPath_model1.png)
 

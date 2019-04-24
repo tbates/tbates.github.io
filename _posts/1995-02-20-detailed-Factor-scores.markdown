@@ -43,7 +43,7 @@ All the data-points of demoOneFactor are present:
 all(complete.cases(demoOneFactor))
 # [1] TRUE
 ```
-Let's delete 10% from each column at random:
+Let’s delete 10% from each column at random:
 
 ```r
 df = demoOneFactor

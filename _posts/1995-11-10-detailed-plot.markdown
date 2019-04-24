@@ -10,7 +10,8 @@ categories: advanced
 
 If you've used R, you'll be used to `plot` for graphical output. With *umx*,  `plot` works for RAM models! And for twin models! 
 
-Just `plot(model)`, and you will get a path diagram display (You might need to install Graphviz, or another viewing app).
+Just `plot(model)`, and you will get a path diagram displayed in your browser (or RStudio graph window if you use RStudio). We'll learn later how to open plots in other applications (like *[Graphviz](https://www.graphviz.org)*), including for editing.
+in apps like *[OmniGraffle](https://www.omnigroup.com/omnigraffle)*).
 
 ```r
 selVars = c("mpg", "wt", "disp")
@@ -25,7 +26,7 @@ plot(m1)
 
 ![model of mpg](/media/plot_the_plot_thickens/1simpleModel.png "A model of Miles/gallon")
 
-`plot` writes a "[dot](http://graphviz.org/content/dot-language)" file. This is another Bell Labs invention (just like R (or S))to specify "graphs" (for our purposes, objects linked by lines) and lay them out (not an easy problem).
+`plot` writes a "[dot](http://graphviz.org/content/dot-language)" file. This is another Bell Labs invention (just like R (or S))to specify "graphs" (for our purposes, objects linked by lines) and lay them out (not an easy problem). By default, it opens courtesy of Richard Iannone&rsquo;s fabulous [DiagrammR](https://CRAN.R-project.org/package=DiagrammeR) package.
 
 ## Inside a Graphviz file
 

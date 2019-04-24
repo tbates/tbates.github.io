@@ -61,7 +61,7 @@ m4 = umxModify(m2, update = "disp_to_mpg", name = "drop effect of capacity", com
 |big_and_heavy           |  9|             |           |      | 419.1183|                   |
 |drop effect of capacity |  8|3.8616447    |1          |0.049 | 420.9800|big_and_heavy      |
 
-```r   
+```r  
 plot(m4)
 ```
 
@@ -88,7 +88,7 @@ We'll use `umx` to build both models, and compare them.
 
 ### Building on what you already know
 
-In `lm`, model 1 would be "mpg ~ disp + wt". Model 2 would be "mpg ~ disp"
+In `lm`, model 1 would be `mpg ~ disp + wt`. Model 2 would be `mpg ~ disp`
 
 [Sewall Wright](https://en.wikipedia.org/wiki/Sewall_Wright) invented SEM to allow us to think in explicit graphs. So, here's what that language implies:
 
@@ -96,9 +96,11 @@ In `lm`, model 1 would be "mpg ~ disp + wt". Model 2 would be "mpg ~ disp"
 
 ### Your first umxRAM model
 
-Let's start off with something very simple: the means and variances of three raw variables. This is also called an "independence model".
+Let’s start off with something very simple: the means and variances of three raw variables. This is also called an "independence model".
 
 The `umx` equivalent of `lm` is `umxRAM`, and we build the "formula" using `umxPath`s. here's the whole model:
+
+splus
 
 ```splus
 manifests = c("disp", "wt", "mpg")
@@ -107,6 +109,37 @@ m1 <- umxRAM("big_motor_bad_mpg", data = mtcars,
 	umxPath(means = manifests)
 )
 ```
+
+r
+
+```r
+manifests = c("disp", "wt", "mpg")
+m1 <- umxRAM("big_motor_bad_mpg", data = mtcars,
+	umxPath(var   = manifests),
+	umxPath(means = manifests)
+)
+```
+
+R
+
+```R
+manifests = c("disp", "wt", "mpg")
+m1 <- umxRAM("big_motor_bad_mpg", data = mtcars,
+	umxPath(var   = manifests),
+	umxPath(means = manifests)
+)
+```
+
+splusR
+
+```splusR
+manifests = c("disp", "wt", "mpg")
+m1 <- umxRAM("big_motor_bad_mpg", data = mtcars,
+	umxPath(var   = manifests),
+	umxPath(means = manifests)
+)
+```
+
 
 Like `lm`, we're going to feed this model-container a data set (`data = mtcars`). The string "my_first_model" is a name that is used to refer to the model, and which is used in output as well (so make it informative).
 
@@ -138,7 +171,7 @@ Here's the plot:
 
 As you can see, this is an "independence model": No covariances were included, so all variables are modelled as uncorrelated. It would fit poorly in this case. `umxSummary` tells us this fit can definitely be improved: χ²(90) = 98.32, p < 0.001; CFI = 0; TLI = 0; RMSEA = 0.996
 
-Clearly some un-modelled covariance here... Let's build our theorized model.
+Clearly some un-modelled covariance here... Let’s build our theorized model.
 
 ```splus
 m2 <- umxRAM("big_and_heavy", data = mxData(mtcars, type = "raw"),

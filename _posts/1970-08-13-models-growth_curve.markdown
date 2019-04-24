@@ -12,7 +12,7 @@ categories: models
 
 This page shows how to implement these analyses in `umx` and `OpenMx`.
 
-Let's build this simple example based on 5 repeated measures (1:5) of "x". Graphically, the model looks like this (means not shown):
+Let’s build this simple example based on 5 repeated measures (1:5) of "x". Graphically, the model looks like this (means not shown):
 
  
 ![latent growth in umx](https://tbates.github.com/media/growth/growth.png)

@@ -137,7 +137,7 @@ m1 <- mxModel("m1", type = "RAM",
 
 OpenMx has a built-in function for getting parameters from a model
 
-Let's have a look at the `A` matrix, which contains our asymmetric paths
+Let’s have a look at the `A` matrix, which contains our asymmetric paths
 
 ```r
 m1$matrices$A$labels # nb: By default, paths have no labels
@@ -179,7 +179,7 @@ m1 = umxStart(m1)
 
 `umxRAM` does this for you, writing systematic path-based labels to every matrix label cell in the form `var1_to_var2` for single-heaed arrows, and `var1_with_var2` for double headed arrows.
 
-Let's do that now
+Let’s do that now
 
 ```splus
 manifests = names(demoOneFactor)
