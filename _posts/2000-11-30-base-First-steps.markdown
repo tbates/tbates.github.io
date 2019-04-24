@@ -14,7 +14,7 @@ I called this post "first steps" but it will take you a long way into practical 
 If you haven't installed umx, [do that now](/basic/2000/12/10/base-Install.html), and follow the link back here.
 
 
-``` splus
+```splus
 # load umx library
 library("umx")
 ```
@@ -26,7 +26,7 @@ library("umx")
 
 For those of you who like to get straight to the code: here's what happens on this page:
 
-``` splus
+```splus
 m2 <- umxRAM("big_and_heavy", data = mxData(mtcars, type = "raw"),
 	# One headed paths from disp and weight to mpg
 	umxPath(c("disp", "wt"), to = "mpg"),
@@ -100,7 +100,7 @@ Let's start off with something very simple: the means and variances of three raw
 
 The `umx` equivalent of `lm` is `umxRAM`, and we build the "formula" using `umxPath`s. here's the whole model:
 
-``` splus
+```splus
 manifests = c("disp", "wt", "mpg")
 m1 <- umxRAM("big_motor_bad_mpg", data = mtcars,
 	umxPath(var   = manifests),
@@ -121,7 +121,7 @@ By default, just like `lm`, `umxRAM` runs the model automatically for you. It al
 
 You can also request a summary, and plot the output:
 
-``` splus
+```splus
 umxSummary(m1)
 plot(m1, std = F)
 ```
@@ -140,7 +140,7 @@ As you can see, this is an "independence model": No covariances were included, s
 
 Clearly some un-modelled covariance here... Let's build our theorized model.
 
-``` splus
+```splus
 m2 <- umxRAM("big_and_heavy", data = mxData(mtcars, type = "raw"),
 	# One headed paths from disp and weight to mpg
 	umxPath(c("disp", "wt"), to = "mpg"),
@@ -156,7 +156,7 @@ m2 <- umxRAM("big_and_heavy", data = mxData(mtcars, type = "raw"),
 
 You can compare the models with 
 
-``` splus
+```splus
 umxCompare(m2, m1)
 ```
 
@@ -172,7 +172,7 @@ In fact this (saturated) model fits perfectly, as `umxSummary` shows: χ²(87) =
 
 We can request a full summary including standardized output as a table with ("**show** = *std*" requests the standardized paths):
 
-``` splus
+```splus
 umxSummary(m2, show = "std")
 ```
 
@@ -188,7 +188,7 @@ umxSummary(m2, show = "std")
 
 We can plot these standardized (or raw) coefficients on a diagram the way Sewall Wright would like us too:
 
-``` splus
+```splus
 plot(m2, showMeans = F)
 ```
 
@@ -254,13 +254,13 @@ First, we can modify m2 by overwriting the existing path with one fixing the val
 
 With umxPath we can save some typing and use `fixedAt`
 
-``` splus
+```splus
 m3 = umxRAM(m2, umxPath("disp", to = "mpg", fixedAt = 0), name = "weight_doesnt_matter")
 ```
 
 *note:* The equivalent in base OpenMx is:
 
-``` splus
+```splus
 m3 = mxModel(m2, mxPath(from = "wt", to = "mpg", free = FALSE, values = 0), name = "weight_doesnt_matter")
 m3 = mxRun(m3)
 ```
@@ -273,7 +273,7 @@ That examines our competing theoretical prediction, with a "zero" path from wt t
 
 Now we can test if weight affects mpg by comparing these two models:
 
-``` splus
+```splus
 umxCompare(m2, m3)
 ```
 
@@ -290,7 +290,7 @@ The AIC moved the wrong direction, p-value is marginal. This model would lead us
 
 For instance to drop the path from wt to mpg, we can say:
 
-``` splus
+```splus
 m4 = umxModify(m2, update = "wt_to_mpg", name = "drop effect of wt", comparison = TRUE)
 ```
 
@@ -302,7 +302,7 @@ By default, `umxModify` fixes the value of matched labels to zero. Learn more at
 
 This version of parameters is "on steroids" - you can filter using regular expressions! So
 
-``` splus
+```splus
 parameters(m3, "^mpg")
 # [1] "mpg_to_mpg"   "mpg_to_disp"  "mpg_to_wt"    "mpg_with_mpg" "mpg_with_wt" 
 ```

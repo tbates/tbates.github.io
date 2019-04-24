@@ -60,14 +60,14 @@ What follows in this post, is the construction of our toy model using base OpenM
 
 To build the model, we need umx and some data:
 
-``` splus
+```splus
 require("umx")
 data(mtcars)
 ```
 
 I like to begin with making up a list of the manifests.
 
-``` splus
+```splus
 manifests = c("mpg", "disp", "wt")
 ```
 
@@ -77,7 +77,7 @@ First, make a model, give it a name, and let it know it is a RAM model (a model 
 
 The name is a memorable string allowing us to refer across models (OpenMx handles multiple nested groups), and also for making `umxCompare` tables easier to understand. I usually pick a name that say what the model claims.
 
-``` splus
+```splus
 m1 <- mxModel("big_motor_bad_mpg", type = "RAM")
 ```
 
@@ -85,7 +85,7 @@ m1 <- mxModel("big_motor_bad_mpg", type = "RAM")
 
 Next, we add a list of manifests to m1:
 
-``` splus
+```splus
 m1 <- mxModel(m1, manifestVars = manifests )
 ```
 
@@ -94,7 +94,7 @@ We don't have any latents in this model. If we did, they'd be included using `la
 
 Now we can add the paths from `disp` and from `wt` to `mpg`
 
-``` splus
+```splus
 m1 <- mxModel(m1, mxPath(from = c("disp", "wt"), to = "mpg") )
 ```
 
@@ -104,7 +104,7 @@ This exposes a great advanced feature of `mxPath` (and `umxPath`): They're smart
 
 So that was the same as:
 
-``` splus
+```splus
 m1 <- mxModel(m1,
 	mxPath(from = "disp", to = "mpg"),
 	mxPath(from = "wt"  , to = "mpg")
@@ -117,7 +117,7 @@ m1 <- mxModel(m1,
 
 Assuming you've got `umx` loaded, just say:
 
-``` splus
+```splus
 	plot(m1)
 ```
 
@@ -125,13 +125,13 @@ Alternatively use the built in graphing function, `omxGraphviz`. This adds color
 
 PS: the reason i don't use circles for variances is they are not (currently) imported nicely in Omnigraffle :-(.
 
-``` splus
+```splus
 	omxGraphviz(m1) # doesn't show path values.
 ```
 
 Next, we allow displacement and weight to correlate (a two headed path between them)
 
-``` splus
+```splus
 m1 <- mxModel(m1, mxPath(from = "disp", to = "wt", arrows = 2))
 ```
 
@@ -139,7 +139,7 @@ Here we add `arrows = 2`. In the previous cases, we just used the default, which
 
 Now we need to give the IVs some variance (2-head arrows). To be kind to the optimizer, we can start these at the known values:
 
-``` splus
+```splus
 m1 <- mxModel(m1,
 	mxPath(from = "disp", arrows = 2, free = TRUE, values = var(mtcars$disp)),
 	mxPath(from = "wt"  , arrows = 2, free = TRUE, values = var(mtcars$wt))
@@ -148,7 +148,7 @@ m1 <- mxModel(m1,
 
 mpg will need some residual variance:
 
-``` splus
+```splus
 m1 <- mxModel(m1,
 	mxPath(from = "mpg", arrows = 2)
 )
@@ -156,7 +156,7 @@ m1 <- mxModel(m1,
 
 Finally, we must add the data against which we are testing our hypothesis:
 
-``` splus
+```splus
 m1 <- mxModel(m1,
 	mxData(cov(mtcars[,manifests]), type = "cov", numObs = nrow(mtcars))
 )
@@ -165,7 +165,7 @@ m1 <- mxModel(m1,
 
 We can be a bit more verbose about that for clarity
 
-``` splus
+```splus
 covData = cov(mtcars[,manifests], use ="pairwise.complete.obs")
 numObs = nrow(mtcars)
 
@@ -183,7 +183,7 @@ Mow we run the model. In this case we take advantage of umxRun to also set label
 
 **nb**: See tutorials on using [labels](http://tbates.github.io/models/tutorial/2020/10/03/How-labels-work.html), and on [values](http://tbates.github.io/models/tutorial/2020/10/04/Values-matter.html).
 
-``` splus
+```splus
 m1 <- umxRun(m1, setLabels = T, setValues = T)
 ```
 
@@ -194,7 +194,7 @@ This exposes a lovely (and unique) feature of OpenMx: running a model returns a 
 
 ## Report on the model
 
-``` splus
+```splus
 umxSummary(m1, show = "std")
 ```
 Now we can compare this to competing models with `mxCompare()`

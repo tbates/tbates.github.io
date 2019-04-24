@@ -14,7 +14,7 @@ CIs –&nbsp;or profile-based confidence intervals are key to understanding how 
 
 First, run our very first model again:
 
-``` splus
+```splus
 manifests = c("mpg", "disp", "gear")
 m1 <- mxModel("car", type = "RAM",
 	manifestVars = manifests,	
@@ -29,7 +29,7 @@ m1 <- mxModel("car", type = "RAM",
 
 Here's the one line to get CIs
 
-``` splus
+```splus
 confint(m1, run = TRUE) # lots more to learn about ?confint.MxModel
 ```
 
@@ -49,14 +49,14 @@ The alternative is to give a vector of names, like
 ### level = 0.95
 The default confidence interval is 95%. You can ask for others, for instance .99
 
-``` splus
+```splus
 confint(m1, run = TRUE, level = .99) 
 ```
 
 ### run = FALSE
 By default this function doesn't run the model. That's because CIs can be computationally intensive.
 
-``` splus
+```splus
 confint(m1, run = FALSE) 
 ```
 
@@ -64,7 +64,7 @@ confint(m1, run = FALSE)
 
 By default, we don't show the errorcodes. Turn this on to see them (if any)
 
-``` splus
+```splus
 confint(m1, run = TRUE, showErrorcodes = TRUE) 
 ```
 

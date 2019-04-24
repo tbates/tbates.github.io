@@ -12,7 +12,7 @@ categories: basic
 
 1f If you haven't already, install `umx` now. In `R`, just type:
 
-``` splus
+```splus
 install.packages("umx")
 
 library("umx")
@@ -30,7 +30,7 @@ The development version of *umx* lives on [github](https://github.com/tbates/umx
 
 Loading libraries from github differs slightly from the procedure you may be used to. instead of `install.packages()`, we're going to use `devtools::install_github()`
 
-``` splus
+```splus
 # if you haven't already, install & load devtools now
 install.packages("devtools")
 library("devtools")
@@ -38,13 +38,13 @@ library("devtools")
 
 With `devtools` installed, installing umx is easy:
 
-``` splus
+```splus
 install_github("tbates/umx")
 library("umx")
 ```
 
 On windows you *might* need
 
-``` splus
+```splus
 install_github("tbates/umx", args = "--no-multiarch")
 ```

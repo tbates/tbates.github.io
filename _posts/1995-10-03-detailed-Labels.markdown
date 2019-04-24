@@ -117,7 +117,7 @@ In this tutorial, we are going to [get](#getLabels) a parameter by it's label. W
 
 For all these examples, we will use our old friend, `m1`, so if you haven't made him, do so now:
 
-``` splus
+```splus
 latents = c("G")
 manifests = names(demoOneFactor)
 m1 <- mxModel("m1", type = "RAM",
@@ -172,7 +172,7 @@ With `umxLabel`, you can easily add informative and predictable labels to each f
 
 and use `umxStart`, to set sensible guesses for start values...
 
-``` splus
+```splus
 m1 = umxLabel(m1)
 m1 = umxStart(m1)
 ```
@@ -181,7 +181,7 @@ m1 = umxStart(m1)
 
 Let's do that now
 
-``` splus
+```splus
 manifests = names(demoOneFactor)
 m1 <- umxRAM("m1", data = mxData(cov(demoOneFactor), type = "cov", numObs = nrow(demoOneFactor)),
 	umxPath(from = "G", to = manifests),
@@ -193,7 +193,7 @@ m1 <- umxRAM("m1", data = mxData(cov(demoOneFactor), type = "cov", numObs = nrow
 <a name="setLabels"></a>
 ### Setting a value by label
 
-``` splus
+```splus
 m1 = omxSetParameters(m1, labels="x1_to_x5", values = 0)
 
 umxGetParameters(m1, "^x1.*5$") # umxGetParameters can filter using regular expressions!
@@ -202,7 +202,7 @@ umxGetParameters(m1, "^x1.*5$") # umxGetParameters can filter using regular expr
 <a name="equate"></a>
 ### Equating two paths by  setting their label
 
-``` splus
+```splus
 # force G_to_x5 to have the same estimated value as G_to_x4
 m1 = omxSetParameters(m1, labels="G_to_x5", newlabels = "G_to_x4")
 umxSummary(mxRun(m1), show = "std")
