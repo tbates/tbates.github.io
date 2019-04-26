@@ -100,7 +100,7 @@ m1 <- mxModel(m1, mxPath(from = c("disp", "wt"), to = "mpg") )
 
 These default to single-arrow paths with values left free, starting at 0 (probably jiggled to .01 when `mxRun` sees the model).
 
-This exposes a great advanced feature of `mxPath` (and `umxPath`): They're smart about reusing `from` and `to`. In this case, two paths to "mpg" are created, one from each of the two elements from. Learn more in the chapter on [using umxPath](http://tbates.github.io/ram/path/2020/09/20/Power-of-the-(mx)-Path.html).
+This exposes a great advanced feature of `mxPath` (and `umxPath`): They're smart about reusing `from` and `to`. In this case, two paths to "mpg" are created, one from each of the two elements from. Learn more in the chapter on [using umxPath](http://tbates.github.io/advanced/1995/11/20/detailed-umxPath.html).
 
 So that was the same as:
 
@@ -181,7 +181,7 @@ Done! So now we have a complete model, with all our hypothesised paths (variance
 
 Mow we run the model. In this case we take advantage of umxRun to also set labels and start values. Of course this won't touch fixed values.
 
-**nb**: See tutorials on using [labels](http://tbates.github.io/models/tutorial/2020/10/03/How-labels-work.html), and on [values](http://tbates.github.io/models/tutorial/2020/10/04/Values-matter.html).
+**nb**: See tutorials on using [labels](http://tbates.github.io/advanced/1995/10/03/detailed-Labels.html), and on [values](http://tbates.github.io/advanced/1995/10/04/detailed-Values).
 
 ```splus
 m1 <- umxRun(m1, setLabels = T, setValues = T)

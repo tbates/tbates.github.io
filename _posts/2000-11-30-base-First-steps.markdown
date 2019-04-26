@@ -7,7 +7,7 @@ categories: basic
 ---
 
 <a name="top"></a>
-umx stands for "user" OpenMx helper library. It's purpose is to help with [Structural Equation Modeling](https://en.wikipedia.org/wiki/Structural_equation_modeling) in [OpenMx](http://openmx.psyc.virginia.edu).
+umx stands for "user" OpenMx helper library. It's purpose is to help with [Structural Equation Modeling](https://en.wikipedia.org/wiki/Structural_equation_modeling) in [OpenMx](https://openmx.ssri.psu.edu).
 
 I called this post "first steps" but it will take you a long way into practical modelling. So, let's do some modeling …
 
@@ -115,7 +115,7 @@ Like `lm`, we're going to feed this model-container a data set (`data = mtcars`)
 We then give `umxRAM` a list of `umxPaths` to specify all the lines, boxes, and circles in the figure above.
 
 With `umxPath`, you can specify a variance (a 2-headed path originating and terminating on one variable) with the argument `var =`
-To specify a mean (a path from the constant one to a variable), just use the argument `means =`. You can learn more about umxPath in the help and in this chapter on [using umxPath](http://tbates.github.io/ram/path/2020/09/20/Power-of-the-(mx)-Path.html).
+To specify a mean (a path from the constant one to a variable), just use the argument `means =`. You can learn more about umxPath in the help and in this chapter on [using umxPath](http://tbates.github.io/advanced/1995/11/20/detailed-umxPath.html).
 
 By default, just like `lm`, `umxRAM` runs the model automatically for you. It also returns fit-information.
 
@@ -243,7 +243,7 @@ Next, we can modify and compare this model, with one in which only weight affect
 <a name="modify"></a>
 ## Modify and Compare models: The secret-sauce of science
 
-[Fundamentally](http://www.mii.ucla.edu/causality), modeling is in the service of understanding causality and we do that primarily via model comparison: Better theories fit the data better than do worse theories.
+[Fundamentally](https://en.wikipedia.org/wiki/Causal_model), modeling is in the service of understanding causality and we do that primarily via model comparison: Better theories fit the data better than do worse theories.
 
 So, we can ask questions like "does lower weight give better miles per gallon"?
 
@@ -286,7 +286,7 @@ The table below shows that dropping this path caused a (just) significant loss o
 |big_and_heavy        | 9 |419.13 |    |     |419.12|             |
 |weight_doesnt_matter | 8 |  3.86 | 1  |0.049|420.98|big_and_heavy|
 
-The AIC moved the wrong direction, p-value is marginal. This model would lead us to conclude that weight matters, but only a little bit (controlling for engine capacity). Note however that these variables covary: heavy vehicles have big motors: This is why trying to do science on observational data is fraught with problems. MUCH better to systematically vary the weight and watch mpg change. In behavior science, [Twin Studies](https://en.wikipedia.org/wiki/Twin_study), [Mendelian Randomization](https://en.wikipedia.org/wiki/Mendelian_randomization) let us do this.
+The AIC moved the wrong direction, p-value is marginal. This model would lead us to conclude that weight matters, but only a little bit (controlling for engine capacity). Note however that these variables covary: heavy vehicles have big motors: This is why trying to do science on observational data is fraught with problems. MUCH better to systematically vary the weight in a randomized controlled trial and measure mpg change. In behavior science, [Twin Studies](https://en.wikipedia.org/wiki/Twin_study) and [Mendelian Randomization](https://en.wikipedia.org/wiki/Mendelian_randomization) let us do this.
 
 *Advanced tip*: `umxModify()` can modify, run, and compare all in 1-line!
 

@@ -8,7 +8,7 @@ categories: models twin
 
 This page will introduce writing Cholesky structures using umxPath to facilitate twin modeling.
 
-It is not finished, and for now (and perhaps for sometime), I'd recommend you read [this page instead on the awesome umxACE](/models/twin/2020/05/06/Twin-umxACE.html) function
+It is not finished, and for now (and perhaps for sometime), I'd recommend you read [this page instead on the awesome umxACE](/models/twin/1980/06/10/twin-umxACE.html) function
 
 ```r
 # ====================

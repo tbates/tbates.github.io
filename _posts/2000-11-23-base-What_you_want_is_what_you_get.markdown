@@ -18,7 +18,7 @@ Assisting requires taking an [intentional stance](https://en.wikipedia.org/wiki/
 
 
 <a name="top"></a>
-The [OpenMx](http://openmx.psyc.virginia.edu) philosophy is "no black boxes". 
+The [OpenMx](https://openmx.ssri.psu.edu) philosophy is "no black boxes". 
 
 Unlike, say, Mplus, OpenMx doesn't do things behind the scenes. You get what you request: Nothing less, and Nothing more.
 

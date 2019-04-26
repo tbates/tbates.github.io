@@ -41,7 +41,7 @@ umxSummary(m1, show = "both")
 <a name="modify"></a>
 ## Modify a model
 
-[Fundamentally](http://www.mii.ucla.edu/causality), modeling is in the service of understanding causality and we do that primarily via model comparison: Better theories fit the data better than do worse theories.
+[Fundamentally](https://en.wikipedia.org/wiki/Causal_model), modeling is in the service of understanding causality and we do that primarily via model comparison: Better theories fit the data better than do worse theories.
 
 So, "do more gears give better miles per gallon"?
 

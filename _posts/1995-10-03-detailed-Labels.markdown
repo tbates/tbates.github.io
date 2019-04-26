@@ -10,7 +10,7 @@ toc: true
 
 ### "In the beginning was the  <strike>word</strike> label"
 
-Making names for things is a key to [cognitive development](http://www.amazon.com/dp/0199838801). In [OpenMx](http://openmx.psyc.virginia.edu), labels are just as important. In fact, OpenMx is MUCH more powerful when label your parameters.
+Making names for things is a key to [cognitive development](http://www.amazon.com/dp/0199838801). In [OpenMx](https://openmx.ssri.psu.edu), labels are just as important. In fact, OpenMx is MUCH more powerful when label your parameters.
 
 This power comes because those labels can be used to control the parameter.
 
@@ -104,7 +104,7 @@ a$labels
 
 <a name = "equating"></a>
 # Equate parameters by label
-A primary use for labels is to equate parameters. If parameters have the same label, they are forced to have identical values. They are especially powerful for allowing communication across [groups](http://tbates.github.io/models/tutorial/2020/02/15/multigroup-example.html), but also, as we will see here, within groups.
+A primary use for labels is to equate parameters. If parameters have the same label, they are forced to have identical values. They are especially powerful for allowing communication across [groups](http://tbates.github.io/advanced/1995/02/15/detailed-Multigroup.html), but also, as we will see here, within groups.
 
 **Core concept in OpenMx**
 

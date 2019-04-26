@@ -16,7 +16,7 @@ Values are where model estimation starts from.
 
 Once run, a model's values are the best estimates of its `parameters()`.
 
-In this tutorial, we are going to [set](#setStarts) values, and [get values](#getValues). In a more [advanced tutorial](http://tbates.github.io/advanced/2020/10/03/detailed-How-labels-work.html), we will learn how to equate values using constraints and labels.
+In this tutorial, we are going to [set](#setStarts) values, and [get values](#getValues). In a more [advanced tutorial](http://tbates.github.io/advanced/1995/10/03/detailed-Labels.html), we will learn how to equate values using constraints and labels.
 
 
 ### Setting start values in a path
