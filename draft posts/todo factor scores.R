@@ -1,4 +1,4 @@
-# CI on RMSEA is implemented in [MBESS](http://openmx.psyc.virginia.edu/thread/41-summarymyfitmodel-what-should-be-printed-what-should-be-returned-list)
+# CI on RMSEA is implemented in [MBESS](https://openmx.ssri.psu.edu/thread/41-summarymyfitmodel-what-should-be-printed-what-should-be-returned-list)
 # require(MBESS)
 # ci.rmsea(rmsea=.05, df=10, N=100, conf.level = 0.90)
 # $Lower.Conf.Limit #[1] 0
@@ -19,7 +19,7 @@
 # (i.e., Bartlett) estimator, you could use the OpenMx estimated loadings and use 
 # the functions in the psych library.
 
-# http://openmx.psyc.virginia.edu/svn/trunk/demo/OneFactorModel_PathRaw.R
+# https://openmx.ssri.psu.edu/svn/trunk/demo/OneFactorModel_PathRaw.R
 require(OpenMx)
 data(demoOneFactor)
 manifests = paste0("x", 1:5)

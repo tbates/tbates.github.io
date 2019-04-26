@@ -1,6 +1,6 @@
 # library for the code
 require(OpenMx) 
-load(url("http://openmx.psyc.virginia.edu/sites/default/files/df.dat")) # rda file
+load(url("https://openmx.ssri.psu.edu/sites/default/files/df.dat")) # rda file
 manifests      = c("cont1", "ord1", "ord2")
 ordinalVars    = manifests[2:3]
 continuousVars = manifests[1]

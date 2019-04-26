@@ -1,7 +1,7 @@
 # Weighted analyses
 Often people have datasets where different rows have different weights: more weight needs to be given to some subjects than others.
 
-So, how do you do this in [OpenMx](http://openmx.psyc.virginia.edu)?
+So, how do you do this in [OpenMx](https://openmx.ssri.psu.edu)?
 
 Turns out it's pretty straight forward, but does require a little bit of extra work. 
 

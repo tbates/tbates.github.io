@@ -3,8 +3,8 @@
 ## Recent features (In the 2.𝛽 version)
 
 ```splus
-source("http://openmx.psyc.virginia.edu/getOpenMx.R")
-source("http://openmx.psyc.virginia.edu/getOpenMxBeta.R")
+source("https://openmx.ssri.psu.edu/getOpenMx.R")
+source("https://openmx.ssri.psu.edu/getOpenMxBeta.R")
 ```
 ### Directions for 2014
 

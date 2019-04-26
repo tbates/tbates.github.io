@@ -1,4 +1,4 @@
-# source("http://openmx.psyc.virginia.edu/getOpenMxBeta.R")
+# source("https://openmx.ssri.psu.edu/getOpenMxBeta.R")
 
 devtools::document("~/bin/umx"); devtools::install("~/bin/umx");
 library(umx)

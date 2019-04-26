@@ -10,10 +10,10 @@ umxSummary(m1, showEstimates = "std")
 umxFitIndices(m1, showEstimates = "std")
 plot(m1)
 
-http://openmx.psyc.virginia.edu/thread/765#comment-6757
-http://openmx.psyc.virginia.edu/node/1301
-http://openmx.psyc.virginia.edu/thread/2204#comment-4780
-http://openmx.psyc.virginia.edu/thread/697
+https://openmx.ssri.psu.edu/thread/765#comment-6757
+https://openmx.ssri.psu.edu/node/1301
+https://openmx.ssri.psu.edu/thread/2204#comment-4780
+https://openmx.ssri.psu.edu/thread/697
 
 
 <h1 id="modelfit">Model Fit Wish list</h1>
