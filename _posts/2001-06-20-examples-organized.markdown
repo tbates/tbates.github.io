@@ -49,8 +49,8 @@ categories: basic
 <!-- * Test equating -->
 
 ### Multiple groups
-* umxSuperGroupModel
-
+* Multiple group analysis
+* umxSuperGroup
 
 ### Growth and change
 * Latent growth model
@@ -70,7 +70,6 @@ categories: basic
 * Multilevel mediation models Moderation
 * Mediated moderation models
 * Product of latent variables
--->
 
 ### Latent classes
 * Latent class analysis
@@ -82,44 +81,44 @@ categories: basic
 * Multi-subject models
 * Hidden Markov models
 * Network models
+-->
 
 ### Modeling different types of Data correctly
-* Continuous variables
-* Ordinal variables
-* Joint ordinal & continuous variables Contingency tables
-* Gaussian Copulas
-* Polychoric/Polyserial correlations
 * Raw data
 * Weighted least squares
+* Polychoric correlations
+* Continuous variables
+* Ordinal variables
+* Joint ordinal & continuous variables
 
 ### Modeling predictors, effects, definition variables, weights, missingness correctly
 * Extracting means, covariances, and thresholds
-* Exogenous predictors
 * Definition variables
-* Fixed & random effects
+<!-- * Fixed & random effects -->
 * Sample weights
-* Missing data
-* Missing at random
-* Non-ignorable missingness
+<!-- * Missing data -->
+<!-- * Missing at random -->
+<!-- * Non-ignorable missingness -->
 * Censoring
 
-### How do I simulate data, power...
-* Simulations
+### How do I simulate data, or do a power analysis?
 * Power analysis
+* Simulations
 * [Meta analysis](https://cran.r-project.org/web/packages/metaSEM/vignettes/Examples.html)
-* Multiple group analysis
 
 ### Twin Models
-* umx includes many twin models including ACE, ACEv, simplex, sex-limitation, GxE, common pathway, independent pathway, etc.
 * ACE / ADE
-* Univariate / Multivariate
+* ACEv
+* Common pathway umxCP
+* Independent pathway umxIP
 * Sex limitation
 * GxE interaction
+* Simplex
 * Direction of causation
 * Two-stage Twin family models
 * Assortative mating models
-* Extended pedigree models
 * Niche selection
+<!-- * Extended pedigree models -->
 
 ### GREML and genomic SEM
 * Molecular genetic variance component analysis
@@ -146,15 +145,15 @@ categories: basic
 * Bootstrap Likelihood ratio tests
 
 ### How do I add covariates, different intervals for growth...
-* Fixed ages for all participants
-* Variable ages or assessment intervals for all participants
-* Data harmonization
+* Age
+<!-- * Variable ages or assessment intervals for all participants -->
+<!-- * Data harmonization -->
 
 ### How to pick starting values
- * Leave them at zero
+ * Let umx do it
  * Make an educated guess
  * Use mxAutoStart
- * Error Status Codes
+
 ### How to modify Graphical output
   * How do I plot results?
 
