@@ -26,9 +26,8 @@ categories: basic
 *note*: This page expresses the goal of umx to cover core models. It's not done :-).
 
 ### Three basic methods of modeling supported in OpenMx
-* Path analysis
-* RAM - LISREL
-* Matrix algebra
+* umxPath
+* matrix-based
 
 ### Confirmatory Factor Analysis
 * One factor models
@@ -39,19 +38,19 @@ categories: basic
 ### SEM, indirect effects, mediation analysis
 * Regression with structural equation models
 * Ordinal regression
-* Mediation and why not to use it: Hunter
+* Mediation
+* Moderation
 
 ### Measurement models and Psychometrics
-* Item response theory
-* Item factor analysis
+<!-- * Item response theory -->
+<!-- * Item factor analysis -->
 * Measurement invariance
-* Differential item functioning
-* Test equating
+<!-- * Differential item functioning -->
+<!-- * Test equating -->
 
 ### Multiple groups
-* Raw data
-* Weighted least squares
-* Extracting means, covariances, and thresholds
+* umxSuperGroupModel
+
 
 ### Growth and change
 * Latent growth model
@@ -81,13 +80,18 @@ categories: basic
 * Multi-subject models
 * Hidden Markov models
 * Network models
+
 ### Modeling different types of Data correctly
 * Continuous variables
 * Ordinal variables
 * Joint ordinal & continuous variables Contingency tables
 * Gaussian Copulas
 * Polychoric/Polyserial correlations
+* Raw data
+* Weighted least squares
+
 ### Modeling predictors, effects, definition variables, weights, missingness correctly
+* Extracting means, covariances, and thresholds
 * Exogenous predictors
 * Definition variables
 * Fixed & random effects
@@ -124,27 +128,19 @@ categories: basic
 
 ### Optimizers
 * Full Information Maximum Likelihood
-* Restricted Maximum Likelihood
 * Weighted least squares
-* Gradient-based quasi-Newton
-* Newton-Raphson
-* Direct Search - Nelder Mead
-* Stochastic global optimization
-* Expectation-Maximization (EM)
-* User defined fit functions
-* Custom compute plans
 
 ### Parameter estimates and fit statistics
 * Goodness-of-fit
 * Getting chi-squared statistics with mxRefModels
 * Using mxSE to get standard errors of functions of free parameters
-* Using mxCI for profile likelihood confidence intervals
+* Using umxCI for profile likelihood confidence intervals
 * Using mxMI for model modification Bootstrapping
 * Robust Standard Errors
 * Factor Scores
 * Jack-knifing
 * Cross-validation
-* Modification indices
+* Modification indices with umxMI
 * Bootstrap Likelihood ratio tests
 
 ### How do I add covariates, different intervals for growth...
@@ -161,9 +157,4 @@ categories: basic
   * Error Status Codes
   * How do I plot results?
 
-### Misc
-* Cloud & big data
-* Brownie baking
-* Donating money
-* Retro Mx
 <div/>
