@@ -6,7 +6,17 @@ comments: true
 categories: basic
 ---
 
-<div style="column-count: 2">
+<style type="text/css">
+	.example {
+	  -webkit-columns: 4 150px;
+	  -moz-columns: 4 150px;
+	  columns: 4 150px;
+	  -webkit-column-gap: 2em;
+	  -moz-column-gap: 2em;
+	  column-gap: 2em;
+	}
+</style>
+<div class="example">
 
 <a  name="top"></a>
 
@@ -156,3 +166,4 @@ categories: basic
 * Brownie baking
 * Donating money
 * Retro Mx
+<div/>
