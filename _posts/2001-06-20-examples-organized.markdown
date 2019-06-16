@@ -61,7 +61,7 @@ categories: basic
 * Factor mixture model
 * Dynamical systems analysis
 * Latent differential equations
-
+<--!
 ### Multilevel SEM
 * Multilevel regression models
 * Multilevel factor models
@@ -69,7 +69,7 @@ categories: basic
 * Multilevel mediation models Moderation
 * Mediated moderation models
 * Product of latent variables
-
+-->
 ### Latent classes
 * Latent class analysis
 * Latent profile analysis
@@ -148,12 +148,11 @@ categories: basic
 * Variable ages or assessment intervals for all participants
 * Data harmonization
 
-### How to
-* Graphical output
-* How to pick starting values
-  * Leave them at zero
-  * Make an educated guess
+### How to pick starting values
+ * Leave them at zero
+ * Make an educated guess
  * Use mxAutoStart
-  * Error Status Codes
+ * Error Status Codes
+### How to modify Graphical output
   * How do I plot results?
 
