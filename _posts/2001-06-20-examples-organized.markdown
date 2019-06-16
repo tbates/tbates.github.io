@@ -1,19 +1,19 @@
 ---
 layout: post
-title: "Collected introductory umx articles"
+title: "Gallery of Example Models!"
 
 comments: true
 categories: basic
 ---
 
+<div style="column-count: 2">
 
-<a style="column-count: 2" name="top"></a>
+<a  name="top"></a>
 
-<p style="text-align: center;">This is a page of example models. To learn about installing click here, to learn about path-based model syntax click here.</p>
+<p style="text-align: center;">This is a gallery of example models. To learn about installing umx, or take a basic tutorial, start at home page.</p>
 
 
-
-note: It is a new page for April 2019: If we go with this wiki as the basis for collecting all OpenMx Scripts, links will be added here.
+*note*: This page expresses the goal of umx to cover core models. It's not done :-).
 
 ### Three basic methods of modeling supported in OpenMx
 * Path analysis
