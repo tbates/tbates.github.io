@@ -61,7 +61,8 @@ categories: basic
 * Factor mixture model
 * Dynamical systems analysis
 * Latent differential equations
-<--!
+
+<!--
 ### Multilevel SEM
 * Multilevel regression models
 * Multilevel factor models
@@ -70,6 +71,7 @@ categories: basic
 * Mediated moderation models
 * Product of latent variables
 -->
+
 ### Latent classes
 * Latent class analysis
 * Latent profile analysis
