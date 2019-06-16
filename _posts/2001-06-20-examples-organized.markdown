@@ -7,7 +7,7 @@ categories: basic
 ---
 
 <style type="text/css">
-	.ul {
+	ul {
 	  -webkit-columns: 3 150px;
 	  -moz-columns: 3 150px;
 	  columns: 3 150px;
