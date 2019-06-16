@@ -7,23 +7,23 @@ categories: basic
 ---
 
 <style type="text/css">
-	.example {
-	  -webkit-columns: 4 150px;
-	  -moz-columns: 4 150px;
-	  columns: 4 150px;
+	.ul {
+	  -webkit-columns: 3 150px;
+	  -moz-columns: 3 150px;
+	  columns: 3 150px;
 	  -webkit-column-gap: 2em;
 	  -moz-column-gap: 2em;
 	  column-gap: 2em;
 	}
 </style>
-<div class="example">
+
 
 <a  name="top"></a>
 
 <p style="text-align: center;">This is a gallery of example models. To learn about installing umx, or take a basic tutorial, start at home page.</p>
 
 
-*note*: This page expresses the goal of umx to cover core models. It's not done :-).
+*note*: This page expresses the goal for umx's coverage of core  copy-and-paste templates. It's not done :-).
 
 ### Three basic methods of modeling supported in OpenMx
 * umxPath
@@ -157,4 +157,3 @@ categories: basic
   * Error Status Codes
   * How do I plot results?
 
-<div/>
