@@ -6,17 +6,18 @@ comments: true
 categories: advanced
 ---
 
+**TODO**: Update for the ability to control plot layout with same, spline, max
+
 # "The plot thickens"
 
-If you've used R, you'll be used to `plot` for graphical output. With *umx*,  `plot` works for RAM models! And for twin models! 
+If you've used `R`, you'll be used to `plot` for graphical output. With *umx*,  `plot` works for umx RAM and twin models!
 
-Just `plot(model)`, and you will get a path diagram displayed in your browser (or RStudio graph window if you use RStudio). We'll learn later how to open plots in other applications (like *[Graphviz](https://www.graphviz.org)*), including for editing.
-in apps like *[OmniGraffle](https://www.omnigroup.com/omnigraffle)*).
+Just `plot(model)`, and you will get a path diagram displayed in your browser (or RStudio graph window if you use RStudio). We'll learn later how to open plots in other applications (like *[Graphviz](https://www.graphviz.org)*), including for editing in apps like *[OmniGraffle](https://www.omnigroup.com/omnigraffle)*).
 
 ```R
 selVars = c("mpg", "wt", "disp")
 myCov = mxData(cov(mtcars[,selVars]), type = "cov", numObs = nrow(mtcars) )
-m1 = umxRAM("tim", data = myCov,
+m1 = umxRAM("cars", data = myCov,
 	umxPath(c("wt", "disp"), to = "mpg"),
 	umxPath("wt", with = "disp"),
 	umxPath(var = c("wt", "disp", "mpg"))
@@ -78,9 +79,9 @@ plot(model, std = TRUE, digits = 2, file = "name", pathLabels = c("none", "label
 
 ```
 
-#### Standardized output and digit rouinding
+#### Standardized output and digit rounding
 
-You can optionally output unstandardized output using `std = FALSE`, and control the precision with `digits = `
+You can optionally output unstandardised output using `std = FALSE`, and control the precision with `digits = `
 
 ```r
 plot(m1, std=F, digits = 3)
@@ -88,9 +89,9 @@ plot(m1, std=F, digits = 3)
 
 #### Plot style: residuals, means, fixed paths
 The correct way to draw a residual is a double headed arrow from an object back to the object. This is the default for `plot`.
-Omingraffle doesn't import or allow you to edit these easily, so for omnigraffle editing, you might switch to resid = "line".
+Omnigraffle doesn't import or allow you to edit these easily, so for omnigraffle editing, you might switch to resid = "line".
 
-For clarity you can turn this off all together with resid = "none".  You can also suppress drawing means, and turn on drawing fixed paths as you choose.
+For clarity you can turn this off all together with `resid = "none"`.  You can also suppress drawing means, and turn on drawing fixed paths as you choose.
 
 ```r
 resid = c("circle", "line", "none")
