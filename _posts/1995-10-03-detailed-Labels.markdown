@@ -36,32 +36,50 @@ For matrix based models, the rule is more general to cope with the varied uses o
 
 So the cell a[2,3] (matrix "a", row 2, col 3) will be labelled "a_r2_c3"
 
-<a name = "finding"></a>
-#### Finding labels
+#### Example umxLabeled matrix
 
 ```r
-require(OpenMx)
-data(demoOneFactor)
-latents = c("G")
-manifests = names(demoOneFactor)
-m1 <- mxModel("One Factor", type = "RAM",
-	manifestVars = manifests, latentVars = latents,
-	mxPath(from = latents, to = manifests),
-	mxPath(from = manifests, arrows = 2),
-	mxPath(from = latents, arrows = 2, free = FALSE, values = 1),
-	mxData(cov(demoOneFactor), type = "cov", numObs = 500)
-)
+a = umxLabel(mxMatrix(name = "a", "Full", 3, 3, values = 1:9))
+a$labels
+     [,1]     [,2]     [,3]    
+[1,] "a_r1c1" "a_r1c2" "a_r1c3"
+[2,] "a_r2c1" "a_r2c2" "a_r2c3"
+[3,] "a_r3c1" "a_r3c2" "a_r3c3"
 
 ```
-###  Using the parameters()  function
-umx implements a `parameters` function to get these for you.
+
+
+<a name = "finding"></a>
+## Finding labels: the parameters() function
+
+`umx` implements a `parameters` function to get all the labeled parameters from a model for you.
+
+You can see how it works with this demo model:
 
 ```r
-parameters(m1) # Default "matrix address" labels, i.e "One Factor.S[2,2]"
-m1 = umxLabel(m1)
-parameters(m1, free = TRUE) # Default "matrix address" labels, i.e "One Factor.S[2,2]"
-# an alias for the same thing
-umxGetParameters(m1, free = TRUE) # Informative labels: "G_to_x1", "x4_with_x4", etc.
+require(umx)
+data(demoOneFactor)
+manifests = names(demoOneFactor)
+m1 <- umxRAM("One Factor", data = demoOneFactor, type = "cov",
+	umxPath("G", to = manifests),
+	umxPath(var = manifests, arrows = 2),
+	umxPath(var = "G", fixedAt = 1)
+)
+
+
+```r
+parameters(m1) 
+         name Estimate
+1     G_to_x1     0.40
+2     G_to_x2     0.50
+3     G_to_x3     0.58
+4     G_to_x4     0.70
+5     G_to_x5     0.80
+6  x1_with_x1     0.04
+7  x2_with_x2     0.04
+8  x3_with_x3     0.04
+9  x4_with_x4     0.04
+10 x5_with_x5     0.04
 
 ```
 
@@ -88,17 +106,6 @@ parameters(m1, free = TRUE) # Just parameters that are free
 parameters(m1, free = FALSE) # Just parameters that are fixed
 ```
 
-# Labeling a matrix
-
-```r
-a = umxLabel(mxMatrix(name = "a", "Full", 3, 3, values = 1:9))
-a$labels
-     [,1]     [,2]     [,3]    
-[1,] "a_r1c1" "a_r1c2" "a_r1c3"
-[2,] "a_r2c1" "a_r2c2" "a_r2c3"
-[3,] "a_r3c1" "a_r3c2" "a_r3c3"
-
-```
 
 <a name = "equating"></a>
 # Equate parameters by label
@@ -205,5 +212,26 @@ umxGetParameters(m1, "^x1.*5$") # umxGetParameters can filter using regular expr
 m1 = omxSetParameters(m1, labels="G_to_x5", newlabels = "G_to_x4")
 umxSummary(mxRun(m1), show = "std")
 ```
+
+```r
+parameters(m1) 
+
+# How can I label matrices not created by umxRAM or other umx models?
+
+By default, OpenMx doesn't label parameters, and they are addressed using "bracket addresses", i.e "MyModel.S[2,2]" 
+which addresses the parameter in column 2 and row 2 of the S matrix of a model called MyModel.
+
+You can label any matrix (or entire model) using `umxLabel`
+
+```r
+m1 = umxLabel(m1)
+parameters(m1) 
+
+```
+
+The default "matrix address" labels, i.e "One Factor.S[2,2]" are now set Informative labels: "G_to_x1", "x4_with_x4", etc.
+
+```
+
 
 
