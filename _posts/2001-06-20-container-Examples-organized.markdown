@@ -26,7 +26,8 @@ categories: basic
 *note*: This page expresses the goal for umx's coverage of core copy-and-paste model templates. Goal deadline to have it completed by end 2019.
 
 ### The two basic methods of modeling supported in umx
-* [umxPath](/advanced/1995/11/20/detailed-umxPath.html)
+* [`umxPath`](/advanced/1995/11/20/detailed-umxPath.html)
+* Making [Cholesky-style path connections](/models/twin/1980/06/15/twin-Cholesky.html) with `umxPath`
 * matrix-based
 
 ### Exploratory and Confirmatory Factor Analysis
@@ -108,7 +109,7 @@ categories: basic
 * [Meta analysis](https://cran.r-project.org/web/packages/metaSEM/vignettes/Examples.html)
 
 ### Twin Models
-* ACE / ADE
+* [ACE](/models/twin/1980/06/10/twin-umxACE.html) / [ADE](/models/twin/1980/06/10/twin-umxACE.html) 
 * ACEv
 * Common pathway umxCP
 * Independent pathway umxIP
@@ -157,3 +158,13 @@ categories: basic
 ### How to modify Graphical output
   * How do I plot results?
 
+
+#### Posts tagged as example models
+
+<ul>
+  {% for post in site.categories.models %}
+	{% if post.url %}
+  <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+	{% endif %}
+  {% endfor %}
+</ul>
