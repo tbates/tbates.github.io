@@ -142,7 +142,7 @@ Here's the plot:
 
 ![independence model](/media/1_make_a_model/independence model.png "Independence model of three variables")
 
-*note*: When you are running real models, having variances differ by orders of magnitude can make it hard for the optimizer. In such cases, you can often get better results making variables more comparable: in this case, for instance, by converting displacement into litres to keep its variance closer to that of the other variables. (see [here](technical/1950/03/10/practical-data-wrangling.html) for a post on renaming variables (like "disp" to "displacement"), and scaling variables/data-wrangling)
+*note*: When you are running real models, having variances differ by orders of magnitude can make it hard for the optimizer. In such cases, you can often get better results making variables more comparable: in this case, for instance, by converting displacement into litres to keep its variance closer to that of the other variables. (see [here](/technical/1950/03/10/practical-data-wrangling.html) for a post on renaming variables (like "disp" to "displacement"), and scaling variables/data-wrangling)
 
 As you can see, this is an "independence model": No covariances were included, so all variables are modeled as uncorrelated. It would fit poorly in this case. `umxSummary` tells us this fit can definitely be improved: χ²(90) = 98.32, p < 0.001; CFI = 0; TLI = 0; RMSEA = 0.996
 
