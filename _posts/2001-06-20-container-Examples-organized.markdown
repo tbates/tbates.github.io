@@ -26,7 +26,7 @@ categories: basic
 *note*: This page expresses the goal for umx's coverage of core copy-and-paste model templates. Goal deadline to have it completed by end 2019.
 
 ### The two basic methods of modeling supported in umx
-* `[umxPath](/advanced/1995/11/20/detailed-umxPath.html)`
+* [umxPath](/advanced/1995/11/20/detailed-umxPath.html)
 * Making [Cholesky-style path connections](/models/twin/1980/06/15/twin-Cholesky.html) with `umxPath`
 * matrix-based
 
@@ -55,14 +55,15 @@ categories: basic
 * `[umxSuperGroup](/advanced/1995/02/15/detailed-Multigroup.html)`
 
 ### Growth and change
-* Latent growth model
-* Latent growth mixture model
-* Regime switching model
-* Independent mixture model
-* Growth Mixture model
-* Factor mixture model
-* Dynamical systems analysis
-* Latent differential equations
+* [Growth model](https://tbates.github.io/models/1970/08/13/models-growth_curve.html)
+<!-- * Latent growth model -->
+<!-- * Latent growth mixture model -->
+<!-- * Regime switching model -->
+<!-- * Independent mixture model -->
+<!-- * Growth Mixture model -->
+<!-- * Factor mixture model -->
+<!-- * Dynamical systems analysis -->
+<!-- * Latent differential equations -->
 
 <!--
 ### Multilevel SEM
