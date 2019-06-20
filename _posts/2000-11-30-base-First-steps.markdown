@@ -7,9 +7,9 @@ categories: basic
 ---
 
 <a name="top"></a>
-umx stands for "user" OpenMx helper library. It's purpose is to help with [Structural Equation Modeling](https://en.wikipedia.org/wiki/Structural_equation_modeling) in [OpenMx](https://openmx.ssri.psu.edu).
+umx stands for "user" OpenMx helper library. It's purpose is to help with [Structural Equation Modeling](https://en.wikipedia.org/wiki/Structural_equation_modeling) in [R](https://cran.r-project.org).
 
-I called this post "first steps" but it will take you a long way into practical modelling. So, let's do some modeling …
+I called this post "first steps" but it will take you a long way into practical modeling. So, let's do some modeling …
 
 If you haven't installed umx, [do that now](/basic/2000/12/10/base-Install.html), and follow the link back here.
 
@@ -26,8 +26,8 @@ library("umx")
 
 For those of you who like to get straight to the code: here's what happens on this page:
 
-```r
-m2 = umxRAM("big_and_heavy", data = mxData(mtcars, type = "raw"),
+```R
+m2 = umxRAM("big_and_heavy", data = mtcars,
 	# One headed paths from disp and weight to mpg
 	umxPath(c("disp", "wt"), to = "mpg"),
 	# Allow predictors to Covary
