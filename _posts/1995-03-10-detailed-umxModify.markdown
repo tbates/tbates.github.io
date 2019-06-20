@@ -20,7 +20,7 @@ This tutorial will cover using umxModify to update models.
 <a name="overview"></a>
 ## Build and Run: An overview
 
-```splus
+```r
 manifests = c("mpg", "disp", "gear")
 m1 <- umxRAM("big_motor_bad_mpg",
 	umxPath(c("disp", "gear"), to = "mpg"),
@@ -51,11 +51,11 @@ In graph terms, this is asking, "is the path from to gear to mpg significant?" T
 
 1. Overwrite existing paths, fixing a value to zero.
 
-```splus
+```r
 m2 = mxModel(m1, mxPath(from = "gear", to = "mpg", free = F, values = 0)
 m2 = mxRun(m2)
 ```
-```splus
+```r
 umxCompare(m1, m2)
 ```
 
@@ -63,13 +63,13 @@ umxCompare(m1, m2)
 
 By default, umxModify fixes the value of matched labels to zero.
 
-```splus
+```r
 m2 = umxModify(m1, update = "gear_to_mpg", name = "no effect of gear")
 ```
 
 `umxModify()` can modify, run, and compare all in 1-line
 
-```splus
+```r
 	m2 = umxModify(m1, update = "gear_to_mpg", name = "drop effect of gear"), comparison = TRUE)
 ```
 

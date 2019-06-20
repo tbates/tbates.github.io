@@ -21,7 +21,7 @@ This post covers:
 
 ### 1. What is the power to detect One Factor.A[1,6] is different from zero given N=1000, and alpha=.05?
 
-```splus
+```r
 mxPowerSearch(trueModel= m1, falseModel= m2)
 ```
 
@@ -30,7 +30,7 @@ mxPowerSearch(trueModel= m1, falseModel= m2)
 This next snippet, however, is asking:
     “At n= 1000, what is the smallest difference (in either direction?) from the value it is fixed at, which I would have power = 0.8 to detect for the parameter which is fixed in falseModel but free in true model (disregarding the value it takes in true model)”?
 
-```splus
+```r
  mxPower(trueModel= m1, falseModel= m2, n = 1000)
 ```
 

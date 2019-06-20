@@ -40,7 +40,7 @@ The next block of code simply sets up a simulated dataset containing X, Y, qtl (
 
 Our first analysis one is a simple linear model (or ordinary least squares regression). This will reveal a large association of X with Y and is the kind of analysis that has been criticised in false-positive epidemiology {GDS reference}.
 
-```splus
+```r
 library(umx)
 df = umx_make_MR_data(df, nSubjects = 10000)
 
@@ -55,7 +55,7 @@ Next, we analyse a Mendelian randomization trial.
 
 A conventional implementation involves two-stage least squares. In R, we can do this using John Fox's `tsls` function from the from `sem` library
 
-```splus
+```r
 m1 = sem::tsls(formula = Y ~ X, instruments = ~ qtl, data = df); coef(m1)
 #                 Estimate  Std. Error   t value     Pr(>|t|)
 # (Intercept) 0.0009797078 0.003053891 0.3208064 7.483577e-01
@@ -67,7 +67,7 @@ Now we can see that X may indeed affect Y, but with the simulated effect size no
 
 ### Implementing MR in OpenMx
 
-```splus
+```r
 manifests <- c("qtl", "X", "Y")
 latents   <- c("e1", "e2")
 
@@ -95,7 +95,7 @@ plot(IVModel, std = FALSE, showFixed = TRUE, showMeans = FALSE, digits = 3)
 
 Now an exactly equivalent model in umxRAM
 
-```splus
+```r
 
 m2 <- umxRAM("myMR", data = df, autoRun = F,
 	umxPath(v.m. = c("qtl", "X", "Y")),

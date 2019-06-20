@@ -10,7 +10,7 @@ categories: models
 
 Performing a factor analysis in R is straightforward, as long as one does not have missing data. This code snippet gives an example of an analysis of 5 variables from the ubiquitous `mtcars` data set, retaining 2-factors: 
 
-```splus
+```r
 vars = c("mpg", "disp", "hp", "wt", "qsec")
 
 factanal(~ mpg + disp + hp + wt + qsec, factors = 2, rotation="promax"data = mtcars)
@@ -24,7 +24,7 @@ factanal(~ mpg + disp + hp + wt + qsec, factors = 2, rotation="promax"data = mtc
 
 In umx, we can replicate this analysis with the `umxEFA` function:
 
-```splus
+```r
 m2 = umxEFA(name = "test", factors = 2, data = mtcars[, vars])
 x = mxStandardizeRAMpaths(m2, SE=T)
 x[,c(2,8,9)]

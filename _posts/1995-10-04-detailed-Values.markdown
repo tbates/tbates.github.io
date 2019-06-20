@@ -22,7 +22,7 @@ In this tutorial, we are going to [set](#setStarts) values, and [get values](#ge
 ### Setting start values in a path
 as we saw in the introductory chapters, `umxRAM` does a good job at guessing start values. Sometimes, however, you want to set your own start values, or, indeed, to fix values at certain points. This is done with the `values` parameter of `umxPath`: 
 
-```splus
+```r
 latents = c("G")
 manifests = names(demoOneFactor)
 df = mxData(cov(demoOneFactor), type = "cov", numObs = nrow(demoOneFactor))
@@ -42,7 +42,7 @@ In R matrices, values flow down columns. To do what humans do (fill across a row
 It's the same for `mxMatrices`, except these have a special "values" slot, which holds the values matrix (mxMatrices have to have a slab of three inner matrices to represent not only the value of a cell, but whether that cell is free, and what its label is).
 
 
-```splus
+```r
 mxMatrix(name = "IwasFilledByRow", type = "Full", nrow = 3, ncol = 3, values = 1:9, byrow = TRUE)
 $values
      [,1] [,2] [,3]
@@ -53,7 +53,7 @@ $values
 
 *nb*: Values are re-used (if needed) fill the cells of a matrix:
 
-```splus
+```r
 a = mxMatrix(name = "IamAllOnes", type = "Full", nrow = 3, ncol = 3, values = 1, byrow = TRUE)
 a$values
      [,1] [,2] [,3]
@@ -68,10 +68,10 @@ a$values
 
 More to do...
 
-```splus
+```r
 umxGetParameters(model)
 ```
 
-```splus
+```r
 umxSetParameters(model, labels, values="")
 ```

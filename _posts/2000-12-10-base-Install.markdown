@@ -28,23 +28,30 @@ Want the bleeding edge version of `umx`?
 
 The development version of *umx* lives on [github](https://github.com/tbates/umx).
 
-Loading libraries from github differs slightly from the procedure you may be used to. instead of `install.packages()`, we're going to use `devtools::install_github()`
+Loading libraries from github differs slightly from the procedure you may be used to.
 
-```splus
-# if you haven't already, install & load devtools now
+Instead of `install.packages()`, we're going to use `devtools::install_github()`
+
+If you haven't already, install devtools now
+
+```r
 install.packages("devtools")
+```
+
+Or just load it:
+```r
 library("devtools")
 ```
 
-With `devtools` installed, installing umx is easy:
+Installing `umx` is easy:
 
-```splus
+```r
 install_github("tbates/umx")
 library("umx")
 ```
 
 On windows you *might* need
 
-```splus
+```r
 install_github("tbates/umx", args = "--no-multiarch")
 ```

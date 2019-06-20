@@ -77,7 +77,7 @@ You can also add a moderator (dragging A across a range according to a moderator
 
 It's this easy:
 
-```splus    
+```r    
 tmp = umx_make_TwinData(nMZpairs = 10000, AA = .30, CC = .00, EE = .70)
  AA  CC  EE 
 0.3 0.0 0.7 
@@ -88,7 +88,7 @@ The results come back as a list of 2 data sets: One for MZ and one for DZ.
 
 #### How to consume the built datasets
 
-```splus
+```r
 mzData = tmp[[1]];
 dzData = tmp[[2]];
 cov(mzData); cov(dzData)
@@ -105,14 +105,14 @@ str(mzData); str(dzData);
 
 ####  Prefer to work in path coefficient values? (little a?)
 
-```splus    
+```r    
 tmp = umx_make_TwinData(200, AA = .6^2, CC = .2^2)
 ```
 You can omit `nDZpairs` (Defaults to MZ numbers)
 
 Variance doesn't need to sum to 1:
 
-```splus
+```r
 tmp = umx_make_TwinData(100, AA = 3, CC = 2, EE = 3, sum2one = FALSE) 
 cov(tmp[[1]])
 
@@ -120,7 +120,7 @@ cov(tmp[[1]])
 
 #### Moderator Example
 
-```splus
+```r
     
 x = umx_make_TwinData(100, AA = c(avg = .7, min = 0, max = 1), CC = .55, EE = .63)
 str(x)

@@ -11,7 +11,7 @@ categories: advanced
 ## umxSummary()
 At its simplest, just pass a model to umxSummary to receive a default summary:
 
-```splus
+```r
 	umxSummary(model)
 ```
 
@@ -20,13 +20,13 @@ This will show the raw parameters and a write-up style fit summary.
 
  * standardized output
 
- ```splus
+ ```r
      umxSummary(model, showEstimates = c("raw", "std"
  ```
 
  * filter "NS" or "SIG"
 
- ```splus
+ ```r
      umxSummary(model, showEstimates = filter = "SIG" # show only significant paths
      umxSummary(model, showEstimates = filter = "NS" # show only NS paths
  ```

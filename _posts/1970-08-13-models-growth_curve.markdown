@@ -19,7 +19,7 @@ Let’s build this simple example based on 5 repeated measures (1:5) of "x". Gra
 
 Here's the umx code: 7 lines without comments. Several assumptions, as you can see.
 
-```splus
+```r
 require(umx)
 data(myLongitudinalData)
 
