@@ -27,21 +27,23 @@ library("umx")
 For those of you who like to get straight to the code: here's what happens on this page:
 
 ```R
-m2 = umxRAM("big_and_heavy", data = mtcars,
+m2 = umxRAM("big and heavy", data = mtcars,
 	# One headed paths from disp and weight to mpg
 	umxPath(c("disp", "wt"), to = "mpg"),
 	# Allow predictors to Covary
 	umxPath("disp", with = "wt"),
-	# Variances and Means
-	umxPath(means = c("disp", "wt", "mpg")),
-	umxPath(var = c("disp", "wt", "mpg"))
+	# free variances and means for each manifest
+	umxPath(v.m. = c("disp", "wt", "mpg"))
 )
 
 umxSummary(m2, show = "std")
-m4 = umxModify(m2, update = "disp_to_mpg", name = "drop effect of capacity", comparison = TRUE)
+
+# Update m2 by dropping mpg ~ displacement, which has label "disp_to_mpg" 
+m3 = umxModify(m2, update = "disp_to_mpg", name = "drop effect of capacity", comparison = TRUE)
+
 ```
 
-**m2 Fit**
+**umxSummary table of model 2**
 
 |name           | Std.Estimate| Std.SE|CI                   |
 |:--------------|------------:|------:|:--------------------|
@@ -54,12 +56,12 @@ m4 = umxModify(m2, update = "disp_to_mpg", name = "drop effect of capacity", com
 
 χ²(87) = 0, p < 0.001; CFI = 1; TLI = 1; RMSEA = 0
 
-**Comparison**
+**umxCompare model 2 and model 3**
 
 |Model                   | EP|&Delta; -2LL |&Delta; df |p     |      AIC|Compare with Model |
 |:-----------------------|--:|:------------|:----------|:-----|--------:|:------------------|
-|big_and_heavy           |  9|             |           |      | 419.1183|                   |
-|drop effect of capacity |  8|3.8616447    |1          |0.049 | 420.9800|big_and_heavy      |
+|big and heavy           |  9|             |           |      | 419.1183|                   |
+|drop effect of capacity |  8|3.8616447    |1          |0.049 | 420.9800|big and heavy      |
 
 ```r  
 plot(m4)
@@ -103,21 +105,29 @@ The `umx` equivalent of `lm` is `umxRAM`, and we build the "formula" using `umxP
 
 ```R
 manifests = c("disp", "wt", "mpg")
-m1 <- umxRAM("big_motor_bad_mpg", data = mtcars,
+m1 <- umxRAM("my_first_model", data = mtcars,
 	umxPath(var   = manifests),
 	umxPath(means = manifests)
 )
 ```
 
+These two steps of giving a variable a variance and a mean are so common, umx has a shortcut "v.m." 
+```R
 
-Like `lm`, we're going to feed this model-container a data set (`data = mtcars`). The string "my_first_model" is a name that is used to refer to the model, and which is used in output as well (so make it informative).
+m1 <- umxRAM("independence_model", data = mtcars,
+	umxPath(v.m. = c("disp", "wt", "mpg"))
+)
+```
+
+
+Like `lm`, we're going to feed this model-container a data set (`data = mtcars`). The string "independence_model" is a name that is used to refer to the model, and which is used in output as well (so make it informative).
 
 We then give `umxRAM` a list of `umxPaths` to specify all the lines, boxes, and circles in the figure above.
 
 With `umxPath`, you can specify a variance (a 2-headed path originating and terminating on one variable) with the argument `var =`
 To specify a mean (a path from the constant one to a variable), just use the argument `means =`. You can learn more about umxPath in the help and in this chapter on [using umxPath](http://tbates.github.io/advanced/1995/11/20/detailed-umxPath.html).
 
-By default, just like `lm`, `umxRAM` runs the model automatically for you. It also returns fit-information.
+By default, just like `lm`, `umxRAM` runs the model automatically for you. It also prints out a  table of fit-information.
 
 *nb*: you can re-run a model anytime with `mxRun`
 
@@ -125,25 +135,21 @@ You can also request a summary, and plot the output:
 
 ```r
 umxSummary(m1)
-plot(m1, std = F)
+plot(m1)
 ```
-
-*nb*: *You'll need to have GraphViz installed for plot to open a graphic: if it doesn't work, don't worry. Later posts will explain how to get great graphics*!
-
-*ps*: On systems with Word installed a .gv file extension gets opened (uselessly) by M$ word. You might need to make graphviz the default app for these files. On Mac, just go to the get info, select "open with", select Graphviz.app and then "change all".
 
 Here's the plot:
 
 ![independence model](/media/1_make_a_model/independence model.png "Independence model of three variables")
 
-*note*: When you are running real models, having variances differ by orders of magnitude can make it hard for the optimiser. In such cases, you can often get better results making variables more comparable: in this case, for instance, by converting displacement into litres to keep its variance closer to that of the other variables.
+*note*: When you are running real models, having variances differ by orders of magnitude can make it hard for the optimizer. In such cases, you can often get better results making variables more comparable: in this case, for instance, by converting displacement into litres to keep its variance closer to that of the other variables.
 
-As you can see, this is an "independence model": No covariances were included, so all variables are modelled as uncorrelated. It would fit poorly in this case. `umxSummary` tells us this fit can definitely be improved: χ²(90) = 98.32, p < 0.001; CFI = 0; TLI = 0; RMSEA = 0.996
+As you can see, this is an "independence model": No covariances were included, so all variables are modeled as uncorrelated. It would fit poorly in this case. `umxSummary` tells us this fit can definitely be improved: χ²(90) = 98.32, p < 0.001; CFI = 0; TLI = 0; RMSEA = 0.996
 
-Clearly some un-modelled covariance here... Let’s build our theorized model.
+Clearly some un-modeled covariance here... Let’s build our theorized model.
 
 ```r
-m2 <- umxRAM("big_and_heavy", data = mxData(mtcars, type = "raw"),
+m2 <- umxRAM("big and heavy", data = mtcars,
 	# One headed paths from disp and weight to mpg
 	umxPath(c("disp", "wt"), to = "mpg"),
 	# Allow predictors to Covary
@@ -154,7 +160,7 @@ m2 <- umxRAM("big_and_heavy", data = mxData(mtcars, type = "raw"),
 )
 ```
 
-*nb*: a shortcut for the last two lines is: `umxPath(v.m. = c("disp", "wt", "mpg"))`
+*nb*: remember: the shortcut for the last two lines is: `umxPath(v.m. = c("disp", "wt", "mpg"))`
 
 You can compare the models with 
 
@@ -162,12 +168,12 @@ You can compare the models with
 umxCompare(m2, m1)
 ```
 
-This is better, i.e., the three degrees of freedom were worth paying for.
+This new model is better, i.e., the three degrees of freedom were worth paying for in improved fit to the data:
 
 |   |  Model            | EP| &Delta; -2LL | &Delta; df | p       |AIC    | Compare with Model|
 |---|-------------------|---|--------------|------------|---------|-------|-------------------|
-| 1 | big_and_heavy     | 9 | 419.12       |            |         |       |                   |
-| 2 | big_motor_bad_mpg | 6 | 98.312       | 3          | < 0.001 |511.44 | big_and_heavy     |
+| 1 | big and heavy     | 9 | 419.12       |            |         |       |                   |
+| 2 | independence_model | 6 | 98.312       | 3          | < 0.001 |511.44 | big and heavy     |
 
 
 In fact this (saturated) model fits perfectly, as `umxSummary` shows: χ²(87) = 0, p < 0.001; CFI = 1; TLI = 1; RMSEA = 0
@@ -191,17 +197,17 @@ umxSummary(m2, show = "std")
 We can plot these standardized (or raw) coefficients on a diagram the way Sewall Wright would like us too:
 
 ```r
-plot(m2, showMeans = F)
+plot(m2,  means = FALSE) # plot has lots of control: here we suppress display of the means
 ```
 
 ![model 1](/media/1_make_a_model/mtcar2.png "Model 1")
 
-note: Means are not shown on this diagram (`showMeans =FALSE`) though they are in the model.
+*note*: Means are not shown on this diagram (`showMeans =FALSE`) though they are in the model.
 
 We can ask for the (unstandardized) confidence intervals with the usual `confint` function. Because these can take a long time for SEM models, the default is to require you to ask to run them.
 
 ```r
-    confint(m2, run = T)
+    confint(m2, run = TRUE)
 ```
 
 |                | lbound   | estimate  | ubound       |
@@ -260,14 +266,14 @@ With umxPath we can save some typing and use `fixedAt`
 m3 = umxRAM(m2, umxPath("disp", to = "mpg", fixedAt = 0), name = "weight_doesnt_matter")
 ```
 
-*note:* The equivalent in base OpenMx is:
+As you develop skill with umx, you 'll often umxModify a model, instead of building a whole new model
 
 ```r
-m3 = mxModel(m2, mxPath(from = "wt", to = "mpg", free = FALSE, values = 0), name = "weight_doesnt_matter")
-m3 = mxRun(m3)
+m3 = umxModify(m2, update = "disp_to_mpg", name = "weight_doesnt_matter")
 ```
 
-That examines our competing theoretical prediction, with a "zero" path from wt to mpg.
+
+That examines our competing theoretical prediction, with a "zero" path from `wt` to `mpg` (weight of car to fuel economy)
 
 <a name="compare"></a>
 
@@ -279,12 +285,19 @@ Now we can test if weight affects mpg by comparing these two models:
 umxCompare(m2, m3)
 ```
 
+As you develop skill with umx, you might umxModify and compare in one step:
+
+```r
+m3 = umxModify(m2, update = "disp_to_mpg", name = "weight_doesnt_matter", comparison = TRUE)
+```
+
+
 The table below shows that dropping this path caused a (just) significant loss of fit (χ²(1) = 3.96, p = 0.049):
 
-|Model                |EP |Δ -2LL |Δ df|p    |AIC   |Compare with Model|
-|---------------------|---|-------|----|-----|------|-------------|
-|big_and_heavy        | 9 |419.13 |    |     |419.12|             |
-|weight_doesnt_matter | 8 |  3.86 | 1  |0.049|420.98|big_and_heavy|
+| Model                            | EP | Δ -2LL | Δ df | p        | AIC     | Compare with Model |
+|:-------------------------------|:----|:-----------|:------|:--------|:----------|:----------------------------|
+| big and heavy               | 9  | 419.13  |         |           | 419.12 |                                  |
+| weight_doesnt_matter  | 8  | 3.86      | 1      | 0.049 | 420.98 | big and heavy           |
 
 The AIC moved the wrong direction, p-value is marginal. This model would lead us to conclude that weight matters, but only a little bit (controlling for engine capacity). Note however that these variables covary: heavy vehicles have big motors: This is why trying to do science on observational data is fraught with problems. MUCH better to systematically vary the weight in a randomized controlled trial and measure mpg change. In behavior science, [Twin Studies](https://en.wikipedia.org/wiki/Twin_study) and [Mendelian Randomization](https://en.wikipedia.org/wiki/Mendelian_randomization) let us do this.
 
@@ -300,18 +313,14 @@ You will use `umxModify` often.
 
 By default, `umxModify` fixes the value of matched labels to zero. Learn more at the [umxModify tutorial](/advanced/1995/03/10/detailed-umxModify.html).
 
-**tip**: To discover the labels in a model, use `parameters(model)`
+**tip**: To discover the labels in a model, use `parameters(model)` (or just call `umxModify` with no update)
 
-This version of parameters is "on steroids" - you can filter using regular expressions! So
+The `umx` version of `parameters` is on steroids - you can filter using wild card patterns! So
 
 ```r
-umxGetParameters(m3, patt="^mpg")
+umxGetParameters(m3, pattern = "^mpg")
 # [1] "mpg_to_mpg"   "mpg_to_disp"  "mpg_to_wt"    "mpg_with_mpg" "mpg_with_wt" 
 ```
-
-**gotcha**: OpenMx doesn't add labels by default –&nbsp; (`umxRAM` does).
-
-You can also add labels to a model (or matrix) using`umxLabel`, and `umxRun` has the option `addLabels`
 
 <!--
 #### TODO
