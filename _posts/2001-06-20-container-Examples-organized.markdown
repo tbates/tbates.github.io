@@ -87,7 +87,6 @@ categories: basic
 
 ### Modeling different types of Data correctly
 * Raw data
-* [Scaling Data]()
 * Weighted least squares
 * Polychoric correlations
 * Continuous variables
@@ -108,6 +107,14 @@ categories: basic
 * Power analysis
 * Simulations
 * [Meta analysis](https://cran.r-project.org/web/packages/metaSEM/vignettes/Examples.html)
+
+### Wrangling data: scaling, renaming, residualizing etc.
+* [Scaling Data]()
+* [Wrangling Data]()
+* [Renaming Data]()
+* [Residualizing Data]()
+* [Wide 2 long and long 2 wide]()
+
 
 ### Twin Models
 * [ACE](/models/twin/1980/06/10/twin-umxACE.html) / [ADE](/models/twin/1980/06/10/twin-umxACE.html) 

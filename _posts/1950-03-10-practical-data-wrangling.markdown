@@ -90,3 +90,10 @@ m1 <- umxRAM("scaled", data = df,
 
 ![renamed](/media/1_make_a_model/renamed.png "All renamed")
 
+
+email me if you want more on scaling, a tutorial on scaling and residualizing wide (e.g. twin data ) with `umx_residualize` and `umx_scale_wide_twin_data`
+
+Also going from wide to long and vice versa with `umx_long2wide` and  `umx_wide2long`
+
+And data simulation with `umx_make_TwinData`
+
