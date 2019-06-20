@@ -20,13 +20,13 @@ categories: basic
 
 <a  name="top"></a>
 
-<p style="text-align: center;">This is a gallery of example models. To learn about installing umx, or take a basic tutorial, start at home page.</p>
+<p style="text-align: center;">This is a gallery of example models. To learn about installing umx, or take a basic tutorial, start at the home page.</p>
 
 
 *note*: This page expresses the goal for umx's coverage of core  copy-and-paste templates. It's not done :-).
 
-### Three basic methods of modeling supported in OpenMx
-* umxPath
+### The two basic methods of modeling supported in umx
+* [umxPath](/advanced/1995/11/20/detailed-umxPath.html)
 * matrix-based
 
 ### Confirmatory Factor Analysis
