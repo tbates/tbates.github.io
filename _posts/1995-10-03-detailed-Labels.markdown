@@ -50,7 +50,7 @@ a$labels
 
 
 <a name = "finding"></a>
-## Finding labels: the parameters() function
+## Showing parameters of a model (and their labels): the parameters() function
 
 `umx` implements a `parameters` function to get all the labeled parameters from a model for you.
 
@@ -65,45 +65,51 @@ m1 <- umxRAM("One Factor", data = demoOneFactor, type = "cov",
 	umxPath(var = manifests, arrows = 2),
 	umxPath(var = "G", fixedAt = 1)
 )
+```
 
+
+Let's get the parameters:
 
 ```r
-parameters(m1) 
-         name Estimate
-1     G_to_x1     0.40
-2     G_to_x2     0.50
-3     G_to_x3     0.58
-4     G_to_x4     0.70
-5     G_to_x5     0.80
-6  x1_with_x1     0.04
-7  x2_with_x2     0.04
-8  x3_with_x3     0.04
-9  x4_with_x4     0.04
-10 x5_with_x5     0.04
+parameters(m1)
+#          name Estimate
+# 1     G_to_x1     0.40
+# 2     G_to_x2     0.50
+# 3     G_to_x3     0.58
+# 4     G_to_x4     0.70
+# 5     G_to_x5     0.80
+# 6  x1_with_x1     0.04
+# 7  x2_with_x2     0.04
+# 8  x3_with_x3     0.04
+# 9  x4_with_x4     0.04
+# 10 x5_with_x5     0.04
 
 ```
 
 #### Filtering the parameter list to show just the labels you're looking for
 
-Often there are many labels in a model. `parameters` (or its alias `umxGetParameters`) allows you to "filter" this list, i.e., view just the ones you want. You can even write filters using regular expressions!
+Often there are many labels in a model. `parameters` allows you to "filter" this list, i.e., view just the ones you want. You can even write filters using regular expressions (statements that match wildcards and text patterns)!
 
-So a simple filter might show only paths containing `G_to`
+So a simple filter on our 1-factor model `m1` might show only paths containing `G_to`
 
 ```r
-umxGetParameters(m1, "G_to", free = TRUE) # Just labels beginning "G_to"
+parameters(m1, "G_to", free = TRUE) # Just labels beginning "G_to"
 ```
 
-A clever regular-expression version uses ^ to "anchor the expression" to the start of the label
-```r
-umxGetParameters(m1, "^G_to", free = TRUE) # Just labels beginning "G_to"
-```
+A clever regular-expression version uses ^ to "anchor" the expression to the start of the label.
+
+
+### Getting and Setting Parameters: umxGetParameters and umxSetparameters
 
 Another feature we've used but not highlighted above is the `free` option. Compare these two outputs:
 
 ```r
-parameters(m1) # All parameters
-parameters(m1, free = TRUE) # Just parameters that are free
-parameters(m1, free = FALSE) # Just parameters that are fixed
+umxGetParameters(m1) # All parameters
+umxGetParameters(m1, free = TRUE) # Just parameters that are free
+umxGetParameters(m1, free = FALSE) # Just parameters that are fixed
+umxGetParameters(m1, free = TRUE, regex="^G") # Only free parameters with labels that start with a "G"
+# "G_to_x1" "G_to_x2" "G_to_x3" "G_to_x4" "G_to_x5"
+
 ```
 
 
@@ -199,16 +205,23 @@ m1 <- umxRAM("m1", data = mxData(cov(demoOneFactor), type = "cov", numObs = nrow
 ### Setting a value by label
 
 ```r
-m1 = omxSetParameters(m1, labels="x1_to_x5", values = 0)
+m1 = umxSetParameters(m1, labels="x1_to_x5", values = 0)
 
 umxGetParameters(m1, "^x1.*5$") # umxGetParameters can filter using regular expressions!
 ```
+
+*note*: `umxGetParameters` is similar to `parameters` but whereas `parameters` only extracts free parameters, `umxGetParameters` can select fixed
+or free parameters, and can return labels, values, or the free/fixed state of parameters. It's more like its mirror image, `umxSetParameters`.
+```r
+umxGetParameters(m1, "^G_to", free = TRUE) # Just labels beginning "G_to"
+```
+
 
 <a name="equate"></a>
 ### Equating two paths by  setting their label
 
 ```r
-# force G_to_x5 to have the same estimated value as G_to_x4
+# Force G_to_x5 to have the same estimated value as G_to_x4
 m1 = omxSetParameters(m1, labels="G_to_x5", newlabels = "G_to_x4")
 umxSummary(mxRun(m1), show = "std")
 ```
@@ -232,6 +245,4 @@ parameters(m1)
 The default "matrix address" labels, i.e "One Factor.S[2,2]" are now set Informative labels: "G_to_x1", "x4_with_x4", etc.
 
 ```
-
-
 
