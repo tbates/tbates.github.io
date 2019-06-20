@@ -58,7 +58,7 @@ data(demoOneFactor)
 manifests = names(demoOneFactor)
 m1 <- umxRAM("One Factor", data = demoOneFactor, type = "cov",
 	umxPath("G", to = manifests),
-	umxPath(var = manifests, arrows = 2),
+	umxPath(var = manifests),
 	umxPath(var = "G", fixedAt = 1)
 )
 ```
@@ -117,16 +117,15 @@ For all these examples, we will use our old friend, `m1`, so if you haven't made
 ```r
 require(umx)
 data(demoOneFactor)
-manifests = names(demoOneFactor)
 m1 <- umxRAM("One Factor", data = demoOneFactor, type = "cov",
-	umxPath("G", to = manifests),
-	umxPath(var = manifests, arrows = 2),
+	umxPath("G", to = c('x1', 'x2', 'x3', 'x4', 'x5')),
+	umxPath(var = c('x1', 'x2', 'x3', 'x4', 'x5')),
 	umxPath(var = "G", fixedAt = 1)
 )
 ```
 
 <a name="getLabels"></a>
-### Getting (reading) existing labels with `umxGetParameters`
+### Getting (reading) existing labels with umxGetParameters
 
 Another feature we've used but not highlighted above is the `free` option. Compare these two outputs:
 
@@ -139,95 +138,66 @@ umxGetParameters(m1, free = TRUE, regex="^G") # Only free parameters with labels
 
 ```
 
-
-#### OpenMx Defaults
-
-OpenMx has a built-in function for getting parameters from a model
-
-Let’s have a look at the `A` matrix, which contains our asymmetric paths
+TIP: For RAM models, a quick way to get an overview of a model is with `tmx_show`
 
 ```r
-m1$matrices$A$labels # nb: By default, paths have no labels
-# we could also use
-# umx_show(m1)
-```
+tmx_show(m1)
 
-|   | x1 | x2 | x3 | x4 | x5 |  G |
-|---|----|----|----|----|----|----|
-|x1 | NA | NA | NA | NA | NA | NA |
-|x2 | NA | NA | NA | NA | NA | NA |
-|x3 | NA | NA | NA | NA | NA | NA |
-|x4 | NA | NA | NA | NA | NA | NA |
-|x5 | NA | NA | NA | NA | NA | NA |
-|G  | NA | NA | NA | NA | NA | NA |
+# Values of S matrix (0 shown as .):
+# 
+# |   |x1   |x2   |x3   |x4   |x5   |G  |
+# |:--|:----|:----|:----|:----|:----|:--|
+# |x1 |0.04 |.    |.    |.    |.    |.  |
+# |x2 |.    |0.04 |.    |.    |.    |.  |
+# |x3 |.    |.    |0.04 |.    |.    |.  |
+# |x4 |.    |.    |.    |0.04 |.    |.  |
+# |x5 |.    |.    |.    |.    |0.04 |.  |
+# |G  |.    |.    |.    |.    |.    |1  |
+# 
+# Values of A matrix (0 shown as .):
+# 
+# |   |x1 |x2 |x3 |x4 |x5 |G    |
+# |:--|:--|:--|:--|:--|:--|:----|
+# |x1 |.  |.  |.  |.  |.  |0.4  |
+# |x2 |.  |.  |.  |.  |.  |0.5  |
+# |x3 |.  |.  |.  |.  |.  |0.58 |
+# |x4 |.  |.  |.  |.  |.  |0.7  |
+# |x5 |.  |.  |.  |.  |.  |0.8  |
+# |G  |.  |.  |.  |.  |.  |.    |
 
-Despite these parameters having no explicit labels, we can still address them in OpenMx using bracket labels.
-
-```r
-omxGetParameters(m1) # nb: By default, paths have no labels, and starts of 0
-```
-
-| m1.A[1,6] |  m1.A[2,6] |  m1.A[3,6] |  m1.A[4,6] |  m1.A[5,6] |  m1.S[1,1] |  m1.S[2,2] | m1.S[3,3] |  m1.S[4,4] |  m1.S[5,5] |  
-|-----------|------------|------------|------------|------------|------------|------------|-----------|------------|------------|  
-|        0  |         0  |       0    |     0      |  0         |    0       |     0      |    0      |    0       |         0  |
-
-Here you can see that OpenMx leaves labels blank by default
-
-umxGetParameters(m1)
-
-With `umxLabel`, you can easily add informative and predictable labels to each free path (works with matrix style as well!)
-
-and use `umxStart`, to set sensible guesses for start values...
-
-```r
-m1 = umxLabel(m1)
-m1 = umxStart(m1)
-```
-
-`umxRAM` does this for you, writing systematic path-based labels to every matrix label cell in the form `var1_to_var2` for single-heaed arrows, and `var1_with_var2` for double headed arrows.
-
-Let’s do that now
-
-```r
-manifests = names(demoOneFactor)
-m1 <- umxRAM("m1", data = mxData(cov(demoOneFactor), type = "cov", numObs = nrow(demoOneFactor)),
-	umxPath(from = "G", to = manifests),
-	umxPath(var = manifests),
-	umxPath(var = "G", fixedAt = 1)	
-)
-```
 
 <a name="setLabels"></a>
 ### Setting a value by label
 
+A common task in model modification is to set a parameter to 0. You can do this with `umxSetParameters`
+by default, `umxSetParameters` also sets the `free` status of the affected labels to `FALSE`
+
 ```r
-m1 = umxSetParameters(m1, labels="x1_to_x5", values = 0)
+m2 = umxSetParameters(m1, labels="G_to_x5", values = 0)
 
-umxGetParameters(m1, "^x1.*5$") # umxGetParameters can filter using regular expressions!
+parameters(m2, patt="G_to_x5")
+#     name Estimate
+#  G_to_x5      0.8
+
 ```
-
-*note*: `umxGetParameters` is similar to `parameters` but whereas `parameters` only extracts free parameters, `umxGetParameters` can select fixed
-or free parameters, and can return labels, values, or the free/fixed state of parameters. It's more like its mirror image, `umxSetParameters`.
-```r
-umxGetParameters(m1, "^G_to", free = TRUE) # Just labels beginning "G_to"
-```
-
 
 <a name="equate"></a>
 ### Equating two paths by  setting their label
 
+Let's force G_to_x5 to have the same estimated value as G_to_x4:
+
 ```r
-# Force G_to_x5 to have the same estimated value as G_to_x4
-m1 = omxSetParameters(m1, labels="G_to_x5", newlabels = "G_to_x4")
-umxSummary(mxRun(m1), show = "std")
+m2 = umxSetParameters(m1, labels="G_to_x5", newlabels = "G_to_x4")
+m2 = mxRun(m2)
+umxSummary(m2, show = "std")
+parameters(m2) 
 ```
 
-```r
-parameters(m1) 
+Note: the normal way to do this would be via `umxModify`
 
-# How can I label matrices not created by umxRAM or other umx models?
+# Can I label matrices not created by umxRAM or other umx models?
 
-By default, OpenMx doesn't label parameters, and they are addressed using "bracket addresses", i.e "MyModel.S[2,2]" 
+Yes. By default, OpenMx doesn't label parameters, and they are addressed using "bracket addresses", i.e "MyModel.S[2,2]" 
 which addresses the parameter in column 2 and row 2 of the S matrix of a model called MyModel.
 
 You can label any matrix (or entire model) using `umxLabel`
