@@ -27,7 +27,7 @@ library("umx")
 For those of you who like to get straight to the code: here's what happens on this page:
 
 ```r
-m2 <- umxRAM("big_and_heavy", data = mxData(mtcars, type = "raw"),
+m2 = umxRAM("big_and_heavy", data = mxData(mtcars, type = "raw"),
 	# One headed paths from disp and weight to mpg
 	umxPath(c("disp", "wt"), to = "mpg"),
 	# Allow predictors to Covary
