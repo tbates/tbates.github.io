@@ -11,33 +11,30 @@ toc: true
 <!-- https://tbates.github.io/advanced/1995/10/03/detailed-Labels.html -->
 ### "In the beginning was the  <strike>word</strike> label"
 
-Making names for things is a key to [cognitive development](http://www.amazon.com/dp/0199838801). In [OpenMx](https://openmx.ssri.psu.edu), labels are just as important. In fact, OpenMx is MUCH more powerful when label your parameters.
+Giving things names is key to [cognitive development](http://www.amazon.com/dp/0199838801), and labels are just as important in `umx`. Because you have MUCH more power to modify and update models when parameters are labeled, umx does this automatically and systematically for you.
 
 This power comes because those labels can be used to control the parameter.
 
-There are two ways in which labels are valuable: two parameters with the same label are effectively just one parameter (i.e., labels implement constraints without all the hassle and time of constraints).
+There are two ways in which labels are valuable: two parameters with the same label are effectively just one parameter (i.e., labels implement constraints without the hassles of mxConstraints).
 
-Second, we can change a model by addressing its parameters by label. That's how, for instance, `umxSetparameters`() works.
+Second, you can change a model by addressing its parameters by label. That's how, for instance, `umxSetparameters` works.
 
 <a name="background"></a>
-###  using umxLabel to create systematic paths and matrices for you.
+###  Path labels in umxRAM
 
-By default, OpenMx doesn't label parameters. However, if you use umxRAM, then all your paths will be labelled. The labelling rule is
+If you use `umxRAM`, your paths will be get default labels according to the following rules:
 
-1. one-headed: &lt;from&gt; + &quot;_to_&quot; &lt;to&gt;
-2. two-headed: &lt;from&gt; + &quot;_with_&quot; &lt;to&gt;
-3. means: &quot;mean_&quot; &lt;to&gt;
+1. one-headed paths: "fromVar_to_toVar"
+2. two-headed paths: "fromVar_with_toVar"
+3. means paths: "one_to_toVar"
 
 So a path from "E" to "days_off_school" will be labelled "E_to_days_off_school"
 
-For matrix based models, the rule is simpler (and more general). All cells are labeled
+###  Path labels in matrix-based models
 
-```r
-<matrixName> + "_r" <rowNumber> + "_c" <cellNumber>
+For matrix based models, the rule is more general to cope with the varied uses of matrices in models. All cells are labeled: `matrixName_rROWNUM_cCOLNUM`
 
-```
-
-So a cell on row 2, column 3 of a matrix called "a" would be labelled "a_r2_c3"
+So the cell a[2,3] (matrix "a", row 2, col 3) will be labelled "a_r2_c3"
 
 <a name = "finding"></a>
 #### Finding labels
