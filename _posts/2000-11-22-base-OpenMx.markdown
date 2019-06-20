@@ -6,26 +6,34 @@ comments: true
 categories: basic
 ---
 
-Previously, I showed how to model with `umxPath` and `umxRAM`. Here, I compare this to built-in OpenMx `mxModel` and `mxPath` functions.
+Previously, we saw how to make `umxRAM` models and use `umxPath`. Here, we compare this to OpenMx's `mxModel` and `mxPath` functions.
 
 #### umxRAM vs mxModel
 
-`umxRAM` saves you specifying three elements of the model:
+`umxRAM` differs from mxModel in eight major ways:
 
-1. The Model type
+1. No Model `type` needed.
  * In OpenMx, all models are built using mxModel. You need to tell the model that the type you want is "RAM". Using umxRAM, that's not needed.
-2. The manifestVars don't need to be listed
+2. No `manifestVars` list.
  * OpenMx requires all the boxes in a diagram to be listed explicitly with `manifestVars = manifests`. In umxRAM, the manifests are simply the names found in umxPath statements that are also in the data.
-3. The latentVars don't need to be listed
+3. No `latentVars` list.
  * In umx, latents are just variables not found in the data.
+4. Data is explicitly passed in as `data = `
+  * In `mxModel`, data is just another thing listed in the model.
+  * This last feature has the benefit that you can pass in raw data, and `umxRAM` will create the `mxData` statement you need. It will also drop columns not referred to in the model.
+5. Parameters are labeled
+  * In `mxModel`, each parameter has to be manually labeled.
+6. Start values are automatic
+  * In `mxModel`, each parameter starts at 0 unless manually set via `values=`.
+7. No need to separately `mxRun` the model
+  * In `umxRAM` the model is automatically run (turn this off with `autoRun = FALSE`)
+8. No need to separately `mxSummary` the model
+  * In `umxRAM` the umxSummary is automatically printed.
 
-In addition, with umxRAM, data is explicitly passed in as `data = ` In `mxModel`, data is just another thing listed in the model.
-
-This last feature has the benefit that you can pass in raw data, and `umxRAM` will create the `mxData` statement you need. It will also drop columns not referred to in the model.
 
 #### mxPath vs umxPath
 
-`umxPath` differs from mxPath in that it supports new arguments to say what you want more succinctly and (I think, more readably).
+`umxPath` differs from mxPath in that it supports new arguments to say what you want with less typing and (I think) more readably.
 
 `mxPath` takes `from`, `to`, `arrows` (1 or 2), `values`, and `free` parameters, amongst others. So, a path with 2 arrows, fixed at 1 requires you to specify all of those things:
 
@@ -45,7 +53,7 @@ Equivalently:
 umxPath(cov = c("A", "B"), fixedAt = 1)
 ```
 
-In total there are 14 new words for describing paths (with, var, cov, unique.bivariate, unique.pairs, Cholesky, defn, means, v0m0, v1m0, v.m., fixedAt, freeAt, firstAt). You can learn more about these additional parameters [here](/advanced/1995/11/20/detailed-umxPath.html)
+In total there are some 14 new words for describing paths (with, var, cov, unique.bivariate, unique.pairs, Cholesky, defn, means, v0m0, v1m0, v.m., fixedAt, freeAt, firstAt). You can learn more about these additional parameters [here](/advanced/1995/11/20/detailed-umxPath.html)
 
 What follows in this post, is the construction of our toy model using base OpenMx functions. Nicely, mxModels can be updated by passing an existing model into mxModel and adding or subtracting objects "line by line".
 
@@ -123,7 +131,6 @@ Assuming you've got `umx` loaded, just say:
 
 Alternatively use the built in graphing function, `omxGraphviz`. This adds color, and uses circles to draw residuals (I use lines in `plot`), but doesn't show path values, doesn't allow customizing what gets drawn.
 
-PS: the reason i don't use circles for variances is they are not (currently) imported nicely in Omnigraffle :-(.
 
 ```r
 	omxGraphviz(m1) # doesn't show path values.
@@ -132,7 +139,7 @@ PS: the reason i don't use circles for variances is they are not (currently) imp
 Next, we allow displacement and weight to correlate (a two headed path between them)
 
 ```r
-m1 <- mxModel(m1, mxPath(from = "disp", to = "wt", arrows = 2))
+m1 = mxModel(m1, mxPath(from = "disp", to = "wt", arrows = 2))
 ```
 
 Here we add `arrows = 2`. In the previous cases, we just used the default, which is 1-headed arrows.
@@ -184,7 +191,7 @@ Mow we run the model. In this case we take advantage of umxRun to also set label
 **nb**: See tutorials on using [labels](http://tbates.github.io/advanced/1995/10/03/detailed-Labels.html), and on [values](http://tbates.github.io/advanced/1995/10/04/detailed-Values).
 
 ```r
-m1 <- umxRun(m1, setLabels = T, setValues = T)
+m1 <- umxRun(m1, setLabels = TRUE, setValues = TRUE)
 ```
 
 This exposes a lovely (and unique) feature of OpenMx: running a model returns a valid model that can be updated and run again 
@@ -197,4 +204,5 @@ This exposes a lovely (and unique) feature of OpenMx: running a model returns a 
 ```r
 umxSummary(m1, show = "std")
 ```
-Now we can compare this to competing models with `mxCompare()`
+
+Now we can compare this to competing models with `umxCompare()`
