@@ -25,10 +25,9 @@ categories: basic
 
 *note*: This page expresses the goal for umx's coverage of core copy-and-paste model templates. Goal deadline to have it completed by end 2019.
 
-### The two basic methods of modeling supported in umx
+### Basic path-based models in `umx`
 * [umxPath](/advanced/1995/11/20/detailed-umxPath.html)
 * Making [Cholesky-style path connections](/models/twin/1980/06/15/twin-Cholesky.html) with `umxPath`
-* matrix-based
 
 ### Exploratory and Confirmatory Factor Analysis
 * Factor analysis with `umxFactanal`
