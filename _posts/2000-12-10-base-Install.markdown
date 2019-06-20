@@ -10,9 +10,9 @@ categories: basic
 
 `umx` is easy to learn, but first you need to install it ☺
 
-1f If you haven't already, install `umx` now. In `R`, just type:
+1. If If you haven't already, install `umx`. Go to  `R`, and just type:
 
-```splus
+```r
 install.packages("umx")
 
 library("umx")
