@@ -11,13 +11,9 @@ toc: true
 <!-- https://tbates.github.io/advanced/1995/10/03/detailed-Labels.html -->
 ### "In the beginning was the  <strike>word</strike> label"
 
-Giving things names is key to [cognitive development](http://www.amazon.com/dp/0199838801), and labels are just as important in `umx`. Because you have MUCH more power to modify and update models when parameters are labeled, umx does this automatically and systematically for you.
+`umx` automatically and systematically labels parameters allowing models to be displayed and modified using these labels.
 
-This power comes because those labels can be used to control the parameter.
-
-There are two ways in which labels are valuable: two parameters with the same label are effectively just one parameter (i.e., labels implement constraints without the hassles of mxConstraints).
-
-Second, you can change a model by addressing its parameters by label. That's how, for instance, `umxSetparameters` works.
+labels can be used to access a parameter (e.g. via `parameters`), to set that parameter (e.g. via `umxSetParameters`) and equate parameters (parameters with the same label have to take the same value.
 
 <a name="background"></a>
 ###  Path labels in umxRAM
@@ -99,7 +95,38 @@ parameters(m1, "G_to", free = TRUE) # Just labels beginning "G_to"
 A clever regular-expression version uses ^ to "anchor" the expression to the start of the label.
 
 
-### Getting and Setting Parameters: umxGetParameters and umxSetparameters
+<a name = "equating"></a>
+# Get, Set, and Equate parameters by label
+A primary use for labels is to equate parameters. If parameters have the same label, they are forced to have identical values. This also allows communicating a value across models in a [supermodel](http://tbates.github.io/advanced/1995/02/15/detailed-Multigroup.html).
+
+**Properties of a parameter**
+
+Parameters know three things:
+
+1. Whether they are free.
+2. What their current value is.
+3. What their label is.
+
+In this tutorial, we are going to [get](#getLabels) a parameter by it's label. We will then [set](#setLabels) a parameter value by label. Finally, we will use a label to [equate](#equate) two parameters.
+
+Parameters are usually set in the process of model building or using `umxModify`, however you can also  use `umxSetParameters` to
+select parameters in a model, and set their value, label, free state.
+
+For all these examples, we will use our old friend, `m1`, so if you haven't made him, do so now:
+
+```r
+require(umx)
+data(demoOneFactor)
+manifests = names(demoOneFactor)
+m1 <- umxRAM("One Factor", data = demoOneFactor, type = "cov",
+	umxPath("G", to = manifests),
+	umxPath(var = manifests, arrows = 2),
+	umxPath(var = "G", fixedAt = 1)
+)
+```
+
+<a name="getLabels"></a>
+### Getting (reading) existing labels with `umxGetParameters`
 
 Another feature we've used but not highlighted above is the `free` option. Compare these two outputs:
 
@@ -112,37 +139,6 @@ umxGetParameters(m1, free = TRUE, regex="^G") # Only free parameters with labels
 
 ```
 
-
-<a name = "equating"></a>
-# Equate parameters by label
-A primary use for labels is to equate parameters. If parameters have the same label, they are forced to have identical values. They are especially powerful for allowing communication across [groups](http://tbates.github.io/advanced/1995/02/15/detailed-Multigroup.html), but also, as we will see here, within groups.
-
-**Core concept in OpenMx**
-
-Parameters know three things:
-1. Whether they are free.
-2. What their current value is.
-3. What their label is.
-
-In this tutorial, we are going to [get](#getLabels) a parameter by it's label. We will then [set](#setLabels) a parameter value by label. Finally, we will use a label to [equate](#equate) two parameters.
-
-For all these examples, we will use our old friend, `m1`, so if you haven't made him, do so now:
-
-```r
-latents = c("G")
-manifests = names(demoOneFactor)
-m1 <- mxModel("m1", type = "RAM",
-	manifestVars = manifests,
-	latentVars  = latents,
-	mxPath(from = latents, to = manifests),
-	mxPath(from = manifests, arrows = 2),
-	mxPath(from = latents  , arrows = 2, free = F, values = 1),
-	mxData(cov(demoOneFactor), type = "cov", numObs = nrow(demoOneFactor))
-)
-```
-
-<a name="getLabels"></a>
-### Getting (reading) existing labels
 
 #### OpenMx Defaults
 
