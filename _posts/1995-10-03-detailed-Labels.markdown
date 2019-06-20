@@ -44,6 +44,22 @@ a$labels
 
 ```
 
+# Sidebar: Can I label matrices not created by umxRAM or other umx models?
+
+Yes. By default, OpenMx doesn't label parameters, and they are addressed using "bracket addresses", i.e "MyModel.S[2,2]" 
+which addresses the parameter in column 2 and row 2 of the S matrix of a model called MyModel.
+
+You can label any matrix (or entire model) using `umxLabel`
+
+```r
+m1 = umxLabel(m1)
+parameters(m1) 
+
+```
+
+The default "matrix address" labels, i.e "One Factor.S[2,2]" are now set Informative labels: "G_to_x1", "x4_with_x4", etc.
+
+```
 
 <a name = "finding"></a>
 ## Showing parameters of a model (and their labels): the parameters() function
@@ -165,6 +181,7 @@ tmx_show(m1)
 # |x5 |.  |.  |.  |.  |.  |0.8  |
 # |G  |.  |.  |.  |.  |.  |.    |
 
+```
 
 <a name="setLabels"></a>
 ### Setting a value by label
@@ -193,22 +210,7 @@ umxSummary(m2, show = "std")
 parameters(m2) 
 ```
 
-Note: the normal way to do this would be via `umxModify`
+*Note*: the normal way to do this would be via `umxModify`
 
-# Can I label matrices not created by umxRAM or other umx models?
 
-Yes. By default, OpenMx doesn't label parameters, and they are addressed using "bracket addresses", i.e "MyModel.S[2,2]" 
-which addresses the parameter in column 2 and row 2 of the S matrix of a model called MyModel.
-
-You can label any matrix (or entire model) using `umxLabel`
-
-```r
-m1 = umxLabel(m1)
-parameters(m1) 
-
-```
-
-The default "matrix address" labels, i.e "One Factor.S[2,2]" are now set Informative labels: "G_to_x1", "x4_with_x4", etc.
-
-```
 
