@@ -50,5 +50,22 @@ m3 = umxSuperModel("myfirstsupermodel", m1, m2)
 
 TODO: multi-group: Actually set the residuals free in these two models
 
-TODO: multi-group: Add a umxRAM group = example
+### Multi-group with umxRAM "group ="
+
+```R
+data("HS.ability.data", package = "OpenMx")
+
+cov(HS.ability.data[, c("visual"  , "cubes"   , "flags")])
+cov(HS.ability.data[, c("paragrap", "sentence", "wordm")])
+cov(HS.ability.data[, c("addition", "counting", "straight")])
+
+HS = "spatial =~ visual   + cubes    + flags
+verbal  =~ paragrap + sentence + wordm
+speed   =~ addition + counting + straight"
+
+m1 = umxRAM(HS, data = umx_scale(HS.ability.data))
+
+# Multiple groups
+m1 = umxRAM(HS, data = umx_scale(HS.ability.data), group = "school")
+ ```
 

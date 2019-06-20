@@ -84,16 +84,18 @@ tmp = umx_make_TwinData(nMZpairs = 10000, AA = .30, CC = .00, EE = .70)
    a    c    e 
 0.55 0.00 0.84 
 ```
-The results come back as a list of 2 data sets: One for MZ and one for DZ.
+The results come back as dataframe with a column for `zygosity` (MZ and DZ at present).
 
 #### How to consume the built datasets
 
 ```r
-mzData = tmp[[1]];
-dzData = tmp[[2]];
-cov(mzData); cov(dzData)
-umxAPA(mzData)
-str(mzData); str(dzData);     
+mzData = tmp[tmp$zygosity == "MZ", ]
+dzData = tmp[tmp$zygosity == "DZ", ]
+str(mzData); str(dzData); 
+cov(mzData[,c("var_T1","var_T2")])
+cov(dzData[,c("var_T1","var_T2")])
+umxAPA(mzData[,c("var_T1","var_T2")])
+    
 ```
 
 |          |var_T1      |var_T2 |
@@ -108,13 +110,15 @@ str(mzData); str(dzData);
 ```r    
 tmp = umx_make_TwinData(200, AA = .6^2, CC = .2^2)
 ```
-You can omit `nDZpairs` (Defaults to MZ numbers)
+
+If omitted, `nDZpairs` defaults to MZ numbers. But you can control both.
 
 Variance doesn't need to sum to 1:
 
 ```r
 tmp = umx_make_TwinData(100, AA = 3, CC = 2, EE = 3, sum2one = FALSE) 
-cov(tmp[[1]])
+mzData = tmp[tmp$zygosity == "MZ", ]
+cov(mzData[,c("var_T1","var_T2")])
 
 ```    
 
@@ -125,12 +129,12 @@ cov(tmp[[1]])
 x = umx_make_TwinData(100, AA = c(avg = .7, min = 0, max = 1), CC = .55, EE = .63)
 str(x)
 ```
-You can also make Thresholded data, just use MZr and DZr,, or create data for Bivariate GxSES  (see umxGxEbiv)
+You can also make Thresholded data, just use MZr and DZr,, or create data for Bivariate GxSES  (see `umxGxEbiv`)
 
 
 ### 3. Making Mendelian Randomization Data
 
-`umx_make_MR_data`allows you to simulate data based on Mendelian Randomization.
+`umx_make_MR_data` allows you to simulate data based on Mendelian Randomization.
 
 You get back a 4-variable data set: 
 
@@ -163,11 +167,11 @@ umxAPA(df)
 umx_print(head(df))
 ```
 
-|          X|          Y|          U| qtl|
-|----------:|----------:|----------:|---:|
-| -1.0023978| -0.9650462| -0.6018928|   1|
-| -0.9593700| -0.1157263| -0.9936986|   0|
-| -0.2573603| -0.0975572|  1.0267851|   1|
-|  0.7112984|  0.0031000|  0.7510613|   0|
-|  0.0026485| -0.1110663| -1.5091665|   0|
-|  1.7699183| -0.2656627| -0.0951475|   1|
+|         X        |           Y       |           U        | qtl  |
+|----------------:|---------------:|-----------------:|-----:|
+| -1.0023978| -0.9650462 | -0.6018928|     1  |
+| -0.9593700| -0.1157263 | -0.9936986|     0  |
+| -0.2573603| -0.0975572 |  1.0267851|     1  |
+|  0.7112984|  0.0031000 |  0.7510613|     0  |
+|  0.0026485| -0.1110663 | -1.5091665|     0  |
+|  1.7699183| -0.2656627 | -0.0951475|     1  |

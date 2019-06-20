@@ -104,8 +104,8 @@ categories: basic
 * Censoring
 
 ### How do I simulate data, or do a power analysis?
-* Power analysis
-* Simulations
+* [Power analysis](/technical/1950/08/10/practical-power.html)
+* [Data Simulation](/technical/1950/06/10/practical-simulation.html)
 * [Meta analysis](https://cran.r-project.org/web/packages/metaSEM/vignettes/Examples.html)
 
 ### Wrangling data: scaling, renaming, residualizing etc.
@@ -164,8 +164,7 @@ categories: basic
  * Use mxAutoStart
 
 ### How to modify Graphical output
-  * How do I plot results?
-
+  * [How do control plot results](/advanced/1995/11/10/detailed-plot.html)?
 
 #### Posts tagged as example models
 
