@@ -6,44 +6,49 @@ comments: true
 categories: advanced
 ---
 
-### This is a work in progress: email me to prioritize this page if you want it sooner.
 
-In OpenMx, multi-group models are just sets of models along with a container model that uses `mxFitFunctionMultigroup` 
-as a fit function.
+In `umx`, multi-group models are just sub-models inside a `umxSuperModel` This is a container that uses `mxFitFunctionMultigroup` as a fit function.
 
-We can make trivial example that shows how this works.
+The most explicit way to make a multi-group model is to create each group as its own model in the normal way, then place these into `umxSuperModel`.
 
-This example, we fit the same model to each of two groups, allowing the residual variances to differ between the groups, then testing if those can be equated.
+For the case of a umxRAM model, where all the groups will be the same except for the data they contain, `umxRAM` supports a `group = ` parameter. This will be familiar to [lavaan](http://lavaan.ugent.be/) users and functions identically in `umx`. Both ways are demonstrated next.
+
+### Placing sub-models into a Supermodel
+
+This example, we build a model for each of two groups, allowing the residual variances to differ between the groups (different [labels](advanced/1995/10/03/detailed-Labels.html) for the residuals in each group). They are then made into a supermodel. We then test if the residuals can be equated.
 
 ```r
 require(umx)
 data(demoOneFactor)
 ```
 
-### 1. Make two models. As an example I'll just make a copy of model 1
+### 1. Make two models with different data.
+
 
 ```r
 latents  = c("G")
 manifests = names(demoOneFactor)
 
-m1 <- umxRAM("model1", data = mxData(cov(demoOneFactor[1:200,]), type = "cov", numObs = 500),
+m1 = umxRAM("model1", data = demoOneFactor[1:200,],
       umxPath(latents, to = manifests),
-      umxPath(var = manifests),
-      umxPath(var = latents, fixedAt = 1.0)
+      umxPath(v.m. = manifests),
+      umxPath(v1m0 = latents)
 )
-m2 <- mxModel(m1, name = "model2",
-	mxData(cov(demoOneFactor[300:500,]), type = "cov", numObs = 500)
-)
+
+# duplicate m1, renaming it, and changing the data
+m2 = mxModel(m1, name = "model2", mxData(demoOneFactor[300:500,], type = "raw"))
+
 ```
+
+*user tip*: You can avoid running the models by setting `autoRun=FALSE`` in `umxRAM()`
 
 ### 2. Nest them in a multi-group "supermodel" and run
 
 ```r
-m3 = mxModel("super", m1, m2, 
-	mxFitFunctionMultigroup(c("model1", "model2"))
-)
-m3 = mxRun(m3);
-# 3 request saturated model
-summary(m3, refModels = mxRefModels(m3))
+m3 = umxSuperModel("myfirstsupermodel", m1, m2)
 ```
+
+TODO: multi-group: Actually set the residuals free in these two models
+
+TODO: multi-group: Add a umxRAM group = example
 

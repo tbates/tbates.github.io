@@ -23,16 +23,17 @@ categories: basic
 <p style="text-align: center;">This is a gallery of example models. To learn about installing umx, or take a basic tutorial, start at the home page.</p>
 
 
-*note*: This page expresses the goal for umx's coverage of core  copy-and-paste templates. It's not done :-).
+*note*: This page expresses the goal for umx's coverage of core copy-and-paste model templates. Goal deadline to have it completed by end 2019.
 
 ### The two basic methods of modeling supported in umx
 * [umxPath](/advanced/1995/11/20/detailed-umxPath.html)
 * matrix-based
 
-### Confirmatory Factor Analysis
-* One factor models
-* Multiple factor models
-* Ordinal factor analysis
+### Exploratory and Confirmatory Factor Analysis
+* Factor analysis with `umxFactanal`
+* Factor scores with `umxFactanal`
+* Confirmatory Factor Analysis with one or more factors
+* CFA with ordinal data
 * Joint ordinal/continuous factor analysis
 
 ### SEM, indirect effects, mediation analysis
@@ -49,15 +50,15 @@ categories: basic
 <!-- * Test equating -->
 
 ### Multiple groups
-* Multiple group analysis
-* umxSuperGroup
+* [Multiple group analysis](https://tbates.github.io/advanced/1995/02/15/detailed-Multigroup.html)
+* `[umxSuperGroup](https://tbates.github.io/advanced/1995/02/15/detailed-Multigroup.html)`
 
 ### Growth and change
 * Latent growth model
 * Latent growth mixture model
 * Regime switching model
 * Independent mixture model
-* [Growth Mixture model](https://vipbg.vcu.edu/vipbg/OpenMx2/docs//OpenMx/latest/GrowthMixtureModel_Path.html)
+* Growth Mixture model
 * Factor mixture model
 * Dynamical systems analysis
 * Latent differential equations
@@ -114,18 +115,18 @@ categories: basic
 * Sex limitation
 * GxE interaction
 * Simplex
-* Direction of causation
-* Two-stage Twin family models
-* Assortative mating models
-* Niche selection
+<!-- * Direction of causation -->
+<!-- * Two-stage Twin family models -->
+<!-- * Assortative mating models -->
+<!-- * Niche selection -->
 <!-- * Extended pedigree models -->
 
-### GREML and genomic SEM
-* Molecular genetic variance component analysis
-* Genomic Relatedness Matrix
-* Restricted Maximum Likelihood
-* Genetic Association analysis
-* More advanced powers
+<!-- ### GREML and genomic SEM -->
+<!-- * Molecular genetic variance component analysis -->
+<!-- * Genomic Relatedness Matrix -->
+<!-- * Restricted Maximum Likelihood -->
+<!-- * Genetic Association analysis -->
+<!-- * More advanced powers -->
 
 ### Optimizers
 * Full Information Maximum Likelihood
@@ -133,14 +134,13 @@ categories: basic
 
 ### Parameter estimates and fit statistics
 * Goodness-of-fit
-* Getting chi-squared statistics with mxRefModels
+<!-- * Getting chi-squared statistics with mxRefModels -->
 * Using mxSE to get standard errors of functions of free parameters
 * Using umxCI for profile likelihood confidence intervals
-* Using mxMI for model modification Bootstrapping
-* Robust Standard Errors
+<!-- * Robust Standard Errors -->
 * Factor Scores
-* Jack-knifing
-* Cross-validation
+<!-- * Jack-knifing -->
+<!-- * Cross-validation -->
 * Modification indices with umxMI
 * Bootstrap Likelihood ratio tests
 

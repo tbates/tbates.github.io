@@ -8,6 +8,7 @@ content: true
 toc: true
 ---
 
+<!-- https://tbates.github.io/advanced/1995/10/03/detailed-Labels.html -->
 ### "In the beginning was the  <strike>word</strike> label"
 
 Making names for things is a key to [cognitive development](http://www.amazon.com/dp/0199838801). In [OpenMx](https://openmx.ssri.psu.edu), labels are just as important. In fact, OpenMx is MUCH more powerful when label your parameters.
