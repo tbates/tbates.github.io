@@ -51,8 +51,8 @@ categories: basic
 <!-- * Test equating -->
 
 ### Multiple groups
-* [Multiple group analysis](https://tbates.github.io/advanced/1995/02/15/detailed-Multigroup.html)
-* `[umxSuperGroup](https://tbates.github.io/advanced/1995/02/15/detailed-Multigroup.html)`
+* [Multiple group analysis](/advanced/1995/02/15/detailed-Multigroup.html)
+* `[umxSuperGroup](/advanced/1995/02/15/detailed-Multigroup.html)`
 
 ### Growth and change
 * Latent growth model
