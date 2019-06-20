@@ -184,14 +184,15 @@ We can request a full summary including standardized output as a table with ("**
 umxSummary(m2, show = "std")
 ```
 
-|   | name           | Estimate | Std.Error | CI (SE-based)       |
-|:--|:---------------|:---------|:----------|:--------------------|
-| 1 |    disp_to_mpg |  -0.37   | 1.8e-01   |-0.37 [-0.72, -0.02] |
-| 2 |      wt_to_mpg |  -0.54   | 1.8e-01   | -0.54 [-0.89, -0.2] |
-| 3 |   mpg_with_mpg |   0.21   | 6.8e-02   |   0.21 [0.08, 0.35] |
-| 4 | disp_with_disp |   1.00   | 1.9e-12   |            1 [1, 1] |
-| 5 |   disp_with_wt |   0.89   | 3.7e-02   |   0.89 [0.82, 0.96] |
-| 6 |     wt_with_wt |   1.00   | 2.5e-13   |            1 [1, 1] |
+|   | name                    | Estimate | Std.Error | CI (SE-based)        |
+|:--|:------------------------|:---------|:-------------|:---------------------|
+| 1 | disp_to_mpg       | -0.37    | 1.8e-01   | -0.37 [-0.72, -0.02] |
+| 2 | wt_to_mpg          | -0.54    | 1.8e-01   | -0.54 [-0.89, -0.2]  |
+| 3 | mpg_with_mpg   | 0.21     | 6.8e-02   | 0.21 [0.08, 0.35]    |
+| 4 | disp_with_disp    | 1.00     | 1.9e-12   | 1 [1, 1]             |
+| 5 | disp_with_wt       | 0.89     | 3.7e-02   | 0.89 [0.82, 0.96]    |
+| 6 | wt_with_wt         | 1.00     | 2.5e-13   | 1 [1, 1]             |
+
 
 
 We can plot these standardized (or raw) coefficients on a diagram the way Sewall Wright would like us too:

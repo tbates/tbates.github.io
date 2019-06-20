@@ -87,6 +87,7 @@ categories: basic
 
 ### Modeling different types of Data correctly
 * Raw data
+* [Scaling Data]()
 * Weighted least squares
 * Polychoric correlations
 * Continuous variables
