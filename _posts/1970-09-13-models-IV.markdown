@@ -13,7 +13,7 @@ IV [Instrumental variable](https://en.wikipedia.org/wiki/Instrumental_variable) 
 IV analyses allow the estimation of causal relationships when confounding is likely but controlled experiments are not feasible. This ubiquitous situation has lead to many non-replicable findings driven by unmeasured or excluded confounders (Ioannidis, 2012).
 
 ### Motivation: linear regression can be misleading
-Consider some explanatory equation e.g. `Y ~ 𝛽×X + ε`. As a scientific construct, this is interpreted as the causal claim that X plays a causal role in Y, revealed in these data. Some scientists prevaricate about the word cause, but if the relation is not causal, the equation is ambiguous at best, at worst terribly misleading. We seek conditions that allow us to validly interpret significant estimates of 𝛽 as support for a causal role of `X` If, however covariates are correlated with the error terms, ordinary least squares regression produces biased and inconsistent estimates.[2]
+Consider some explanatory equation e.g. `Y ~ 𝛽₁X + ε`. As a scientific construct, this is interpreted as the causal claim that X plays a causal role in Y. Methodologically, we seek to create conditions that allow us to validly interpret significant estimates of 𝛽 as support for a causal role of `X` If, however covariates are correlated with the error terms, ordinary least squares regression produces biased and inconsistent estimates.[2]
 
 Such correlation with error occurs when:
 
@@ -36,7 +36,7 @@ In linear models, there are two main requirements for using an IV:
 
 In this example, we examine the causal influence of X on Y, using an instrumental variable (qtl) which affects only X, based on Professor [David Evans'](http://www.di.uq.edu.au/professor-david-evans) [presentation]() at the [2016 International twin workshop](), 
 
-The next block of code simply sets up a simulated dataset containing X, Y, qtl (a SNP affecting X), and U - a covariate which induces a correlation between X and Y and which, if not measured, confounds the association of X and Y, allowing an errant researcher to assert evidence that X affects Y.
+The next block of code simply sets up a simulated dataset containing X, Y, qtl (a SNP affecting exposure X), and U - a covariate which induces a correlation between X and Y and which, if not measured, confounds the association of X and Y, allowing an errant researcher to assert evidence that X affects Y.
 
 Our first analysis one is a simple linear model (or ordinary least squares regression). This will reveal a large association of X with Y and is the kind of analysis that has been criticised in false-positive epidemiology {GDS reference}.
 
@@ -124,5 +124,7 @@ plot(SB, std = F, showFixed = T, digits = 3)
 umxCompare(SB, m3)
 
 ```
+
+**TODO**: Add an example in which assumption is violated and `qtl` directly affects `Y`, or affects `U`
 
 Ioannidis, J. P. (2012). Why Science Is Not Necessarily Self-Correcting. *Perspect Psychol Sci*, **7**, 645-654. doi:10.1177/1745691612464056
