@@ -14,6 +14,9 @@ This page shows how to implement these analyses in `umx`.
 
 IV analyses allow the estimation of causal relationships when confounding is likely but controlled experiments are not feasible. This ubiquitous situation has lead to many non-replicable findings driven by unmeasured or excluded confounders (Ioannidis, 2012).
 
+![MR model](/media/MR/TSLS.png "MR model testing if X causes Y")
+
+
 ### Motivation: linear regression can be misleading
 Consider some explanatory equation e.g. `Y ~ 𝛽₁X + ε`. As a scientific construct, this is interpreted as the causal claim that X plays a causal role in Y. Methodologically, we seek to create conditions that allow us to validly interpret significant estimates of 𝛽₁ as support for a causal role of `X` If, however covariates are correlated with the error terms, ordinary least squares regression produces biased and inconsistent estimates.[2]
 
