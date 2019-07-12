@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "Instrumental Variables"
+title: "Mendelian Randomisation and Instrumental Variables in umx"
 
 comments: true
 categories: models
 ---
-
-### This is not finished: e-mail me to prioritise this page if you want it sooner.
+<!-- https://tbates.github.io/ -->
+### Page not finished: e-mail me to prioritise this page if you want it sooner.
 
 IV [Instrumental variable](https://en.wikipedia.org/wiki/Instrumental_variable) analyses are widely used in fields as diverse as [economics], and [genetic epidemiology]. This page shows how to implement these analyses in `umx` and `OpenMx`.
 
