@@ -6,14 +6,14 @@ comments: true
 categories: technical
 ---
 
-Parallel execution in OpenMx can be on mulitple cores, or distributed across distinct machines. Single models can be processed using parallel resrouces, and multiple models can be run and results combined.
+Parallel execution in OpenMx can be on multiple cores, or distributed across distinct machines. Single models can be processed using parallel resources, and multiple models can be run and results combined.
 
 Modern CPUs contain multiple cores ([processing units that share memory](https://en.wikipedia.org/wiki/Multi-core_processor)), and machines may contain more than one CPU.
 Some chips also implement "[virtual](https://en.wikipedia.org/wiki/Hyper-threading)" cores which help allow the compiler to keep the hardware working while one process is data limited.
 
-You can see total number of cores on your machine with `detectCores()` (on my 2016 iMac, the answer is 8 (4 real, with hyperthreading).
+You can see total number of cores on your machine with `detectCores()` (on my 2016 iMac, the answer is 8 (4 real, with hyper-threading).
 
-Out of the box, OpenMx uses `detectCores() - 1` to execute in parallel on supported OS's.
+Out of the box, umx uses `detectCores() - 1` to execute in parallel.
 
 ### Set cores with umx
 
@@ -33,13 +33,9 @@ mxOption(NULL, "Number of Threads") # get current value
 mxOption(NULL, "Number of Threads", n) # set value to n
 ```
 
-So this
+Setting cores to 0 will use the most available
 
-```r
-umx_set_cores(detectCores())
-```
-
-is equivalent to:
+*note*: `umx_set_cores` is equivalent to:
 
 ```r
 mxOption(NULL, "Number of Threads", detectCores())
@@ -47,14 +43,12 @@ mxOption(NULL, "Number of Threads", detectCores())
 
 Now you don't need to remember or type this long option string!
 
-Support for multiple cores is expected on all R platforms during 2016, and will dramatically speed up model runtime, e,g,CIs.
-
 *top tip*: Use R's tab-function completion (just type `umx_` and tab to see the list…):
 *top tip*: [TextMate](http://macromates.com) OpenMx bundle contains snippets for many of umx's features.
 
 ### OpenMP on unix clusters
 
-If you're trying to use mulitple cores on a managed cluster, you might need to request these in the control script that schedules your jobs.
+If you're trying to use multiple cores on a managed cluster, you might need to request these in the control script that schedules your jobs.
 
 Here's an example for edinburgh's cluster. The key is `-pe OpenMP 12`
 
