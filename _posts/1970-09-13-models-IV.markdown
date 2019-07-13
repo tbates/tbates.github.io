@@ -46,7 +46,7 @@ Our first analysis one is a simple linear model (or ordinary least squares regre
 
 ```r
 library(umx)
-df = umx_make_MR_data(nSubjects = 10000, Vqtl=.02, bXY=.1,bUX=.5,pQTL=.5, seed = 123)
+df = umx_make_MR_data(nSubjects = 10000, Vqtl = .02, bXY= .1, bUX= .5, pQTL= .5, seed = 123)
 
 m1 = lm(Y ~ X    , data = df); umxAPA(m1) # Appears Y is caused by X:  β = 0.35 [0.33, 0.37]
 m1 = lm(Y ~ X + U, data = df); umxAPA(m1) # Controlling U reveals the true link: β = 0.09 [0.07, 0.11]
@@ -66,15 +66,49 @@ summary(m1)
 
 ```
 
-|             | Estimate | Std.  | Error | t     | value |
-|:------------|:---------|:------|:------|:------|:------|
-| (Intercept) | 0.002    | 0.010 | 0.238 | 0.812 |       |
-| X           | 0.159    | 0.075 | 2.108 | 0.035 | *     |
+|             | Estimate | Std.  | Error | t     |
+|:------------|:---------|:------|:------|:------|
+| (Intercept) | 0.002    | 0.010 | 0.238 | 0.812 |
+| X           | 0.159    | 0.075 | 2.108 | 0.035 |
 
 
 Now we can see that `X` may indeed affect `Y`, but with the simulated effect size now correctly estimated at .1 (as specified in the simulated data) rather than the confounded .35 reported from the simple `lm` previously presented.
 
-### Implementing MR in OpenMx
+### Implementing MR in umx
+
+Now an exactly equivalent model in `umxRAM`
+
+```r
+
+m2 <- umxRAM("myMR", data = df, autoRun = F,
+	umxPath(v.m. = c("qtl", "X", "Y")),
+	umxPath("qtl", to = "X"),
+	umxPath("X", to = "Y")
+	# umxPath("X", with = "Y") # Due to OpenMx rules, will be deleted!
+)
+m3 <- umxModify(m2, "X_with_Y", free = T, value = .2)
+plot(m3, std = F, digits = 3)
+
+SB <- umxRAM("SB_IV", data = mxData(df, type="raw"),
+	umxPath("ex", to = "X", fixedAt = 1, labels = "ex"),
+	umxPath("ey", to = "Y", fixedAt = 1, labels = "ey"),
+	umxPath("Tx", to = "X", fixedAt = 1, labels = "Tx"),
+	umxPath("Ty", to = "Y", fixedAt = 1, labels = "Ty"),
+	umxPath("Tz", to = "qtl", fixedAt = 1, labels = "Tz"),
+	umxPath("ex", with = "ey", values = 0.2, labels = "phi"),
+	umxPath("Tz",  to = "Tx", labels = "b_zx"),
+	umxPath("Tx",  to = "Ty", labels = "b_xy"),
+	umxPath(var = c("Tx", "Ty", "Tz", "ex", "ey"), values = 1),
+	umxPath(means = c("qtl", "X", "Y"))
+)
+ 
+plot(SB, std = F, showFixed = T, digits = 3)
+umxCompare(SB, m3)
+
+```
+
+<img src = "/media/MR/myMR.png" height = "400">
+
 
 ```r
 manifests <- c("qtl", "X", "Y")
@@ -98,41 +132,10 @@ IVModel <- mxModel("IV Model", type="RAM",
 IVModel <- mxRun(IVModel); umx_time(IVModel) # IV Model: 14.34 seconds for 100,000 subjects
 coef(IVModel)
 plot(IVModel, std = FALSE, showFixed = TRUE, showMeans = FALSE, digits = 3)
-# https://www.dropbox.com/s/ljqrhpuskbihda3/IV_Model.png?dl=0
 
 ```
 
-Now an exactly equivalent model in umxRAM
-
-```r
-
-m2 <- umxRAM("myMR", data = df, autoRun = F,
-	umxPath(v.m. = c("qtl", "X", "Y")),
-	umxPath("qtl", to = "X"),
-	umxPath("X", to = "Y")
-	# umxPath("X", with = "Y") # Due to OpenMx rules, will be deleted!
-)
-m3 <- umxModify(m2, "X_with_Y", free = T, value = .2)
-plot(m3, std = F, digits = 3)
-# https://www.dropbox.com/s/1sg32yglfuzgwoz/myMR.png?dl=0
-
-SB <- umxRAM("SB_IV", data = mxData(df, type="raw"),
-	umxPath("ex", to = "X", fixedAt = 1, labels = "ex"),
-	umxPath("ey", to = "Y", fixedAt = 1, labels = "ey"),
-	umxPath("Tx", to = "X", fixedAt = 1, labels = "Tx"),
-	umxPath("Ty", to = "Y", fixedAt = 1, labels = "Ty"),
-	umxPath("Tz", to = "qtl", fixedAt = 1, labels = "Tz"),
-	umxPath("ex", with = "ey", values = 0.2, labels = "phi"),
-	umxPath("Tz",  to = "Tx", labels = "b_zx"),
-	umxPath("Tx",  to = "Ty", labels = "b_xy"),
-	umxPath(var = c("Tx", "Ty", "Tz", "ex", "ey"), values = 1),
-	umxPath(means = c("qtl", "X", "Y"))
-)
- 
-plot(SB, std = F, showFixed = T, digits = 3)
-umxCompare(SB, m3)
-
-```
+<img src="/media/MR/IV_Model.png" height="400">
 
 **TODO**: Add an example in which assumption is violated and `qtl` directly affects `Y`, or affects `U`
 
