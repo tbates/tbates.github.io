@@ -72,7 +72,7 @@ summary(m1)
 | X           | 0.159    | 0.075 | 2.108 | 0.035 |
 
 
-Now we can see that `X` may indeed affect `Y`, but with the simulated effect size now correctly estimated at .1 (as specified in the simulated data) rather than the confounded .35 reported from the simple `lm` previously presented. Importantly, we didn;t need to know (measure) `U`, (the confounders).
+Now we can see that `X` may indeed affect `Y`, but with the simulated effect size now correctly estimated at .1 (as specified in the simulated data) rather than the confounded .35 reported from the simple `lm` previously presented. Importantly, we didn't need to know (measure) `U`, (the confounders).
 
 ### Implementing MR in umx
 
@@ -88,7 +88,7 @@ m2 <- umxRAM("myMR", data = df, autoRun = F,
 )
 m2 <- umxModify(m2, "X_with_Y", free = TRUE, value = .2)
 ```
-*note*: This double-step is required because OpenMx will over-write the `X→Y` path when you add `X↔Y`.
+*note*: This double-step is required because OpenMx will otherwise over-write the `X→Y` path when you add `X↔Y`.
 
 ```r
 plot(m2, digits = 3)
@@ -97,7 +97,7 @@ plot(m2, digits = 3)
 <img src = "/media/MR/myMR.png" height = "400">
 
 
-Now an exactly equivalent model in `umxTSLS`/ `umxMendelianRandomization`
+Now an exactly equivalent model in `umxTwoStage`/ `umxMendelianRandomization`
 
 ```r
 m1 = umxMendelianRandomization(Y~X, instruments= ~qtl, data = df)
@@ -110,4 +110,4 @@ umx_set_plot_format("graphviz")
 
 **TODO**: Add an example in which assumption is violated and `qtl` directly affects `Y`, or affects `U`
 
-Ioannidis, J. P. (2012). Why Science Is Not Necessarily Self-Correcting. *Perspect Psychol Sci*, **7**, 645-654. doi:10.1177/1745691612464056
+Ioannidis, J. P. (2012). Why Science Is Not Necessarily Self-Correcting. *Perspectives in Psychological Science*, **7**, 645-654. doi:10.1177/1745691612464056
