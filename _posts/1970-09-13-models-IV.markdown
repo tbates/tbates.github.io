@@ -66,10 +66,10 @@ summary(m1)
 
 ```
 
-|             | Estimate | Std.    | Error   | t      | value |
-|:------------|:---------|:--------|:--------|:-------|:------|
-| (Intercept) | 0.00228  | 0.00961 | 0.23773 | 0.8121 |       |
-| X           | 0.15807  | 0.07498 | 2.10826 | 0.0350 | *     |
+|             | Estimate | Std.  | Error | t     | value |
+|:------------|:---------|:------|:------|:------|:------|
+| (Intercept) | 0.002    | 0.010 | 0.238 | 0.812 |       |
+| X           | 0.159    | 0.075 | 2.108 | 0.035 | *     |
 
 
 Now we can see that `X` may indeed affect `Y`, but with the simulated effect size now correctly estimated at .1 (as specified in the simulated data) rather than the confounded .35 reported from the simple `lm` previously presented.
