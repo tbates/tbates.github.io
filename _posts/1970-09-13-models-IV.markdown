@@ -16,6 +16,7 @@ IV analyses allow the estimation of causal relationships when confounding is lik
 
 ![MR model](/media/MR/TSLS.png "MR model testing if X causes Y")
 
+<img src="/media/MR/TSLS.png" height="400">
 
 ### Motivation: linear regression can be misleading
 Consider some explanatory equation e.g. `Y ~ 𝛽₁X + ε`. As a scientific construct, this is interpreted as the causal claim that X plays a causal role in Y. Methodologically, we seek to create conditions that allow us to validly interpret significant estimates of 𝛽₁ as support for a causal role of `X` If, however covariates are correlated with the error terms, ordinary least squares regression produces biased and inconsistent estimates.[2]
