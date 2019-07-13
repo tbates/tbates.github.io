@@ -14,8 +14,6 @@ This page shows how to implement these analyses in `umx`.
 
 IV analyses allow the estimation of causal relationships when confounding is likely but controlled experiments are not feasible. This ubiquitous situation has lead to many non-replicable findings driven by unmeasured or excluded confounders (Ioannidis, 2012).
 
-![MR model](/media/MR/TSLS.png "MR model testing if X causes Y")
-
 <img src="/media/MR/TSLS.png" height="400">
 
 ### Motivation: linear regression can be misleading
