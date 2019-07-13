@@ -48,10 +48,11 @@ Our first analysis one is a simple linear model (or ordinary least squares regre
 library(umx)
 df = umx_make_MR_data(nSubjects = 10000, Vqtl=.02, bXY=.1,bUX=.5,pQTL=.5, seed = 123)
 
-m1 = lm(Y ~ X    , data = df); coef(m1) # "appears" that Y is caused by X:  𝛽= .35
-m1 = lm(Y ~ X + U, data = df); coef(m1) # Controlling U reveals the true link: 𝛽= 0.1
+m1 = lm(Y ~ X    , data = df); umxAPA(m1) # Appears Y is caused by X:  β = 0.35 [0.33, 0.37]
+m1 = lm(Y ~ X + U, data = df); umxAPA(m1) # Controlling U reveals the true link: β = 0.09 [0.07, 0.11]
 
 ```
+
 
 ### Mendelian randomization analysis
 
@@ -71,7 +72,7 @@ summary(m1)
 | X           | 0.15807  | 0.07498 | 2.10826 | 0.0350 | *     |
 
 
-Now we can see that X may indeed affect Y, but with the simulated effect size now correctly estimated at .1 (as specified in the simulated data) rather than the confounded .35 reported from the simple `lm` previously presented.
+Now we can see that `X` may indeed affect `Y`, but with the simulated effect size now correctly estimated at .1 (as specified in the simulated data) rather than the confounded .35 reported from the simple `lm` previously presented.
 
 ### Implementing MR in OpenMx
 
