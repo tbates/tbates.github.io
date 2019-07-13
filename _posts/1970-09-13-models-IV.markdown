@@ -72,11 +72,11 @@ summary(m1)
 | X           | 0.159    | 0.075 | 2.108 | 0.035 |
 
 
-Now we can see that `X` may indeed affect `Y`, but with the simulated effect size now correctly estimated at .1 (as specified in the simulated data) rather than the confounded .35 reported from the simple `lm` previously presented.
+Now we can see that `X` may indeed affect `Y`, but with the simulated effect size now correctly estimated at .1 (as specified in the simulated data) rather than the confounded .35 reported from the simple `lm` previously presented. Importantly, we didn;t need to know (measure) `U`, (the confounders).
 
 ### Implementing MR in umx
 
-Now an exactly equivalent model in `umxRAM`
+`umx` allow us to build this model with `umxRAM`, and also with a specialized `umxMendelianRandomization` function which builds the model for you. `umxRAM` first:
 
 ```r
 
@@ -86,56 +86,27 @@ m2 <- umxRAM("myMR", data = df, autoRun = F,
 	umxPath("X", to = "Y")
 	# umxPath("X", with = "Y") # Due to OpenMx rules, will be deleted!
 )
-m3 <- umxModify(m2, "X_with_Y", free = T, value = .2)
-plot(m3, std = F, digits = 3)
+m2 <- umxModify(m2, "X_with_Y", free = TRUE, value = .2)
+```
+*note*: This double-step is required because OpenMx will over-write the `X→Y` path when you add `X↔Y`.
 
-SB <- umxRAM("SB_IV", data = mxData(df, type="raw"),
-	umxPath("ex", to = "X", fixedAt = 1, labels = "ex"),
-	umxPath("ey", to = "Y", fixedAt = 1, labels = "ey"),
-	umxPath("Tx", to = "X", fixedAt = 1, labels = "Tx"),
-	umxPath("Ty", to = "Y", fixedAt = 1, labels = "Ty"),
-	umxPath("Tz", to = "qtl", fixedAt = 1, labels = "Tz"),
-	umxPath("ex", with = "ey", values = 0.2, labels = "phi"),
-	umxPath("Tz",  to = "Tx", labels = "b_zx"),
-	umxPath("Tx",  to = "Ty", labels = "b_xy"),
-	umxPath(var = c("Tx", "Ty", "Tz", "ex", "ey"), values = 1),
-	umxPath(means = c("qtl", "X", "Y"))
-)
- 
-plot(SB, std = F, showFixed = T, digits = 3)
-umxCompare(SB, m3)
-
+```r
+plot(m2, digits = 3)
 ```
 
 <img src = "/media/MR/myMR.png" height = "400">
 
 
+Now an exactly equivalent model in `umxTSLS`/ `umxMendelianRandomization`
+
 ```r
-manifests <- c("qtl", "X", "Y")
-latents   <- c("e1", "e2")
-
-IVModel <- mxModel("IV Model", type="RAM",
-	manifestVars = manifests,
-	latentVars = latents,
-	mxPath(from = c("qtl"), arrows=2, free=TRUE, values=1, labels=c("qtl") ),  #Variance of SNP 
-	mxPath(from = "e1", to = "X", arrows = 1, free = FALSE, values = 1, labels = "e1"), # Residual error X variable. Value set to 1.
-	mxPath(from = "e2", to = "Y", arrows = 1, free = FALSE, values = 1, labels = "e2"), # Residual error Y variable. Value set to 1.
-	mxPath(from = latents, arrows = 2, free = TRUE, values = 1, labels = c("var_e1", "var_e2") ), # Variance of residual errors
-	mxPath(from = "e1", to = "e2", arrows = 2, free = TRUE, values = 0.2, labels = "phi" ), # Correlation between residual errors
-	mxPath(from = "qtl",  to = "X", arrows = 1, free = TRUE, values = 1, labels = "b_zx"), # SNP effect on X variable
-	mxPath(from = "X",  to = "Y", arrows = 1, free = TRUE, values = 0, labels = "b_xy"), # Causal effect of X on Y
-	# means and intercepts
-	mxPath(from = "one", to = c("qtl", "X", "Y"), arrows = 1, free = TRUE, values =1, labels = c("meansnp", "alpha0", "alpha1") ),
-	mxData(df, type="raw")
-)
-
-IVModel <- mxRun(IVModel); umx_time(IVModel) # IV Model: 14.34 seconds for 100,000 subjects
-coef(IVModel)
-plot(IVModel, std = FALSE, showFixed = TRUE, showMeans = FALSE, digits = 3)
+m1 = umxMendelianRandomization(Y~X, instruments= ~qtl, data = df)
+plot(m1, means=F, min="")
+umx_set_plot_format("graphviz")
 
 ```
 
-<img src="/media/MR/IV_Model.png" height="400">
+<img src="/media/MR/IV Model.png" height="400">
 
 **TODO**: Add an example in which assumption is violated and `qtl` directly affects `Y`, or affects `U`
 
