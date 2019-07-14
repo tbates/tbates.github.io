@@ -43,9 +43,19 @@ So you should know about matrix algebra.
 
 To quote [Wolfram](http://mathworld.wolfram.com/Matrix.html) "*A matrix is a concise and useful way of uniquely representing and working with linear transformations… first formulated by Sylvester (1851) and Cayley."
 
-For our purposes, the benefit of matrices is their ability to represent linear transformations and, in an optimiser, to allow us to solve questions posed as simultaneous linear algebra equations. 
+For our purposes, the benefit of matrices is their ability to represent linear transformations and, together with an [optimiser](TODO), to allow us to solve questions posed as simultaneous linear algebra equations. 
 
-*etymology*: "matrix" means a container or place from which something (else) originates. Examples include the [extracellular matrix](https://en.wikipedia.org/wiki/Extracellular_matrix). In math, matrices consist of cells organized as rows and columns, each cell of which can contain a number. The "order" of a matrix is the number of rows followed by the number of columns. This a matrix of order 3,2 looks like this:
+*etymology*: "matrix" means a container or place from which something (else) originates. Examples include the [extracellular matrix](https://en.wikipedia.org/wiki/Extracellular_matrix).
+
+In math, matrices consist of cells organized in rows and columns. Each cell can contain a value. Matrix algebra is a set of rules for manipulating matrices, designed to make representing and solving problems easier to specify or accomplish.
+
+Here, we will just scratch the surface of matrices and algebra, just enough to make sense of RAM models, and alert you to the uses of basic operations on matrices, as well as the special multi-layer format of matrices in `umx` and how this aids modeling (allowing you to specify not just values in the row-column addressing system of matrices, but bounds on those values, labels by which to refer to them, and whether they are free or fixed).
+
+*note*: There are several online tutorials in matrix algebra, like [this one](http://stattrek.com/matrix-algebra/deviation-score.aspx?tutorial=matrix)
+
+#### Making two matrices a and c, and computing the matrix product a %*% b
+
+The "order" of a matrix is the number of rows followed by the number of columns. This a matrix of order 3,2:
 
     |c1| c2 
 ----|---|---
@@ -61,11 +71,11 @@ Y2 = a<sub>21</sub> × b<sub>1</sub> + a<sub>22</sub> × b<sub>2</sub>
 
 Y3 = a<sub>31</sub> × b<sub>1</sub> + a<sub>33</sub> × b<sub>2</sub>
 
-These potentially quite large matrices of relations can be expressed in just 1-line of matrix algebra:
+These potentially quite large matrices of relations can be expressed in just 1-line of matrix algebra, which doesn't grow in complexity as the matrix rows and columns grow:
 
 **Y** = **a** × **b**
 
-Where **Y** is a 3*1 column matrix of the Y solutions, **a** is a 3*2 matrix of values of `a`, and **b** is a 2*1 column matrix of `b` values.
+Here, **Y** is a 3*1 column matrix of the Y solutions, **a** is a 3*2 matrix of values of `a`, and **b** is a 2*1 column matrix of `b` values.
 
 Try it in R. First set up two matrices **a** and **b**:
 ```r
@@ -76,29 +86,26 @@ a = matrix(nrow= 3 , ncol = 2, byrow = TRUE, c(
 )
 b = matrix(c(.1, .2), nrow = 2, ncol = 1, byrow = TRUE)
 ```
-list(a = a, b = b, Y = Y)
 
-Now, set Y to the matrix multiply product (`%*%` in R) of a and b:
+To see what you have created, type `a`, or `b` into the R console.
+
+Now, set **Y** to the matrix multiply product (`%*%` in R) of **a** and **b**:
 
 ```R
 Y = a %*% b;
 ```
 
-http://stattrek.com/matrix-algebra/deviation-score.aspx?tutorial=matrix
+Matrix multiplication differs from regular multiplication. In R, the regular `*` sign does a conventional multiply operation on the corresponding cells of two matrices, outputting a matrix of the same size with these individual products.
 
-Matrix algebra is a tool for solving problems. Like all tools, it represents or acts on things in a way that makes tasks easier to specify or accomplish.
+Matrix multiplication requires matrices to be "conformable": The number of columns of matrix a must equal the rows of matrix b.
 
-Matrix algebra makes the three core elements of SEM easier. These are
+The result of a matrix multiplication will have the number of rows of matrix a, and the number of columns of matrix b.
 
-1. Means
-2. Covariances
-3. Simultaneous equations
+Let’s use the example of computing the mean for each of a set of columns of data using matrix algebra.
 
-Let’s start trying to compute a mean.
+To compute a mean, we want to sum all the elements of a column, and divide them by `nrow`. Equivalently, we might multiply by 1/nrow.
 
-To compute a mean, we want to sum all the elements of a column, and divide them by `nrow`. Equivalently, we might multiply by 1/nrow
-
-Let’s compute the mean of each of three columns of a matrix of order 5,3.
+If we set up 3 columns of data in a matrix myData to compute the mean on:
 
 ```r
 n = 5
@@ -112,19 +119,53 @@ myData <- matrix(nrow = n, byrow = TRUE, data = c(
 myData
 ```
 
-To form the means, we’ll need the help of an n * 1 Identify matrix (matrix of ones), let's call it `I`.
+The full algebra to return the means is: `t(I) %*% myData %x% solve(t(I) %*% I)`
+
+We can take this step by step.
+
+First **I** is an `nrow * 1` "Identify" matrix (a matrix of ones), which we will call `I`.
 
 ```r
 I = matrix(data = 1, nrow= n, ncol = 1)
 ```
 
-Now if we pre-multiply the data by t(I), and then take the Kronecker product of t(I) %*% I):
+Next, we have `t(I)`, the transpose of **I**. This flips the rows and columns of **I**, so our 5 by 1 matrix become a 1 by 5 matrix. Do this in R yourself to see:
 
 ```r
-# means
-t(I) %*% myData %x% solve(t(I) %*% I)
+t(I)
 ```
-We get the means
+
+Next we can turn to `t(I) %*% I)`: the matrix product of our 1 by 5 transposed **I** matrix and **I**: a 5 by 1 matrix of 1s.
+
+The rules for conformability let us know this is legal (columns of matrix 1 = rows of matrix 2), and the rules of matrix algebra tell us to expect a 1 by 1 matrix as output. In this trivial example, you can visualize the first column matrix **I** rotating over to come alongside the 1st (and only) row of `t(I)`. Then multiply the corresponding items of each (i.e., the 1st item of the first row of `t(I)` * the first item of the first column of **I**, second times the second and so on.) And now add these products together (this whole process is called an Einstein product) and store the result in row 1 column 1 of the result matrix.
+
+And in this simple example, that's it! t(I) %*% I) = 5`
+
+Next we take the inverse of this result. In R, the inverse if taken with a function called `solve`. For this trivial example, `solve(t(I) %*% I)` works the same as simply `1/5 = 0.2`.
+
+What's left to do of our original equation `t(I) %*% myData %x% solve(t(I) %*% I)`? 
+
+Next is the part saying `myData %x% .2`. `%x%` is called Kronecker product.
+
+The Kronecker product `myData %x% .2` is:
+
+```R
+     [,1] [,2] [,3]
+[1,]   18   12 18.0
+[2,]   18   18  5.6
+[3,]   12   12 12.0
+[4,]   12   12 18.0
+[5,]    6    6  4.0
+```
+
+Lets store that as `K` to keep the mental load down. 
+
+```r
+K = myData %x% .2
+```
+
+Finally if we pre-multiply this Kronecker product of the data by `t(I)`, i.e., `t(I) %*% K` we get the means!
+
 
 | col 1 | col 2 | col 3 |
 |:------|:------|:------|
@@ -132,27 +173,36 @@ We get the means
 
 ### Computing a Covariance matrix
 
-Covariances are simply the (sum of squared deviations from the mean) divided by n or n-1.
+Covariances are simply the sum of squared deviations from the mean, divided by n or n-1.
 
-Now we have the means, we can subtract these from each column to create a column of leftovers: deviations from the mean.
+Now we have the means, we can subtract these from each column to create a column of "leftovers": deviations from the mean.
 
-And then devise a matrix formulation which sums the squares of these deviations, returning a matrix of variances and covariances.
+We'd next want to devise a matrix formulation which square sums the squares of these deviations, returning a matrix of variances and covariances.
 
-If we have n variables, we will want an n * n output matrix, containing variances on the diagonal, and covariances on the off diagonal.
+If we have n variables, we will want an n by n output matrix. This will contain the variances of each variable on the diagonal, and covariances among the variables in the off diagonal cells.
 
-We first want not a row of means (like above) but a matrix with the column mean in each cell. To get that, we do I times our row of means:
+We first want an n-row matrix with cells in each column set to the mean of the variable represented in that column. To get this, we take **I** times our row of means:
 
 ```r
 meanMyData = (I %*% (t(I) %*% myData))/n
-
 ```
-Now we can subtract that from our data, to get a deviation matrix:
+
+Now, if we subtract this from our data, we are left with a matrix of deviations from the mean:
 
 ```r
 devMatrix = myData - meanMyData
+#      [,1] [,2]  [,3]
+# [1,]   24    0  32.4
+# [2,]   24   30 -29.6
+# [3,]   -6    0   2.4
+# [4,]   -6    0  32.4
+# [5,]  -36  -30 -37.6
 ```
 
-The sum of squares of the deviations is t(dev) %*% dev
+
+Consider for a moment: how to compute the sum of squares of the deviations? 
+
+This is a widely reused pattern in statistics and matrix algebra, so you might want to commit it to memory: We pre-multiply the matrix of deviations by its transpose: t(dev) %*% dev
 
 ```r
 
@@ -160,7 +210,17 @@ t(devMatrix) %*% devMatrix
 
 ```
 
-The covariance matrix is the sum-of-squares of the deviations divided by n-1. We can check this by comparing it to R's built-in `cov()` function:
+The covariance matrix is the sum-of-squares of the deviations divided by n-1. 
+
+|      | var1 | var2 | var3   |
+|:-----|:-----|:-----|:-------|
+| var1 | 2520 | 1800 | 1212   |
+| var2 | 1800 | 1800 | 240    |
+| var3 | 1212 | 240  | 4395.2 |
+
+
+
+We can check this by comparing it to R's built-in `cov()` function:
 
 ```r
 
@@ -170,7 +230,9 @@ cov(myData) - ourCov
 
 ```
 
-This is a nice chance too to mention that umx has a nifty quick-matrix helper built in for rapidly building matrices:
+That's a lot of ground: but covers most of what you will need to build models using matrices if you choose to.
+
+Finally is a nice chance too to mention that `umx` has a nifty quick-matrix helper built in for rapidly building matrices. This saves some typing when you are playing around with matrices, by using `,` to separate numbers in different columns and `|` to signify the end of a row.
 
 ```r
 
@@ -198,7 +260,7 @@ For the diagonal case, the inverse of a matrix is simply 1/x in each cell.
 ## Example with variance matrix A
 
 ```
-	A = matrix(nrow = 3, byrow = T,c(
+	A = matrix(nrow = 3, byrow = T, c(
 	 	1,0,0,
 	 	0,2,0,
 		0,0,3)
@@ -275,7 +337,7 @@ round(cor,2)
 Using diag to grab the diagonal and make a new one, and capitalising on the fact that inv(X) = 1/x for a diagonal matrix
 
 ```r
-diag(1/sqrt(diag(A))) %&% A # note: The %&%  operator is short for pre- and post-mul
+diag(1/sqrt(diag(A))) %&% A # note: The %&%  operator is short for "pre- and post-multiply A by B"
      [,1] [,2] [,3]
 [1,] 1.00 0.35 0.45
 [2,] 0.35 1.00 0.14

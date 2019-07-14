@@ -45,8 +45,9 @@ mxOption(NULL, "Number of Threads", detectCores())
 
 Now you don't need to remember or type this long option string!
 
-*top tip*: Use R's tab-function completion (just type `umx_` and tab to see the list…):
-*top tip*: [TextMate](http://macromates.com) OpenMx bundle contains snippets for many of umx's features.
+*top tip*: Use R's tab-function completion (just type `umx_s` and tab to see the list of easy set and get helpers…):
+
+*top tip*: If you're a MacOS user, my [TextMate](http://macromates.com) OpenMx bundle contains snippets for many of umx's features.
 
 ### OpenMP on unix clusters
 

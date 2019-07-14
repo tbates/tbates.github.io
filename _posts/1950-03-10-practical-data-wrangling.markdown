@@ -11,11 +11,12 @@ categories: technical
 <a name="overview"></a>
 # Overview
 
-There are a range of cases where it is useful to manipulate data for modeling: for convenience (such as re-naming variables), to help ensure good solutions, e.g., by re-scaling variables, and in more focussed cases, like using the same scale factor for repeated measures in wide data. This post covers umx support for these needs.
+There are a range of cases where it is useful to manipulate data for modeling: for convenience (such as re-naming variables), to help ensure good solutions, e.g., by re-scaling variables, and in more focussed cases, like using the same scale factor for repeated measures in wide (e.g. twin) data. This post covers `umx` support for these needs.
 
 We saw back in basic modeling post that data can vary substantially in mean and variance, and that this can make life hard for the optimizer.
 
 As usual, the post assumes you've loaded `umx`:
+
 ```r
 library("umx")
 ```
@@ -23,22 +24,22 @@ library("umx")
 Starting with our very simple model of three raw variables:
 
 ```R
-m1 <- umxRAM("my_first_model", data = mtcars,
+m1 = umxRAM("my_first_model", data = mtcars,
 	umxPath(cov = c("disp", "wt")),
 	umxPath(c("disp", "wt"), to = "mpg"),
-	umxPath(v.m.   = c("disp", "wt", "mpg"))
+	umxPath(v.m. = c("disp", "wt", "mpg"))
 )
 ```
 
 If we `plot` this, we can see that displacement has a MUCH bigger variance than the other variables...
 
 ```R
- plot(m1, mean=FALSE)
- ```
+ plot(m1, mean = FALSE)
+```
  
 ![unscaled_model](/media/1_make_a_model/unscaled_model.png "unscaled model of three variables")
 
-Having variances differ by orders of magnitude can make it hard for the optimizer. In such cases, you can often get better results making variables more comparable: in this case, for instance, by converting displacement into litres to keep its variance closer to that of the other variables.
+Having variances differ by orders of magnitude can make it hard for the optimizer. In such cases, you can often get better results making variables more comparable: in this case, for instance, by converting disp  (with its units of cubic inches) into displacement in litres. This will keep the variance of displacement smaller, and closer to that of the other variables.
 
 ```R
 df = mtcars
@@ -49,8 +50,6 @@ m1 <- umxRAM("scaled", data = df,
 	umxPath(v.m.   = c("engine_litres", "wt", "mpg"))
 )
 ```
-
-Which is more comparable across variables:
 
  `plot(m1, mean=FALSE)`
  
@@ -65,9 +64,9 @@ m1 <- umxRAM("scaled", data = df,
 	umxPath(c("disp", "wt"), to = "mpg"),
 	umxPath(v.m.   = c("disp", "wt", "mpg"))
 )
- plot(m1, mean=FALSE)
+plot(m1, mean=FALSE)
  
- ```
+```
 
 ![scaled](/media/1_make_a_model/scaled.png "All scaled")
 
@@ -84,16 +83,16 @@ m1 <- umxRAM("scaled", data = df,
 	umxPath(c("engine_displacement", "car_weight"), to = "mpg"),
 	umxPath(v.m.   = c("engine_displacement", "car_weight", "mpg"))
 )
- plot(m1, std=T, mean=FALSE)
 
- ```
+plot(m1, std=TRUE, mean = FALSE)
+```
 
 ![renamed](/media/1_make_a_model/renamed.png "All renamed")
 
 
-email me if you want more on scaling, a tutorial on scaling and residualizing wide (e.g. twin data ) with `umx_residualize` and `umx_scale_wide_twin_data`
+e-mail me if you want more on scaling, or:
 
-Also going from wide to long and vice versa with `umx_long2wide` and  `umx_wide2long`
-
-And data simulation with `umx_make_TwinData`
+1. TODO: A tutorial on residualizing regaulr or wide (e.g. twin data) with `umx_residualize` and `umx_scale_wide_twin_data`.
+2. TODO: A tutorial on going from wide to long and vice versa with `umx_long2wide` and `umx_wide2long`.
+3. TODO: A tutorial on data simulation with `umx_make_TwinData`, `umx_make_fake_data`, and `umx_make_MR_data`
 

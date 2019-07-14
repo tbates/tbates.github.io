@@ -20,14 +20,14 @@ This post covers:
 
 ### 1. Making data by specifying the model it comes from
 
-You can also use the `mxGenerateData` function to build a model which captures your data, and then generate data from that model!
+You can use the `mxGenerateData` function to build a model, setting parameters to their desired values, and then generate data from that model! (no data required!)
 
-Make a model
+1. Make a target model:
 
 ```r
-m1 <- umxRAM("simData", data = letters[1:3],
-	umxPath(means = letters[1:3], values= 0),
-	umxPath(var   = letters[1:3], values= 1),
+vars = c("a", "b", "c")
+m1 = umxRAM("simData", data = vars,
+	umxPath(v1.m0 = vars, values= 0),
 	umxPath("a", with= "b", values= .4),
 	umxPath("a", with= "c", values= .3),
 	umxPath("b", with= "c", values= .4)
