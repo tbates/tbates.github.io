@@ -43,9 +43,9 @@ So you should know about matrix algebra.
 
 To quote [Wolfram](http://mathworld.wolfram.com/Matrix.html) "*A matrix is a concise and useful way of uniquely representing and working with linear transformations… first formulated by Sylvester (1851) and Cayley."
 
-For our purposes, the benefit of matrices is their ability to represent linear transformations and, in an optimiser, to allow us to solve questions posed as linear algebra. 
+For our purposes, the benefit of matrices is their ability to represent linear transformations and, in an optimiser, to allow us to solve questions posed as simultaneous linear algebra equations. 
 
-A matrix is a container or place from which something (else) originates. Examples include the [extracellular matrix](https://en.wikipedia.org/wiki/Extracellular_matrix). In math, matrices consist of cells organized as rows and columns, each cell of which can contain a number. The "order" of a matrix is the number of rows followed by the number of columns. This a matrix of order 3,2 looks like this:
+*etymology*: "matrix" means a container or place from which something (else) originates. Examples include the [extracellular matrix](https://en.wikipedia.org/wiki/Extracellular_matrix). In math, matrices consist of cells organized as rows and columns, each cell of which can contain a number. The "order" of a matrix is the number of rows followed by the number of columns. This a matrix of order 3,2 looks like this:
 
     |c1| c2 
 ----|---|---
@@ -61,20 +61,27 @@ Y2 = a<sub>21</sub> × b<sub>1</sub> + a<sub>22</sub> × b<sub>2</sub>
 
 Y3 = a<sub>31</sub> × b<sub>1</sub> + a<sub>33</sub> × b<sub>2</sub>
 
-These can be re-expressed in 1-line of matrix algebra as:
+These potentially quite large matrices of relations can be expressed in just 1-line of matrix algebra:
 
 **Y** = **a** × **b**
 
 Where **Y** is a 3*1 column matrix of the Y solutions, **a** is a 3*2 matrix of values of `a`, and **b** is a 2*1 column matrix of `b` values.
 
-Try it in R:
-
+Try it in R. First set up two matrices **a** and **b**:
 ```r
-a = matrix(c(1, 1, 2, 2, 3, 3), 3 , 2, byrow = TRUE)
-b = matrix(c(.1, .2), 2, 1, byrow = TRUE)
-Y = a %*% b; 
-list(a = a,b = b, Y = Y)
+a = matrix(nrow= 3 , ncol = 2, byrow = TRUE, c(
+	1, 1,
+	2, 2,
+	3, 3)
+)
+b = matrix(c(.1, .2), nrow = 2, ncol = 1, byrow = TRUE)
+```
+list(a = a, b = b, Y = Y)
 
+Now, set Y to the matrix multiply product (`%*%` in R) of a and b:
+
+```R
+Y = a %*% b;
 ```
 
 http://stattrek.com/matrix-algebra/deviation-score.aspx?tutorial=matrix
@@ -89,18 +96,19 @@ Matrix algebra makes the three core elements of SEM easier. These are
 
 Let’s start trying to compute a mean.
 
-To compute a mean, we want to sum all the elements of a column, and divide them by nrows. Equivalently, we might multiply by 1/nrow
+To compute a mean, we want to sum all the elements of a column, and divide them by `nrow`. Equivalently, we might multiply by 1/nrow
 
 Let’s compute the mean of each of three columns of a matrix of order 5,3.
 
 ```r
 n = 5
 myData <- matrix(nrow = n, byrow = TRUE, data = c(
-90, 60, 90, 
-90, 90, 28, 
-60, 60, 60, 
-60, 60, 90, 
-30, 30, 20))
+	90, 60, 90, 
+	90, 90, 28, 
+	60, 60, 60, 
+	60, 60, 90, 
+	30, 30, 20)
+)
 myData
 ```
 
@@ -138,7 +146,7 @@ We first want not a row of means (like above) but a matrix with the column mean 
 meanMyData = (I %*% (t(I) %*% myData))/n
 
 ```
-Now we can subtract that from our data, to get a deviatio matrix:
+Now we can subtract that from our data, to get a deviation matrix:
 
 ```r
 devMatrix = myData - meanMyData

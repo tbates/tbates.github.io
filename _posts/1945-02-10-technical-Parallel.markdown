@@ -6,24 +6,26 @@ comments: true
 categories: technical
 ---
 
-Parallel execution in OpenMx can be on multiple cores, or distributed across distinct machines. Single models can be processed using parallel resources, and multiple models can be run and results combined.
+Parallel execution allows `umx` to use multiple cores, or distribute a model across machines. Single models can be processed using parallel resources, and multiple models can be run and results combined.
 
-Modern CPUs contain multiple cores ([processing units that share memory](https://en.wikipedia.org/wiki/Multi-core_processor)), and machines may contain more than one CPU.
-Some chips also implement "[virtual](https://en.wikipedia.org/wiki/Hyper-threading)" cores which help allow the compiler to keep the hardware working while one process is data limited.
-
-You can see total number of cores on your machine with `detectCores()` (on my 2016 iMac, the answer is 8 (4 real, with hyper-threading).
-
-Out of the box, umx uses `detectCores() - 1` to execute in parallel.
+Out of the box, `umx` uses all cores (actually, the result of a call to `detectCores() - 1`).
 
 ### Set cores with umx
 
-*umx* allows you to get and set the number of cores OpenMx will use with:
+`umx` allows you to get and set the number of cores OpenMx will use with:
 
 ```r
 umx_set_cores()  # See many cores are currently requested?
 umx_set_cores(3) # Request use of 3 cores
 
 ```
+
+#### Background
+Modern CPUs contain multiple cores ([processing units that share memory](https://en.wikipedia.org/wiki/Multi-core_processor)), and machines may contain more than one CPU.
+Some chips also implement "[virtual](https://en.wikipedia.org/wiki/Hyper-threading)" cores which help allow the compiler to keep the hardware working while one process is data limited.
+
+You can see total number of cores on your machine with `detectCores()` (on my 2016 iMac, the answer was 8 (4 real, with hyper-threading). In practice, only real cores advance model speed much, and 4 cores will complete a model in a little over 1/4 of the time compared to 1-core.
+
 
 Under the hood, this is getting or setting an mxOption:
 
