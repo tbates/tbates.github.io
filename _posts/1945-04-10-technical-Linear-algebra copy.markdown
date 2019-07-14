@@ -10,19 +10,18 @@ categories: technical
 
 # Matrices
 
-To understand your models you should understand matrices and linear algebra. In some ways, OpenMx's USP or unique selling point is that it is a matrix algebra processor. Most of the blog posts on this site cover RAM-style modeling, but all of this sits on top of matrices: `mxPath("A", "B")` simply inserts values into a matrix cell: Try it and see!
+To understand your models, you should understand matrices and linear algebra. In some ways, umx's unique selling point is that it sits on the OpenMx matrix algebra processor. Several of the blog posts on this site cover RAM-style modeling, but many are built in matrix algebra, and `umxRAM` is simply an interface to underlying matrices: `mxPath("A", "B", ...)` simply inserts values into cells in each the layer of matrix (the A - for Asymmetric) matrix: Try it and see!
 
 ```r
-require(OpenMx)
-data(demoOneFactor)
-latents  = c("G")
+require(umx)
+
 manifests = names(demoOneFactor)
-m1 <- umxRAM("One Factor", data = mxData(cov(demoOneFactor), type = "cov", numObs = 500),
-	umxPath(latents, to = manifests),
+m1 <- umxRAM("One Factor", data = demoOneFactor, type = "cov",
+	umxPath("G", to = manifests),
 	umxPath(var = manifests),
-	umxPath(var = latents, fixedAt = 1)
+	umxPath(var = "G", fixedAt = 1)
 )
-umx_show(m1)
+tmx_show(m1)
 
 ```
 

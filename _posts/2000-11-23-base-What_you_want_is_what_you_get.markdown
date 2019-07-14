@@ -85,7 +85,7 @@ And gives the same parameters:
 
 
 ```r
- umx_show(m1)
+ tmx_show(m1)
  plot(m1)
 ```
 

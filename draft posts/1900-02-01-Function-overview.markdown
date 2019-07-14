@@ -38,7 +38,7 @@ Here are some of the most important.
 		* umx_APA_pval
 		* umx_aggregate
 		* umx_print
-		* umx_show
+		* tmx_show
 5. Modify models
 	* `umxMI` # Report the top n modification indices
 	* `umxAdd1` # add parameters and return a table of the effect on fit
