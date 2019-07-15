@@ -6,15 +6,17 @@ comments: true
 categories: models twin
 ---
 
-The Multivariate ACE Cholesky is a core construct in behavior genetics (Neale & Maes, 1996), and umx supports this via umxACE.
+The Multivariate ACE Cholesky is a core model in behavior genetics (Neale & Maes, 1996), and `umx` implements this as `umxACE`.
 
-The ACE model decomposes phenotypic variance into Additive genetic (A), unique environmental (E) and, optionally, either common or shared-environment (C) or non-additive genetic effects (D). This latter restriction emerges due to a lack of degrees of freedom to simultaneously model C and D given only MZ and DZ twin pairs. 
+The ACE model decomposes phenotypic variance into Additive genetic (A), unique environmental (E) and, optionally, either common or shared-environment (C) or non-additive genetic effects (D). The latter restriction emerges due to a lack of degrees of freedom to simultaneously model C and D given only MZ and DZ twin pairs.
 
-The Cholesky or lower-triangle decomposition allows a model that is both sure to be solvable, and also to account for all the variance (with some restrictions) in the data. This model creates as many latent A C and E variables as there are phenotypes, and, moving from left to right, decomposes the variance in each component into successively restricted factors (see Figure below).
+The Cholesky or lower-triangle decomposition ensure a model that is solvable, and also accounts for all the variance (with some restrictions) in the data. This model creates as many latent `A` `C` and `E` parameters as there are phenotypes, and, moving from left to right, decomposes the variance in each component into successively restricted factors (see Figure below).
 
 <table border="0" cellspacing="5" cellpadding="5">
 	<tr><th>Diagram</th><th>Matrix</th></tr>
-	<tr> <td width="50%"> <img src="/media/umxTwin/ACE.png" width="330" height="337" alt="ACE"></td>
+	<tr>
+		<td width="50%"> <img src="/media/umxTwin/ACE.png" width="330" height="337" alt="ACE"></td>
+		
 		<td>3 &times; 3 matrix-form of the Cholesky paths, with labels as applied by umxLabel.
 			<table border="1">
 				<tr><td></td>     <td>A1</td>    <td>A2</td>    <td>A3</td>    </tr>
@@ -26,43 +28,39 @@ The Cholesky or lower-triangle decomposition allows a model that is both sure to
 	</tr>
 	<tr>
 		<td colspan = "0">
-			Multivariate ACE Cholesky model, showing the additive genetic component only (C and E take identical forms) and for one-twin only (each model in umxACE describes the A, C (or D), and E paths, constrained appropriately across the two-members of the pair, dependent on their zygosity. 
+			Multivariate ACE Cholesky model, showing the additive genetic component only (C and E take identical forms) and for one-twin only (each model in umxACE describes the A, C (or D), and E paths, constrained appropriately across the members of the pair, contingent on their zygosity. 
 		</td>
 	</tr>
 </table>
 
 ### Data Input
-The umxACE function flexibly accepts both raw data and summary covariance data (in which case the user must also supply numbers of observations for the data sets). In an important capability, the model transparently handles ordinal (binary or multi-level ordered factor data) inputs, and can handle mixtures of continuous, binary, and ordinal data in any combination. An experimental feature is under development to allow Tobit modeling.
+`umxACE` flexibly accepts either raw data or summary covariance data (in which case the user must also supply numbers of observations for the data sets). In an important capability, the model transparently handles ordinal (binary or multi-level ordered factor data) inputs, and can handle mixtures of continuous, binary, and ordinal data in any combination. In terms of loss function, FIML and WLS are supported. On the roadmap, is handling Tobit modeling.
 
-*umxACE* also supports weighting of individual data rows. In this case, the model is estimated for each row individually, then each row’s likelihood is multiplied by its weight, and these weighted likelihoods summed to form the model likelihood, which is to be minimized. This feature is currently used in non-linear GxE model functions. In addition, umxACE supports varying the DZ genetic association (defaulting to .5) to allow exploring assortative mating effects, as well as varying the DZ "C" factor from 1 (the default for modeling family-level effects shared 100% by twins in a pair), to .25 to model dominance effects.
+`umxACE` also supports weighting individual data rows. In this case, the model is estimated for each row individually, then each row’s likelihood is multiplied by its weight, and these are summed to form the model likelihood (the target for the optimizer). This feature is currently used to implement non-linear `umxGxE_window` function.
 
-When it comes to interpretation and graphing, models built by umxACE() are able to be plotted and summarized using plot() and umxSummary() methods. umxSummary can report summary A, C, and E multivariate path-coefficients, along with model fit indices, and genetic correlations. The built-in plot() method is extended by umx to handle graphical reporting of ACE models, laying out models as seen in Figure 2.
-ACE Examples
+In addition, `umxACE` supports varying the DZ genetic association (defaulting to .5) to allow exploring assortative mating effects, as well as varying the DZ "C" factor from 1 (the default for modeling family-level effects shared 100% by twins in a pair), to .25 to model dominance effects.
+
+### Interpretation and graphing
+Models built by `umxACE` are able to be plotted and summarized using `plot` and `umxSummary`. `umxSummary` can report A, C, and E path-coefficients, along with model fit indices, and genetic correlations (Rg = TRUE). `plot` is extended by `umx` to handle graphical reporting of ACE models, laying out models as seen in Figure 2.
+
+### ACE Examples
 
 We first set up data for a summary-data ACE analysis of weight data (using a built-in example dataset from Nick Martin’s Australian twin sample:
 
 
 ```r    
 require(umx); data(twinData)
-selDVs = c("wt1", "wt2")
-# Not working until a new version of OpenMx releases the updated dataset…
-tmpTwin = twinData[twinData$cohort == "younger"]
-dz = tmpTwin[tmpTwin$zyg == "DZFF", selDVs]
-mz = tmpTwin[tmpTwin$zyg == "MZFF", selDVs]
+dz = subset(twinData, zygosity == "DZFF" & cohort == "younger")
+mz = subset(twinData, zygosity == "MZFF" & cohort == "younger")
 
-# current version:
-tmpTwin <- twinData
-labList = c("MZFF", "MZMM", "DZFF", "DZMM", "DZOS")
-tmpTwin$zyg = factor(tmpTwin$zyg, levels = 1:5, labels = labList)
-selDVs = c("wt1", "wt2")
-dz = tmpTwin[tmpTwin$zyg == "DZFF", selDVs]
-mz = tmpTwin[tmpTwin$zyg == "MZFF", selDVs]
 ```
 
-The next line shows how umxACE allows the user to easily build an ACE model with a single function call. umx will give some feedback, noting that the variables are continuous and that the data have been treated as raw. We could conduct this same modeling using only covariance data, offering up suitable covariance matrices to mzData and dzData, and entering the number of subjects in each via numObsDZ and numObsMZ.
+The next line shows how `umxACE` allows the user to easily build an ACE model with a single function call. `umx` will give some feedback, noting that the variables are continuous and that the data have been treated as raw.
+
+We could conduct this same modeling using only covariance data, offering up suitable covariance matrices to `mzData` and `dzData`, and entering the number of subjects in each via `numObsDZ` and `numObsMZ`.
 
 ```r
-m1 = umxACE(selDVs = selDVs, dzData = dz, mzData = mz)
+m1 = umxACE(selDVs = "wt1", "wt2", sep="", dzData = dz, mzData = mz)
 ```
         
 This model can be run:
