@@ -11,11 +11,11 @@ In `umx`, multi-group models are just sub-models inside a `umxSuperModel` This i
 
 The most explicit way to make a multi-group model is to create each group as its own model in the normal way, then place these into `umxSuperModel`.
 
-For the case of a umxRAM model, where all the groups will be the same except for the data they contain, `umxRAM` supports a `group = ` parameter. This will be familiar to [lavaan](http://lavaan.ugent.be/) users and functions identically in `umx`. Both ways are demonstrated next.
+For the case of a umxRAM model, where all the groups will be the same except for the data they contain, `umxRAM` supports a `group = ` parameter. This will be familiar to [lavaan](http://lavaan.ugent.be) users and functions identically in `umx`. Both ways are demonstrated next.
 
 ### Placing sub-models into a Supermodel
 
-This example, we build a model for each of two groups, allowing the residual variances to differ between the groups (different [labels](advanced/1995/10/03/detailed-Labels.html) for the residuals in each group). They are then made into a supermodel. We then test if the residuals can be equated.
+This example, we build a model for each of two groups, allowing the residual variances to differ between the groups (different [labels](https://tbates.github.io/advanced/1995/10/03/detailed-Labels.html) for the residuals in each group). They are then made into a supermodel. We then test if the residuals can be equated.
 
 ```r
 require(umx)
