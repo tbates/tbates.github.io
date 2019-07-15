@@ -8,7 +8,7 @@ categories: models
 <!-- https://tbates.github.io/ -->
 ### Page not finished: e-mail me to prioritise this page if you want it sooner.
 
-[Instrumental variable](https://en.wikipedia.org/wiki/Instrumental_variable) (IV) analyses are widely used in fields as diverse as [economics](https://en.wikipedia.org/wiki/economics), and [genetic epidemiology](https://en.wikipedia.org/wiki/genetic epidemiology).
+[Instrumental variable](https://en.wikipedia.org/wiki/Instrumental_variable) (IV) analyses are widely used in fields as diverse as [economics](https://en.wikipedia.org/wiki/economics), and [genetic epidemiology](https://en.wikipedia.org/wiki/Genetic epidemiology).
 
 This page shows how to implement these analyses in `umx`.
 
@@ -38,7 +38,7 @@ In linear models, there are two main requirements for using an IV:
 2. The instrument cannot be correlated with the error term in the explanatory equation (conditional on the other covariates)
 
 
-In this example, we examine the causal influence of X on Y, using an instrumental variable (qtl) which affects only X, based on Professor [David Evans'](http://www.di.uq.edu.au/professor-david-evans) [presentation]() at the [2016 International twin workshop](), 
+In this example, we examine the causal influence of X on Y, using an instrumental variable (qtl) which affects only X, based on Professor [David Evans'](https://di.uq.edu.au/profile/997/david-evans) [presentation]() at the [2016 International twin workshop](), 
 
 The next block of code simply sets up a simulated dataset containing X, Y, qtl (a SNP affecting exposure X), and U - a covariate which induces a correlation between X and Y and which, if not measured, confounds the association of X and Y, allowing an errant researcher to assert evidence that X affects Y.
 

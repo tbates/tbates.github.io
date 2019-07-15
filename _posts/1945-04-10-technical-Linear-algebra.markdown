@@ -51,7 +51,7 @@ In math, matrices consist of cells organized in rows and columns. Each cell can 
 
 Here, we will just scratch the surface of matrices and algebra, just enough to make sense of RAM models, and alert you to the uses of basic operations on matrices, as well as the special multi-layer format of matrices in `umx` and how this aids modeling (allowing you to specify not just values in the row-column addressing system of matrices, but bounds on those values, labels by which to refer to them, and whether they are free or fixed).
 
-*note*: There are several online tutorials in matrix algebra, like [this one](http://stattrek.com/matrix-algebra/deviation-score.aspx?tutorial=matrix)
+*note*: There are several online tutorials in matrix algebra, like [this one](https://stattrek.com/matrix-algebra/deviation-score.aspx?tutorial=matrix)
 
 #### Making two matrices a and c, and computing the matrix product a %*% b
 
