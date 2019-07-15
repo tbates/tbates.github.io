@@ -43,7 +43,7 @@ So you should know about matrix algebra.
 
 To quote [Wolfram](http://mathworld.wolfram.com/Matrix.html) "*A matrix is a concise and useful way of uniquely representing and working with linear transformations… first formulated by Sylvester (1851) and Cayley."
 
-For our purposes, the benefit of matrices is their ability to represent linear transformations and, together with an [optimiser](TODO), to allow us to solve questions posed as simultaneous linear algebra equations. 
+For our purposes, the benefit of matrices is their ability to represent linear transformations and, together with an [optimiser](https://tbates.github.io/technical/1943/02/12/technical-Optional-optimizers.html), to allow us to solve questions posed as simultaneous linear algebra equations. 
 
 *etymology*: "matrix" means a container or place from which something (else) originates. Examples include the [extracellular matrix](https://en.wikipedia.org/wiki/Extracellular_matrix).
 
