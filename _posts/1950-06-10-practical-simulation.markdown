@@ -27,11 +27,26 @@ You can use the `mxGenerateData` function to build a model, setting parameters t
 ```r
 vars = c("a", "b", "c")
 m1 = umxRAM("simData", data = vars,
-	umxPath(v1.m0 = vars, values= 0),
+	umxPath(v1m0 = vars, values= 0),
 	umxPath("a", with= "b", values= .4),
 	umxPath("a", with= "c", values= .3),
 	umxPath("b", with= "c", values= .4)
 )
+```
+
+Or in lavaan syntax:
+
+```R
+m1 = umxRAM("#simData
+a ~~ 1*a
+b ~~ 1*b
+c ~~ 1*c
+a ~~ .4*b
+a ~~ .3*c
+b ~~ .4*c
+a ~ 0*1
+")
+
 ```
 
 If you just want a dataframe back:
