@@ -14,22 +14,19 @@ Let’s start using `umxPath` to specify a [CFA](https://en.wikipedia.org/wiki/C
 
 ![UmxPath Model1](/media/umxPath/umxPath_model1.png)
 
-We'll also use `umxRAM` to give us automagical labeling and good start values.
+We'll also use `umxRAM` to give us automagical parameter labeling and good start values.
 
 ```r
-# 1. grab some data
-data(myFADataRaw, package = "OpenMx")
-# 2. set up some handy lists
+# 2. set up some handy lists for the built-in myFADataRaw data set
 manifests = paste0("x", 1:3) # "x1" "x2" "x3"
-latents = c("A","B")
-df = myFADataRaw[, manifests]
+latents = c("A", "B")
 
-m1 <- umxRAM("m1", data = mxData(df, "raw"),
+m1 <- umxRAM("m1", data = myFADataRaw,
 	# 1-headed paths from latent B to each of the manifests
 	umxPath("B", to = manifests),
-	# a slightly silly linking of latent 1 with latent 2
+	# A slightly silly unit-covariance between latent 1 & 2
 	umxPath("A", with = "B", fixedAt = 1),
-	# each of the manifests and latents needs a mean and variance
+	# free mean and variance for the manifests and standardized latents.
 	umxPath(v.m. = manifests),
 	umxPath(v1m0 = latents)	
 )
@@ -39,7 +36,10 @@ plot(m1, showFixed = TRUE)
 
 ### Shortcuts
 
-You just learned two shortcuts offered by umxPath: The "v1m0" and "v.m." options are short for "variance @1, mean @ zero" and "variance free, mean free" respectively.
+You just learned two shortcuts offered by `umxPath`: The "v1m0" and "v.m." options are short for "variance @1 and mean @ zero" and `v.m.` is show for "variance free, mean free" respectively.
+
+The intuition for `v.m.` is v for variance, m for means, and dot for "any value"
+
 We could break this out into 4 lines if desired:
 
 ```r
@@ -49,30 +49,7 @@ umxPath(means = latents, fixedAt = 0),
 umxPath(var   = latents, fixedAt = 1),
 ```
 
-For comparison, see how you would do that using `mxModel` and `mxPath`:
-
-```r
-data(myFADataRaw, package = "OpenMx")
-manifests = paste0("x", 1:3)
-latents = c("A","B")
-df = myFADataRaw[, manifests]
-
-m1 <- mxModel("m1", type="RAM", 
-	latentVars = latents,
-	manifestVars = manifests,
-	mxPath(from = "B", to = manifests),
-	mxPath(from = "A", to = "B", arrows = 2, free = F, values = 1),
-	mxPath(from = "one", to = manifests),
-	mxPath(from = "one", to = latents, free = F, values = 0),
-	mxPath(from = manifests, arrows = 2, free = F, values = 1),
-	mxPath(from = latents  , arrows = 2, free = F, values = 1),
-	mxData(df, "raw")
-)    
-```
-
-*note*: mxModel does not run the model, has start values of zero or .1, and no labels.
-
-The new terms for *connecting variables* are shown below, along with their `mxPath` equivalents
+The `umxPath` terms for *connecting variables* are shown below, along with their `mxPath` equivalents:
 
 |New Term         | Example           | mxPath Equivalent                    |
 |-----------------|:-------------------|:------------------------------------|
@@ -88,10 +65,9 @@ The new terms for *connecting variables* are shown below, along with their `mxPa
 | unique.pairs.   | unique.pairs = c("X","Y", "Z") | from = c("X","Y", "Z"), connection = "unique.pairs", arrows = 2|
 | Cholesky        | Cholesky = c("X","Y"), to = c("a", "b") | a complex series of paths|
 
-The intuition for `v.m.` is v for variance, m for means, and dot for "any value"
 
 ### unique.bivariate
-`unique.bivariate` is a massive time saver and error-preventer. It allows a 1-line specification of bivariate paths between all distinct pairs of variables.
+`unique.bivariate` is a time saver and error-preventer. It allows a 1-line specification of bivariate paths between all distinct pairs of variables.
 
 So to create paths "A&harr;B", "B&harr;C", and "A&harr;C", you can say just:
 
@@ -157,7 +133,7 @@ umxPath(from  = "A", to = "A")
 
 #### QuickLook: look often, run once
 
-*Tip*: `plot`() is a great way to see what you are doing in a model as you build it: look often build once
+*Tip*: `plot`() is a great way to see what you are doing in a model as you build it: look often build once.
 
 ```r
     plot(umxRAM("tim", umxPath(c("mpg", "cyl", "disp"), value=1), data=mtcars, run=F))
