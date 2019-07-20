@@ -6,7 +6,7 @@ comments: true
 categories: advanced
 ---
 
-## umxSummary()
+
 At its simplest, just pass a model to `umxSummary` to receive a default summary:
 
 ```r
@@ -55,27 +55,74 @@ umxSummary(m1, filter = "SIG") # show only significant paths
 umxSummary(model, filter = "NS") # show only NS paths
  ```
 
-### What if I have raw data and no refmodels?
+*advanced tip*:  What if I have raw data and no refmodels?
+
+By default, OpenMx doesn't compute the independence and saturated models for raw data models (it can take some time, so is off by default). By default `umxRAM` computes the independence and saturated models for all data types. In some circumstances, however, you might find you have a model that lacks reference models. If so, here is how to call `umxSummary` and pass in reference models:
 
 ```R
 umxSummary(model, refModels = mxRefModels(model, run = TRUE))
 ```
-umxSummary(model, showEstimates = c("raw", "std", "none", "both", "list of column names"),
-  digits = 2, report = c("1", "table", "html"), filter = c("ALL", "NS",
-  "SIG"), SE = TRUE, RMSEA_CI = FALSE, matrixAddresses = FALSE, ...)
 
+### Other parameters in umxSummary
+
+umxSummary(model, show = c("raw", "std", "both"), digits = 2, report = c("markdown", "html"), filter = c("ALL", "NS",
+  "SIG"), SE = TRUE, RMSEA_CI = FALSE)
 
 ## confint()
-* options
+You can display the SE-based confidence intervals from a model using `confint`. You will get a table like this:
+
+```R
+                  2.5%        97.5%
+G_to_x1     0.36633842  0.427170822
+G_to_x2     0.46749315  0.538820807
+G_to_x3     0.53666526  0.616661746
+```
 
 ## parameters()
-* model parameters
+
+`umx`'s `parameters` function gives a great deal of flexibility displaying the parameters of a model.
+
+1. You can show only those parameters meeting some magnitude criterion:
+
+```R
+parameters(m1, thresh="above", b=.4)
+     name Estimate
+2 G_to_x2     0.50
+3 G_to_x3     0.58
+4 G_to_x4     0.70
+5 G_to_x5     0.80
+```
+
+2. You can filter by parameter name, e.g. only means:
+
+```R
+parameters(m1, patt="one_to")
+        name Estimate
+11 one_to_x1    -0.04
+12 one_to_x2    -0.05
+13 one_to_x3    -0.06
+14 one_to_x4    -0.06
+15 one_to_x5    -0.08
+```
 
 ## residuals()
-* options
- * filter minimum value to display
+Viewing residuals can be very helpful in understanding model misspecification.
 
-## vcov()
-* options
- * filter minimum value to display
+The residuals function returns a nice table for you:
 
+```R
+residuals(m1)
+ 
+|   |x1   |x2    |x3   |x4    |x5 |
+|:--|:----|:-----|:----|:-----|:--|
+|x1 |.    |.     |0.01 |.     |.  |
+|x2 |.    |.     |0.01 |-0.01 |.  |
+|x3 |0.01 |0.01  |.    |.     |.  |
+|x4 |.    |-0.01 |.    |.     |.  |
+|x5 |.    |.     |.    |.     |.  |
+```
+
+You can zoom in on bad values with, e.g. `suppress = .01`, which will hide values smaller than this. `digits` can control rounding.
+
+
+Other functions to look at `vcov`
