@@ -125,4 +125,5 @@ plot(m1, file = "~/tmp.gv") # specify a file
 ```
 
 TODO:  tutorial on `umx_set_plot_file_suffix` and `umx_set_plot_format`
-TODO:  needs `same` and `spline` examples
+
+TODO:  examples for `same` and `spline` parameters.
