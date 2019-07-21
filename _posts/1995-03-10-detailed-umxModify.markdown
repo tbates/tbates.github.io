@@ -25,11 +25,11 @@ For what follows, we'll need a model, so:
 
 ```r
 manifests = c("mpg", "disp", "gear")
-m1 <- umxRAM("big_motor_bad_mpg",
+
+m1 <- umxRAM("mpg_model",data = mtcars, type = "cov",
 	umxPath(c("disp", "gear"), to = "mpg"),
 	umxPath("disp", with = "gear"),
-	umxPath(var = manifests),
-	data = mtcars, type = "cov"
+	umxPath(var = manifests)
 )
 ```
 
@@ -37,10 +37,10 @@ Now show a summary.
 
 ```R
 umxSummary(m1, show = "std")
-
+plot(m1, std= TRUE)
 ```
 
-![model 1](/media/1_make_a_model/mtcar2.png "Model 1")
+![model 1](/media/1_make_a_model/mpg_model.png "Model 1")
 
 <a name="modify"></a>
 ## Modify a model
@@ -84,13 +84,13 @@ For example, this one-liner drops a path labelled "gear_to_mpg", tests the effec
 m2 = umxModify(m1, update = "gear_to_mpg", name = "drop effect of gear", comparison = TRUE)
 ```
 
-χ²(1) = 0.08, p = 0.773; CFI = 1.017; TLI = 1.05; RMSEA = 0
+χ²(1) = -0.02, p = 1.000; CFI = 1.021; TLI = 1.062; RMSEA = 0"
 
 
-|Model               | EP|∆ -2LL    |∆ df |p     |       AIC|Compare with Model |
-|:-------------------|--:|:---------|:----|:-----|---------:|:------------------|
-|big_motor_bad_mpg   |  6|          |     |      | -0.047875|                   |
-|drop effect of gear |  5|0.1309833 |1    |0.717 | -1.916892|big_motor_bad_mpg  |
+|Model               | EP|∆ -2LL    |∆ df |p     |        AIC|Compare with Model |
+|:-------------------|--:|:---------|:----|:-----|----------:|:------------------|
+|mpg_model           |  6|          |     |      | -0.0319091|                   |
+|drop effect of gear |  5|0.0145591 |1    |0.904 | -2.0173500|mpg_model          |
 
 
 
@@ -100,45 +100,74 @@ m2 = umxModify(m1, update = "gear_to_mpg", name = "drop effect of gear", compari
 A powerful feature of `umxModify` is regular expressions. These let you drop collections of paths by matching patterns. So, 
 
 ```r
-fit2 = umxModify(fit1, update = "Cs_r1_c[0-9].", regex = TRUE, name = "drop_all_cols_of_row1_of_Cs", comparison = T)
+m2 = umxModify(m1, regex = "gear_to_.*", name = "drop all paths from gear", comparison = TRUE)
 ```
 
-Will drop all paths with labels matching  "Cs_r1_c" followed by any other digits. i.e., all columns of row 1.
+Will drop all paths with labels matching  "gear_to_.*". This is particularly powerful with twin models.
 
-In addition to the `lastFit` parameter (the mxModel you wish to update and re-run), umxModify takes the following options:
-
-`update` specifies what to update before re-running. It can be a list of labels, a regular expression (set regex = T) or an object such as an `mxCI` (mx confidence interval request).
-
-1. update by matching a label
+So far we've seen update by matching a label:
 
 ```r
 fit2 = umxModify(fit1, update = "Cs", name = "newModelName") 
 ```
-2. update by matching a regular expression
+Update by matching a regular expression:
 
 ```r
 fit2 = umxModify(fit1, update = "C[sr]", regex = TRUE, name = "drop_Cs_andCr")
 ```
 
-3. update by passing in a new object to be added to the model
+and update by passing in a new object to be added to the model
 
 ```r
 fit2 = umxModify(fit1, update = mxCI("Cs"), name = "withCI")
 ```
+Also, we seen that you can request the model comparison summary at the same time:
+
+To run `umxCompare`() and report on the old and new models, just set "comparison = TRUE"
+
+### Additional options for `umxModify`
+
 ### free and value
 
 By default, matched labels will be dropped, i.e., "free = FALSE value = 0"
 
-Set `free = TRUE` to free (instead of fix) a variable.
+To free (instead of fix) a variable, set `free = TRUE`.
 
-Set `value = X` to set the value of the matched paths to value X (instead of the default 0)
+To set the value of the matched paths to value X (instead of the default 0), set `value = X`.
 
 To update only parameters that are already free, set `freeToStart = TRUE`. This defaults to NA - i.e, state is ignored.
 
+### more than one thing
+Most parameters can take more than one input. To drop two paths, just offer up two labels in `update`.
+
+```r
+m2 = umxModify(m1, update = c("path1", "path2"), name = "drop 2 paths")
+```
+
+### tryHard
+If you have a hard model to fit, you might want the optimizer to try extra hard. Just set tryHard = "yes":
+
+```r
+m2 = umxModify(m1, regex = "gear_to_.*", name = "drop paths from gear", tryHard = "yes")
+```
+
+### update a label
+If you want to update a label, you can do so as follows: In this case, setting to labels to a single newlabel
+
+```r
+m2 = umxModify(m1, update = c("gear_to_mpg", "disp_to_mpg"), newlabels = "inputs_to_mpg", name = "equate paths", tryHard = "yes")
+```
+*note*: this updates the model in raw units: standardized effects will likely differ. Best to work in standardized data for this sort of change.
+
 ### Confidence Intervals
 
-As in mxRun, you can set `intervals` = TRUE to run confidence intervals (see mxRun)
+As in `mxRun`, you can set `intervals` = TRUE to run confidence intervals (see mxRun)
 
-### comparison
+```r
+m2 = umxModify(m1, update = "gear_to_mpg", name = "no gear", intervals = TRUE)
+```
+*note 1*: For this to work, there have to be mxCIs in your model. See the post on mxConfint to learn more about confidence intervals.
 
-To run `umxCompare`() and report on the old and new models, just set "comparison = TRUE"
+*note 2*: SEs are often quicker and easier and are shown in the summary.
+
+
