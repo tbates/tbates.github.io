@@ -6,33 +6,37 @@ comments: true
 categories: advanced
 ---
 
-note: This page is not finished.
-
 ### Why make a new model when you can update one you already have?
 
-In OpenMx, models can be modified. Want to add a new path? Go ahead - no need to start from scratch.
+In `umx`, models can be modified. Want to add a new path? Go ahead - no need to start from scratch. You can add, or remove anything, re-run, and compare. 
 
-You can add, or remove anything, re-run, and compare.
+This tutorial covers using `umxModify` to do this.
 
-This tutorial will cover using umxModify to update models.
+The easiest and most powerful way to modify `umx` models is with the `umxModify` function.
+
+`umxModify` is a convenience function to add, set, or drop parameters, re-name, and re-run a model.
+
+Its main benefit is compactness. `umxModify()` can modify, run, and compare all in 1-line. So, the equivalent to the above three lines is:
 
 
 <a name="overview"></a>
-## Build and Run: An overview
+
+For what follows, we'll need a model, so: 
 
 ```r
 manifests = c("mpg", "disp", "gear")
 m1 <- umxRAM("big_motor_bad_mpg",
 	umxPath(c("disp", "gear"), to = "mpg"),
 	umxPath("disp", with = "gear"),
-	umxPath(var = "mpg"),
-	umxPath(var = "disp", fixedAt = var(mtcars$disp)),
-	umxPath(var = "gear", fixedAt = var(mtcars$gear)),
-	data = mxData(cov(mtcars[,manifests]), type = "cov", numObs = nrow(mtcars))
+	umxPath(var = manifests),
+	data = mtcars, type = "cov"
 )
+```
 
-# Now show a summary.
-umxSummary(m1, show = "both")
+Now show a summary.
+
+```R
+umxSummary(m1, show = "std")
 
 ```
 
@@ -43,87 +47,98 @@ umxSummary(m1, show = "both")
 
 [Fundamentally](https://en.wikipedia.org/wiki/Causal_model), modeling is in the service of understanding causality and we do that primarily via model comparison: Better theories fit the data better than do worse theories.
 
-So, "do more gears give better miles per gallon"?
+So, "do more gears give better miles per gallon"? In graph terms, this is asking, "is the path from to gear to mpg significant?" There are two ways to test this with `umx`.
 
-In graph terms, this is asking, "is the path from to gear to mpg significant?" There are two ways to test this with umx.
+### 1. Overwriting a path with OpenMx's mxModel function
 
-### Removing a path
-
-1. Overwrite existing paths, fixing a value to zero.
+Using OpenMx's mxModel function, new paths over-write existing paths. So adding a new path, with value fixed to zero will accomplish our goal:
 
 ```r
-m2 = mxModel(m1, mxPath(from = "gear", to = "mpg", free = F, values = 0)
+m2 = mxModel(m1, umxPath("gear", to = "mpg", fixedAt = 0))
 m2 = mxRun(m2)
 ```
+
+You can then compare the two models
+
 ```r
 umxCompare(m1, m2)
 ```
 
-2. Use a label and umxModify()
+You can also do this with `umxModify`:
 
-By default, umxModify fixes the value of matched labels to zero.
-
-```r
-m2 = umxModify(m1, update = "gear_to_mpg", name = "no effect of gear")
+```R
+m2 = umxModify(m1, umxPath("gear", to = "mpg", fixedAt = 0), comp=T)
 ```
 
-`umxModify()` can modify, run, and compare all in 1-line
+### 2. Use umxModify() and labels 
+
+The easiest and most powerful way to modify models is with umx's `umxModify` function. 
+
+`umxModify` is a convenience function to add, set, or drop parameters, re-name, and re-run a model.
+
+Its main benefit is compactness. `umxModify()` can modify, run, and compare all in 1-line.
+
+For example, this one-liner drops a path labelled "gear_to_mpg", tests the effect, and returns the updated model:
 
 ```r
-	m2 = umxModify(m1, update = "gear_to_mpg", name = "drop effect of gear"), comparison = TRUE)
+m2 = umxModify(m1, update = "gear_to_mpg", name = "drop effect of gear", comparison = TRUE)
 ```
 
+χ²(1) = 0.08, p = 0.773; CFI = 1.017; TLI = 1.05; RMSEA = 0
 
-`umxModify` Is a convenience function to add, set, or drop parameters, re-name, and re-run a model. Its main benefit is compactness. 
 
-For example, this one-liner drops a path labelled "Cs", tests the effect, and returns the updated model
+|Model               | EP|∆ -2LL    |∆ df |p     |       AIC|Compare with Model |
+|:-------------------|--:|:---------|:----|:-----|---------:|:------------------|
+|big_motor_bad_mpg   |  6|          |     |      | -0.047875|                   |
+|drop effect of gear |  5|0.1309833 |1    |0.717 | -1.916892|big_motor_bad_mpg  |
 
-```r
-fit2 = umxModify(fit1, update = "Cs", name = "newModelName", comparison = T) 
-```
-A powerful feature of umxModify is regular expressions. These let you drop collections of paths by matching patterns. So, 
+
+
+### More advanced options in umxModify
+
+1. Pattern matching with regex
+A powerful feature of `umxModify` is regular expressions. These let you drop collections of paths by matching patterns. So, 
 
 ```r
 fit2 = umxModify(fit1, update = "Cs_r1_c[0-9].", regex = TRUE, name = "drop_all_cols_of_row1_of_Cs", comparison = T)
 ```
-Will drop all paths with labels matching  "Cs_r1_c" followed by any other digits. i.e., all columns of row 1.
 
-### Parameters of umxModify
+Will drop all paths with labels matching  "Cs_r1_c" followed by any other digits. i.e., all columns of row 1.
 
 In addition to the `lastFit` parameter (the mxModel you wish to update and re-run), umxModify takes the following options:
 
 `update` specifies what to update before re-running. It can be a list of labels, a regular expression (set regex = T) or an object such as an `mxCI` (mx confidence interval request).
 
+1. update by matching a label
+
 ```r
-# 1. update by matching a label
 fit2 = umxModify(fit1, update = "Cs", name = "newModelName") 
+```
+2. update by matching a regular expression
 
-# 2. update by matching a regular expression
+```r
 fit2 = umxModify(fit1, update = "C[sr]", regex = TRUE, name = "drop_Cs_andCr")
+```
 
-# 3. update by passing in a new object to be added to the model
+3. update by passing in a new object to be added to the model
+
+```r
 fit2 = umxModify(fit1, update = mxCI("Cs"), name = "withCI")
 ```
 ### free and value
 
-By default, matched labels will be dropped, i.e., "free = F value = 0"
+By default, matched labels will be dropped, i.e., "free = FALSE value = 0"
 
-Set "free = TRUE" to free a variable. Set "value = X" to set the value of the matched paths to value X	
+Set `free = TRUE` to free (instead of fix) a variable.
 
-`freeToStart`: Whether to only update parameters based on their current free-state. defaults to NA - i.e, not checked.
+Set `value = X` to set the value of the matched paths to value X (instead of the default 0)
 
-### confidence Intervals
+To update only parameters that are already free, set `freeToStart = TRUE`. This defaults to NA - i.e, state is ignored.
+
+### Confidence Intervals
 
 As in mxRun, you can set `intervals` = TRUE to run confidence intervals (see mxRun)
 
 ### comparison
 
 To run `umxCompare`() and report on the old and new models, just set "comparison = TRUE"
-
-```r
-# 1. Run the new model
-fit2 = umxModify(fit1, update = "Cs", name = "newModelName") 
-
-# 2. R model, and compare to the lastFit
-fit2 = umxModify(fit1, update = "Cs", name = "newModelName", comparison = T) 
-```
