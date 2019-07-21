@@ -13,7 +13,7 @@ toc: true
 
 `umx` automatically and systematically labels parameters allowing models to be displayed and modified using these labels.
 
-labels can be used to access a parameter (e.g. via `parameters`), to set that parameter (e.g. via `umxSetParameters`) and equate parameters (parameters with the same label have to take the same value.
+`labels` can be used to access a parameter (e.g. via `parameters`), to set that parameter (e.g. via `umxSetParameters`) or equate parameters (parameters with the same label have to take the same value, as well as to modify a model, via `umxModify`.
 
 <a name="background"></a>
 ###  Path labels in umxRAM
@@ -46,8 +46,7 @@ a$labels
 
 # Sidebar: Can I label matrices not created by umxRAM or other umx models?
 
-Yes. By default, OpenMx doesn't label parameters, and they are addressed using "bracket addresses", i.e "MyModel.S[2,2]" 
-which addresses the parameter in column 2 and row 2 of the S matrix of a model called MyModel.
+Yes. By default, OpenMx doesn't label parameters, requiring them to be addressed using "bracket addresses", i.e `MyModel.S[2,2]` which addresses the parameter in column 2 and row 2 of the S matrix of a model called MyModel.
 
 You can label any matrix (or entire model) using `umxLabel`
 
@@ -59,7 +58,6 @@ parameters(m1)
 
 The default "matrix address" labels, i.e "One Factor.S[2,2]" are now set Informative labels: "G_to_x1", "x4_with_x4", etc.
 
-```
 
 <a name = "finding"></a>
 ## Showing parameters of a model (and their labels): the parameters() function
