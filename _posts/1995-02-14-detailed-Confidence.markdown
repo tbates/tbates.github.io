@@ -52,11 +52,11 @@ gear_with_gear    0.26895182     0.7856374
 
 ```
 
-## More about ?confint.MxModel
+## More about ?umxConfint.MxModel
 
 ### parm
 the `parm` parameter defaults to "existing": Show existing confidence intervals (and create all if none exist).
-The alternative is to give a vector of names, like
+The alternative is to give a vector of names.
 
 ### level = 0.95
 The default confidence interval is 95%. You can ask for others, for instance .99
@@ -66,7 +66,7 @@ umxConfint(m1, run = TRUE, level = .99)
 ```
 
 ### run = FALSE
-By default this function doesn't run the model. That's because CIs can be computationally intensive.
+By default umxConfint doesn't run the model (that's because CIs can be computationally intensive). Might change in future.
 
 ```r
 umxConfint(m1, run = FALSE) 
