@@ -49,10 +49,10 @@ a ~ 0*1
 
 ```
 
-If you just want a dataframe back:
+If you just want a data.frame back:
 
 ```r
-simData = mxGenerateData(m1, nrows=1000)
+simData = mxGenerateData(m1, nrows = s1000)
 umxAPA(m2) # have a look at it.
 ```
 
@@ -77,7 +77,7 @@ Or just ask `mxGenerateData` to do that for you:
 m2 = mxGenerateData(m1, nrows = 1000, returnModel = TRUE)
 ```
 
-Neat huh! The help on `?mxGenerateData` is nice too!
+The help on `?mxGenerateData` is nice also.
 
 ### 2. Making Twin Data
 
@@ -92,14 +92,15 @@ You can also add a moderator (dragging A across a range according to a moderator
 
 It's this easy:
 
-```r    
+```r
 tmp = umx_make_TwinData(nMZpairs = 10000, AA = .30, CC = .00, EE = .70)
  AA  CC  EE 
 0.3 0.0 0.7 
    a    c    e 
 0.55 0.00 0.84 
 ```
-The results come back as dataframe with a column for `zygosity` (MZ and DZ at present).
+
+The results come back as dataframe with a column for `zygosity` ("MZ" and "DZ" at present).
 
 #### How to consume the built datasets
 
@@ -139,12 +140,17 @@ cov(mzData[,c("var_T1","var_T2")])
 
 #### Moderator Example
 
+For our meta-analysis of gene-SES interaction with IQ heritability, we found an a` value of .06.
+
+This makes a data set that corresponds to this (with some assumed values for mean A, and for the values of C and E).
+
+
 ```r
-    
-x = umx_make_TwinData(100, AA = c(avg = .7, min = 0, max = 1), CC = .55, EE = .63)
+x = umx_make_TwinData(100, AA = c(avg = .4, min = .2, max = .65), CC = .2, EE = .4)
 str(x)
 ```
-You can also make Thresholded data, just use MZr and DZr,, or create data for Bivariate GxSES  (see `umxGxEbiv`)
+
+You can also make Thresholded data, just use MZr and DZr. Finally, the function can create data for Bivariate GxSES  (see `?umxGxEbiv`)
 
 
 ### 3. Making Mendelian Randomization Data
