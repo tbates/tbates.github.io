@@ -6,39 +6,51 @@ comments: true
 categories: advanced
 ---
 
-# Confidence in 1 line:
 
 #### This page is not finished. When done it will explain using umx to get CIs from models. 
 
 CIs –&nbsp;or profile-based confidence intervals are key to understanding how big the likely true effects of your causes are.
 
-First, run our very first model again:
+First, run our first model again:
 
 ```r
-manifests = c("mpg", "disp", "gear")
-m1 <- mxModel("car", type = "RAM",
-	manifestVars = manifests,	
-	mxPath(from = c("disp", "gear"), to = "mpg"),
-	mxPath(from = "disp", to = "gear", arrows = 2),
-	mxPath(from = "disp", arrows = 2, free = F, values = var(mtcars$disp)),
-	mxPath(from = "gear", arrows = 2, free = F, values = var(mtcars$gear)),
-	mxPath(from = "mpg", arrows = 2),
-	mxData(cov(mtcars[,manifests]), type = "cov", numObs = nrow(mtcars))
+m1 = umxRAM("cars", data =  mtcars, type = "cov",
+	umxPath(c("disp", "gear"), to = "mpg"),
+	umxPath("disp", with = "gear"),
+	umxPath(var = c("disp", "gear", "mpg"))
 )
 ```
 
 Here's the one line to get CIs
 
 ```r
-confint(m1, run = TRUE) # lots more to learn about ?confint.MxModel
+umxConfint(m1, parm= "all", run=TRUE)
+                 lbound  estimate    ubound lbound Code ubound Code
+disp_to_mpg      -0.052    -0.041    -0.030           0           0
+gear_to_mpg      -1.750     0.111     1.973           0           0
+mpg_with_mpg      6.298     9.907    16.890           0           0
+disp_with_disp 9459.638 14876.544 25369.879           0           0
+disp_with_gear  -98.406   -49.202   -20.861           0           0
+gear_with_gear       NA     0.527     0.866          NA           0
+
 ```
 
-| Path           | lbound  | estimate | ubound  | lbound | Code |
-|---------------:|--------:|---------:|--------:|-------:|-----:|
-| disp_to_mpg    | -0.052  | -0.041   | -0.030  | 1      | 1    |
-| gear_to_mpg    | -1.816  | 0.111    | 2.038   | 1      | 1    |
-| mpg_with_mpg   | 6.397   | 10.226   | 18.494  | 1      | 1    |
-| disp_with_gear | -66.415 | -50.803  | -17.977 | 1      | 1    |
+
+PS: OpenMx has a confint method (this used to be how to access umx's confint methods). It returns SE-based bounds
+
+```r
+confint(m1, run = TRUE) # lots more to learn about ?confint.MxModel
+
+Wald type confidence intervals (see ?mxCI for likelihood-based CIs)
+                        2.5%         97.5%
+disp_to_mpg      -0.05159987    -0.0300958
+gear_to_mpg      -1.69503585     1.9174272
+mpg_with_mpg      5.05248336    14.7614100
+disp_with_disp 7589.36713111 22163.7204380
+disp_with_gear  -84.29849884   -14.1062932
+gear_with_gear    0.26895182     0.7856374
+
+```
 
 ## More about ?confint.MxModel
 
@@ -50,14 +62,14 @@ The alternative is to give a vector of names, like
 The default confidence interval is 95%. You can ask for others, for instance .99
 
 ```r
-confint(m1, run = TRUE, level = .99) 
+umxConfint(m1, run = TRUE, level = .99) 
 ```
 
 ### run = FALSE
 By default this function doesn't run the model. That's because CIs can be computationally intensive.
 
 ```r
-confint(m1, run = FALSE) 
+umxConfint(m1, run = FALSE) 
 ```
 
 ###  showErrorcodes = FALSE,
@@ -65,7 +77,7 @@ confint(m1, run = FALSE)
 By default, we don't show the errorcodes. Turn this on to see them (if any)
 
 ```r
-confint(m1, run = TRUE, showErrorcodes = TRUE) 
+umxConfint(m1, run = TRUE, showErrorcodes = TRUE) 
 ```
 
 That's it!
