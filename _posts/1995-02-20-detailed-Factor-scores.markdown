@@ -6,20 +6,17 @@ comments: true
 categories: advanced
 ---
 
-# A simple one factor ordinal model
 
 ```r
-require(OpenMx)
+require(umx)
 data(demoOneFactor)
-latents = c("G")
+
 manifests = names(demoOneFactor)
-m1 <- umxRAM("OneFactor", data = mxData(cov(demoOneFactor), type = "cov", numObs = 500),
-	umxPath(latents, to = manifests),
+m1 = umxRAM("OneFactor", data = demoOneFactor, type = "cov",
+	umxPath("G", to = manifests),
 	umxPath(var = manifests),
-	umxPath(var = latents, fixedAt = 1)
+	umxPath(var = "G", fixedAt = 1)
 )
-m1 = mxRun(m1)
-umxSummary(m1, showEstimates = "std")
 
 ```
 	
@@ -28,7 +25,7 @@ umxSummary(m1, showEstimates = "std")
 ```r
 
 # Swap in raw data in place of summary data
-m2 <- mxModel(m1, mxData(demoOneFactor, type = "raw"))
+m2 = mxModel(m1, mxData(demoOneFactor, type = "raw"))
 
 # Estimate factor scores for the model
 fs = mxFactorScores(m2, 'Regression')
@@ -43,6 +40,7 @@ All the data-points of demoOneFactor are present:
 all(complete.cases(demoOneFactor))
 # [1] TRUE
 ```
+
 Let’s delete 10% from each column at random:
 
 ```r
