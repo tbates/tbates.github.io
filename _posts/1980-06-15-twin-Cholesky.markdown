@@ -6,7 +6,7 @@ comments: true
 categories: models twin
 ---
 
-This page will introduce writing Cholesky structures using umxPath to facilitate twin modeling.
+This page will introduce writing Cholesky structures using `umxPath` to facilitate twin modeling with `umxRAM`.
 
 It is not finished, and for now (and perhaps for sometime), I'd recommend you read [this page instead on the awesome umxACE](/models/twin/1980/06/10/twin-umxACE.html) function
 
@@ -31,6 +31,9 @@ umxSummary(m1)
 
 ```
 
+![Chol model](/media/umxPath/Chol.png)
+
+
 What about a 1-factor solution?
 
 ```r
@@ -39,13 +42,11 @@ m2 = umxModify(m1, "^A[2:5]", regex = TRUE)
 ```
 
 ```r
-latents   = paste0("A", 1)
 manifests = names(demoOneFactor)
-myData    = mxData(cov(demoOneFactor), type = "cov", numObs = 500)
-m3 <- umxRAM("Chol", data = myData,
-	umxPath(Cholesky = latents, to = manifests),
+m3 <- umxRAM("Chol", data = demoOneFactor, type = "cov",
+	umxPath(Cholesky = "A1, to = manifests),
 	umxPath(var = manifests),
-	umxPath(var = latents, fixedAt = 1.0)
+	umxPath(var = "A1, fixedAt = 1.0)
 )
 umxSummary(m3)
 plot(m3)

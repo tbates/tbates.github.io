@@ -131,11 +131,6 @@ Assuming you've got `umx` loaded, just say:
 
 Alternatively use the built in graphing function, `omxGraphviz`. This adds color, and uses circles to draw residuals (I use lines in `plot`), but doesn't show path values, doesn't allow customizing what gets drawn.
 
-
-```r
-	omxGraphviz(m1) # doesn't show path values.
-```
-
 Next, we allow displacement and weight to correlate (a two headed path between them)
 
 ```r
