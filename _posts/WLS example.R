@@ -8,7 +8,6 @@ Wilkinson, R., & Pickett, K. (2009). The Spirit Level: Why more equal societies 
 library(umx)
 # full WLS gives unbiased estimates like diagonally weighted least squares and unweighted least squares do.
 # inst/models/passing/jointFactorModelsTest.R
-require(OpenMx)
 
 rms <- function(x, y = NA){
 	if(is.matrix(x) && is.vector(y) && nrow(x) == length(y)){
