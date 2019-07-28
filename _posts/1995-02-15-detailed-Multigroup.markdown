@@ -11,7 +11,7 @@ In `umx`, multi-group models are just sub-models inside a `umxSuperModel` This i
 
 The most explicit way to make a multi-group model is to create each group as its own model in the normal way, then place these into `umxSuperModel`.
 
-For the case of a umxRAM model, where all the groups will be the same except for the data they contain, `umxRAM` supports a `group = ` parameter. This will be familiar to [lavaan](http://lavaan.ugent.be) users and functions identically in `umx`. Both ways are demonstrated next.
+For the case of a `umxRAM` model, where all the groups will be the same except for the data they contain, `umxRAM` supports a `group = ` parameter. This will be familiar to [lavaan](http://lavaan.ugent.be) users and functions the same in `umx`. Both ways are demonstrated next.
 
 ### Placing sub-models into a Supermodel
 
@@ -26,21 +26,24 @@ data(demoOneFactor)
 
 
 ```r
-latents  = c("G")
 manifests = names(demoOneFactor)
 
-m1 = umxRAM("model1", data = demoOneFactor[1:200,],
-      umxPath(latents, to = manifests),
+m1 = umxRAM("model1", data = demoOneFactor[1:200, ],
+      umxPath("G", to = manifests),
       umxPath(v.m. = manifests),
-      umxPath(v1m0 = latents)
+      umxPath(v1m0 = "G")
 )
 
-# duplicate m1, renaming it, and changing the data
-m2 = mxModel(m1, name = "model2", mxData(demoOneFactor[300:500,], type = "raw"))
+# model 2 with a different set of data
+m2 = umxRAM("model2", data = demoOneFactor[300:500, ], autoRun = FALSE,
+      umxPath("G", to = manifests),
+      umxPath(v.m. = manifests),
+      umxPath(v1m0 = "G")
+)
 
 ```
 
-*user tip*: You can avoid running the models by setting `autoRun=FALSE`` in `umxRAM()`
+*user tip*: You can avoid running `umxRAM` models by setting `autoRun=FALSE`` in `umxRAM()`
 
 ### 2. Nest them in a multi-group "supermodel" and run
 
@@ -48,7 +51,9 @@ m2 = mxModel(m1, name = "model2", mxData(demoOneFactor[300:500,], type = "raw"))
 m3 = umxSuperModel("myfirstsupermodel", m1, m2)
 ```
 
-TODO: multi-group: Actually set the residuals free in these two models
+*Note:* As of 2019-07-28, OpenMx had an [issue](https://github.com/OpenMx/OpenMx/issues/221) with reporting fit indices.
+
+TODO: multi-group: Set the residuals free in these two models
 
 ### Multi-group with umxRAM "group ="
 
