@@ -87,7 +87,8 @@ umxSummary(m1) # Create a tabular summary of the model
 |    |    a1|c1 |    e1|
 |:---|-----:|:--|-----:|
 |wt1 | -0.92|.  | -0.39|
-[Standardized solution]
+
+Standardized solution
 
 By default the report table is written to the console in markdown-format. By setting report = "html", the user can request a rendered html be opened in the default browser. Whether the parameter table is standardized or not is set using the `showStd = TRUE` parameter (the default). The user can request the genetic correlations with `showRg = TRUE` (the default is FALSE). If Confidence intervals have been computed, these can be displayed with `CIs = TRUE`.
 
