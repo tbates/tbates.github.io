@@ -6,7 +6,6 @@ comments: true
 categories: models
 ---
 <!-- https://tbates.github.io/ -->
-### Page not finished: e-mail me to prioritise this page if you want it sooner.
 
 [Instrumental variable](https://en.wikipedia.org/wiki/Instrumental_variable) (IV) analyses are widely used in fields as diverse as [economics](https://en.wikipedia.org/wiki/economics), and [genetic epidemiology](https://en.wikipedia.org/wiki/Genetic epidemiology).
 

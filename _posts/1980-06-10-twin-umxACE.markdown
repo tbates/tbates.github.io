@@ -79,10 +79,9 @@ plot(m1) # output shown in below
 
 Or summarized in table and graphical form:
 
-```r
-umxSummary(m1) # Create a tabular summary of the model
+`umxSummary(m1)`
+
 -2 × log(Likelihood) = 12186.28 (df = 4)
-```
 
 |    |    a1|c1 |    e1|
 |:---|-----:|:--|-----:|
