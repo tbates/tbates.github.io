@@ -15,6 +15,32 @@ There are a range of cases where it is useful to manipulate data for modeling: f
 
 We saw back in basic modeling post that data can vary substantially in mean and variance, and that this can make life hard for the optimizer.
 
+### umx_residualise
+
+We often want to residualise several variables prior to analysis. In twin-data, it is critical to use the same residual formula for all copies of a variable in the wide dataset. This can lead to complex, error-prone and lengthy code. For instance, in a recent paper, this is how I was residualizing some variables:
+
+```r
+twinData$MPQAchievement_T1 <- residuals(lm(Achievement_T1 ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude))                                                    
+twinData$MPQAchievement_T2 <- residuals(lm(Achievement_T2 ~ Sex_T2 + Age_T2 + I(Age_T2^2), data = twinData, na.action = na.exclude))
+```
+One complex line of code for each twin. And I repeated this for 10 more variables: 20 lines of complex code&hellip; Lot&#x27;s of opportunity for a tupo &#x263A;
+
+You also have to remember to `na.exclude` your `lm`() call.
+
+With `umx_residualise` this can be reduced in two ways. This one-line residualizes both twin's data, and doesn't require typing all the suffixes:
+
+```r
+twinData = umx_residualise(Achievement ~ Sex + Age + I(Age^2), suffix = "_T", data = twinData)
+```
+
+`umx_residualise` can also residualise more than one dependent variable (though not with formulae yet). So this works:
+
+```r
+twinData = umx_residualise(c("Achievement", "Motivation"), c("Sex", "Age"), suffix = "_T", data = twinData)
+```
+
+### umx_scale
+
 As usual, the post assumes you've loaded `umx`:
 
 ```r
@@ -55,6 +81,7 @@ m1 <- umxRAM("scaled", data = df,
  
 ![scaled_disp](/media/1_make_a_model/scaled_disp.png "disp in litres")
 
+
 A common workflow is to standardize all variables. *note*: Plot can give you a standardized output: just say` std=TRUE`
 
 ```R
@@ -92,7 +119,7 @@ plot(m1, std=TRUE, mean = FALSE)
 
 e-mail me if you want more on scaling, or:
 
-1. TODO: A tutorial on residualizing regaulr or wide (e.g. twin data) with `umx_residualize` and `umx_scale_wide_twin_data`.
+1. TODO: A tutorial on residualizing regular or wide (e.g. twin data) with `umx_residualize` and `umx_scale_wide_twin_data`.
 2. TODO: A tutorial on going from wide to long and vice versa with `umx_long2wide` and `umx_wide2long`.
 3. TODO: A tutorial on data simulation with `umx_make_TwinData`, `umx_make_fake_data`, and `umx_make_MR_data`
 
