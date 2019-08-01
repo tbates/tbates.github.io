@@ -8,48 +8,55 @@ categories: technical
 
 <a name="top"></a>
 
+ignore this post: not finished as we consider the final interface for `umxPower`
+
 # Power analysis
 
-Knowing the power of an study is critical to interpreting its results, and to deciding if it is worth doing at all.
+Power is the probability of detecting an effect when it is present. Knowing the power of a study is important: Weak studies spew out 5% false positives (i.e., at the rate alpha), but without power, they fail to detect true results at rate beta. Power is 1-beta.
 
 This post covers:
 
-1. Getting the power to detect a difference between 2 models.
-2. Power given a certain n.
+1. Computing power to detect a difference between 2 models.
+2. Computing power given a certain n.
 
-# NOTE THIS POST IS NOT COMPLETE !!!
-
-umx supports power calculations in the following ways:
-
-1. What's the power to detect dropping 1 or more parameters from our model?
-2. What's the power of a umxACE model?
+As of 2019-08-01, `umx` supports power calculations for the `umxACE` model.
 
 ### 1. What is the power to detect One Factor.A[1,6] is different from zero given N=1000, and alpha=.05?
 
-```r
-m1 = 
+```R
+df = mtcars
+df$engine_litres = .016 * df$disp
+
+m1 = umxRAM(data = df, "#mpg_model
+	mpg ~ engine_litres + wt
+	wt ~~ engine_litres"
+)
+
+m2 = umxModify(m1, "engine_litres_to_mpg")
+mxPowerSearch(trueModel= m1, falseModel= m2)
+
 ```
 
 ```r
-mxPowerSearch(trueModel= m1, falseModel= m2)
+# solve for N
+umxPower(trueModel=,update= "engine_litres_to_mpg",sig.level=.05,power=.8, method= c("empirical", "ncp"))
+# umxPower(trueModel=,update= ,n=,sig.level=.05,power=.8, method= c("empirical", "ncp"))
+
 ```
 
 ### 2. What is the power to detect One Factor.A[1,6] is different from zero given N=1000, and alpha=.05?
 
 This next snippet, however, is asking:
-    “At n= 1000, what is the smallest difference (in either direction?) from the value it is fixed at, which I would have power = 0.8 to detect for the parameter which is fixed in falseModel but free in true model (disregarding the value it takes in true model)”?
+    “At n= 1000, what is the smallest difference (in either direction?) from the value it is fixed at, which I would have power = 0.8 to detect a difference in fit between falseModel (in which a certain parameter is fixed at a value we consider null or wrong) and trueModel (in which the parameter is free)”?
+
+It works just like umxModify
+
+```r
+umxPower(model = m1, update = "One Factor.A[1,6]", values = .3, n = 1000)
+```
+
+*note*: In OpenMx, you can say:
 
 ```r
  mxPower(trueModel= m1, falseModel= m2, n = 1000)
 ```
-
-Am I getting that right?
-
-Second. Seems like a quick way to say that would be:
-mxPower(nullModel= m2, parameter= "One Factor.A[1,6]", n = 1000)
-
-From what I've seen, the purpose of “truemodel” is just to allow the  function to detect which (only one?) parameter has been fixed by comparing  “false model”  to true model? Why not just offer up mxPower(model= myModel, parameterUnderTest =  "One Factor.A[1,6]”)
-
-i.e., if  “truemodel” is solely used to identify the parameter the user wants to test, why not just let them specify its label (and even value, which would be easier still to play with). So: 
-
-mxPower(nullModel= m2, parameter= "One Factor.A[1,6]", nullValue = .3, n = 1000)
