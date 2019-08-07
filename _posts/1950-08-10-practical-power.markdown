@@ -34,23 +34,63 @@ pwr::pwr.r.test(n = 36, r = .3)
     alternative = two.sided
 ```
 
-Power for SEM is rather more complex as the models are arbitrary in the number of relations in the model. Many more questions can also be asked than, say for `pwr.t.test`. 
+Power for SEM is rather more complex as the models are arbitrary in the number of relations in the model. Many more questions can also be asked than, say, `pwr.t.test` could answer. 
 
 `umx`'s `umxPower` tackles this by using an interface very similar to `umxModify`. You offer up a true model, and paths that you want test.
 
 ```R
-umxPower(trueModel = , update = , sig.level = .05, power = .8, method = c("empirical", "ncp"))
+umxPower(trueModel = , update = "path_to_test", sig.level = .05, power = .8, method = c("empirical", "ncp"))
 ```
 
-To emulate the `pwr.r.test` example, you would build a `trueModel` or generating model with this set of path estimates. This model doesn't need to have data. You can then request a `umxPower` test, specifying the path to set to zero as the null or `falseModel`. 
+To emulate the `pwr.r.test` example, you would run a `trueModel`: A generating model with a covariance of `X` with `Y`. 
+You can then request a `umxPower` test, updating "X_with_Y" set to 0.
 
+
+1. Run model with true correlation (.3)
 
 ```R
-m1 = umxRAM("predicted state of the world", data = c("x", "y"), autoRun = FALSE,
-	umxPath(v.m. = c("x", "y")),
-	umxPath("x", with = "y", , value=.3)
+
+tmp = umx_make_raw_from_cov(qm(1, .3| .3, 1), n=200, varNames= c("X", "Y"), empirical= TRUE)
+
+m1 = umxRAM("corXY", data = tmp,
+	umxPath("X", with = "Y"),
+	umxPath(var = c("X", "Y"))
 )
-umxPower(trueModel = m1, update = "x_with_y", power = .8, method = "ncp")
+
+```
+
+2. Using `umxPower`, test the path you want to drop, 
+
+```R
+umxPower(m1, "X_with_Y", n= 50)
+#    method = empirical
+#         n = 50
+# sig.level = 0.05
+#     power = 0.6266667
+#    probes = 300
+# statistic = LRT
+```
+
+3. Now try the ncp method: instant and accurate if the model is valid.
+
+```R
+umxPower(m1, "X_with_Y", n= 50, method="ncp")
+#    method = ncp
+#         n = 50
+# sig.level = 0.05
+#     power = 0.5837944
+# statistic = LRT
+```
+
+Now, let's compare the results using a cor.test doing the same thing?
+
+```R
+pwr::pwr.r.test(n = 50, r = .3)
+#           n = 50
+#           r = 0.3
+#   sig.level = 0.05
+#       power = 0.5715558
+# alternative = two.sided
 ```
 
 ### 1. What is the power to detect a path is different from zero given N=1000, and alpha=.05?
@@ -68,35 +108,30 @@ m1 = umxRAM(data = df, "#mpg_model
 	wt ~~ engine_litres"
 )
 
-m2 = umxPower(m1, "engine_litres_to_mpg")
+umxPower(m1, "engine_litres_to_mpg", n= 30)
+
+   method = empirical
+        n = 30
+    power = 0.46
+   probes = 300
+sig.level = 0.05
+statistic = LRT
 
 ```
 
-```r
-# solve for N
-umxPower(trueModel= , update = "engine_litres_to_mpg", sig.level = .05, power = .8, method = c("empirical", "ncp"))
-# umxPower(trueModel=, update= , n=, sig.level=.05, power=.8, method= c("empirical", "ncp"))
-
-```
-
-### 2. What is the power to detect One Factor.A[1,6] is different from zero given N=1000, and alpha=.05?
-
-This next snippet, however, is asking:
-    “At n= 1000, what is the smallest difference (in either direction?) from the value it is fixed at, which I would have power = 0.8 to detect a difference in fit between falseModel (in which a certain parameter is fixed at a value we consider null or wrong) and trueModel (in which the parameter is free)”?
-
-It works just like umxModify
+Now let's solve for N to give us 80% power.
 
 ```r
-umxPower(model = m1, update = "One Factor.A[1,6]", values = .3, n = 1000)
-```
+umxPower(m1, update = "engine_litres_to_mpg", power = .8, method = "ncp")
 
-*note*: In OpenMx, you can say:
+####################
+# Estimating n #
+####################
 
-```r
-umxPower(trueModel = m1, update = "x_with_y", power = .8, method = "ncp")
-m2 = mxGenerateData(m1, nrow=35, returnModel=TRUE)
-m2 = umxModify(m1, "x_with_y")
-mxPower(trueModel= m1, falseModel= m2, n = 1000)
-mxPowerSearch(trueModel= m1, falseModel= m2)
+   method = ncp
+        n = 68
+    power = 0.8
+sig.level = 0.05
+statistic = LRT
 
 ```
