@@ -89,16 +89,12 @@ Here are some of the most important.
 	* umx_trim
 7. Miscellaneous Data Functions
 	* umxHetCor
-	* umxPadAndPruneForDefVars
 	* umx_as_numeric
 	* umx_cont_2_ordinal
-	* umx_cov2raw
 	* umx_lower2full
-	* umx_make_bin_cont_pair_data
-	* umx_merge_CIs
-	* umx_read_lower
+	* umx_make_raw_from_cov
 	* umx_residualize
 	* umx_round
-	* umx_scale_wide_twin_data
 	* umx_scale
-	* umx_swap_a_block
+	* umx_scale_wide_twin_data
+	* umx_read_lower
