@@ -42,7 +42,9 @@ To emulate the `pwr.r.test` example, you would run a `trueModel`: A generating m
 You can then request a `umxPower` test, updating "X_with_Y" set to 0.
 
 
-1. Run model with true correlation (.3)
+### Demonstration
+
+**First**: Make and run a model of the true correlation (.3)
 
 ```R
 
@@ -55,7 +57,7 @@ m1 = umxRAM("corXY", data = tmp,
 
 ```
 
-2. Using `umxPower`, test the path you want to drop, 
+**Next**: Using `umxPower`, test the path you want to drop, 
 
 ```R
 umxPower(m1, "X_with_Y", n= 50, method="empirical")
@@ -67,7 +69,7 @@ umxPower(m1, "X_with_Y", n= 50, method="empirical")
  statistic = LRT
 ```
 
-3. Now try the ncp method: instant and accurate if the model is valid.
+We can also take advantage of the noncentrality parameter, to run power. This is near-instant and accurate if the model is valid.
 
 ```R
 umxPower(m1, "X_with_Y", n= 50, method="ncp")
@@ -78,7 +80,7 @@ umxPower(m1, "X_with_Y", n= 50, method="ncp")
  statistic = LRT
 ```
 
-Now, let's compare the results using a cor.test doing the same thing?
+Now, let's compare the results using a `cor.test` doing the same thing?
 
 ```R
 pwr::pwr.r.test(n = 50, r = .3)
@@ -89,7 +91,7 @@ pwr::pwr.r.test(n = 50, r = .3)
  alternative = two.sided
 ```
 
-### 1. What is the power to detect a path is different from zero given N=1000, and alpha=.05?
+### Another example
 
 If someone publishes this simple model claiming that larger engines lower miles/gallon in vehicles, what power do we have to detect `engine_litres_to_mpg` is > 0 if we replicate with the same `n`, and assume that the obtained effect is the true one? 
  
@@ -103,7 +105,11 @@ m1 = umxRAM(data = df, "#mpg_model
 	mpg ~ engine_litres + wt
 	wt ~~ engine_litres"
 )
+```
 
+And test power:
+
+```R
 umxPower(m1, "engine_litres_to_mpg", n= 30, method = "empirical")
 
    method = empirical
@@ -131,7 +137,16 @@ statistic = LRT
 
 ```
 
+Finally, we can make a table showing how power changes across n:
+
 ```r
+tmp = umx_make_raw_from_cov(qm(1, .3| .3, 1), n=200, varNames= c("X", "Y"), empirical= TRUE)
+
+m1 = umxRAM("corXY", data = tmp,
+	umxPath("X", with = "Y"),
+	umxPath(var = c("X", "Y"))
+)
+
 umxPower(m1, update = "X_with_Y", tabulatePower = TRUE)
 
            N     power lower upper
