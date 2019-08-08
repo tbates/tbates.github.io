@@ -39,7 +39,7 @@ mxPowerSearch(trueModel= m1, falseModel= m2)
 
 ```r
 # solve for N
-umxPower(trueModel=,update= "engine_litres_to_mpg",sig.level=.05,power=.8, method= c("empirical", "ncp"))
+umxPower(trueModel=m1 ,update= "engine_litres_to_mpg",sig.level=.05,power=.8, method= c("empirical", "ncp"))
 # umxPower(trueModel=,update= ,n=,sig.level=.05,power=.8, method= c("empirical", "ncp"))
 
 ```
