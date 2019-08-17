@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Factor scores"
+title: "umxRAM with Ordinal Data"
 
 comments: true
 categories: advanced
