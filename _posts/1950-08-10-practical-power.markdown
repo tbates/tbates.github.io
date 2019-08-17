@@ -15,11 +15,11 @@ This post covers:
 1. Computing power to detect a difference between 2 models.
 2. Computing power given a certain `n`.
 
-As of 2019-08-01, `umx` supports power calculations for the `umxACE` model.
+`umx` supports power calculations for the `umxACE` model (via `power.ACE.test`) and a generic `umxPower` function, which can handle a range of power-related questions given a trueModel, and a parameter which you wish to drop.
 
-## The basic problem
+## Comparing two models with umxPower
 
-R has great support for power. For instance, testing power to detect a correlation of .3 in a sample of 36 subjects, R quickly tells us we're going to need some more subjects...
+`R` has great support for power. For instance, testing power to detect a correlation of .3 in a sample of 36 subjects, R quickly tells us we're going to need some more subjects...
 
 ```R
 pwr::pwr.r.test(n = 36, r = .3)
@@ -30,26 +30,31 @@ pwr::pwr.r.test(n = 36, r = .3)
     alternative = two.sided
 ```
 
-Power for SEM is rather more complex as the models are arbitrary in the number of relations in the model. Many more questions can also be asked than, say, `pwr.t.test` could answer. 
+Computing power for SEM is rather more complex, as the models are arbitrary. Many more questions can also be asked than, say, `pwr.t.test` could answer. 
 
-`umx`'s `umxPower` tackles this by using an interface very similar to `umxModify`. You offer up a true model, and paths that you want test.
+`umxPower` tackles this by using an interface very similar to `umxModify`. You offer up a true model, and paths that you want test.
 
 ```R
-umxPower(trueModel = , update = "path_to_test", sig.level = .05, power = .8, method = c("empirical", "ncp"))
+umxPower(trueModel = , update = "path_to_test", n= , power = , sig.level = .05, method = c("ncp", "empirical"))
 ```
 
-To emulate the `pwr.r.test` example, you would run a `trueModel`: A generating model with a covariance of `X` with `Y`. 
-You can then request a `umxPower` test, updating "X_with_Y" set to 0.
+To emulate the `pwr.r.test` example, you would build a `trueModel` of two manifests ("X", and "Y"), with a covariance between them equal to r= .3.
+You can then input this to `umxPower` test, setting update to "X_with_Y" (value= 0 is the default for updated parameters).
 
 
-### Demonstration
+### Demonstration: Power to detect a correlation of .3 between two variables: X and Y
 
 **First**: Make and run a model of the true correlation (.3)
 
+Make data for the model (this can be tricky for more complex models. the easiest solution is often to use the model with mxGenerateData to generate data corresponding to the model).
+
 ```R
-
 tmp = umx_make_raw_from_cov(qm(1, .3| .3, 1), n=200, varNames= c("X", "Y"), empirical= TRUE)
+```
 
+Build the model: in this case a correlation
+
+```R
 m1 = umxRAM("corXY", data = tmp,
 	umxPath("X", with = "Y"),
 	umxPath(var = c("X", "Y"))
@@ -61,13 +66,17 @@ m1 = umxRAM("corXY", data = tmp,
 
 ```R
 umxPower(m1, "X_with_Y", n= 50, method="empirical")
+```
+
+After a few moments, this yields:
+
     method = empirical
          n = 50
  sig.level = 0.05
      power = 0.6266667
     probes = 300
  statistic = LRT
-```
+
 
 We can also take advantage of the noncentrality parameter, to run power. This is near-instant and accurate if the model is valid.
 
@@ -141,35 +150,36 @@ statistic = LRT
 Finally, we can make a table showing how power changes across n:
 
 ```r
-tmp = umx_make_raw_from_cov(qm(1, .3| .3, 1), n=200, varNames= c("X", "Y"), empirical= TRUE)
+
+tmp = umx_make_raw_from_cov(qm(1, .3| .3, 1), n= 200, varNames= c("X", "Y"), empirical= TRUE)
 
 m1 = umxRAM("corXY", data = tmp,
 	umxPath("X", with = "Y"),
 	umxPath(var = c("X", "Y"))
 )
 
-umxPower(m1, update = "X_with_Y", tabulatePower = TRUE)
+umxPower(m1, update = "X_with_Y", explore = TRUE)
 
-           N     power lower upper
-1   17.68281 0.2524566    NA    NA
-2   25.35621 0.3398249    NA    NA
-3   33.02962 0.4227884    NA    NA
-4   40.70303 0.4997667    NA    NA
-5   48.37644 0.5698807    NA    NA
-6   56.04984 0.6327761    NA    NA
-7   63.72325 0.6884764    NA    NA
-8   71.39666 0.7372651    NA    NA
-9   79.07006 0.7795929    NA    NA
-10  86.74347 0.8160076    NA    NA
-11  94.41688 0.8471017    NA    NA
-12 102.09028 0.8734748    NA    NA
-13 109.76369 0.8957086    NA    NA
-14 117.43710 0.9143494    NA    NA
-15 125.11050 0.9298992    NA    NA
-16 132.78391 0.9428105    NA    NA
-17 140.45732 0.9534851    NA    NA
-18 148.13072 0.9622754    NA    NA
-19 155.80413 0.9694872    NA    NA
-20 163.47754 0.9753837    NA    NA
+        N power
+1   17.68  0.25
+2   25.36  0.34
+3   33.03  0.42
+4   40.70  0.50
+5   48.38  0.57
+6   56.05  0.63
+7   63.72  0.69
+8   71.40  0.74
+9   79.07  0.78
+10  86.74  0.82
+11  94.42  0.85
+12 102.09  0.87
+13 109.76  0.90
+14 117.44  0.91
+15 125.11  0.93
+16 132.78  0.94
+17 140.46  0.95
+18 148.13  0.96
+19 155.80  0.97
+20 163.48  0.98
 
 ```
