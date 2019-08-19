@@ -60,32 +60,29 @@ The next line shows how `umxACE` allows the user to easily build an ACE model wi
 We could conduct this same modeling using only covariance data, offering up suitable covariance matrices to `mzData` and `dzData`, and entering the number of subjects in each via `numObsDZ` and `numObsMZ`.
 
 ```r
-m1 = umxACE(selDVs = "wt1", "wt2", sep="", dzData = dz, mzData = mz)
+m1 = umxACE(selDVs = c("wt"), sep = "", dzData = dz, mzData = mz)
 ```
         
-This model can be run:
+By default the model will run itself
+
+You can plot with:
 
 ```r
-m1 = mxRun(m1) # Run the model
-```
-and then plotted:
-
-```r
-plot(m1) # output shown in below
+plot(m1) # output shown below
 ```
 
 <img src="/media/umxTwin/weight_ACE_plot.png" width="330" height="337" alt="ACE_uni_plot">
 
 
-Or summarized in table and graphical form:
+`umxSummary` provides a summary table:
 
 `umxSummary(m1)`
 
 -2 × log(Likelihood) = 12186.28 (df = 4)
 
-|    |    a1|c1 |    e1|
-|:---|-----:|:--|-----:|
-|wt1 | -0.92|.  | -0.39|
+|      |       a1 | c1 |    e1  |
+|:----|---------:|:----|--------:|
+| wt1 | -0.92 | .    | -0.39 |
 
 Standardized solution
 
