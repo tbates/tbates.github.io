@@ -1,20 +1,18 @@
 ---
 layout: post
-title: "Definition Variables in umxRAM"
+title: "Definition variables in umxRAM"
 
 comments: true
 categories: advanced
 ---
 
 
-install_github("r-lib/roxygen2")
-
-# Definition variables in the RAM framework
-
-We're used to seeing measured variables as manifests in our models.
+We're used to seeing measured variables as manifests in our models, like this:
 
 ```R
-m1 = umxRAM("manifest",  umxPath(v.m. = "mpg"), data = mtcars)
+m1 = umxRAM("my manifest model",data = mtcars,
+	umxPath(v.m. = "mpg")
+)
 plot(m1)
 ```
 ![manifest](/media/definition_variables/manifest.png "Variance of a manifest")
@@ -35,6 +33,9 @@ See how this is handled: umx creates a latent variable with variance fixed at ze
 
 ```R
 umxPath(defn = "mpg")
+```
+
+```R
 mxPath def_mpg <-> def_mpg [value=0, free=FALSE, lbound=0]
 
 mxPath one -> def_mpg [value=0, free=FALSE, label='data.mpg']
@@ -54,3 +55,4 @@ m1 = umxRAM("my name my way", data = mtcars,
 plot(m1)
 ```
 
+![def](/media/definition_variables/named_def.png "Definition variable with an arbitrary name")
