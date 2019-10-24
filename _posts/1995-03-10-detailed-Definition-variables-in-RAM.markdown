@@ -27,7 +27,7 @@ m1 = umxRAM("manifest and definition", data = mtcars,
 plot(m1)
 ```
 
-![def](/media/definition_variables/def.png "Definition variable as a data.labeled latent")
+![def](/media/definition_variables/manifest_and_definition.png "Definition variable as a data.labeled latent")
 
 See how this is handled: umx creates a latent variable with variance fixed at zero, and a mean fixed at zero, but sets the label of the mean to data.mpg.
 
