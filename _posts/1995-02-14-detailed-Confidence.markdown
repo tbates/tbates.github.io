@@ -36,7 +36,7 @@ gear_with_gear       NA     0.527     0.866          NA           0
 ```
 
 
-PS: OpenMx has a confint method (this used to be how to access umx's confint methods). It returns SE-based bounds
+PS: OpenMx has a `confint` method: It returns SE-based bounds
 
 ```r
 confint(m1, run = TRUE) # lots more to learn about ?confint.MxModel
@@ -66,7 +66,7 @@ umxConfint(m1, run = TRUE, level = .99)
 ```
 
 ### run = FALSE
-By default umxConfint doesn't run the model (that's because CIs can be computationally intensive). Might change in future.
+By default `umxConfint` doesn't run the model (that's because CIs can be computationally intensive). Might change in future.
 
 ```r
 umxConfint(m1, run = FALSE) 
@@ -74,7 +74,7 @@ umxConfint(m1, run = FALSE)
 
 ###  showErrorcodes = FALSE,
 
-By default, we don't show the errorcodes. Turn this on to see them (if any)
+By default, we don't show the error codes. Turn this on to see them (if any)
 
 ```r
 umxConfint(m1, run = TRUE, showErrorcodes = TRUE) 
