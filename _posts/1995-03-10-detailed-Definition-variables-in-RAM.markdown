@@ -1,0 +1,66 @@
+---
+layout: post
+title: "Definition variables in umxRAM"
+
+comments: true
+categories: advanced
+---
+
+
+We're used to seeing measured variables as manifests in our models, like this:
+
+```R
+m1 = umxRAM("my manifest model",data = mtcars,
+	umxPath(v.m. = "mpg")
+)
+plot(m1)
+```
+![manifest](/media/definition_variables/manifest.png "Variance of a manifest")
+
+You can also use definition variables in RAM. A definition variable is a variable that takes a row-specific value in the model.
+
+```R
+m1 = umxRAM("manifest and definition", data = mtcars,
+	umxPath(v.m. = "mpg"),
+	umxPath(defn = "mpg")
+)
+plot(m1)
+```
+
+*Note*, this model doesn't yet serve a useful purpose: It just shows how to add a definition variable to a model.
+
+![def](/media/definition_variables/manifest_and_definition.png "Definition variable as a data.labeled latent")
+
+See how this is handled: umx creates a latent variable with variance fixed at zero, and a mean fixed at zero, but sets the label of the mean to data.mpg.
+
+```R
+umxPath(defn = "mpg")
+```
+
+```R
+mxPath def_mpg <-> def_mpg [value=0, free=FALSE, lbound=0]
+
+mxPath one -> def_mpg [value=0, free=FALSE, label='data.mpg']
+```
+
+That means the model will use the subject-specific value of mpg in the model. It also means the model will drop all rows where the definition variable is NA.
+
+*Note*, to avoid confusing the latent variable created by umx with the manifest variable, umx names the latent "def_"
+so you can refer to the definition variable as 'def_mpg'
+
+If you want, you can set your own name for the definition variable:
+
+```R
+m1 = umxRAM("my name my way", data = mtcars,
+	umxPath(defn = "defMPG", label= "mpg")
+)
+plot(m1)
+```
+
+![def](/media/definition_variables/named_def.png "Definition variable with an arbitrary name")
+
+### To be added to this blog
+
+1. A moderation example: x->y; mod-> y; x*mod->y
+2. The same thing using a product column (just a column containing X * Moderator for each row)
+
