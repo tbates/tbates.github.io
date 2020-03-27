@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Simulation & power"
+title: "Power"
 
 comments: true
 categories: technical
