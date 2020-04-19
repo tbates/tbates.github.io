@@ -49,9 +49,9 @@ r1 = umx_residualize(mpg ~ cyl + I(cyl^2) + disp, data = mtcars)
 
 ### Wide Data
 
-A common data format for `umx` is wide: 1-family per row for twin data. This complixifies normal approaches to residualization.
+A common data format for `umx` is wide: 1-family per row for twin data. This complex-ifies normal approaches to residualization.
 
-You MUST residualise data for both twins using the same beta weights. This means making the data long, doing the model, get the residualization results, then setting the data back to wide format.
+You MUST residualize data for both twins using the same beta weights. This means making the data long, doing the model, get the residualization results, then setting the data back to wide format.
 
 ```R
 twinData$MPQAchievement_T1 <- residuals(lm(Achievement_T1 ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude))                                                    
@@ -74,6 +74,7 @@ twinData = umx_residualize(Achievement ~ Sex + Age + I(Age^2), suffix = "_T", da
 
 ```r
 twinData = umx_residualize(c("Achievement", "Motivation"), c("Sex", "Age"), suffix = "_T", data = twinData)
+```
 
 `umx_residualize` does this in one line:
 
