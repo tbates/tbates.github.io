@@ -33,15 +33,17 @@ We often want to residualize several variables prior to analysis. In twin-data, 
 
 Here's residualization using base `R`:  Here, you need to remember to set the `na.action` to "na.exclude", and then do the residualization as a second step after the modelling.
 
-```R
+```RSplus
 m1 = lm(mpg ~ cyl + disp, data = mtcars, na.action = na.exclude)
 r2$mpg = residuals(m1)
+
 ```
 
 Compare this to the same kind of thing done using `umx_residualize`:
 
-```R
+```SplusR
 r1 = umx_residualize(mpg ~ cyl + I(cyl^2) + disp, data = mtcars)
+
 ```
 
 
@@ -124,7 +126,7 @@ m1 <- umxRAM("scaled", data = df,
 
 A common workflow is to standardize all variables. *note*: Plot can give you a standardized output: just say` std=TRUE`
 
-```Rsplus
+```RSplus
 df = umx_scale(mtcars)
 m1 <- umxRAM("scaled", data = df,
 	umxPath(cov = c("disp", "wt")),
