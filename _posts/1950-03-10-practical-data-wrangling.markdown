@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Data Wrangling"
+title: "Data Wrangling (scale, rename, residualize data, twin data, umxAPA)"
 
 comments: true
 categories: technical
@@ -11,22 +11,56 @@ categories: technical
 <a name="overview"></a>
 # Overview
 
-There are a range of cases where it is useful to manipulate data for modeling: for convenience (such as re-naming variables), to help ensure good solutions, e.g., by re-scaling variables, and in more focussed cases, like using the same scale factor for repeated measures in wide (e.g. twin) data. This post covers `umx` support for these needs.
+This post covers `umx_residualize`, `umx_scale`, `umx_rename`
 
-We saw back in basic modeling post that data can vary substantially in mean and variance, and that this can make life hard for the optimizer.
+There are a range of cases where it is useful to manipulate data for modeling: for convenience (e.g. re-naming variables), to help ensure good solutions, e.g., by re-scaling variables, scaling specialized data e.g. twin data. This post covers `umx` support for these needs.
+
 
 ### umx_residualize
 
-We often want to residualize several variables prior to analysis. In twin-data, it is critical to use the same residual formula for all copies of a variable in the wide dataset. This can lead to complex, error-prone and lengthy code. For instance, this is one way to residualize two variables:
+A common need is to residualize variables prior to modeling. You might, for instance, want to control for (residualize) the effects of age on depression scores.
 
-```r
+This post covers:
+
+1. Simple residualization using `umx_residualize`
+2. Residualizing twin (wide) data using `umx_residualize`
+
+We often want to residualize several variables prior to analysis. In twin-data, it is critical to use the same residual formula for all copies of a variable in the wide dataset. This can lead to complex, error-prone and lengthy code. For instance, this is how one might think to residualize two variables in base-R:
+
+#### Simpler tasks: a formula interface to residualization
+
+`R` has great support for linear modeling with an insightful formula interface. Getting residuals can still benefit from a helper, however.
+
+Here's residualization using base `R`:  Here, you need to remember to set the `na.action` to "na.exclude", and then do the residualization as a second step after the modelling.
+
+```R
+m1 = lm(mpg ~ cyl + disp, data = mtcars, na.action = na.exclude)
+r2$mpg = residuals(m1)
+```
+
+Compare this to the same kind of thing done using `umx_residualize`:
+
+```R
+r1 = umx_residualize(mpg ~ cyl + I(cyl^2) + disp, data = mtcars)
+```
+
+
+### Wide Data
+
+A common data format for `umx` is wide: 1-family per row for twin data. This complixifies normal approaches to residualization.
+
+You MUST residualise data for both twins using the same beta weights. This means making the data long, doing the model, get the residualization results, then setting the data back to wide format.
+
+```R
 twinData$MPQAchievement_T1 <- residuals(lm(Achievement_T1 ~ Sex_T1 + Age_T1 + I(Age_T1^2), data = twinData, na.action = na.exclude))                                                    
 twinData$MPQAchievement_T2 <- residuals(lm(Achievement_T2 ~ Sex_T2 + Age_T2 + I(Age_T2^2), data = twinData, na.action = na.exclude))
 ```
 
-One complex line of code for each twin, perhaps repeated for 10 more variables: 20 lines of complex code&hellip; Lot&#x27;s of opportunity for a tupo &#x263A; You also have to remember to `na.exclude` your `lm`() call.
+One complex line of code for each twin, perhaps repeated for 10 more variables, generating 20-lines of complex code&hellip; Lot&#x27;s of opportunity for a tupo &#x263A; 
 
-But more than this: the residualization is undertaken separately on twin 1 and twin 2 - this is an error: what formula is applied to the variable for twin 1 must be done also for twin 2.
+You also have to remember to `na.exclude` your `lm`() call.
+
+But more than this: the **residualization separately on twin 1 and twin 2 is a massive error**: different betas are applied to the variable for twin 1 and twin 2. We would need to make the data long, generate betas for all family members, then take the data back out to wide. A pain.
 
 With `umx_residualise` this can be reduced in two ways. This one-line residualizes both twin's data, and doesn't require typing all the suffixes:
 
@@ -38,6 +72,11 @@ twinData = umx_residualize(Achievement ~ Sex + Age + I(Age^2), suffix = "_T", da
 
 ```r
 twinData = umx_residualize(c("Achievement", "Motivation"), c("Sex", "Age"), suffix = "_T", data = twinData)
+
+`umx_residualize` does this in one line:
+
+```R
+df= umx_residualize(var="DEP", covs="age", suffixes= c("_T1", "_T2"), data=df)
 ```
 
 ### umx_scale
@@ -98,6 +137,8 @@ plot(m1, mean=FALSE)
 
 ![scaled](/media/1_make_a_model/scaled.png "All scaled")
 
+`umxAPA(std=TRUE)` will also standardize many types of `lm`, `glm` etc.
+
 ### Renaming variables
 
 Above, in the process of getting a variable with smaller variance, we created the less cryptic "engine_litres" variable name. `umx` provides `umx_rename` to ease this more generally.
@@ -118,9 +159,5 @@ plot(m1, std=TRUE, mean = FALSE)
 ![renamed](/media/1_make_a_model/renamed.png "All renamed")
 
 
-e-mail me if you want more on scaling, or:
-
-1. TODO: A tutorial on residualizing regular or wide (e.g. twin data) with `umx_residualize` and `umx_scale_wide_twin_data`.
-2. TODO: A tutorial on going from wide to long and vice versa with `umx_long2wide` and `umx_wide2long`.
-3. TODO: A tutorial on data simulation with `umx_make_TwinData`, `umx_make_fake_data`, and `umx_make_MR_data`
+1. **TODO**: A tutorial on data simulation with `umx_make_TwinData`, `umx_make_fake_data`, and `umx_make_MR_data`
 
