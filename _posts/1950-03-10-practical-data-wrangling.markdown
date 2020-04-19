@@ -124,7 +124,7 @@ m1 <- umxRAM("scaled", data = df,
 
 A common workflow is to standardize all variables. *note*: Plot can give you a standardized output: just say` std=TRUE`
 
-```R
+```Rsplus
 df = umx_scale(mtcars)
 m1 <- umxRAM("scaled", data = df,
 	umxPath(cov = c("disp", "wt")),
