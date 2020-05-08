@@ -8,8 +8,6 @@ categories: technical
 
 <a name="top"></a>
 
-# Simulation
-
 Often, having simulated data can help explore an idea, or test an idea.
 
 This post covers:

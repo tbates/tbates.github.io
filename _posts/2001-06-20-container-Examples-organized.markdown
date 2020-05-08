@@ -23,18 +23,18 @@ categories: basic
 <p style="text-align: center;">This is a gallery of example models. To learn about installing umx, or take a basic tutorial, start at the home page.</p>
 
 
-*note*: This page expresses the goal for umx's coverage of core copy-and-paste model templates. Goal deadline to have it completed by end 2019.
+*note*: This page expresses the goal for umx's coverage of core copy-and-paste model templates. Goal deadline to have it completed by end 2021.
 
 ### Basic path-based models in `umx`
 * [umxPath](/advanced/1995/11/20/detailed-umxPath.html)
 * Making [Cholesky-style path connections](/models/twin/1980/06/15/twin-Cholesky.html) with `umxPath`
 
 ### Exploratory and Confirmatory Factor Analysis
-* Factor analysis with `umxFactanal`
-* Factor scores with `umxFactanal`
-* Confirmatory Factor Analysis with one or more factors
-* CFA with ordinal data
-* Joint ordinal/continuous factor analysis
+* ✓ Factor analysis with `umxFactanal`
+* ✓ Factor scores with `umxFactanal`
+* ✓ Confirmatory Factor Analysis with one or more factors with `umxRAM`
+* ✓ CFA with ordinal data (automagically handled with `umxRAM`)
+* ✓ Joint ordinal/continuous factor analysis  (automagically handled with `umxRAM`)
 
 ### SEM, indirect effects, mediation analysis
 * Regression with structural equation models
@@ -50,8 +50,7 @@ categories: basic
 <!-- * Test equating -->
 
 ### Multiple groups
-* [Multiple group analysis](/advanced/1995/02/15/detailed-Multigroup.html)
-* `[umxSuperGroup](/advanced/1995/02/15/detailed-Multigroup.html)`
+* ✓ `[umxSuperGroup](/advanced/1995/02/15/detailed-Multigroup.html)`
 
 ### Growth and change
 * [Growth model](https://tbates.github.io/models/1970/08/13/models-growth_curve.html)
@@ -86,18 +85,18 @@ categories: basic
 -->
 
 ### Modeling different types of Data correctly
-* Raw data
-* Weighted least squares
-* Polychoric correlations
-* Continuous variables
-* Ordinal variables
-* Joint ordinal & continuous variables
+* ✓ Raw data: supported in `umxRAM` and all twin Models
+* ✓ Weighted least squares: supported in `umxRAM` and all twin Models
+* ✓ Polychoric correlations: `umx_polychoric` and `umxHetCor`
+* ✓ Continuous variables: supported in `umxRAM` and all twin Models
+* ✓ Ordinal variables: supported in `umxRAM` and all twin Models
+* ✓ Joint ordinal & continuous variables: supported in `umxRAM` and all twin Models
 
 ### Modeling predictors, effects, definition variables, weights, missingness correctly
 * Extracting means, covariances, and thresholds
 * Definition variables
 <!-- * Fixed & random effects -->
-* Sample weights
+* ✓ Sample weights: handled in `umxACE` and other twin models
 <!-- * Missing data -->
 <!-- * Missing at random -->
 <!-- * Non-ignorable missingness -->
@@ -109,22 +108,21 @@ categories: basic
 * [Meta analysis](https://cran.r-project.org/web/packages/metaSEM/vignettes/Examples.html)
 
 ### Wrangling data: scaling, renaming, residualizing etc.
-* [Scaling Data]()
-* [Wrangling Data]()
-* [Renaming Data]()
-* [Residualizing Data]()
-* [Wide 2 long and long 2 wide]()
+* ✓ Scaling Data with `umxScale`
+* ✓ Renaming Data: `umx_rename`
+* ✓ Residualizing Data with `umx_residualise`, including twin data.
+* ✓ Wide 2 long and long 2 wide with `umx_long2wide` and `umx_wide2long`
 
 
 ### Twin Models
 * [ACE](/models/twin/1980/06/10/twin-umxACE.html) / [ADE](/models/twin/1980/06/10/twin-umxACE.html) 
-* ACEv
-* Common pathway umxCP
-* Independent pathway umxIP
-* Sex limitation
-* GxE interaction
-* Simplex
-<!-- * Direction of causation -->
+* ✓ `umxACEv`
+* ✓ Common pathway `umxCP`
+* ✓ Independent pathway `umxIP`
+* ✓ Sex limitation inc. multivariate with `umxSexlim`
+* ✓ GxE interaction with `umxGxE`, `umxGxEbiv`, and `umxGxEwindow`
+* ✓ Simplex: `umxSimplex`
+* ✓ Direction of causation: `umxDoc`
 <!-- * Two-stage Twin family models -->
 <!-- * Assortative mating models -->
 <!-- * Niche selection -->
@@ -138,14 +136,14 @@ categories: basic
 <!-- * More advanced powers -->
 
 ### Optimizers
-* Full Information Maximum Likelihood
-* Weighted least squares
+* ✓ Full Information Maximum Likelihood
+* ✓ Weighted least squares
 
 ### Parameter estimates and fit statistics
 * Goodness-of-fit
 <!-- * Getting chi-squared statistics with mxRefModels -->
-* Using mxSE to get standard errors of functions of free parameters
-* Using umxCI for profile likelihood confidence intervals
+* ✓ Using `mxSE` to get standard errors of functions of free parameters
+* ✓ Using `umxCI` for profile likelihood confidence intervals
 <!-- * Robust Standard Errors -->
 * Factor Scores
 <!-- * Jack-knifing -->
@@ -159,12 +157,11 @@ categories: basic
 <!-- * Data harmonization -->
 
 ### How to pick starting values
- * Let umx do it
- * Make an educated guess
- * Use mxAutoStart
+* Let `umx` do it
+* Use `mxAutoStart`
 
 ### How to modify Graphical output
-  * [How do control plot results](/advanced/1995/11/10/detailed-plot.html)?
+* [How do control plot results](/advanced/1995/11/10/detailed-plot.html)?
 
 #### Posts tagged as example models
 
