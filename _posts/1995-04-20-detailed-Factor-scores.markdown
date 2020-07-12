@@ -6,6 +6,33 @@ comments: true
 categories: advanced
 ---
 
+It is often useful to obtain scores for subjects on the latent variables in a model.
+
+A common use many are familiar with is scores from a factor analysis, e.g. `fact.anal`. But you can assign scores to subjects for arbitrary models.
+This tutorial covers both cases briefly, begining with `umxEFA`.
+
+`umx` provides `umxEFA` to conduct exploratory factor analysis, and this supports returning scores for subjects.
+Unlike `fact.anal` which doesn&rsquo;t allow missing data, umxEFA support scores even in data with missing cells.
+
+Here&rsquo;s a quick 2-factor model of some variables in the built-in `mtcars` data set:
+
+```r
+myVars = c("mpg", "disp", "hp", "wt", "qsec")
+x = umxEFA(mtcars[, myVars], factors =   2, rotation = "promax", scores= "Regression")
+x
+```
+
+| row | F1          | F2          |
+|:----|:------------|:------------|
+| 1   | -0.50791846 | -0.18514471 |
+| 2   | -0.33064492 |  0.06552157 |
+| 3   | -0.94419567 |  0.50718985 |
+| 4   | -0.15293406 |  0.65402567 |
+| 5   |  0.34436572 | -0.60262537 |
+| 6   |  0.00162507 |  0.96319721 |
+| 7   |  0.66518005 | -1.47386057 |
+| 8   | -0.35350661 |  1.42364717 |
+ 
 
 ```r
 require(umx)
