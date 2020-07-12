@@ -8,8 +8,10 @@ categories: advanced
 
 It is often useful to obtain scores for subjects on the latent variables in a model.
 
-A common use many are familiar with is scores from a factor analysis, e.g. `fact.anal`. But you can assign scores to subjects for arbitrary models.
-This tutorial covers both cases briefly, begining with `umxEFA`.
+A familiar method is `scores` from `fact.anal`. This has several limits: It&rsquo;s limited to 
+factor models and can&rsquo;t handle missing data. This tutorial covers both cases briefly, begining with `umxEFA`.
+
+#### Factor scores from factor analysis
 
 `umx` provides `umxEFA` to conduct exploratory factor analysis, and this supports returning scores for subjects.
 Unlike `fact.anal` which doesn&rsquo;t allow missing data, umxEFA support scores even in data with missing cells.
