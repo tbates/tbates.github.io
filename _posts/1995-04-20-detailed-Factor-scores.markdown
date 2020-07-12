@@ -14,7 +14,9 @@ factor models and can&rsquo;t handle missing data. This tutorial covers both cas
 #### Factor scores from factor analysis
 
 `umx` provides `umxEFA` to conduct exploratory factor analysis, and this supports returning scores for subjects.
-Unlike `fact.anal` which doesn&rsquo;t allow missing data, umxEFA support scores even in data with missing cells.
+Unlike `fact.anal` which doesn&rsquo;t allow missing data, `umxEFA` support scores even in data with missing cells.
+
+Like `fact.anal`, to get scores from `umxEFA` you simply set `scores = "Regression"`. `umxEFA` supports alternative methods for computing them.
 
 Here&rsquo;s a quick 2-factor model of some variables in the built-in `mtcars` data set:
 
@@ -25,7 +27,7 @@ x
 ```
 
 | row | F1          | F2          |
-|:----|:------------|:------------|
+|:----|------------:|------------:|
 | 1   | -0.50791846 | -0.18514471 |
 | 2   | -0.33064492 |  0.06552157 |
 | 3   | -0.94419567 |  0.50718985 |
@@ -33,44 +35,42 @@ x
 | 5   |  0.34436572 | -0.60262537 |
 | 6   |  0.00162507 |  0.96319721 |
 | 7   |  0.66518005 | -1.47386057 |
-| 8   | -0.35350661 |  1.42364717 |
+| ... | ...         |  ...        |
  
+
+#### Factor scores from arbitrary RAM models.
 
 ```r
 require(umx)
 data(demoOneFactor)
 
 manifests = names(demoOneFactor)
-m1 = umxRAM("OneFactor", data = demoOneFactor, type = "cov",
+m1 = umxRAM("OneFactor", data = demoOneFactor,
 	umxPath("G", to = manifests),
-	umxPath(var = manifests),
-	umxPath(var = "G", fixedAt = 1)
+	umxPath(v.m. = manifests),
+	umxPath(v1m0 = "G")
 )
-
 ```
 	
-### Add raw data and compute factor scores
+We can compute factor scores thus:
 
 ```r
-
-# Swap in raw data in place of summary data
-m2 = mxModel(m1, mxData(demoOneFactor, type = "raw"))
-
-# Estimate factor scores for the model
-fs = mxFactorScores(m2, 'Regression')
-
+fs = umxFactorScores(m1, 'Regression')
 ```
+| row | G     |
+|:----|------:|
+| 1   | -0.17 |
+| 2   | -0.11 |
+| 3   | -2.14 |
+| 4   | -0.16 |
+| 5   |  1.11 |
+| 6   |  0.11 |
+| 7   | -0.02 |
+| 8   |  0.93 |
 
 ### Create some missing data and compute factor scores
 
-All the data-points of demoOneFactor are present:
-
-```r
-all(complete.cases(demoOneFactor))
-# [1] TRUE
-```
-
-Let’s delete 10% from each column at random:
+All the data-points of demoOneFactor are present. Let&rsquo;s delete 10% from each column at random:
 
 ```r
 df = demoOneFactor
@@ -84,11 +84,21 @@ all(complete.cases(df))
 Run again with the missing data:
 
 ```r
-
-m2 <- mxModel(m1, mxData(df, type = "raw"))
-# Estimate factor scores for the model
-fs = mxFactorScores(m2, 'Regression')
-
+# 1. update model with new data
+m2 = mxModel(m1, mxData(df, type = "raw"))
+# 2. score factors
+fs = umxFactorScores(m2, 'Regression')
+umx_round(fs, digits=3)
 ```
+
+| row | G      |
+|----:|-------:|
+| 1   | -0.167 |
+| 2   | -0.106 |
+| 3   | -2.137 |
+| 4   | -0.157 |
+| 5   |  1.106 |
+| 6   |  0.110 |
+
 
 Just saved yourself $1000 buying Mplus for factor scores with missing data!
