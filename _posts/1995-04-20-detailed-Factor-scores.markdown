@@ -57,6 +57,7 @@ We can compute factor scores thus:
 ```r
 fs = umxFactorScores(m1, 'Regression')
 ```
+
 | row | G     |
 |:----|------:|
 | 1   | -0.17 |
