@@ -92,9 +92,15 @@ We'll use `umx` to build both models, and compare them.
 
 In `lm`, model 1 would be `mpg ~ disp + wt`. Model 2 would be `mpg ~ disp`
 
-[Sewall Wright](https://en.wikipedia.org/wiki/Sewall_Wright) invented SEM to allow us to think in explicit graphs. So, here's what that language implies:
+[Sewall Wright](https://en.wikipedia.org/wiki/Sewall_Wright) invented SEM to allow us to think in explicit graphs. So, here's what that language implies: in the figure "A model of Miles/gallon"
 
 ![model of mpg](/media/1_make_a_model/mpg_1a_theory.png "A model of Miles/gallon")
+
+
+<figure>
+  <img src="{{site.url}}/media//media/1_make_a_model/mpg_1a_theory.png" alt="model of mpg"/>
+  <figcaption>A model of Miles/gallon.</figcaption>
+</figure>
 
 ### Your first umxRAM model
 
