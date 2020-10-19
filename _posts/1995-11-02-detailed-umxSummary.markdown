@@ -13,7 +13,7 @@ At its simplest, just pass a model to `umxSummary` to receive a default summary:
 require(umx)
 manifests = names(demoOneFactor)
 
-m1 <- umxRAM("OneFactor", data = demoOneFactor,
+m1 = umxRAM("OneFactor", data = demoOneFactor,
 	umxPath(latents, to = manifests),
 	umxPath(v.m. = manifests),
 	umxPath(v1m0 = latents)
@@ -21,7 +21,7 @@ m1 <- umxRAM("OneFactor", data = demoOneFactor,
 ```
 
 ```R
-umxSummary(m1, showEstimates = "std")
+umxSummary(m1, std = TRUE)
 ```
 
 |name       | Estimate|   SE|
@@ -46,7 +46,7 @@ umxSummary(m1, showEstimates = "std")
 χ²(5) = 7.4, p = 0.193; CFI = 0.999; TLI = 0.999; RMSEA = 0.031
 
 
-By default raw parameters are shown, but standardized estimates can be requested, as above by using  `umxSummary(model, showEstimates = "std")`
+By default raw parameters are shown, but standardized estimates can be requested, as above by using  `umxSummary(model, std=TRUE)`
 
 For RAM models, the output can filter "NS" or "SIG" parameters:
 
@@ -65,7 +65,7 @@ umxSummary(model, refModels = mxRefModels(model, run = TRUE))
 
 ### Other parameters in umxSummary
 
-umxSummary(model, show = c("raw", "std", "both"), digits = 2, report = c("markdown", "html"), filter = c("ALL", "NS",
+umxSummary(model, std=F, digits = 2, report = c("markdown", "html"), filter = c("ALL", "NS",
   "SIG"), SE = TRUE, RMSEA_CI = FALSE)
 
 ## confint()
@@ -77,6 +77,8 @@ G_to_x1     0.36633842  0.427170822
 G_to_x2     0.46749315  0.538820807
 G_to_x3     0.53666526  0.616661746
 ```
+
+You can calculate "proper" Confidence intervals using `umxCI`.
 
 ## parameters()
 

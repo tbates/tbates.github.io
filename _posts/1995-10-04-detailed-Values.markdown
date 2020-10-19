@@ -20,7 +20,7 @@ As we saw in the introductory chapters, `umxRAM` does a good job at guessing sta
 ```r
 manifests = names(demoOneFactor)
 
-m1 <- umxRAM("One Factor", data = demoOneFactor,
+m1 = umxRAM("One Factor", data = demoOneFactor,
 	umxPath(latents, to = manifests, values = .5), # Start path estimate for these paths at .5
 	umxPath(var = manifests, values= .1), # Set starting values of manifest residuals to .1
 	umxPath(means = manifests, freeAt= 0), # Start values of manifest means at 0.

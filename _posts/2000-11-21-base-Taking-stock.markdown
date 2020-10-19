@@ -25,8 +25,6 @@ We've used:
 * umxSummary
 * plot
 * umxModify
-* mxModel
-* mxPath
 
 # Congratulations!
 
@@ -37,7 +35,7 @@ You can learn about umxPath, models, plot, summary in more detail in the [advanc
 We'll also cover:
 
 1. Multiple groups
-2. Twin models: umxACE, umxCP, umxIP, umxGxE
+2. Twin models: `umxACE`, `umxCP`, `umxIP`, `umxGxE`
 3. Factor scores (with missing data!)
 4. Ordinal and Binary data
 5. WLS
@@ -45,6 +43,6 @@ We'll also cover:
 7. Confidence intervals
 8. Specific model types
  * Mimic?
- * Simplex?
+ * Simplex
  * Bi-factor?
 9. Lower-level helpers

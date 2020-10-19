@@ -8,15 +8,11 @@ categories: advanced
 
 ### Why make a new model when you can update one you already have?
 
-In `umx`, models can be modified. Want to add a new path? Go ahead - no need to start from scratch. You can add, or remove anything, re-run, and compare. 
+This tutorial covers using `umxModify`. 
 
-This tutorial covers using `umxModify` to do this.
-
-The easiest and most powerful way to modify `umx` models is with the `umxModify` function.
+In `umx`, models can be modified. Want to free a path? Go ahead - no need to start from scratch. You can add, or remove most things, and re-run, and compare in one call. 
 
 `umxModify` is a convenience function to add, set, or drop parameters, re-name, and re-run a model.
-
-Its main benefit is compactness. `umxModify()` can modify, run, and compare all in 1-line. So, the equivalent to the above three lines is:
 
 
 <a name="overview"></a>
@@ -26,7 +22,7 @@ For what follows, we'll need a model, so:
 ```r
 manifests = c("mpg", "disp", "gear")
 
-m1 <- umxRAM("mpg_model",data = mtcars, type = "cov",
+m1 = umxRAM("mpg_model",data = mtcars, type = "cov",
 	umxPath(c("disp", "gear"), to = "mpg"),
 	umxPath("disp", with = "gear"),
 	umxPath(var = manifests)
@@ -64,63 +60,68 @@ You can then compare the two models
 umxCompare(m1, m2)
 ```
 
-You can also do this with `umxModify`:
-
-```R
-m2 = umxModify(m1, umxPath("gear", to = "mpg", fixedAt = 0), comp=T)
-```
-
 ### 2. Use umxModify() and labels 
 
 The easiest and most powerful way to modify models is with umx's `umxModify` function. 
 
-`umxModify` is a convenience function to add, set, or drop parameters, re-name, and re-run a model.
-
-Its main benefit is compactness. `umxModify()` can modify, run, and compare all in 1-line.
-
-For example, this one-liner drops a path labelled "gear_to_mpg", tests the effect, and returns the updated model:
+For example, this one-liner drops the path "gear_to_mpg", tests the effect, and returns the updated model:
 
 ```r
 m2 = umxModify(m1, update = "gear_to_mpg", name = "drop effect of gear", comparison = TRUE)
 ```
 
-χ²(1) = -0.02, p = 1.000; CFI = 1.021; TLI = 1.062; RMSEA = 0"
+And viola: 
+
+|name           |  Estimate|       SE|
+|:--------------|---------:|--------:|
+|disp_to_mpg    |    -0.041|    0.005|
+|mpg_with_mpg   |     9.911|    2.478|
+|disp_with_disp | 14880.775| 3720.133|
+|disp_with_gear |   -49.215|   17.914|
+|gear_with_gear |     0.527|    0.132|
+
+χ²(1) = -0.03, p = 1.000; CFI = 1.021; TLI = 1.063; RMSEA = 0
 
 
-|Model               | EP|∆ -2LL    |∆ df |p     |        AIC|Compare with Model |
-|:-------------------|--:|:---------|:----|:-----|----------:|:------------------|
-|mpg_model           |  6|          |     |      | -0.0319091|                   |
-|drop effect of gear |  5|0.0145591 |1    |0.904 | -2.0173500|mpg_model          |
+|Model     | EP|Δ -2LL    |Δ df |p     |       AIC|Δ AIC      |Compare with Model |
+|:---------|--:|:---------|:----|:-----|---------:|:----------|:------------------|
+|mpg_model |  6|          |     |      | -0.047875|0          |                   |
+|mpg_model |  5|0.0145592 |1    |0.904 | -2.033316|-1.9854408 |mpg_model          |
+
 
 
 
 ### More advanced options in umxModify
 
 1. Pattern matching with regex
-A powerful feature of `umxModify` is regular expressions. These let you drop collections of paths by matching patterns. So, 
-
-```r
-m2 = umxModify(m1, regex = "gear_to_.*", name = "drop all paths from gear", comparison = TRUE)
-```
-
-Will drop all paths with labels matching  "gear_to_.*". This is particularly powerful with twin models.
-
 So far we've seen update by matching a label:
 
 ```r
 fit2 = umxModify(fit1, update = "Cs", name = "newModelName") 
 ```
-Update by matching a regular expression:
+
+A powerful additional feature of `umxModify` is regular expressions. These let you drop collections of paths by matching patterns. 
+
+So, to drop all paths with labels matching  "gear_to_" followed by any characters, you could say:
+
+```r
+m2 = umxModify(m1, regex = "gear_to_.*", name = "drop all paths from gear", comparison = TRUE)
+```
+
+*nb*: This is particularly powerful updating twin models with many paths to drop.
+
+Regular expressions are very powerful.
 
 ```r
 fit2 = umxModify(fit1, update = "C[sr]", regex = TRUE, name = "drop_Cs_andCr")
 ```
 
-and update by passing in a new object to be added to the model
+You can also update a model by passing in new objects to be added to the model, like a CI request:
 
 ```r
 fit2 = umxModify(fit1, update = mxCI("Cs"), name = "withCI")
 ```
+
 Also, we seen that you can request the model comparison summary at the same time:
 
 To run `umxCompare`() and report on the old and new models, just set "comparison = TRUE"
@@ -155,7 +156,7 @@ m2 = umxModify(m1, regex = "gear_to_.*", name = "drop paths from gear", tryHard 
 If you want to update a label, you can do so as follows: In this case, setting to labels to a single newlabel
 
 ```r
-m2 = umxModify(m1, update = c("gear_to_mpg", "disp_to_mpg"), newlabels = "inputs_to_mpg", name = "equate paths", tryHard = "yes")
+m2 = umxModify(m1, update = c("gear_to_mpg", "disp_to_mpg"), newlabels = "inputs_to_mpg", name = "equated_paths", tryHard = "yes")
 ```
 *note*: this updates the model in raw units: standardized effects will likely differ. Best to work in standardized data for this sort of change.
 

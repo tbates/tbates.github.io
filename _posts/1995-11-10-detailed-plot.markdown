@@ -25,7 +25,7 @@ plot(m1)
 
 ![model of mpg](/media/plot_the_plot_thickens/1simpleModel.png "A model of Miles/gallon")
 
-`plot` writes a "[dot](http://graphviz.org/content/dot-language)" file. This is another Bell Labs invention (just like R's predecessor "S"))to specify "graphs" -for our purposes, objects (nodes) linked by lines ("edges")- and lay them out (not an easy problem). By default, it opens courtesy of Richard Iannone&rsquo;s fabulous [DiagrammR](https://CRAN.R-project.org/package=DiagrammeR) package.
+`plot` writes a "[dot](http://graphviz.org/content/dot-language)" file. This is another Bell Labs invention (just like R's predecessor "S") to specify "graphs" -for our purposes, objects (nodes) linked by lines ("edges")- and lay them out (not an easy problem). By default, it opens courtesy of Richard Iannone&rsquo;s fabulous [DiagrammR](https://CRAN.R-project.org/package=DiagrammeR) package.
 
 ## Inside a Graphviz file
 
@@ -73,17 +73,21 @@ So we can make the above example into this in about 1 minute (I timed it):
 The parameters of plot give you a lot of flexibility. You can set the name of the file (it defaults to the model name), show unstandardised output, set the rounding for loadings, choose to show labels rather than estimates of paths, show or hide fixed paths, and means, and error variance.
 
 ```R
-plot(model, std = FALSE, digits = 2, file = "name", pathLabels = c("none", "labels", "both"),
-  showFixed = FALSE, showMeans = TRUE, showError = TRUE, ...)
+plot(model, std = F, means = T, digits = 2, file = "name", ...)
 
 ```
 
+More advanced controls include showing labels, not showing fixed paths, or modifying how residuals are drawn with `resid = c("circle", "line", "none")`
+
+These are described below. 
+
+  
 #### Standardized output and digit rounding
 
-You can optionally output standardised output using `std = TRUE`, and control the number of values after the decimal with `digits = ` (as well as `strip = TRUE` to strip off leading "0." from parameter values - can be helpful for cluttered figures).
+You can optionally output standardised output using `std = TRUE`, and control the number of values after the decimal with `digits = ` (as well as `strip_zero = TRUE` to strip off leading "0." from parameter values - can be helpful for cluttered figures).
 
 ```r
-plot(m1, std=FALSE, digits = 3)
+plot(m1, std = TRUE, digits = 3, strip_zero = TRUE)
 ```
 
 #### Plot style: residuals, means, fixed paths
@@ -96,9 +100,11 @@ For clarity you can turn this off all together with `resid = "none"`.  You can a
 
 ```r
 resid = c("circle", "line", "none")
-showFixed = FALSE, FALSE
-showMeans = FALSE, TRUE
+fixed = FALSE, 
+means = FALSE,
 ```
+
+You can control how lines are drawn with the "splines" option. Users can also force the plot engine to group sets of variables at the top (`min`=), `same`  or bottom (`max`) of the plot, which helps layout complex models.
 
 #### File output and filename
 
