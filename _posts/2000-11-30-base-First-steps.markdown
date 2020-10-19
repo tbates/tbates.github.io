@@ -18,6 +18,7 @@ If you haven't installed umx, [do that now](/basic/2000/12/10/base-Install.html)
 # load umx library
 library("umx")
 ```
+
 *note*: umx help is not just boilerplate documentation: All functions have real-world examples and tips!.
 
 <a name="overview"></a>
@@ -41,7 +42,7 @@ umxSummary(m2, show = "std")
 # Update m2 by dropping mpg ~ displacement, which has label "disp_to_mpg" 
 m3 = umxModify(m2, update = "disp_to_mpg", name = "drop effect of capacity", comparison = TRUE)
 
-```
+```r
 
 **umxSummary table of model 2**
 
@@ -119,9 +120,9 @@ m1 <- umxRAM("my_first_model", data = mtcars,
 ```
 
 These two steps of giving a variable a variance and a mean are so common, umx has a shortcut "v.m." 
-```R
 
-m1 <- umxRAM("independence_model", data = mtcars,
+```R
+m1 = umxRAM("independence_model", data = mtcars,
 	umxPath(v.m. = c("disp", "wt", "mpg"))
 )
 ```
