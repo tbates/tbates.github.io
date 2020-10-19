@@ -108,8 +108,7 @@ figure {
 }
 
 figcaption {
-  background-color: black;
-  color: white;
+  background-color: light_gray;
   font-style: italic;
   padding: 2px;
   text-align: center;
