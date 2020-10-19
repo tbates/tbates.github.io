@@ -8,20 +8,22 @@ categories: technical
 
 Parallel execution allows `umx` to use multiple cores, or distribute a model across machines. Single models can be processed using parallel resources, and multiple models can be run and results combined.
 
-Out of the box, `umx` uses all cores (actually, the result of a call to `detectCores() - 1`).
+CRAN, `umx` uses all cores (actually, the result of a call to `detectCores() - 1`).
 
 ### Set cores with umx
 
 `umx` allows you to get and set the number of cores OpenMx will use with:
 
 ```r
-umx_set_cores()  # See many cores are currently requested?
+umx_set_cores()  # Show many cores are currently requested
 umx_set_cores(3) # Request use of 3 cores
 
 ```
 
 #### Background
+
 Modern CPUs contain multiple cores ([processing units that share memory](https://en.wikipedia.org/wiki/Multi-core_processor)), and machines may contain more than one CPU.
+
 Some chips also implement "[virtual](https://en.wikipedia.org/wiki/Hyper-threading)" cores which help allow the compiler to keep the hardware working while one process is data limited.
 
 You can see total number of cores on your machine with `detectCores()` (on my 2016 iMac, the answer was 8 (4 real, with hyper-threading). In practice, only real cores advance model speed much, and 4 cores will complete a model in a little over 1/4 of the time compared to 1-core.
@@ -45,7 +47,7 @@ mxOption(NULL, "Number of Threads", detectCores())
 
 Now you don't need to remember or type this long option string!
 
-*top tip*: Use R's tab-function completion (just type `umx_s` and tab to see the list of easy set and get helpers…):
+*top tip*: Use R's tab-function completion (just type `umx_set` and tab to see the list of easy set and get helpers…):
 
 *top tip*: If you're a MacOS user, my [TextMate](http://macromates.com) OpenMx bundle contains snippets for many of umx's features.
 
@@ -67,7 +69,7 @@ Here's an example for edinburgh's cluster. The key is `-pe OpenMP 12`
 #$ -N parallel_example
 #$ -pe OpenMP 12
  
-# initiallise environment module 
+# initialise environment module 
 . /etc/profile.d/modules.sh
  
 # use Intel compilers (icc,ifort)
