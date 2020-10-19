@@ -10,7 +10,7 @@ categories: basic
 
 <p style="text-align: center;">"Principles keep practice aligned with goals"</p>
 
-This package has one principle: make good modeling easier.
+This package has one principle: make good modeling easier. We designed `umx` to be transparent and reproducible, to make basic work easy, and to make complex work manageable, so you can spend more time doing better science.
 
 `umx` provides a compact set of functions to support four core tasks:
 
@@ -19,14 +19,14 @@ This package has one principle: make good modeling easier.
 3. Maintain a reproducible workflow.
 4. Communicate results effectively.
 
-[OpenMx](https://openmx.ssri.psu.edu) is a fantastic base - often you'll stick with core OpenMx functions: Using `mxPath` instead of `umxPath`, or `summary` instead of `umxSummary`.
+`umx` also provides a suite of complete twin models - a complex multi-group task – to aid users.
 
-That said, we designed `umx` to provide "one way that works", making basic work easy, and complex work manageable, so you can spend more time doing better science.
+You can learn more about umx and twin modeling in Bates, Maes, & Neale, (2019). umx: Twin and Path-Based Structural Equation Modeling in R. *Twin Res Hum Genet*, **22**, 27-41. [doi:10.1017/thg.2019.2](https://www.cambridge.org/core/journals/twin-research-and-human-genetics/article/umx-twin-and-pathbased-structural-equation-modeling-in-r/B9658AC0CDA139E540BFAC0C9D989623) open access.
 
-That's it ☺ 
+
 Read below on installing umx, then on to the modeling!
 
-`umx` is easy to learn, but first you need to install it. If If you haven't already, install `umx`. Go to  `R`, and just type:
+`umx` is easy to learn, but first you need to install it. If If you haven't already, install `umx`. Go to  `R`, and type:
 
 ```r
 install.packages("umx")

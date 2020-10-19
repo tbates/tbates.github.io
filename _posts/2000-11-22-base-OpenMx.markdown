@@ -6,54 +6,57 @@ comments: true
 categories: basic
 ---
 
-Previously, we saw how to make `umxRAM` models and use `umxPath`. Here, we compare this to OpenMx's `mxModel` and `mxPath` functions.
+Previously, we saw how to make `umxRAM` models and use `umxPath`. The following is a guide for those familiar with OpenMx's `mxModel` and `mxPath` functions.
 
 #### umxRAM vs mxModel
 
 `umxRAM` differs from mxModel in eight major ways:
 
 1. No Model `type` needed.
- * In OpenMx, all models are built using mxModel. You need to tell the model that the type you want is "RAM". Using umxRAM, that's not needed.
+ * Unlike `mxModel`, `umxRAM` `umxACE` etc knows the model type that's not needed.
 2. No `manifestVars` list.
- * OpenMx requires all the boxes in a diagram to be listed explicitly with `manifestVars = manifests`. In umxRAM, the manifests are simply the names found in umxPath statements that are also in the data.
+ * In umxRAM, the manifests are simply the names found in umxPath statements that are also in the data. So OpenMx no need too explicitly list up `manifestVars`. 
 3. No `latentVars` list.
- * In umx, latents are just variables not found in the data.
+ * In `umx`, latents are just variables not found in the data.
 4. Data is explicitly passed in as `data = `
-  * In `mxModel`, data is just another thing listed in the model.
-  * This last feature has the benefit that you can pass in raw data, and `umxRAM` will create the `mxData` statement you need. It will also drop columns not referred to in the model.
-5. Parameters are labeled
-  * In `mxModel`, each parameter has to be manually labeled.
-6. Start values are automatic
+  * In `mxModel`, data has to be processed by mxData. umx can handle this for you, including dropping unused variables, taking a covariance matrix, etc.
+5. Path labels are automatic
+  * umxRAM gives plain english path names like "a_to_b". or `a_r1c1`. In `mxModel`, each parameter has no label by default.
+6. Start values are automatic and smart.
   * In `mxModel`, each parameter starts at 0 unless manually set via `values=`.
 7. No need to separately `mxRun` the model
-  * In `umxRAM` the model is automatically run (turn this off with `autoRun = FALSE`)
+  * In `umxRAM` the model is automatically run and output tables and graphs produced. (turn this off with `autoRun = FALSE`)
 8. No need to separately `mxSummary` the model
-  * In `umxRAM` the umxSummary is automatically printed.
+  * In `umxRAM` the `umxSummary` is automatically printed.
 
 
 #### mxPath vs umxPath
 
 `umxPath` differs from mxPath in that it supports new arguments to say what you want with less typing and (I think) more readably.
 
-`mxPath` takes `from`, `to`, `arrows` (1 or 2), `values`, and `free` parameters, amongst others. So, a path with 2 arrows, fixed at 1 requires you to specify all of those things:
 
-```r
-mxPath(from = "A", to = "B", arrows = 2, values = 1, free = FALSE)
-```
-
-`umxPath` adds several new verbs which link these actions in common patterns:
+`umxPath` adds several new verbs which describe common patterns:
 
 ```r
 umxPath("A", with = "B", fixedAt = 1)
 ```
 
-Equivalently:
+In  `mxPath`, `arrows`, `values`, and `free` among others must be set independently. So, a path with 2 arrows, fixed at 1 requires you to specify all of those things, and `to` can mean "with". 
+
+```r
+mxPath(from = "A", to = "B", arrows = 2, values = 1, free = FALSE)
+```
+
+In umx, you would say:
 
 ```r
 umxPath(cov = c("A", "B"), fixedAt = 1)
+# or
+umxPath("A", with = "B", fixedAt = 1)
+
 ```
 
-In total there are some 14 new words for describing paths (with, var, cov, unique.bivariate, unique.pairs, Cholesky, defn, means, v0m0, v1m0, v.m., fixedAt, freeAt, firstAt). You can learn more about these additional parameters [here](/advanced/1995/11/20/detailed-umxPath.html)
+In total there are about a dozen new words for describing paths (`with`, `var`, `cov`, `unique.bivariate`, `unique.pairs`, `Cholesky`, `defn`, `means`, `v0m0`, `v1m0`, `v.m.`, `fixedAt`, `freeAt`, `firstAt`). You can learn more about and memorise these key new path writing ideas [here](/advanced/1995/11/20/detailed-umxPath.html)
 
 What follows in this post, is the construction of our toy model using base OpenMx functions. Nicely, mxModels can be updated by passing an existing model into mxModel and adding or subtracting objects "line by line".
 
@@ -151,7 +154,7 @@ m1 <- mxModel(m1,
 mpg will need some residual variance:
 
 ```r
-m1 <- mxModel(m1,
+m1 = mxModel(m1,
 	mxPath(from = "mpg", arrows = 2)
 )
 ```
@@ -159,7 +162,7 @@ m1 <- mxModel(m1,
 Finally, we must add the data against which we are testing our hypothesis:
 
 ```r
-m1 <- mxModel(m1,
+m1 = mxModel(m1,
 	mxData(cov(mtcars[,manifests]), type = "cov", numObs = nrow(mtcars))
 )
 ```
@@ -171,7 +174,7 @@ We can be a bit more verbose about that for clarity
 covData = cov(mtcars[,manifests], use ="pairwise.complete.obs")
 numObs = nrow(mtcars)
 
-m1 <- mxModel(m1,
+m1 = mxModel(m1,
 	mxData(covData, type = "cov", numObs = numObs)
 )
 ```
@@ -186,7 +189,7 @@ Mow we run the model. In this case we take advantage of umxRun to also set label
 **nb**: See tutorials on using [labels](http://tbates.github.io/advanced/1995/10/03/detailed-Labels.html), and on [values](http://tbates.github.io/advanced/1995/10/04/detailed-Values).
 
 ```r
-m1 <- umxRun(m1, setLabels = TRUE, setValues = TRUE)
+m1 = umxRun(m1, setLabels = TRUE, setValues = TRUE)
 ```
 
 This exposes a lovely (and unique) feature of OpenMx: running a model returns a valid model that can be updated and run again 
