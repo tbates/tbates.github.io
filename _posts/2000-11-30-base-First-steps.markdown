@@ -42,7 +42,7 @@ umxSummary(m2, show = "std")
 # Update m2 by dropping mpg ~ displacement, which has label "disp_to_mpg" 
 m3 = umxModify(m2, update = "disp_to_mpg", name = "drop effect of capacity", comparison = TRUE)
 
-```r
+```
 
 **umxSummary table of model 2**
 
