@@ -204,7 +204,7 @@ Let's force G_to_x5 to have the same estimated value as G_to_x4:
 ```r
 m2 = umxSetParameters(m1, labels="G_to_x5", newlabels = "G_to_x4")
 m2 = mxRun(m2)
-umxSummary(m2, show = "std")
+umxSummary(m2, std = TRUE)
 parameters(m2) 
 ```
 

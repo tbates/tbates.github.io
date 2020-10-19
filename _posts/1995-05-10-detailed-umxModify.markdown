@@ -36,7 +36,7 @@ m1 <- umxRAM("mpg_model",data = mtcars, type = "cov",
 Now show a summary.
 
 ```R
-umxSummary(m1, show = "std")
+umxSummary(m1, std = TRUE)
 plot(m1, std= TRUE)
 ```
 

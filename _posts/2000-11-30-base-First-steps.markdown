@@ -37,7 +37,7 @@ m2 = umxRAM("big and heavy", data = mtcars,
 	umxPath(v.m. = c("disp", "wt", "mpg"))
 )
 
-umxSummary(m2, show = "std")
+umxSummary(m2, std = TRUE)
 
 # Update m2 by dropping mpg ~ displacement, which has label "disp_to_mpg" 
 m3 = umxModify(m2, update = "disp_to_mpg", name = "drop effect of capacity", comparison = TRUE)
@@ -189,7 +189,7 @@ In fact this (saturated) model fits perfectly, as `umxSummary` shows: χ²(87) =
 We can request a full summary including standardized output as a table with ("**show** = *std*" requests the standardized paths):
 
 ```r
-umxSummary(m2, show = "std")
+umxSummary(m2, std = TRUE)
 ```
 
 |   | name                    | Estimate | Std.Error | CI (SE-based)        |

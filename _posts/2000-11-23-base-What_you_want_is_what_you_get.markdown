@@ -18,13 +18,13 @@ Assisting requires taking an [intentional stance](https://en.wikipedia.org/wiki/
 
 
 <a name="top"></a>
-The [OpenMx](https://openmx.ssri.psu.edu) philosophy is "no black boxes". 
+The umx philosophy is "no black boxes". 
 
-Unlike, say, Mplus, OpenMx doesn't do things behind the scenes. You get what you request: Nothing less, and Nothing more.
+Unlike, say, Mplus, umx doesn't do things behind the scenes. You get what you request: Nothing less, and nothing more (that said, `umxRAM` supports `lavaan` syntax, which gives access to scripts written in that language).
 
-Partly the OpenMx philosophy is aided by R - it makes function defaults transparent: When you omit `arrows = 1`, you can see (glass box) that `mxPath` is going to set arrows to 1, because that default is in the function definition.
+Partly the umx philosophy is aided by R - it makes function defaults transparent: When you omit `arrows = 1`, you can see (glass box) that `mxPath` is going to set arrows to 1, because that default is in the function definition.
 
-This means, however, that out of the box, OpenMx requires explicit setting of many things you might &ldquo;expect&rdquo; to happen automagically. In particular, OpenMx doesn't set values or labels. It also doesn't add paths or objects you don't explicitly request. So it doesn't add residual variances or covariances among exogenous variables.
+Out of the box, the package umx builds on – OpenMx – requires explicit setting of many things you might &ldquo;expect&rdquo; to happen automagically. In particular, it doesn't set start values or path labels. It also doesn't add paths or objects you don't explicitly request. So it doesn't add residual variances or covariances among exogenous variables.
 
 The goal of `umx` is to take a slightly different perspective, perhaps best phrased as *"It's easy to realise your expectations"*.
 
@@ -42,13 +42,13 @@ This however, leaves a lot of expectations implicit - a lot is &ldquo;intended&r
 
 Fully verbalized, people who know this means "changes in A cause changes in B" expect also that:
 
-1. A and B are measured (squares)
-2. That A and B have [variance](https://en.wikipedia.org/wiki/Index_of_dispersion).
-2. That A accounts for *some* of the variance in B.
-3. But not all of it: B has [residual variance](https://en.wikipedia.org/wiki/Explained_variation).
-4. Variance of A is [exogenous](https://en.wikipedia.org/wiki/Exogeny) to the model.
- * The [standardized](https://en.wikipedia.org/wiki/Standard_score) variance of A will be 1.
-5. A and B have means as well as variances.
+1. `A` and `B` are measured (squares)
+2. That `A` and `B` have [variance](https://en.wikipedia.org/wiki/Index_of_dispersion).
+2. That `A` accounts for *some* but not all of the variance in `B`.
+3. But not all of it: `B` has [residual variance](https://en.wikipedia.org/wiki/Explained_variation).
+4. Variance of `A` is [exogenous](https://en.wikipedia.org/wiki/Exogeny) to the model.
+ * The [standardized](https://en.wikipedia.org/wiki/Standard_score) variance of `A` will be 1.
+5. `A` and `B` have means as well as variances.
 
 How to implement this without black boxes? Let’s look at an `lm` statement of A -> B:
 
@@ -56,6 +56,11 @@ How to implement this without black boxes? Let’s look at an `lm` statement of 
 df = myFADataRaw[, 1:2]
 names(df) <- c("A", "B")
 summary(lm(B ~ A, data = df))
+m1 = lm(B ~ A, data = df)
+umxAPA(m1, std = TRUE)
+# (Intercept) β = 0 [-0.07, 0.07], t = 0, p = 1.000
+# A β = 0.63 [0.57, 0.7], t = 18.33, p < 0.001
+
 ```
 
 This tells us that B = A × 𝛽₁ + ε, where 𝛽₁ = 0.64  CI95[0.57, 0.71]. R² = 0.40 (F(1, 498) = 336.1,  p-value: << .001)
@@ -64,11 +69,11 @@ Now in `umx`:
 
  ```r
 manifests  = names(df)
-m1 <- umxRAM("A_causes_B", data = df, show = "std",
+m1 = umxRAM("A_causes_B", data = df, std= TRUE,
  	umxPath("A", to = "B"), 
  	umxPath(var = manifests), 
  	umxPath(means = manifests)
- )
+)
 ```
 
 Fits well!
@@ -98,7 +103,6 @@ This, more complex model is typical of real research (modified from Duncan, Hall
 
 <img src="/media/umxFixed/Duncan.png" alt="Duncan SEM model">
 
-<!-- https://github.com/robwierzbowski/jekyll-picture-tag -->
 
 How would we state the claims of this model, and what do we expect an intelligent assistant to take taken for granted?
 

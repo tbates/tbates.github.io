@@ -197,7 +197,7 @@ This exposes a lovely (and unique) feature of OpenMx: running a model returns a 
 ## Report on the model
 
 ```r
-umxSummary(m1, show = "std")
+umxSummary(m1, std = TRUE)
 ```
 
 Now we can compare this to competing models with `umxCompare()`
