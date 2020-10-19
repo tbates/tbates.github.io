@@ -99,7 +99,7 @@ In `lm`, model 1 would be `mpg ~ disp + wt`. Model 2 would be `mpg ~ disp`
 -->
 
 <figure>
-  <img src="{{site.url}}/media/1_make_a_model/mpg_1a_theory.png" alt="model of mpg" size="50%"/>
+  <img src="{{site.url}}/media/1_make_a_model/mpg_1a_theory.png" alt="model of mpg" width="150"/>
   <figcaption>A model of Miles/gallon.</figcaption>
 </figure>
 
