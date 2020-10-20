@@ -27,14 +27,14 @@ categories: basic
 
 ### Basic path-based models in `umx`
 * [umxPath](/advanced/1995/11/20/detailed-umxPath.html)
-* Making [Cholesky-style path connections](/models/twin/1980/06/15/twin-Cholesky.html) with `umxPath`
+* `umxPath` to make [Cholesky paths](/models/twin/1980/06/15/twin-Cholesky.html)
 
-### Exploratory and Confirmatory Factor Analysis
+### Exploratory and Confirmatory Factor Analysis (CFA)
 * ✓ Factor analysis with `umxFactanal`
 * ✓ Factor scores with `umxFactanal`
-* ✓ Confirmatory Factor Analysis with one or more factors with `umxRAM`
-* ✓ CFA with ordinal data (automagically handled with `umxRAM`)
-* ✓ Joint ordinal/continuous factor analysis  (automagically handled with `umxRAM`)
+* ✓ CFA with one or more factors with `umxRAM`
+* ✓ CFA with ordinal data (automatic in `umxRAM`)
+* ✓ Joint ordinal/continuous CFA  (automatic in `umxRAM`)
 
 ### SEM, indirect effects, mediation analysis
 * Regression with structural equation models
@@ -50,7 +50,8 @@ categories: basic
 <!-- * Test equating -->
 
 ### Multiple groups
-* ✓ `[umxSuperGroup](/advanced/1995/02/15/detailed-Multigroup.html)`
+* ✓ [umxRAM group=](/advanced/1995/02/15/detailed-Multigroup.html)
+* ✓ [umxSuperGroup](/advanced/1995/02/15/detailed-Multigroup.html)
 
 ### Growth and change
 * [Growth model](https://tbates.github.io/models/1970/08/13/models-growth_curve.html)
