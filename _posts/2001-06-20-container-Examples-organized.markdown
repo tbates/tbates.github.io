@@ -20,7 +20,7 @@ categories: basic
 
 <a  name="top"></a>
 
-<p style="text-align: center;">This is a gallery of example models. To learn about installing umx, or take a basic tutorial, start at the home page.</p>
+<p style="text-align: center;">This gallery will hold example models as we build them. To learn about installing umx, or take a basic tutorial, start at the [home page](https://tbates.github.io).</p>
 
 
 *note*: This page expresses the goal for umx's coverage of core copy-and-paste model templates. Goal deadline to have it completed by end 2021.
@@ -103,9 +103,9 @@ categories: basic
 * Censoring
 
 ### How do I simulate data, or do a power analysis?
-* [Power analysis](/technical/1950/08/10/practical-power.html)
-* [Data Simulation](/technical/1950/06/10/practical-simulation.html)
-* [Meta analysis](https://cran.r-project.org/web/packages/metaSEM/vignettes/Examples.html)
+* ✓ [Power analysis](/technical/1950/08/10/practical-power.html)
+* ✓ [Data Simulation](/technical/1950/06/10/practical-simulation.html)
+* ✓ [Meta analysis](https://cran.r-project.org/web/packages/metaSEM/vignettes/Examples.html)
 
 ### Wrangling data: scaling, renaming, residualizing etc.
 * ✓ Scaling Data with `umxScale`
@@ -157,7 +157,7 @@ categories: basic
 <!-- * Data harmonization -->
 
 ### How to pick starting values
-* Let `umx` do it
+* ✓ Let `umx` do it
 * Use `mxAutoStart`
 
 ### How to modify Graphical output
