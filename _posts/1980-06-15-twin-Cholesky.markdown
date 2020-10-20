@@ -6,6 +6,12 @@ comments: true
 categories: models twin
 ---
 
+<style>
+img{
+	float: none;
+}
+</style>
+
 This page will introduce writing Cholesky structures using `umxPath` to facilitate twin modeling with `umxRAM`.
 
 It is not finished, and for now (and perhaps for sometime), I'd recommend you read [this page instead on the awesome umxACE](/models/twin/1980/06/10/twin-umxACE.html) function
