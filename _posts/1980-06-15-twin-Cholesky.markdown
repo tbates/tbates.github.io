@@ -134,6 +134,7 @@ dz = mxModel(mz, name= "dz",
 m1 = mxModel(mz, dz, mxFitFunctionMultigroup(c("mz", "dz")))
 parameters(mz)
 plot(dz, fixed= TRUE)
+```
 
 ## umxTwinMaker
 
@@ -178,6 +179,7 @@ plot(m1, std= TRUE, means= FALSE)
 
 **Here's the same thing using umxACE**
 
+```r
 m2 = umxACE(selDVs="wt", mzData = mzData, dzData=dzData, sep="_T")
 
 plot(m2)
