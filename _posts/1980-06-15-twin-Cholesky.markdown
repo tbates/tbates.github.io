@@ -23,14 +23,14 @@ It is not finished, and for now (and perhaps for sometime), I'd recommend you re
 latents   = paste0("A", 1:5)
 manifests = names(demoOneFactor)
 myData    = mxData(cov(demoOneFactor), type = "cov", numObs = 500)
-m1 <- umxRAM("Chol", data = myData,
+m1 = umxRAM("Chol", data = myData,
 	umxPath(Cholesky = latents, to = manifests),
 	umxPath(var = manifests),
 	umxPath(var = latents, fixedAt = 1.0)
 )
 ```
 
-We can see that this fits perfectly:
+We can see that this fits "perfectly" - it's a saturated solution, with some caveats (see `umx::umxACEv` to learn more about these):
 
 ```r
 umxSummary(m1)
@@ -40,23 +40,43 @@ umxSummary(m1)
 ![Chol model](/media/umxPath/Chol.png)
 
 
-What about a 1-factor solution?
+### What about a 1-factor solution?
 
-```r
-m2 = umxModify(m1, "^A[2:5]", regex = TRUE)
-
-```
+A 1 factor Cholesky is just a general factor, but let's use it as an example:
 
 ```r
 manifests = names(demoOneFactor)
-m3 <- umxRAM("Chol", data = demoOneFactor, type = "cov",
-	umxPath(Cholesky = "A1, to = manifests),
+m2 = umxRAM("Chol", data = demoOneFactor, type = "cov",
+	umxPath(Cholesky = "A1", to = manifests),
 	umxPath(var = manifests),
-	umxPath(var = "A1, fixedAt = 1.0)
+	umxPath(var = "A1", fixedAt = 1)
 )
-umxSummary(m3)
-plot(m3)
+plot(m2)
+
 ```
+
+We could also drop the paths from m1:
+
+```r
+m3 = umxModify(m1, regex = "^A[2-5]")
+
+```
+
+*tip*: use `parameters(m1, pattern = "^A[2-5]")` to see what paths this expression matches and drops.
+
+Is a one-factor model significantly worse than the extravagant saturated five Cholesky-factor solution?
+
+```r
+umxCompare(m1, m2)
+```
+
+|Model | EP|Δ -2LL    |Δ df |p     |       AIC|Δ AIC       |Compare with Model |
+|:-----|--:|:---------|:----|:-----|---------:|:-----------|:------------------|
+|Chol  | 20|          |     |      |  9.994993|0           |                   |
+|Chol  | 10|7.3987999 |10   |0.687 | -2.606207|-12.6012001 |Chol               |
+
+No: fit is not-significantly worse.
+
 
 
 
