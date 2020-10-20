@@ -77,12 +77,19 @@ umxCompare(m1, m2)
 
 No: fit is not-significantly worse.
 
+## A multi-group twin model
 
+Twin models have models for each class of twins – MZ DZ, perhaps differentiated by sex – and these differ in the genetic paths they set.
 
+umx includes built-in twin models, including `umxACE`. Here, we'll build a twin model completely by hand in `umx` from scratch.
+
+*NOTE*: `umx` now includes `umxTwinMaker` which makes specifying novel multivariate twin models MUCH more straight-foward.
+
+First let's build an ace model from scratch:
 
 ```r
 data(twinData)
-tmpTwin <- twinData
+tmpTwin = twinData
 names(tmpTwin)
 # "fam", "age", "zyg", "part", "wt1", "wt2", "ht1", "ht2", "htwt1", "htwt2", "bmi1", "bmi2"
 
@@ -92,12 +99,11 @@ tmpTwin$zyg = factor(tmpTwin$zyg, levels = 1:5, labels = labList)
 
 # Pick the variables
 selDVs = c("bmi1", "bmi2") # nb: Can also give base name, (i.e., "bmi") AND set suffix.
+
 # the function will then make the varnames for each twin using this:
 # for example. "VarSuffix1" "VarSuffix2"
-mzData <- tmpTwin[tmpTwin$zyg %in% "MZFF", selDVs]
-dzData <- tmpTwin[tmpTwin$zyg %in% "DZFF", selDVs]
-mzData <- mzData[1:200,] # just top 200 so example runs in a couple of secs
-dzData <- dzData[1:200,]
+mzData = tmpTwin[tmpTwin$zyg %in% "MZFF", selDVs]
+dzData = tmpTwin[tmpTwin$zyg %in% "DZFF", selDVs]
 
 latentA = paste0(c("A1"), "_T", 1:2)
 latentC = paste0(c("C1"), "_T", 1:2)
@@ -126,14 +132,55 @@ dz = mxModel(mz, name= "dz",
 )
 
 m1 = mxModel(mz, dz, mxFitFunctionMultigroup(c("mz", "dz")))
-omxGetParameters(mz)
-plot(dz, showFixed= T)
+parameters(mz)
+plot(dz, fixed= TRUE)
 
+## umxTwinMaker
 
-m1 = umxACE(selDVs = selDVs, dzData = dzData, mzData = mzData)
-m1 = umxRun(m1)
-umxSummary(m1)
-umxSummaryACE(m1)
-## Not run: 
-plot(m1)
+Now let's do that in `umxTwinMaker`. Here we only have to draw the model for one person.
+
+First let's assemble some data
+
+```r
+data(twinData)
+tmp = umx_make_twin_data_nice(data=twinData, sep="", zygosity="zygosity", numbering=1:2)
+tmp = umx_scale_wide_twin_data(varsToScale= c("wt", "ht"), sep= "_T", data= tmp)
+mzData = subset(tmp, zygosity %in%  c("MZFF", "MZMM"))
+dzData = subset(tmp, zygosity %in%  c("DZFF", "DZMM"))
 ```
+Now, I'll make a bivariate ACE twin model.
+
+### 1. Define paths for *one* person:
+
+```r
+latents = paste0(rep(c("a", "c", "e"), each = 2), 1:2)
+paths = c(
+	umxPath(v1m0 = latents),
+	umxPath(mean = c("wt", "ht")),
+	umxPath(fromEach = c("a1", 'c1', "e1"), to = c("ht", "wt")),
+	umxPath(c("a2", 'c2', "e2"), to = "wt")
+)
+```
+
+### 2. Make a twin model from the paths for one person
+
+```r
+m1 = umxTwinMaker("myACE", paths, mzData = mzData, dzData= dzData)
+plot(m1, std= TRUE, means= FALSE)
+
+```
+
+<figure>
+  <img src="{{site.url}}/media/umxTwin/MZ.png" width="651" height="320" alt="umxTwinMaker example ACE">
+  <figcaption>umxTwinMaker example ACE.</figcaption>
+</figure>
+
+
+**Here's the same thing using umxACE**
+
+m2 = umxACE(selDVs="wt", mzData = mzData, dzData=dzData, sep="_T")
+
+plot(m2)
+```
+
+
