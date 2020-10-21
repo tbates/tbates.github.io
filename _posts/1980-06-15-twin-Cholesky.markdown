@@ -163,7 +163,7 @@ paths = c(
 )
 ```
 
-### 2. Make a twin model from the paths for one person
+### 2. Make a twin model based on the paths for one person
 
 ```r
 m1 = umxTwinMaker("myACE", paths, mzData = mzData, dzData= dzData)
@@ -180,7 +180,7 @@ plot(m1, std= TRUE, means= FALSE)
 **Here's the same thing using umxACE**
 
 ```r
-m2 = umxACE(selDVs="wt", mzData = mzData, dzData=dzData, sep="_T")
+m2 = umxACE(selDVs= c("wt", "ht"), mzData = mzData, dzData=dzData, sep="_T")
 
 plot(m2)
 ```
