@@ -16,9 +16,8 @@ You can see what optimizer is being used by calling `umx_set_optimizer` with no 
 
 ```r
 umx_set_optimizer()
-
 ```
-> Current Optimizer is: 'CSOLNP'. Options are: 'CSOLNP', 'SLSQP', and 'NPSOL'
+> Current Optimizer is: 'SLSQP'. Options are: 'CSOLNP', 'SLSQP', and 'NPSOL'
 
 Set the optimizer by name:
 
