@@ -6,11 +6,11 @@ comments: true
 categories: technical
 ---
 
-`umx` can use 3 optimizers: `NPSOL`, `SLSQP`, and  `CSOLNP`(the default).
+`umx` can use any OpenMx optimizer: `SLSQP` (the default), `NPSOL`, or `CSOLNP`.
 
 `NPSOL` doesn't ship on the CRAN version of OpenMx. It is, however, highly optimized and works well with the vast majority of models. If you're having hassles with `mxRun`, or CIs, NPSOL might help.
 
-`CSOLNP` often works well for ordinal models. `SLSQP` is often as good or better than `NPSOL` and has the benefit of working out of the box from CRAN.
+`SLSQP` is often as good or better than `NPSOL` and has the benefit of working out of the box from CRAN. `CSOLNP` often works well for ordinal models. 
 
 You can see what optimizer is being used by calling `umx_set_optimizer` with no parameters.
 
