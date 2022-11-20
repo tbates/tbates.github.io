@@ -80,6 +80,7 @@ You could of course build an MR model with `umxRAM`, but `umx` also gives us the
 First, `umxRAM`:
 
 ```r
+df = umx_make_MR_data(10e4)
 
 m2 <- umxRAM("myMR", data = df, autoRun = FALSE,
 	umxPath(v.m. = c("qtl", "X", "Y")),
@@ -103,6 +104,8 @@ plot(m2, digits = 3)
 Now an exactly equivalent model in `umxMR`:
 
 ```r
+df = umx_make_MR_data(10e4)
+
 m1 = umxMR(Y~X, instruments= ~qtl, data = df)
 
 plot(m1, means = FALSE, min = "")
