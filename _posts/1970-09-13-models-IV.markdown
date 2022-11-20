@@ -75,11 +75,13 @@ Now we can see that `X` may indeed affect `Y`, but with the simulated effect siz
 
 ### Implementing MR in umx
 
-`umx` allow us to build this model with `umxRAM`, and also with a specialized `umxMendelianRandomization` function which builds the model for you. `umxRAM` first:
+You could of course build an MR model with `umxRAM`, but `umx` also gives us the shortcut `umxMR` function which builds the model for you.
+
+First, `umxRAM`:
 
 ```r
 
-m2 <- umxRAM("myMR", data = df, autoRun = F,
+m2 <- umxRAM("myMR", data = df, autoRun = FALSE,
 	umxPath(v.m. = c("qtl", "X", "Y")),
 	umxPath("qtl", to = "X"),
 	umxPath("X", to = "Y")
@@ -96,17 +98,21 @@ plot(m2, digits = 3)
 <img src = "/media/MR/myMR.png" height = "400">
 
 
-Now an exactly equivalent model in `umxTwoStage`/ `umxMendelianRandomization`
+## umxMR
+
+Now an exactly equivalent model in `umxMR`:
 
 ```r
-m1 = umxMendelianRandomization(Y~X, instruments= ~qtl, data = df)
-plot(m1, means=F, min="")
-umx_set_plot_format("graphviz")
+m1 = umxMR(Y~X, instruments= ~qtl, data = df)
+
+plot(m1, means = FALSE, min = "")
 
 ```
 
 <img src="/media/MR/IV Model.png" height="400">
 
-**TODO**: Add an example in which assumption is violated and `qtl` directly affects `Y`, or affects `U`
+**TODO**: 
+1. Add an example with data in which the assumptions are violated, e.g. `qtl` directly affects `Y`, or affects `U`
 
+**Refs**
 Ioannidis, J. P. (2012). Why Science Is Not Necessarily Self-Correcting. *Perspectives in Psychological Science*, **7**, 645-654. doi:10.1177/1745691612464056
