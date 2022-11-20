@@ -114,7 +114,6 @@ plot(m1, means = FALSE, min = "")
 
 ```
 
-###The resulting plot:
 
 <img src="/media/MR/IV Model.png" height="400">
 
