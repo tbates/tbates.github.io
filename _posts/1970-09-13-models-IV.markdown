@@ -77,9 +77,10 @@ Now we can see that `X` may indeed affect `Y`, but with the simulated effect siz
 
 You could of course build an MR model with `umxRAM`, but `umx` also gives us the shortcut `umxMR` function which builds the model for you.
 
+<img src = "/media/MR/myMR.png" height = "400">
+
 First, `umxRAM`:
 
-<img src = "/media/MR/myMR.png" height = "400">
 
 ```r
 df = umx_make_MR_data(10e4)
@@ -92,12 +93,12 @@ m2 <- umxRAM("myMR", data = df, autoRun = FALSE,
 )
 m2 <- umxModify(m2, "X_with_Y", free = TRUE, value = .2)
 ```
+
 *note*: This double-step is required because OpenMx will otherwise over-write the `X→Y` path when you add `X↔Y`.
 
 ```r
 plot(m2, digits = 3)
 ```
-
 
 
 ## umxMR
@@ -113,6 +114,7 @@ plot(m1, means = FALSE, min = "")
 
 ```
 
+###The resulting plot:
 <img src="/media/MR/IV Model.png" height="400">
 
 
