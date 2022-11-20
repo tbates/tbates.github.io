@@ -77,7 +77,7 @@ Now we can see that `X` may indeed affect `Y`, but with the simulated effect siz
 
 You could of course build an MR model with `umxRAM`, but `umx` also gives us the shortcut `umxMR` function which builds the model for you.
 
-<img src = "/media/MR/myMR.png" height = "400">
+<img src = "/media/MR/myMR.png" height = "200">
 
 First, `umxRAM`:
 
@@ -115,6 +115,7 @@ plot(m1, means = FALSE, min = "")
 ```
 
 ###The resulting plot:
+
 <img src="/media/MR/IV Model.png" height="400">
 
 
