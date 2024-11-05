@@ -7,7 +7,9 @@ categories: advanced
 ---
 
 
-We're used to seeing measured variables as manifests in our models, like this:
+`umx` supports using definition variables in RAM models. A definition variable is a variable that takes a row-specific value in the model.
+
+You will be used to seeing manifest variables as squares in your models, like this:
 
 ```R
 m1 = umxRAM("my manifest model",data = mtcars,
@@ -15,35 +17,35 @@ m1 = umxRAM("my manifest model",data = mtcars,
 )
 plot(m1)
 ```
-![manifest](/media/definition_variables/manifest.png "Variance of a manifest")
+![manifest](/media/definition_variables/manifest.png "manifest variable with variance")
 
-You can also use definition variables in RAM. A definition variable is a variable that takes a row-specific value in the model.
+We add a definition variable to a model by declaring a column in our dataset to be a definition variable using the `defn` keyword in a `umxpath` statement.
+*Note*, this model doesn't yet serve a useful purpose: It just shows how to add a definition variable to a model.
+
+Here's the code:
 
 ```R
 m1 = umxRAM("manifest and definition", data = mtcars,
-	umxPath(v.m. = "mpg"),
 	umxPath(defn = "mpg")
 )
 plot(m1)
 ```
-
-*Note*, this model doesn't yet serve a useful purpose: It just shows how to add a definition variable to a model.
+And the plot:
 
 ![def](/media/definition_variables/manifest_and_definition.png "Definition variable as a data.labeled latent")
 
-See how this is handled: umx creates a latent variable with variance fixed at zero, and a mean fixed at zero, but sets the label of the mean to data.mpg.
+Crucially, unlike a manifest variable, for `defn`, umx creates a latent variable with zero variance, and a zero average mean, *but* it sets the **label** of the variable "data.varName" (in this case "data.mpg").
+That causes umx to model each row of the dataset using the value of *that row* as the value for the definition variable!
 
-```R
-umxPath(defn = "mpg")
-```
+You can see here the paths that are now in the model: a latent variable called def_mpg, that has no variance and has its mean set **by row**.
+
+That means the model will use the subject-specific value of mpg in the model. It also means the model will drop all rows where the definition variable is NA.
 
 ```R
 mxPath def_mpg <-> def_mpg [value=0, free=FALSE, lbound=0]
 
 mxPath one -> def_mpg [value=0, free=FALSE, label='data.mpg']
 ```
-
-That means the model will use the subject-specific value of mpg in the model. It also means the model will drop all rows where the definition variable is NA.
 
 *Note*, to avoid confusing the latent variable created by umx with the manifest variable, umx names the latent "def_"
 so you can refer to the definition variable as 'def_mpg'
@@ -67,7 +69,7 @@ plot(m1)
 
 [moderation and mediation](https://ademos.people.uic.edu/Chapter14.html#31_example_moderation_data)
 
-#Moderation "By Hand"
+# Moderation "By Hand"
 
 ```R
 # setwd("location")        # Working directory
