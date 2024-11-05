@@ -26,7 +26,8 @@ Here's the code:
 
 ```R
 m1 = umxRAM("manifest and definition", data = mtcars,
-	umxPath(defn = "mpg")
+	umxPath(defn = "mpg"), #using mpg as a definition (makes it a latent with row-wise means)
+	umxPath(v.m. = "mpg") #using mpg as a manifest (makes it regular square as expected)
 )
 plot(m1)
 ```
@@ -61,7 +62,44 @@ plot(m1)
 
 ![def](/media/definition_variables/named_def.png "Definition variable with an arbitrary name")
 
-### To be added to this blog
+# A working example
+
+```R
+m1 = umxRAM("Model of the effect of weight on miles per gallon with transmission type as a definition variable", data = mtcars, 
+	umxPath(v.m. = c("wt","mpg")),
+	umxPath("wt", to = "mpg"),
+	umxPath(defn="am"), # creates a  latent called "def_am" with data "data.am"
+	umxPath("def_am", to = c("wt", "mpg"))
+)
+plot(m1)
+```
+
+> 1 definition variable created: refer to it as: 'def_am'
+1 latent variable created: def_am. 
+Running Model of the effect of weight on miles per gallon with transmission type as a definition variable with 7 parameters
+?umxSummary options: std=T|F', digits=, report= 'html', filter= 'NS' & more
+
+```R
+umxSummary(m1, report="html")
+plot(m1)
+```
+Table: Parameter loadings for model 'Model of the effect of weight on miles per gallon with transmission type as a definition variable'
+
+|   |name          | Estimate|SE   |type           |
+|:--|:-------------|--------:|:----|:--------------|
+|2  |def_am_to_mpg |    -0.02|1.47 |Factor loading |
+|3  |def_am_to_wt  |    -1.36|0.25 |Factor loading |
+|1  |wt_to_mpg     |    -5.35|0.75 |Manifest path  |
+|6  |one_to_mpg    |    37.32|2.91 |Mean           |
+|7  |one_to_wt     |     3.77|0.16 |Mean           |
+|8  |data.am       |     1.00|0    |Mean           |
+|4  |mpg_with_mpg  |     8.70|2.17 |Residual       |
+|5  |wt_with_wt    |     0.48|0.12 |Residual       |
+
+![def](/media/definition_variables/wt_mpg_by_am.png "Model of the effect of weight on miles per gallon with transmission type as a definition variable")
+
+
+### TODO list
 
 1. A moderation example: x->y; mod-> y; x*mod->y
 2. The same thing using a product column (just a column containing X * Moderator for each row)
