@@ -174,7 +174,8 @@ plot(m1)
 |coffeeC_with_sleepC            | -0.13 [-0.32, 0.06] |
 |sleep_by_coffee_with_sleepC    | 0.16 [-0.03, 0.35]  |
 |coffeeC_with_sleep_by_coffee   | -0.03 [-0.23, 0.17] |
-[1] "χ²(0) = 0, p = 1.000; CFI = 1; TLI = 1; RMSEA = 0"
+
+χ²(0) = 0, p = 1.000; CFI = 1; TLI = 1; RMSEA = 0
 
 
 ## Mediation
