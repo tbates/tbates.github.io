@@ -87,6 +87,7 @@ plot(m1, splines = FALSE)
 |x5_with_x5 |    0.040| 0.005|
 |g_with_g   |    1.000| 0.000|
 |f_with_f   |    1.000| 0.000|
-[1] "χ²(0) = 1.85, p = 1.000; CFI = 1; TLI = 1; RMSEA = 0"
+
+χ²(0) = 1.85, p = 1.000; CFI = 1; TLI = 1; RMSEA = 0
 
 ![factor model](/media//factorScores/factor_model.png)

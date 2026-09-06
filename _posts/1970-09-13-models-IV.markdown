@@ -81,42 +81,37 @@ You could of course build an MR model with `umxRAM`, but `umx` also gives us the
 
 First, `umxRAM`:
 
-
 ```r
 df = umx_make_MR_data(10e4)
 
-m2 <- umxRAM("myMR", data = df, autoRun = FALSE,
+m2 = umxRAM("myMR", data = df, autoRun = FALSE,
 	umxPath(v.m. = c("qtl", "X", "Y")),
 	umxPath("qtl", to = "X"),
 	umxPath("X", to = "Y")
 	# umxPath("X", with = "Y") # Due to OpenMx rules, will be deleted!
 )
-m2 <- umxModify(m2, "X_with_Y", free = TRUE, value = .2)
+m2 = umxModify(m2, "X_with_Y", free = TRUE, value = .2)
 ```
 
-*note*: This double-step is required because OpenMx will otherwise over-write the `X→Y` path when you add `X↔Y`.
+*note*: This double-step was required because OpenMx used to over-write the `X→Y` path when you add `X↔Y`.
+The GenomicMx fork of OpenMx does not do this any more.
 
 ```r
 plot(m2, digits = 3)
 ```
 
-
 ## umxMR
-
-Now an exactly equivalent model in `umxMR`:
+Now the equivalent model in `umxMR`:
 
 ```r
 df = umx_make_MR_data(10e4)
-
-m1 = umxMR(Y~X, instruments= ~qtl, data = df)
+m1 = umxMR(Y ~ X, instruments= ~qtl, data = df)
 
 plot(m1, means = FALSE, min = "")
 
 ```
 
-
 <img src="/media/MR/IV Model.png" height="400">
-
 
 
 **TODO**: 

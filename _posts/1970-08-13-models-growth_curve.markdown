@@ -25,7 +25,7 @@ data(myLongitudinalData)
 
 latents = c("intercept", "slope")
 manifests = c("x1", "x2", "x3", "x4", "x5")
-m1 <- umxRAM("Linear Growth Curve", data = myLongitudinalData,
+m1 = umxRAM("Linear Growth Curve", data = myLongitudinalData,
 	# Latent variances and covariance
 	umxPath(unique.pairs = c("intercept", "slope"), values = 1, labels = c("var_i", "cov", "var_s")),
 	# Fix intercept loadings @0 and slope loadings @c(0,1,2,3,4) (linear)
@@ -42,9 +42,9 @@ umxSummary(m1); round(coef(m1), 2)
 plot(m1, means = T)
 
 ```
+
 χ²(2494) = 9.19, p = 0.818; CFI = 1.003; TLI = 1.002; RMSEA = 0
 
 | residual | var_i | cov  | var_s | mean_i | mean_s |
 |:---------|:------|:-----|:------|:-------|:-------|
 | 2.32     | 3.88  | 0.46 | 0.26  | 9.93   | 1.81   |
-
