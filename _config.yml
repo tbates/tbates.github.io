@@ -10,8 +10,8 @@ url: http://tbates.github.io
 # baseurl: /
 
 # Name of your blog (this will show up at the top of your page and in the RSS feed)
-name: "umx!"
+name: "umx SEM package"
 # Short description (goes below the title; it will also be used in the RSS feed)
-description: "Tutorial help doing Structural Equation Modeling in R using umx."
+description: "Guide to umx for doing Structural Equation Modeling in R."
 
 # url for [snaptortoise](https://github.com/snaptortoise/jekyll-rss-feeds)
