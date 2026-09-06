@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The umx principle (1-minute read)"
+title: "Installing umx (1-minute read)"
 
 comments: true
 categories: basic
@@ -8,9 +8,7 @@ categories: basic
 
 <a name="top"></a>
 
-<p style="text-align: center;">"Principles keep practice aligned with goals"</p>
-
-This package has one principle: make good modeling easier. We designed `umx` to be transparent and reproducible, to make basic work easy, and to make complex work manageable, so you can spend more time doing better science.
+I designed `umx` to be transparent and reproducible, to make basic work easy, and to make complex work manageable, so you can spend more time doing better science.
 
 `umx` provides a compact set of functions to support four core tasks:
 
@@ -19,14 +17,14 @@ This package has one principle: make good modeling easier. We designed `umx` to 
 3. Maintain a reproducible workflow.
 4. Communicate results effectively.
 
-`umx` also provides a suite of complete twin models - a complex multi-group task – to aid users.
+`umx` also provides a wide range of twin models implementing these complex multi-group models as single function calls.
 
 You can learn more about umx and twin modeling in Bates, Maes, & Neale, (2019). umx: Twin and Path-Based Structural Equation Modeling in R. *Twin Res Hum Genet*, **22**, 27-41. [doi:10.1017/thg.2019.2](https://www.cambridge.org/core/journals/twin-research-and-human-genetics/article/umx-twin-and-pathbased-structural-equation-modeling-in-r/B9658AC0CDA139E540BFAC0C9D989623) open access.
 
 
 Read below on installing umx, then on to the modeling!
 
-`umx` is easy to learn, but first you need to install it. If If you haven't already, install `umx`. Go to  `R`, and type:
+Install umx like any other cran package. In `R` type:
 
 ```r
 install.packages("umx")
@@ -35,29 +33,27 @@ library("umx")
 
 ```
                                                                
-That's it: There is no step 2: You're ready for [your first umx model](/basic/2000/11/30/base-First-steps.html)!
+OK, now you're ready for [your first umx model](/basic/2000/11/30/base-First-steps.html)!
 
 
 ### Optional: For bleeding-edge beta testers
 
 The development version of *umx* lives on [github](https://github.com/tbates/umx).
 
-Loading libraries from github differs slightly from the procedure you may be used to.
+To install this version:
 
-Instead of `install.packages()`, we're going to use `devtools::install_github()`
-
-If you haven't already, install devtools now
+0. If you don't have it:
 
 ```r
 install.packages("devtools")
 ```
 
-Or just load it:
+1. Load devtools
 ```r
 library("devtools")
 ```
 
-Installing `umx` is easy:
+Instal `umx`:
 
 ```r
 install_github("tbates/umx")
