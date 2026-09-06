@@ -44,6 +44,7 @@ m2$A$values[manifests, latents] = load
 
 ```
 
+```R
 require(umx)
 
 manifests = names(data)
