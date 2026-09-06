@@ -23,7 +23,7 @@ categories: basic
 <p style="text-align: center;">This gallery will hold example models as we build them. To learn about installing umx, or take a basic tutorial, start at the [home page](https://tbates.github.io).</p>
 
 
-*note*: This page expresses the goal for umx's coverage of core copy-and-paste model templates. Goal deadline to have it completed by end 2021.
+*note*: This page lists umx's goal for coverage of core model templates. Aiming to have it completed by end 2026.
 
 ### Basic path-based models in `umx`
 * [umxPath](/advanced/1995/11/20/detailed-umxPath.html)
