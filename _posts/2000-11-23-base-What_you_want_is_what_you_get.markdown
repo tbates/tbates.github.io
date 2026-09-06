@@ -54,7 +54,7 @@ How to implement this without black boxes? Let’s look at an `lm` statement of 
 
 ```r
 df = myFADataRaw[, 1:2]
-names(df) <- c("A", "B")
+names(df) = c("A", "B")
 summary(lm(B ~ A, data = df))
 m1 = lm(B ~ A, data = df)
 umxAPA(m1, std = TRUE)

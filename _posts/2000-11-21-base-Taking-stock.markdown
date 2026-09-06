@@ -18,7 +18,7 @@ categories: basic
 
 ### umx function list
 
-We've used:
+Functions we've used:
 
 * umxRAM
 * umxPath
@@ -26,23 +26,18 @@ We've used:
 * plot
 * umxModify
 
-# Congratulations!
-
 ### What's in store?
 
-You can learn about umxPath, models, plot, summary in more detail in the [advanced collection](/container/2015/06/18/container-More-advanced-RAM-articles.html).
-
-We'll also cover:
-
+You can learn more about umxPath, models, plot, summary in more detail in the [advanced collection](/container/2015/06/18/container-More-advanced-RAM-articles.html). e.g.,
 1. Multiple groups
 2. Twin models: `umxACE`, `umxCP`, `umxIP`, `umxGxE`
-3. Factor scores (with missing data!)
-4. Ordinal and Binary data
+3. Factor scores (with missing data)
+4. Liability threshold models of Ordinal data
 5. WLS
 6. Modification indices
-7. Confidence intervals
+7. Robust SEs, and profile Confidence intervals
 8. Specific model types
- * Mimic?
  * Simplex
- * Bi-factor?
-9. Lower-level helpers
+ * Bi-factor
+11. GenomicSEM (coming soon if not already)
+

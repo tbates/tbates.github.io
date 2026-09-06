@@ -6,7 +6,7 @@ comments: true
 categories: advanced
 ---
 
-## "Staying on the (Wright) path"
+## umxPath
 
 `umxPath` is a core `umx` function. It facilitates path specification, streamlines scripts, and increases readability.
 
@@ -136,7 +136,7 @@ umxPath(from  = "A", to = "A")
 *Tip*: `plot`() is a great way to see what you are doing in a model as you build it: look often build once.
 
 ```r
-    plot(umxRAM("tim", umxPath(c("mpg", "cyl", "disp"), value=1), data=mtcars, run=F))
+    plot(umxRAM("tim", umxPath(from = c("mpg", "cyl", "disp"), value=1), data=mtcars, run=FALSE))
 	# hmmm single-headed arrows... should use "var = "
 ```
 ![quicklook](/media/umxPath/quickLook.png)
