@@ -134,7 +134,7 @@ tmp = umx_make_TwinData(100, AA = 3, CC = 2, EE = 3, sum2one = FALSE)
 mzData = tmp[tmp$zygosity == "MZ", ]
 cov(mzData[,c("var_T1","var_T2")])
 
-```    
+```
 
 #### Moderator Example
 

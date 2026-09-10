@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Build & run your first SEM model"
+title: "Getting Started: Build & run your first SEM model"
 
 comments: true
 categories: basic
@@ -17,13 +17,13 @@ If you haven't installed umx, [do that now](/basic/2000/12/10/base-Install.html)
 library("umx")
 ```
 
-*note*: umx ? function help is not just boilerplate documentation: All functions have real-world examples.
+*note*: umx ? function help is not just boilerplate documentation: All functions have real-world examples to build on!
 
 <a name="overview"></a>
 
 ## Overview
 
-For those of you who like to get straight to the code: here's what happens on this page:
+For those of you who like to get straight to the code: on this page we will build up a simply one-group structural equation model.
 
 ```R
 m1 = umxRAM("gas mileage", data = mtcars,
@@ -51,22 +51,21 @@ umxSummary(m1, std = TRUE)
 
 χ²(87) = 0, p < 0.001; CFI = 1; TLI = 1; RMSEA = 0
 
-Now, we can update this model by dropping displacement -> mpg. 
-Note, umxRAM auto labels all paths so you can see what they do, like this: "disp_to_mpg"
+Now, we can update this model by dropping the path from displacement to mpg. 
+*Note*: `umxRAM` auto-labels all paths based on what they do like this: "disp_to_mpg"
 
 ```R
 m2 = umxModify(m1, update = "disp_to_mpg", name = "drop effect of capacity", comparison = TRUE)
-
 ```
 
 **umxCompare model 1 2**
 
 |Model                   | EP|&Delta; -2LL |&Delta; df |p     |      AIC|Compare with |
 |:-----------------------|--:|:------------|:----------|:-----|--------:|:------------|
-|big and heavy           |  9|             |           |      | 419.1183|             |
-|drop effect of capacity |  8|3.8616447    |1          |0.049 | 420.9800|big and heavy|
+|gas mileage.            |  9|             |           |      | 419.1183|             |
+|drop effect of capacity |  8|3.8616447    |1          |0.049 | 420.9800|gas mileage  |
 
-And Plot this model:
+And `plot` this model:
 
 ```r  
 plot(m2)
@@ -75,15 +74,9 @@ plot(m2)
 ![model of mpg](/media/1_make_a_model/drop_effect_of_capacity.png "Model 2 figure")
 
 
-Now, let's build, run, summarize, modify/compare, and display this model step by step.
+Now, let's go into more detail on the build, run, summarize, modify/compare, and display options step by step.
 
 ### Two theories to compare
-
-After you formulate a prediction, SEM can help you make and compare different predictions: the idea that there are, say, two forms of dyslexia is tested against some competing model, i.e., that there is one form, for instance. Or perhaps a model that reading disorder is just a problem with vision.
-
-Fitting better than a model that has no restrictions is an easy bar.
-
-This bed-rock metric of closer-to the truth, further-from-the-truth however, gives us a bootstrap to iteratively choose ideas that are ever closer to reality. It is captured in likelihood differences, which we will use here to test our competing models.
 
 Here, we begin with a simple prediction in a built-in dataset: miles/gallon (mpg) goes down linearly with increases in car mass car **and** as engine size (capacity) goes up. Our contrasting theory predicts that "*only weight matters*", not engine capacity. We can compare these claims by building model 1, then dropping capacity and testing if this model fits significantly worse.
 
@@ -93,9 +86,9 @@ We will use the built-in [mtcars](https://stat.ethz.ch/R-manual/R-devel/library/
 
 ### Building on what you already know
 
-In `lm`, model 1 would be `mpg ~ disp + wt`. Model 2 would be `mpg ~ disp`
+In `lm`, model 1 would be `mpg ~ disp + wt`. Model 2 would be `mpg ~ disp` and you might compare them with `anova(m1, m2)`
 
-[Sewall Wright](https://en.wikipedia.org/wiki/Sewall_Wright) invented SEM to allow us to think in explicit graphs. So, here's what that language implies: in the figure "A model of Miles/gallon"
+[Sewall Wright](https://en.wikipedia.org/wiki/Sewall_Wright) invented SEM to allow us to think in explicit graphs specifying the model with both complete mathematical precision and easy graphical intuition. In Wright's terms, the model we are describing is shown in the figure below as "A model of Miles/gallon"
 
 <figure>
   <img src="{{site.url}}/media/1_make_a_model/mpg_1a_theory.png" alt="model of mpg" width="292"/>
@@ -104,15 +97,15 @@ In `lm`, model 1 would be `mpg ~ disp + wt`. Model 2 would be `mpg ~ disp`
 
 ### Your first umxRAM model
 
-Let’s start off with something very simple: the means and variances of three raw variables. This is also called an "independence model".
 
-The `umx` equivalent of `lm` is `umxRAM`, and we build the "formula" using `umxPath`. Here's and independence model (all variables included, but no covariances):
+The `umx` equivalent of `lm` is `umxRAM`, and we build the "formula" using `umxPath`s. Something very simple: the means and variances of three raw variables. This is also called an "independence model".
+
+We feed this model-container a data set the way that most R models use: (`data = mtcars`).
 
 ```R
-manifests = c("disp", "wt", "mpg")
 m1 = umxRAM("my_first_model", data = mtcars,
-	umxPath(var   = manifests),
-	umxPath(means = manifests)
+	umxPath(var   = c("disp", "wt", "mpg")),
+	umxPath(means = c("disp", "wt", "mpg"))
 )
 ```
 
@@ -124,26 +117,24 @@ m1 = umxRAM("independence_model", data = mtcars,
 )
 ```
 
+Clearly some un-modeled covariance here... Let’s build our theorized model.
 
-Like `lm`, we're going to feed this model-container a data set (`data = mtcars`). The string "independence_model" is a name that is used to refer to the model, and which is used in output as well, so you know which model is which by name.
+Next, we can add more `umxPaths` to specify all the arrows, boxes, and circles in the figure above.
 
-We then give `umxRAM` a list of `umxPaths` to specify all the arrows, boxes, and circles in the figure above.
+note: `umxPath` has many shortcuts for specifying a path: So a list of variances (2-headed path originating and terminating on one variable) are set with the argument `var =c(x, y, z)`
 
-With `umxPath`, you can specify a variance (a 2-headed path originating and terminating on one variable) with the argument `var =`
 To specify a mean (a path from the constant one to a variable), just use the argument `means =`. You can learn more about umxPath in the help and in this chapter on [using umxPath](http://tbates.github.io/advanced/1995/11/20/detailed-umxPath.html).
 
-By default, just like `lm`, `umxRAM` runs the model automatically for you. It also prints out a table of fit-information.
+Just like `lm`, `umxRAM` defaults to running the model automatically and it prints out a table of fit-information.
 
-*nb*: you can re-run a model anytime with `umxRun()`
+*nb*: You can re-run a model anytime with `umxRun()`
 
 You can also request a summary, and plot the output:
 
-```r
+```R
 umxSummary(m1)
 plot(m1)
 ```
-
-Here's the plot:
 
 ![independence model](/media/1_make_a_model/independence model.png "Independence model of three variables")
 
@@ -151,27 +142,6 @@ Here's the plot:
 
 As you can see, this is an "independence model": No covariances were included, so all variables are modeled as uncorrelated. It would fit poorly in this case. `umxSummary` tells us this fit can definitely be improved: χ²(90) = 98.32, p < 0.001; CFI = 0; TLI = 0; RMSEA = 0.996
 
-Clearly some un-modeled covariance here... Let’s build our theorized model.
-
-```r
-m2 = umxRAM("big and heavy", data = mtcars,
-	# One headed paths from disp and weight to mpg
-	umxPath(c("disp", "wt"), to = "mpg"),
-	# Allow predictors to Covary
-	umxPath(cov = c("disp", "wt")),
-	# Variances and Means
-	umxPath(means = c("disp", "wt", "mpg")),
-	umxPath(var = c("disp", "wt", "mpg"))
-)
-```
-
-*nb*: remember: the shortcut for the last two lines is: `umxPath(v.m. = c("disp", "wt", "mpg"))`
-
-You can compare the models with 
-
-```r
-umxCompare(m2, m1)
-```
 
 This new model is better, i.e., the three degrees of freedom were worth paying for in improved fit to the data:
 
@@ -182,6 +152,31 @@ This new model is better, i.e., the three degrees of freedom were worth paying f
 
 
 In fact this (saturated) model fits perfectly, as `umxSummary` shows: χ²(87) = 0, p < 0.001; CFI = 1; TLI = 1; RMSEA = 0
+
+
+```R
+m2 = umxRAM("big and heavy", data = mtcars,
+	# One headed paths from disp and weight to mpg
+	# Allow predictors to Covary
+	# Variances and Means
+	umxPath(c("disp", "wt"), to = "mpg"),
+	umxPath(cov = c("disp", "wt")),
+	umxPath(v.m = c("disp", "wt", "mpg"))
+)
+```
+
+We can drop the path by label:
+
+```R
+m2 = umxModify(m1, update = "disp_to_mpg", name = "drop effect of capacity", comparison = TRUE)
+```
+
+You can compare models anytime with
+
+```r
+umxCompare(m2, m1)
+```
+
 
 We can request a full summary including standardized output as a table with ("**show** = *std*" requests the standardized paths):
 
