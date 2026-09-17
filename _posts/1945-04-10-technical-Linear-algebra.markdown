@@ -10,58 +10,16 @@ categories: technical
 
 # Matrices
 
-To understand your models, you should understand matrices and linear algebra. In some ways, umx's unique selling point is that it sits on the OpenMx matrix algebra processor. Several of the blog posts on this site cover RAM-style modeling, but many are built in matrix algebra, and `umxRAM` is simply an interface to underlying matrices: `mxPath("A", "B", ...)` simply inserts values into cells in each the layer of matrix (the A - for Asymmetric) matrix: Try it and see!
-
-```r
-require(umx)
-
-manifests = names(demoOneFactor)
-m1 <- umxRAM("One Factor", data = demoOneFactor, type = "cov",
-	umxPath("G", to = manifests),
-	umxPath(var = manifests),
-	umxPath(var = "G", fixedAt = 1)
-)
-tmx_show(m1)
-
-```
-
-Showing	values for the S matrix:
-
-|    | x1  | x2   | x3   | x4   | x5   | G |
-|:---|:----|:-----|:-----|:-----|:-----|:--|
-| x1 | 0.1 | .    | .    | .    | .    | . |
-| x2 | .   | 0.15 | .    | .    | .    | . |
-| x3 | .   | .    | 0.19 | .    | .    | . |
-| x4 | .   | .    | .    | 0.27 | .    | . |
-| x5 | .   | .    | .    | .    | 0.34 | . |
-| G  | .   | .    | .    | .    | .    | 1 |
+Matrices were developed in the 1850s by Sylvester and Cayley as a concise way to work with blocks of numbers, for instance to solve questions posed as simultaneous linear algebra equations.
 
 
-So you should know about matrix algebra. 
+This a matrix of order 3,2 (The "order" of a matrix is the number of rows followed by the number of columns).
 
-### What's a matrix?
-
-To quote [Wolfram](http://mathworld.wolfram.com/Matrix.html) "*A matrix is a concise and useful way of uniquely representing and working with linear transformations… first formulated by Sylvester (1851) and Cayley."
-
-For our purposes, the benefit of matrices is their ability to represent linear transformations and, together with an [optimiser](https://tbates.github.io/technical/1943/02/12/technical-Optional-optimizers.html), to allow us to solve questions posed as simultaneous linear algebra equations. 
-
-*etymology*: "matrix" means a container or place from which something (else) originates. Examples include the [extracellular matrix](https://en.wikipedia.org/wiki/Extracellular_matrix).
-
-In math, matrices consist of cells organized in rows and columns. Each cell can contain a value. Matrix algebra is a set of rules for manipulating matrices, designed to make representing and solving problems easier to specify or accomplish.
-
-Here, we will just scratch the surface of matrices and algebra, just enough to make sense of RAM models, and alert you to the uses of basic operations on matrices, as well as the special multi-layer format of matrices in `umx` and how this aids modeling (allowing you to specify not just values in the row-column addressing system of matrices, but bounds on those values, labels by which to refer to them, and whether they are free or fixed).
-
-*note*: There are several online tutorials in matrix algebra, like [this one](https://stattrek.com/matrix-algebra/deviation-score.aspx?tutorial=matrix)
-
-#### Making two matrices a and c, and computing the matrix product a %*% b
-
-The "order" of a matrix is the number of rows followed by the number of columns. This a matrix of order 3,2:
-
-    |c1| c2 
-----|---|---
- r1 | . | .  
- r2 | . | .  
- r3 | . | .  
+|  a | c1  |  c2 |
+|:---|:----|:----|
+| r1 | a11 | a12 |
+| r2 | a21 | a22 |
+| r3 | a31 | a32 |
 
 To begin to see the value of this representation, let's consider the following 3 equations:
 
@@ -71,7 +29,7 @@ Y2 = a<sub>21</sub> × b<sub>1</sub> + a<sub>22</sub> × b<sub>2</sub>
 
 Y3 = a<sub>31</sub> × b<sub>1</sub> + a<sub>33</sub> × b<sub>2</sub>
 
-These potentially quite large matrices of relations can be expressed in just 1-line of matrix algebra, which doesn't grow in complexity as the matrix rows and columns grow:
+These (potentially very large number) relations can be expressed in a single line of matrix algebra, which doesn't grow in complexity as the matrix rows and columns grow:
 
 **Y** = **a** × **b**
 
